@@ -1543,3 +1543,7 @@ span.subject_title {
     padding: 14px;
 }
 
+.question_list_qa {
+    border: 1px solid;
+}
+

@@ -2716,6 +2716,7 @@ $(document).on('click','.note1_doc_delete', function(){
        $(this).parent().prev().find('.check-box-input').trigger( "click" );
        var data_value = $(this).data('value');
        $('#genrate_question').modal();
+       $('#doc_path_directory').data('value',data_value);
 
    }); 
 
@@ -2732,6 +2733,55 @@ $(document).on('click','.note1_doc_delete', function(){
    }
 
    $('.multipleSelect').fastselect();
+
+
+
+   $(document).on('click','.send_question',function(){
+     $('#genrate_question').modal('hide');
+     var directory_url  =  $('.directory_location #current_directory').val(); 
+
+     var doc_path =  $('#doc_path_directory').data('value');
+     
+     var project_id  = $('.directory_location #project_id_doc').val();
+
+     var token = $('#csrf-token').val();  
+     var users = $('.multipleSelect').val();
+
+     var subject = $('.question_subject').val();
+     var ques_content  = $('.question_content').val();
+     var project_name  = $('.project_name').val();
+
+     $.ajax({
+
+        type : "POST",
+        url : "{{url('/')}}/send_question",
+        message: swal("send successfully"," ","success"),
+        data : {
+          _token       : token,
+          doc_path     : doc_path,
+          project_id   : project_id,
+          users        : users,
+          subject      : subject,
+          ques_content : ques_content,
+          project_name : project_name,
+
+        },
+
+      success:function(response){
+        
+          if(response == 'send_question'){
+
+             data_display(token,directory_url);
+             $('#create_question_answer')[0].reset();
+
+          }
+        }
+
+       }); 
+
+   });
+
+
 
 </script>
 

@@ -44,6 +44,10 @@
             </li>
           @endif
           <li> 
+         <li class="nav-item ">
+              <a href="{{url('/')}}/project/{{$project_id}}/question" class="nav-link">
+                <i class="fa fa-comments" aria-hidden="true"></i>Q&A</a>
+          </li>
           <div class="nav-link">
               
           </div>

@@ -50,6 +50,15 @@ Route::post('/recycle/document/restore', 'RecyclebinController@restoreRecycleBin
 Route::post('/recycle/select_document/delete', 'RecyclebinController@deleteRecycleBinSelectedDoc');
 
 
+// Question and answer route
+Route::post('send_question', 'QuestionsController@create_Question');
+
+//question answer route.
+Route::get('project/{project_id}/question','QuestionsController@getQuestions')->middleware('auth');
+
+Route::post('/show_questions','QuestionsController@getAllQuestions');
+
+
 //Favrouit documents 
 
 Route::post('/fav/document', 'FavDocumentController@makeFavDocument');

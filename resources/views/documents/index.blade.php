@@ -660,7 +660,6 @@
 
 <!-- End -->
 
-
 <div id="genrate_question" class="modal fade" role="dialog">
   <div class="modal-dialog create_question">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
@@ -673,27 +672,27 @@
       <div class="modal-body">
         <div class="form">
           <div id="directory_current">
-            <form action="javascript:void(0)" id="folder_create" method="post" >
+            <form action="javascript:void(0)" id="create_question_answer" method="post" >
              <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-             <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}" />
              <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
 
-             <input type="hidden" value="" class = "document_indexing_count">
-             
+             <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}"/>
+
              <input type="hidden" name="slug_folder" class="slug_folder" />
+
              <input type="hidden" name="current_dir" class="current_dir" id="current_directory" 
              value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
-             <input type="hidden" name="project_dir" class="project_dir" id="project_directory" 
-             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
-             To:<div class='ques_ans_docs_group'>             
+
+             <input type="hidden" name="doc_path" id="doc_path_directory"/>
+
+             To:<div class='ques_ans_docs_group'>        
               <select class="multipleSelect" multiple name="language"></select>
              </div>
              <div class="subject_section">
                 <span class="subject_title">Subject:</span>
-                <div class='subject'><input type="text" class="subject_question">
-                </div>
+                <input type="text" class="question_subject">
              </div>
-             <div class="question_content">
+             <div class="question_content_section">
               <textarea class="question_content" data-value="0" rows="10" cols="55"></textarea>
              </div>
            </form>
@@ -701,7 +700,7 @@
        </div>
      </div>
      <div class="modal-footer">
-      <input type="button" value="Send" name="submit" class="create_question" >
+      <input type="button" value="Send" name="submit" class="send_question">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
     </div>
   </div>
