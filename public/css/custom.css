@@ -285,9 +285,9 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
 }
 
 .upload_details_index {
-	float: left;
-	width:100%;
-	margin-top: 10px;
+    float: left;
+    width:100%;
+    margin-top: 10px;
     
 }
 
@@ -305,7 +305,7 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
 }
 
 @media only screen and (max-width:1230px) {
-.document_index{ float:left; width:100%;}	
+.document_index{ float:left; width:100%;}   
 }
 
 span#total_file {
@@ -349,7 +349,7 @@ i.indicator.glyphicon.glyphicon-folder-open {
 .selected_file_uploaded{ float:left; width:100%; height:100%; position:relative; }
 .selected_file_uploaded input[type="file"] { float: left; cursor:pointer; width: 100%; height: 100%; opacity: 0; z-index: 9;}
 .selected_file_uploaded span {
-	float:left;
+    float:left;
     width: 100%;
     text-align: center;
 }
@@ -986,9 +986,9 @@ span.radio_down_content {float: left; margin: 0 0 0 24px;}
 /*1st Nov 2018*/
 
 /*5 nov 2018*/
-.accordion {
+.ques_ans_list {
+    
     background-color: #fafafa;
-    color: #444;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -1158,7 +1158,12 @@ background:#ffffff;     max-width: 78%;}
 }
 
 .row.document_index_buttons {
+    
     float: left;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -12.5px;
+    margin-left: 2px;
 }
 
 a.btn.btn_export_doc {
@@ -1544,6 +1549,73 @@ span.subject_title {
 }
 
 .question_list_qa {
-    border: 1px solid;
+
+    background:#FAFAFA;
+    padding: 10px;
+    margin-top: 10px;
 }
 
+.reply_answer_section {
+    margin-top: 20px;
+}
+.waiting_reply{
+    color: red;
+}
+.in_progress_ques{
+    color: green;
+
+}
+.header_left {
+    float: left;
+    width: 380px;
+}
+.reply_answer{
+
+    background-color: #fafafa;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    border: 1px solid #e4e4e4;
+
+}
+
+
+.reply_editor {
+ 
+    height: 310px;
+    padding: 7px;
+    background: #ECECEC;
+}
+
+.reply_center{
+    float: left;
+}
+
+.reply_section{
+
+     overflow: scroll;
+    overflow-x: hidden;
+}
+
+.row.group_block{
+
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -12.5px;
+    margin-left: 2px;
+
+}
+
+p.content_ques {
+    color: #308ee0;
+}
+
+p.reply_content_ques {
+    color: green;
+}

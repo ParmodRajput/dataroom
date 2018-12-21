@@ -8,7 +8,6 @@ use App\Group;
 use App\Delete_Doc;
 use App\Note;
 use App\Question;
-use App\QuesReply;
 use App\Permission;
 use App\Document;
 use App\Group_Member;
@@ -188,14 +187,11 @@ class QuestionsController extends Controller
            //subject
 	       $subject = $getQuestion->subject;
 
-           //question id
-         $question_id =$getQuestion->id;
-
 	       //question content
 	       $ques_content = $getQuestion->ques_content;
 	       $time = $getQuestion->time;
 	       // date
-	       $date = date('M/d/Y H:i:s', $time );
+	       $date = date('M/D/Y H:i:s', $time );
 	       $sender_id = $getQuestion->send_by;
 	       $getSenderName = User::where('id',$sender_id)->first();
            // sender name
@@ -211,7 +207,7 @@ class QuestionsController extends Controller
            // group_name 
            $groupName = $GetGroupName->group_name;
 
-           $Question_array1 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
+           $Question_array1 = ['document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
 
            array_push($Question_array,$Question_array1);
 
@@ -229,9 +225,6 @@ class QuestionsController extends Controller
 	       //document name
 	       $documet_name = $getDocument_name->document_name;
 
-         //question id
-         $question_id =$getQuestion1->id;
-
            //subject
 	       $subject = $getQuestion1->subject;
 
@@ -240,9 +233,7 @@ class QuestionsController extends Controller
 	       $time = $getQuestion1->time;
 	       // date
 	       $date = date('M/D/Y H:i:s', $time );
-
 	       $sender_id = $getQuestion1->send_by;
-
 	       $getSenderName = User::where('id',$sender_id)->first();
            // sender name
 	       $sender_name = $getSenderName->name;
@@ -258,7 +249,7 @@ class QuestionsController extends Controller
            $groupName = $GetGroupName->group_name;
 
 
-           $Question_array2 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
+           $Question_array2 = ['document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
 
            array_push($Question_sec_array,$Question_array2);
 
@@ -273,75 +264,5 @@ class QuestionsController extends Controller
 
     }
 
-
-    //question reply store
-
-
-    public function sendReply(Request $request){
-
-
-        $authEmail = Auth::user()->email;
-        $project_id  = $request->project_id;
-        $users_email = $request->send_to;
-        $reply_subject = $request->reply_subject; 
-        $reply_content  = $request->reply_content;
-        $question_id = $request->question_id;
-        $get_time = time();
-        $time = date('M/d/Y H:i:s', $get_time);
-        $project_name = $request->project_name;
-        $doc_name = $request->document_name;
-
-        foreach ($users_email as $users_email) {
-        
-            $reply = new QuesReply();
-
-            $reply->question_id = $question_id;
-            $reply->reply_subject = $reply_subject;
-            $reply->reply_content = $reply_content;
-            $reply->reply_status = '0';
-            $reply->project_id = $project_id;
-            $reply->reply_by = $authEmail; 
-            $reply->reply_to = $users_email; 
-            $reply->time = $time;
-            $reply->save();
-            
-            $data = array(
-
-              'name' => "Invite To Prodata room By prodata.com",
-              'email' =>  $users_email,
-              'sender_email' => Auth::user()->email,
-              'project'=> $project_name,
-              'subject'=>$reply_subject,
-              'document_name'=>$doc_name,
-
-              );
-
-              Mail::send('mail.question_answer_email',$data, function ($message) use($users_email) {
-                  $message->from('admin@prodata.com', 'Prodata room');
-                  $message->to($users_email)->subject('New post to discussion
-                  ')->setBody("url('/')");
-
-            });
-
-          }//end foreach
-
-
-          return "reply_sent";
-
-     }//end function
-
-
-     // get alll reply
-
-     public function GetAllReply(Request $request){
-
-      $project_id = $request->project_id;
-      $question_id = $request->question_id;
-
-      $getReply = QuesReply::where('question_id',$question_id)->where('project_id',$project_id)->get();
-
-     return $getReply; 
-
-     }
 
 }

@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.addons.css') }}">
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/fastselect.min.css') }}">
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -39,7 +38,6 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastselect/0.7.3/fastselect.standalone.min.js"></script>
  
 </head>
 <body>
@@ -153,16 +151,10 @@
 
 
 
-    $(document).ready(function(){
-
-                  //fast select for select users
-
-                  $('.multipleSelectUsers').fastselect();
+                 $(document).ready(function(){
 
                    var window_width = $(window).width();
                    var window_height = $(window).height();
-
-                   $('.reply_section').css('height',window_height-90);
 
                     $('#tree4').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
 
@@ -180,8 +172,6 @@
                         event.preventDefault();
                         event.stopPropagation(); 
 
-                        $('.reply_section').addClass('hidden');
-
                         var directory_url = $(this).data("value");
 
                         var current_directory = $('.current_dir_qa').val(directory_url);
@@ -190,7 +180,9 @@
 
                         ques_display(token,directory_url);
                   
-                    });
+                      });
+
+
 
                  // question display
 
@@ -225,15 +217,15 @@
 
                                  $.each(response.question_to,function(key,value){
 
-                                  
-
-                                    html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='0'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='waiting_reply'>Awaiting reply</button></div></div></div>";
+                                    html +="<div class='question_list_qa'><div class='check_input'><input type='checkbox' class='question_check'></div><h5 class='send_by'>"+value.sender_name+"</h5>("+value. group_name+") <span class='date'>"+value.date+"</span><p class='ques_subject'>"+value.subject+"</p><button class='awaiting' style='color:red;'>Awaiting reply</button><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div>";
 
                                    });
 
+
                                  $.each(response.question_by,function(key,value){
+
                         
-                                   html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='1'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='in_progress_ques'>In Progress</button></div></div></div>";
+                                    html +="<div class='question_list_qa'><div class='check_input'><input type='checkbox' class='question_check'></div><h5 class='send_by'>"+value.sender_name+"</h5>("+value. group_name+") <span class='date'>"+value.date+"</span><p class='ques_subject'>"+value.subject+"</p><button class='awaiting' style='color:green;'>In progress</button><p class='related_to'><h6>Related to:</h6>  "+value.document_name+"</p></div>";
 
                                    });
 
@@ -245,221 +237,7 @@
 
                     }
 
-
-
-      // // Accordion
-
-      // var acc = document.getElementsByClassName("accordion");
-      // var i;
-
-      // for (i = 0; i < acc.length; i++) {
-      //     acc[i].addEventListener("click", function() {
-      //         this.classList.toggle("active");
-      //         var panel = this.nextElementSibling;
-      //         if (panel.style.display === "block") {
-      //             panel.style.display = "none";
-      //         } else {
-      //             panel.style.display = "block";
-      //         }
-      //     });
-      // }
-
-      // //end
-
-      $(document).on('click','.question_list_qa',function(){
-          
-         $('.reply_editor').addClass('hidden'); 
-         $('.reply_answer').removeClass('hidden'); 
-         
-        var html ='';
-
-        $('.indexing_qu input:checkbox').prop('checked', false);
-        $(this).find('input:checkbox').prop('checked', true);
-
-        $('.reply_section').removeClass('hidden');
-        $('.action_button').click();
-
-        var subject = $(this).data('subject');
-        var content = $(this).data('content');
-        var sender_name = $(this).data('sender_name');
-        var date = $(this).data('date');
-        var document_name = $(this).data('document_name');
-        var get_status = $(this).data('status');
-        var question_id = $(this).data('ques_id');
-        var project_id  = $('.project_id_qu').val();
-
-        $('.reply_question_id').val(question_id);
-
-
-        if(get_status == 0)
-        {
-          html +="<button class='waiting_reply'>Awaiting reply</button>";
-
-        }else{
-
-          html +="<button class='in_progress_ques'>In progress</button>";
-        }
-
-        $('.right_header').html(html);
-
-        $('.main_question_section .sender_name').html(sender_name);
-        $('.main_question_section .subject_ques').html(subject);
-        $('.main_question_section .date_section').html(date);
-
-        $('.main_question_section .content_ques').html(content);
-        $('.header_subject').html(subject);
-        $('.relate_header .doc_name_header').html(document_name);
-        $('.reply_document_name').val(document_name);
-
-        // get the all reply of the question 
-
-        var token = $('#csrf-token').val(); 
-
-          $.ajax({
-            type : "POST",
-            url : "{{url('/')}}/reply_get",
-            data : {
-              project_id : project_id,
-              question_id : question_id,
-              _token      : token,
-
-            },
-            success:function(response){
-               
-              var html ='';
-                
-              $.each(response,function(key, value){
-
-                var reply_user = value.reply_by;
-                var get_reply_user = reply_user.split("@");
-                var length = get_reply_user.length;
-
-                if(length !== 1);
-                {
-                    var reply_user = get_reply_user[0];
-                }
-
-                  html +="<button class='ques_ans_list action_button'><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+reply_user+"</H4><p class='reply_subject_ques'>"+value.reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><p class='reply_date_section'>"+value.time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+value.reply_content+"</p></div></button>";
-                      
-              });
-
-              $('.replied_container').html(html);
-
-            }
-
-          });  
-
-      });
-
-
-
-      $(document).on('click','.action_button',function(){
-
-          $('.reply_editor').addClass('hidden');
-          $('.reply_answer').removeClass('hidden');
-
-      });
-
-
-      // reply module
-
-      $('.reply_answer').click(function(){
-
-          $(this).addClass('hidden');
-          $('.reply_editor').removeClass('hidden');
-
-          var project_id  = $('.project_id_qu').val();
-          var token = $('#csrf-token').val(); 
-
-          $.ajax({
-            type : "POST",
-            url : "{{url('/')}}/project_users",
-            data : {
-              project_id : project_id,
-              _token      : token,
-            },
-            success:function(response){
-
-              var html ='';
-
-               $.each(response,function(key, value){
-
-                 html +=" <option value="+value+">"+value+"</option>";
-                      
-               });
-
-               $('.multipleSelectUsers').html(html);
-           
-            }
-
-           });
-
-      });
-
-      $('.cancle_reply_type').click(function(){
-
-          $('.reply_editor').addClass('hidden');
-
-          $('.reply_answer').removeClass('hidden');
-      })
-
-
-      // Reply question
-
-      $(document).on('click','.question_reply_qa',function(){
-      
-        var token = $('#csrf-token').val();
-        var project_id  = $('.project_id_qu').val();
-        var send_to = $('.multipleSelectUsers').val();
-        var reply_subject = $('.reply_subject').val(); 
-        var reply_content  = $('.reply_question_content').val();
-        var question_id =  $('.reply_question_id').val();
-        var project_name = $('.project_name_qu').val();
-        var document_name = $('.reply_document_name').val();
-        var auth_name =  $('.auth_name').val();
-        var time = new Date();
-
-
-         $.ajax({
-            type : "POST",
-            url : "{{url('/')}}/reply_send",
-            message: swal("reply send successfully", "", "success"),
-            data : {
-
-              project_id : project_id,
-              send_to    : send_to,
-              reply_subject : reply_subject,
-              reply_content : reply_content,
-              question_id   : question_id,
-              project_name : project_name,
-              document_name : document_name,
-              _token      : token,
-
-            },
-
-            success:function(response){
-
-              var html = '';
-
-              if(response == 'reply_sent')
-              {
-
-                html +="<button class='ques_ans_list action_button'><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+auth_name+"</H4><p class='reply_subject_ques'>"+reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><p class='reply_date_section'>"+time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+reply_content+"</p></div></button>";
-                 
-              }
-
-              $('.replied_container').append(html);
-              $('.reply_subject').val('');
-              $('.reply_question_content').val('');
-
-            }
-
-        });
-         
-      });
-
-</script>
-
+        </script>
   <!-- End custom js for this page-->
   @yield('page_specific_script')
 </html>

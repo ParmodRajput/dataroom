@@ -50,6 +50,15 @@ Route::post('/recycle/document/restore', 'RecyclebinController@restoreRecycleBin
 Route::post('/recycle/select_document/delete', 'RecyclebinController@deleteRecycleBinSelectedDoc');
 
 
+// Question and answer route
+Route::post('send_question', 'QuestionsController@create_Question');
+
+//question answer route.
+Route::get('project/{project_id}/question','QuestionsController@getQuestions')->middleware('auth');
+
+Route::post('/show_questions','QuestionsController@getAllQuestions');
+
+
 //Favrouit documents 
 
 Route::post('/fav/document', 'FavDocumentController@makeFavDocument');
@@ -125,26 +134,8 @@ Route::get('get_groups/{id}', 'GroupsController@getGroups');
 Route::post('/groups/get_group_info', 'GroupsController@getGroupInfo');
 Route::post('/delete_group', 'GroupsController@deleteGroup');
 Route::post('/get_allgroups', 'GroupsController@getAllGroups');
-Route::post('/get_group_users', 'GroupsController@GroupsUsersGet');
 // all project all users
 Route::post('/project_users', 'GroupsController@getAllUserInProject');
-
-
-// Question and answer route
-Route::post('send_question', 'QuestionsController@create_Question');
-
-//question answer route.
-Route::get('project/{project_id}/question','QuestionsController@getQuestions')->middleware('auth');
-
-Route::post('/show_questions','QuestionsController@getAllQuestions');
-
- // reply route
-
- Route::post('/reply_send','QuestionsController@sendReply');
- Route::post('/reply_get','QuestionsController@GetAllReply');
-
-
-//question route end
 
 
 

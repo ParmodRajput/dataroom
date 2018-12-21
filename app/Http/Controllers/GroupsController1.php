@@ -119,7 +119,6 @@ class GroupsController extends Controller
          {
 
           $encryptedGroupId = Crypt::encryptString($group_id);
-
           $encryptedUserEmail = Crypt::encryptString($userEmail);
           $verifyUrl = url('/project/checkUser/'.$encryptedGroupId.'/'.$encryptedUserEmail);
 
@@ -300,23 +299,12 @@ class GroupsController extends Controller
         return $getGroups;
     }
 
-    public function GroupsUsersGet(Request $request){
-
-        $project_id = $request->project_id;
-
-        $get = Group::where('project_id',$project_id)->get();
-
-        return $get;
-        
-    }
-
 
     public function getAllUserInProject(Request $request)
     {
          $project_id =  $request->project_id;
-         $authEmail  = Auth::user()->email;
 
-         $getUsers = Group_Member::where('project_id',$project_id)->whereNotIn( 'member_email', [$authEmail])->pluck('member_email');
+         $getUsers = Group_Member::where('project_id',$project_id)->pluck('member_email');
 
          return $getUsers;
     }

@@ -7,10 +7,6 @@
 		<div class="col-md-12">
 			<input type="hidden" class='current_dir_qa'>
 			<input type="hidden" class='project_id_qu' value="{{$project_id}}">
-			<input type='hidden' class='project_name_qu' value='{{$project_name}}'>
-
-			<input type="hidden" class='auth_name' value='{{ Auth::user()->name }}'>
-
 			<div class="col-md-3">
 			    <div class="folder_and_file_tree_qa">
 				    <div class="select_group_and_user_qa">
@@ -60,7 +56,7 @@
 						</section>
 
 						   <div class="upload_table">
-						        <div class="row document_index_buttons"> 
+						           <div class="row document_index_buttons"> 
 						    <div class="btn_upload" permission ='1'>
 						    <a  class="btn  document-btn" data-toggle="modal" data-target="#myModal"><i class="fa fa-comment-o"></i>New Question
 						    </a> 
@@ -71,7 +67,9 @@
 				            <div class="delete_items hidden" permission = "3">
 				             <a class="btn delete_items_documents " ><i class='fas fa-trash-alt'></i></a>           
 				            </div>
+
 				              </div>
+
 				                <div class="btn-export">
 				                  <a class="btn btn_export_doc" ><i class="fa fa-table"></i> Export</a>
 				                </div>
@@ -102,72 +100,6 @@
 			
 		</div>
 	</div>
-	<div class="col-md-5">
-		<div class='reply_section hidden'>
-			<input type="hidden" class='reply_question_id'>
-			<input type='hidden' class='reply_document_name'>
-			<div class='reply_header'>
-			<div class='header_left'>
-				<h4 class='header_subject'></h4>
-				<div class='relate_header'><span>Related to:</span><p class='doc_name_header'></p></div>
-			</div>
-			<div class='right_header'>
-
-			</div>
-		</div>
-			<div class='reply_question_section'>
-				<div class="main_question_section">
-			    	<button class="ques_ans_list action_button"> 
-			    		<div class='question_block_up'>
-			    			<div class='question_block_first'>
-			    		        <H4 class='sender_name'></H4>
-                                <p class='subject_ques'></p>
-                                <p class="to"></p>
-                             </div>
-                             <div class='question_block_second'>   
-			    		        <p class="date_section"></p>
-			    		    </div>
-			    		</div>
-			    		<div class='question_block_bottom'>
-			    		    <p class='content_ques'></p>
-			    		</div>
-			    	</button>
-				</div>
-				<div class='replied_content_block'>	
-					<div class='replied_container'>
-						<!--  reply answer here -->
-					</div>
-				</div>
-			</div>
-			<div class='reply_answer_section'>
-                <div class="reply_answer">
-                	<p clas='click_here_reply'>
-                		<i class="fa fa-pencil"></i> Click Here to reply
-                	</p>
-                </div>
-                <div class="reply_editor hidden">
-                   <div class="reply_center">
-                		<span>To:</span>
-			             <div class='reply_ques_docs_group'> 
-			                 <select class="multipleSelectUsers" multiple name="language">
-			                 </select>
-			             </div>
-			             <div class="reply_subject_section">
-			                <span class="reply_subject_title">Subject:</span>
-			                <input type="text" class="reply_subject">
-			             </div>
-			             <div class="reply_content_section">
-				              <textarea class="reply_question_content" data-value="0" rows="6" cols="55"> 	
-				              </textarea>
-			             </div>
-			         </div>
-			         <div class="cancle_reply_type">
-                        <i class="fas fa-trash-alt"></i>
-			         </div>
-			         <button class='question_reply_qa btn btn-success'>Reply</button>
-                </div>
-			</div>
-		</div>	
-	</div>
+	<div class="col-md-5">fgfsdf</div>	
 </div>
 @endsection
