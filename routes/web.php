@@ -142,6 +142,8 @@ Route::post('/show_questions','QuestionsController@getAllQuestions');
 
  Route::post('/reply_send','QuestionsController@sendReply');
  Route::post('/reply_get','QuestionsController@GetAllReply');
+ Route::post('/reply_delete','QuestionsController@deleteReply');
+ 
 
 
 //question route end

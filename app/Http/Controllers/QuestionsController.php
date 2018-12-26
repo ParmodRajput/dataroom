@@ -344,4 +344,15 @@ class QuestionsController extends Controller
 
      }
 
+     public function deleteReply(Request $request){
+
+       $project_id = $request->project_id;
+       $reply_id = $request->reply_id;
+
+      QuesReply::where('id',$reply_id)->where('project_id',$project_id)->delete();
+
+      return "delete";
+
+     }
+
 }

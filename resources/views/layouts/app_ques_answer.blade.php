@@ -305,7 +305,6 @@
         $('.main_question_section .sender_name').html(sender_name);
         $('.main_question_section .subject_ques').html(subject);
         $('.main_question_section .date_section').html(date);
-
         $('.main_question_section .content_ques').html(content);
         $('.header_subject').html(subject);
         $('.relate_header .doc_name_header').html(document_name);
@@ -313,7 +312,18 @@
 
         // get the all reply of the question 
 
-        var token = $('#csrf-token').val(); 
+        
+        getReplies(project_id,question_id);
+
+
+      });
+
+      // get the all reply of the question
+
+
+       function getReplies(project_id,question_id){
+
+          var token = $('#csrf-token').val(); 
 
           $.ajax({
             type : "POST",
@@ -339,7 +349,7 @@
                     var reply_user = get_reply_user[0];
                 }
 
-                  html +="<button class='ques_ans_list action_button'><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+reply_user+"</H4><p class='reply_subject_ques'>"+value.reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><p class='reply_date_section'>"+value.time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+value.reply_content+"</p></div></button>";
+                  html +="<button class='ques_ans_list action_button'><input type='hidden' id='reply_qu_id' value="+value.id+" ><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+reply_user+"</H4><p class='reply_subject_ques'>"+value.reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><div class='question_action_move'><span class='reply_all_ques'><i class='fa fa-reply-all'></i></span> <span class='frwd_ques'><i class='fa fa-share'></i></span></div><div class='remove_question'><i class='fa fa-times-circle'></i></div><p class='reply_date_section'>"+value.time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+value.reply_content+"</p></div></button>";
                       
               });
 
@@ -348,9 +358,7 @@
             }
 
           });  
-
-      });
-
+      }
 
 
       $(document).on('click','.action_button',function(){
@@ -360,7 +368,7 @@
 
       });
 
-
+     
       // reply module
 
       $('.reply_answer').click(function(){
@@ -456,6 +464,44 @@
         });
          
       });
+
+      $(document).on('click','.remove_question',function(){
+
+        var token = $('#csrf-token').val();
+
+        var reply_id = $('#reply_qu_id').val();
+        var project_id  = $('.project_id_qu').val();
+        var question_id = $('.reply_question_id').val();
+
+         $.ajax({
+            type : "POST",
+            url : "{{url('/')}}/reply_delete",
+            data : {
+
+              project_id : project_id,
+              reply_id    : reply_id,     
+              _token      : token,
+
+            },
+
+            success:function(response){
+
+                 if(response == 'delete')
+                 {
+                    getReplies(project_id,question_id);
+                 }
+
+            }
+
+      });
+
+ });
+
+  $(document).on('click','.frwd_ques',function(){
+   
+ 
+
+  });    
 
 </script>
 

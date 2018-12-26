@@ -124,7 +124,8 @@
                                 <p class='subject_ques'></p>
                                 <p class="to"></p>
                              </div>
-                             <div class='question_block_second'>   
+                             <div class='question_block_second'>
+                                <div class='question_action_move'><span class='reply_all_ques'><i class='fa fa-reply-all'></i></span> <span class='frwd_ques'><i class='fa fa-share'></i></span></div><div class='remove_question'><i class='fa fa-times-circle'></i></div>   
 			    		        <p class="date_section"></p>
 			    		    </div>
 			    		</div>
