@@ -6,7 +6,7 @@
   <div class="row document_content_index">
     <div class="user_gruoups_list col-md-6">
      <div class="display_groups">
-        <div class="row">
+        <div class="row group_block">
           
             @if(checkUserType($project_name) == 'Administrator')
         	<div class="btn_upload InviteUsersByUp ">
@@ -396,6 +396,7 @@
 <script type="text/javascript">
 
      getgroups();
+     getAllGroups();
 	// A $( document ).ready() block.
 	$( document ).ready(function() {
          
@@ -427,7 +428,6 @@
 
 	function getgroups() {
 
-
 	var token = $('#csrf-token').val();
     var project_id = $('#project_id').val();
 
@@ -449,6 +449,7 @@
                       
                        var group_id = value.groups.id;
                        var GroupUserRole = value.groups.group_user_type;
+                       var group_name = value.groups.group_name;
 
 					  	html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-value='"+group_id+"'><span class=' toggle_user'>";
                              
@@ -467,7 +468,8 @@
                         html+="</div>";
 
 
-					  	  html1 += " <option value='"+value.id+"' data-value='"+value.group_user_type+"'>"+value.group_name+"</option>";
+					  	 html1 += " <option value='"+group_id+"' data-value='"+GroupUserRole+"'>"+group_name+"</option>";
+
 
 					});
 
@@ -845,15 +847,16 @@
  });
 
 
-$(document).on('click','.create_new_group',function(){
+// $(document).on('click','.create_new_group',function(){
 
+function getAllGroups(){
 	var token = $('#csrf-token').val();
     var project_id = $('#project_id').val();
 
 
 		$.ajax({
 			type:"POST",
-			url:"{{ Url('/') }}/get_allgroups",
+			url:"{{ Url('/') }}/get_group_users",
             data:{
                 _token : token,
                  project_id :project_id, 
@@ -873,10 +876,13 @@ $(document).on('click','.create_new_group',function(){
 					});
                      
                     $('.group_type_collaboration').html(html1);
+
                        
 			}  
 		}); 
-});
+}
+	
+// });
 
 $(document).on('click','.toggle_user',function(){
       
@@ -892,8 +898,7 @@ $(document).on('click','.main-user_list',function(){
 
 $('#hjgh').click(function(){
 
-               	alert('bdsygd');
-                   
+
                       	var formData = new FormData();
                       	var token = $('#csrf-token').val();
 			            formData.append('File', $('#file_input')[0].files[0], 'tesyts.docx');
@@ -906,7 +911,7 @@ $('#hjgh').click(function(){
 								    method: 'POST',
 								    success: function(data) {
 								        console.log(data);
-								    }
+								}
 						});  
                });
 

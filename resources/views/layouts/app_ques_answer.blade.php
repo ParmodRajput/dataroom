@@ -423,7 +423,6 @@
          $.ajax({
             type : "POST",
             url : "{{url('/')}}/reply_send",
-            message: swal("reply send successfully", "", "success"),
             data : {
 
               project_id : project_id,

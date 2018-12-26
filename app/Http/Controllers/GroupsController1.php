@@ -24,14 +24,14 @@ class GroupsController extends Controller
       $project_id = $request->project_id;
       $userId =Auth::user()->id;
 
-    	$group = new Group();
+      $group = new Group();
         $userForGroup = $request->userGroup;
         $setGroupUserType = $request->choose_user_type;
         $collaborationWith = $request->group_type_collaboration;
         $setGroupTime = $request->group_time_limit;
-      	$group->group_name = $request->group_name;
-      	$group->project_id = $project_id;
-      	$group->created_by = $userId;
+        $group->group_name = $request->group_name;
+        $group->project_id = $project_id;
+        $group->created_by = $userId;
         $group->updated_by = $userId; 
         $group->group_for  = $userForGroup;
         $group->group_user_type = $setGroupUserType;
@@ -46,7 +46,7 @@ class GroupsController extends Controller
         $group->access_limit = $access_limit;
         $group->active_date  = $active_date;
         $group->QA_access_limit = $setGroupTime;    
-    	  $group->save();
+        $group->save();
 
         $current_group_id = $group->id;
 
@@ -119,6 +119,7 @@ class GroupsController extends Controller
          {
 
           $encryptedGroupId = Crypt::encryptString($group_id);
+
           $encryptedUserEmail = Crypt::encryptString($userEmail);
           $verifyUrl = url('/project/checkUser/'.$encryptedGroupId.'/'.$encryptedUserEmail);
 
@@ -299,12 +300,23 @@ class GroupsController extends Controller
         return $getGroups;
     }
 
+    public function GroupsUsersGet(Request $request){
+
+        $project_id = $request->project_id;
+
+        $get = Group::where('project_id',$project_id)->get();
+
+        return $get;
+        
+    }
+
 
     public function getAllUserInProject(Request $request)
     {
          $project_id =  $request->project_id;
+         $authEmail  = Auth::user()->email;
 
-         $getUsers = Group_Member::where('project_id',$project_id)->pluck('member_email');
+         $getUsers = Group_Member::where('project_id',$project_id)->whereNotIn( 'member_email', [$authEmail])->pluck('member_email');
 
          return $getUsers;
     }
