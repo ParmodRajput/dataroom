@@ -128,6 +128,18 @@
 		</div>
   
 	</body>
+	 <div class="overlay_body">
+
+          <div class="loader14">
+              <div class="loader-inner">
+                  <div class="box-1"></div>
+                  <div class="box-2"></div>
+                  <div class="box-3"></div>
+                  <div class="box-4"></div>
+              </div>
+              <span class="text">loading</span>
+          </div>
+  </div>
 
 	<script type="text/javascript">
 
@@ -164,6 +176,7 @@
 					        var ctx = canvas.getContext("2d");
 
 					        var img = new Image();
+					        $('.overlay_body').addClass('hidden');
 					        img.onload = function () {
 					            // canvas.width=img.width;
 					            // canvas.height=img.height;
@@ -178,7 +191,6 @@
 		    {
                 $('.button_next_pre').removeClass('hidden');   
                 pdfViewer(docPath,__CURRENT_PAGE);
-
 		    }
 
 		    function pdfViewer (docPath,__CURRENT_PAGE){
@@ -204,6 +216,8 @@
 					    var scale = 1.5;
 					    var viewport = page.getViewport(scale);
 
+					    $('.overlay_body').addClass('hidden');
+
 					    // Prepare canvas using PDF page dimensions
 					    var canvas = document.getElementById('canvas');
 					    var context = canvas.getContext('2d');
@@ -223,7 +237,8 @@
 					}, function (reason) {
 					  // PDF loading error
 					  console.error(reason);
-				});
+				}); 
+
 		    }
 
 
@@ -322,8 +337,11 @@
 
 		                        var data = pdfData;
 		                        var wb = XLSX.read(data,{type:'binary'});
-
+                                
 		                        var htmlstr = XLSX.write(wb,{type:'binary',bookType:'html'});
+		                        
+		                        $('.overlay_body').addClass('hidden');
+
 		                $('#excel_viewer')[0].innerHTML += htmlstr;
                     }      
 
@@ -342,6 +360,7 @@
                  }
 
        });
+
 	</script>
 
 </html>

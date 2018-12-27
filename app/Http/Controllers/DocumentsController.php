@@ -1040,12 +1040,14 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
     $projects_id = $projects_id;
     $extension_copied_directory = explode('.',$copied_directory_name);
     $extension = end($extension_copied_directory);
-    $getThumbpath = explode('/', $copied_directory);
-    $thumbnailName = end($getThumbpath);
-    
-    $replace_name ='thumbnail_img/'.$thumbnailName;
+    if($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' )
+    {
+          $getThumbpath = explode('/', $copied_directory);
+          $thumbnailName = end($getThumbpath);
+          $replace_name ='thumbnail_img/'.$thumbnailName;
+          $thumbnail_img_path = str_replace($thumbnailName,$replace_name,$copied_directory);
 
-    $thumbnail_img_path = str_replace($thumbnailName,$replace_name,$copied_directory);
+    }
 
     if($exists)
     {
@@ -1056,16 +1058,28 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
       $this->copy_status =false;
       $this->checkFileIsExits($this->copied_directory_name,$pasted_directory,
       $copied_directory,$projects_id);
-      $thumbnailPath = $pasted_directory.'/thumbnail_img/'.$this->copied_directory_name;
 
+      if($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' )
+       {
+
+         $thumbnailPath = $pasted_directory.'/thumbnail_img/'.$this->copied_directory_name;
+       }
+ 
     }else{ 
 
       $new_path = $pasted_directory.'/'. $this->copied_directory_name;
       $lastCopied = $this->copied_directory_name; 
+
+      if($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' )
+     {
       $thumbnailPath = $pasted_directory.'/thumbnail_img/'.$lastCopied;
+     }
 
       Storage::copy( $copied_directory, $new_path);
-      Storage::copy( $thumbnail_img_path, $thumbnailPath);
+      if($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' )
+       {
+         Storage::copy( $thumbnail_img_path, $thumbnailPath);
+       }
        
       $getIndex =$this->getIndexOfDocument($projects_id,$pasted_directory);
 
@@ -1088,7 +1102,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                     $document->directory_url = $pasted_directory;
                     $document->document_status = '0';
                     $document->type = $extension;
-                     $document->deleted_at = '0';
+                    $document->deleted_at = '0';
                     $document->restored_at ='0';
                     $document->uploaded_by = $user_id;
                     $document->updated_by  = $user_id;

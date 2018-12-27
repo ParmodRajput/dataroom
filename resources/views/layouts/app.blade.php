@@ -155,6 +155,19 @@
 </script>
 </body>
 
+ <div class="overlay_body hidden">
+
+          <div class="loader14">
+              <div class="loader-inner">
+                  <div class="box-1"></div>
+                  <div class="box-2"></div>
+                  <div class="box-3"></div>
+                  <div class="box-4"></div>
+              </div>
+              <span class="text">loading</span>
+          </div>
+  </div>
+
 <!-- get document script -->
 
 <script>
@@ -524,7 +537,7 @@ $(document).ready(function(){
     //Upload file using ajax
     
     $(document).on('submit','#Allfiles,#AllUploadFiles',function(event){
-         
+
           var document_index = $('.document_indexing_count').val();
           $('.choose_file_upload.overlay').hide();
           event.preventDefault();
@@ -540,6 +553,7 @@ $(document).ready(function(){
           var status = $('#status');
           $("#progress-bar").width('0%');
           var value = $('#file').val();
+
          $.ajax({
               type:"POST",
               url:"{{ Url('/upload_file')}}",
@@ -547,7 +561,6 @@ $(document).ready(function(){
               cache : false,
               processData: false,
               contentType: false,
-
 
          xhr: function(){
          var xhr = new window.XMLHttpRequest();
@@ -557,17 +570,18 @@ $(document).ready(function(){
               $("#progress-bar").width(percentComplete*100 + '%');
               $("#progress-bar").html('<div id="progress-status">' + percentComplete*100 +' %</div>');
              
-           }
+             }
            
-       }, false);
-   
-       return xhr;
+         }, false);
+         
+      return xhr;
     },
 
                 success: function(response){ 
 
                  if(response == 'upload')
                  {  
+                  $('.overlay_body').addClass('hidden');
 
                  swal("file uploaded successfully", "", "success");
 
@@ -2781,7 +2795,13 @@ $(document).on('click','.note1_doc_delete', function(){
 
    });
 
+ $(document).ajaxSend(function(event, request, settings) {
+      $('.overlay_body').removeClass('hidden');
+    });
 
+ $(document).ajaxComplete(function(event, request, settings) {
+      $('.overlay_body').addClass('hidden');
+    }); 
 
 </script>
 
