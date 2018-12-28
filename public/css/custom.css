@@ -1713,7 +1713,7 @@ p.reply_content_ques {
 }
 
 .back_arrow_qa.move_last_folder_qa {
-    font-size: 12px;
+    font-size: 14px;
     padding: 8px;
 }
 .question_containor_fir {
@@ -1724,4 +1724,10 @@ p.reply_content_ques {
 button.in_progress_ques {
     margin-left: 20px;
     font-size: 12px;
+}
+
+button.answere_by_me {
+    margin-left: 20px;
+    font-size: 12px;
+    color: #3F9FE1;
 }

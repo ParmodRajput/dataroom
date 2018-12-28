@@ -24,7 +24,7 @@
                                 <div class="folder_file_structure">
                                     <?php 
                                       echo folder_file_tree($folder_file_tree);    
-                                     ?>
+                                    ?>
                                 </div>
                               </li>
                             </ul>
@@ -61,8 +61,8 @@
 
 						   <div class="upload_table">
 						        <div class="row document_index_buttons"> 
-						    <div class="btn_upload" permission ='1'>
-						    <a  class="btn  document-btn" data-toggle="modal" data-target="#myModal"><i class="fa fa-comment-o"></i>New Question
+						    <div class="ques_create_new" permission ='1'>
+						    <a  class="btn  document-btn" data-toggle="modal" data-target="#genrate_question"><i class="fa fa-comment-o"></i>New Question
 						    </a> 
 						    </div>
 						    <div class="btn_upload hidden" permission ='1'>
@@ -171,4 +171,59 @@
 		</div>	
 	</div>
 </div>
+
+
+
+
+<div id="genrate_question" class="modal fade" role="dialog">
+  <div class="modal-dialog create_question">
+    <input type='hidden'  name='copy_document' id='copy_document_directory'>
+    <!-- Modal content-->
+    <div class="modal-content">
+       <div class="modal-header">
+        <h4 class="modal-title">NEW QUESTION</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      </div>
+      <div class="modal-body">
+        <div class="form">
+          <div id="directory_current">
+            <form action="javascript:void(0)" id="create_question_answer" method="post" >
+             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+             <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
+
+             <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}"/>
+
+             <input type="hidden" name="slug_folder" class="slug_folder" />
+
+             <input type="hidden" name="current_dir" class="current_dir" id="current_directory" 
+             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
+
+             <input type="hidden" name="doc_path" id="doc_path_directory"/>
+
+             To:<div class='ques_ans_docs_group'>        
+              <select class="multipleSelectUsers" multiple name="language"></select>
+             </div>
+             <div class="subject_section">
+                <span class="subject_title">Subject:</span>
+                <input type="text" class="question_subject">
+             </div>
+             <div class="question_content_section">
+              <textarea class="question_content" data-value="0" rows="10" cols="55"></textarea>
+             </div>
+           </form>
+         </div>
+       </div>
+     </div>
+    <div class="modal-footer">
+    	
+      <input type="button" value="Send" name="submit" class="send_question">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+    </div>
+  </div>
+        
+</div>
+</div>
 @endsection
+
+

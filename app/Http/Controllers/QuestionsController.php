@@ -40,23 +40,27 @@ class QuestionsController extends Controller
     	$users_email = $request->users;
     	$time = time();
 
+      $users_email1 = implode(',', $users_email);
+
+                   // store question
+            $Question = new Question();
+
+            $Question->document_id = $document_id;
+            $Question->project_id = $project_id;
+            $Question->subject = $subject;
+            $Question->ques_content = $ques_content;
+            $Question->send_by = $Auth_id;
+            $Question->send_to = $users_email1;
+            $Question->priority = '0';
+            $Question->time = $time;
+            $Question->created_by = $Auth_id;
+            $Question->updated_by = $Auth_id;
+            $Question->save();
+
+
         foreach ($users_email  as $users_email) {
 
-                // store question
-	        	$Question = new Question();
-
-		    	$Question->document_id = $document_id;
-		        $Question->project_id = $project_id;
-		        $Question->subject = $subject;
-		        $Question->ques_content = $ques_content;
-		        $Question->send_by = $Auth_id;
-		        $Question->send_to = $users_email;
-		        $Question->priority = '0';
-		        $Question->time = $time;
-		        $Question->created_by = $Auth_id;
-		        $Question->updated_by = $Auth_id;
-		        $Question->save();
-
+   
 		        // send mail 
 
 		        $data = array(
@@ -172,50 +176,69 @@ class QuestionsController extends Controller
 
       foreach ($getDocument_id as $getDocument_id) {
 
-      	 $document_id = $getDocument_id->id;
+        $document_id = $getDocument_id->id;
 
-      $getQuestion = Question::where('document_id',$document_id)->where('project_id',$project_id)->where('send_to',$auth_email)->get();
 
-       foreach ($getQuestion  as $getQuestion){
+        $Questdata = Question::where('document_id',$document_id)->where('project_id',$project_id)->pluck('send_to')->toArray();
 
-           $document_id = $getQuestion->document_id; 
+        foreach ($Questdata as $Questdata) {
+         
+          $certi_id = explode(",",$Questdata);
 
-           $getDocument_name = Document::where('id',$document_id)->first();
+          if(in_array($auth_email,$certi_id)){
 
-	       //document name
-	       $documet_name = $getDocument_name->document_name;
+               $getQuestion = Question::where('document_id',$document_id)->where('project_id',$project_id)->where('send_to',$Questdata)->get();
+          
 
-           //subject
-	       $subject = $getQuestion->subject;
+          }else{
+             $getQuestion =[];
 
-           //question id
-         $question_id =$getQuestion->id;
 
-	       //question content
-	       $ques_content = $getQuestion->ques_content;
-	       $time = $getQuestion->time;
-	       // date
-	       $date = date('M/d/Y H:i:s', $time );
-	       $sender_id = $getQuestion->send_by;
-	       $getSenderName = User::where('id',$sender_id)->first();
-           // sender name
-	       $sender_name = $getSenderName->name;
-	       // sender email
-           $sender_email = $getSenderName->email;
+          }
 
-           $getSenderGroup = Group_Member::where('member_email',$sender_email)->first(); 
-           $sendergroup_id = $getSenderGroup->group_id;
+          foreach ($getQuestion  as $getQuestion){
 
-           $GetGroupName = group::where('id',$sendergroup_id)->first();
+             $document_id = $getQuestion->document_id; 
 
-           // group_name 
-           $groupName = $GetGroupName->group_name;
+             $getDocument_name = Document::where('id',$document_id)->first();
 
-           $Question_array1 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
+           //document name
+           $documet_name = $getDocument_name->document_name;
 
-           array_push($Question_array,$Question_array1);
+             //subject
+           $subject = $getQuestion->subject;
 
-       }
+             //question id
+           $question_id =$getQuestion->id;
+
+           //question content
+           $ques_content = $getQuestion->ques_content;
+           $time = $getQuestion->time;
+           // date
+           $date = date('M/d/Y H:i:s', $time );
+           $sender_id = $getQuestion->send_by;
+           $getSenderName = User::where('id',$sender_id)->first();
+             // sender name
+           $sender_name = $getSenderName->name;
+           // sender email
+             $sender_email = $getSenderName->email;
+
+             $getSenderGroup = Group_Member::where('member_email',$sender_email)->first(); 
+             $sendergroup_id = $getSenderGroup->group_id;
+
+             $GetGroupName = group::where('id',$sendergroup_id)->first();
+
+             // group_name 
+             $groupName = $GetGroupName->group_name;
+
+             $Question_array1 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
+
+             array_push($Question_array,$Question_array1);
+
+         }
+
+        }
+
 
         $getQuestion1 = Question::where('document_id',$document_id)->where('project_id',$project_id)->where('send_by',$auth_id)->get(); 
 
@@ -291,9 +314,10 @@ class QuestionsController extends Controller
         $project_name = $request->project_name;
         $doc_name = $request->document_name;
 
-        foreach ($users_email as $users_email) {
-        
-            $reply = new QuesReply();
+
+        $users_email1 = implode(',', $users_email);
+
+        $reply = new QuesReply();
 
             $reply->question_id = $question_id;
             $reply->reply_subject = $reply_subject;
@@ -301,10 +325,14 @@ class QuestionsController extends Controller
             $reply->reply_status = '0';
             $reply->project_id = $project_id;
             $reply->reply_by = $authEmail; 
-            $reply->reply_to = $users_email; 
+            $reply->reply_to = $users_email1; 
             $reply->time = $time;
             $reply->save();
             
+
+        foreach ($users_email as $users_email) {
+        
+          
             $data = array(
 
               'name' => "Invite To Prodata room By prodata.com",
@@ -352,6 +380,22 @@ class QuestionsController extends Controller
       QuesReply::where('id',$reply_id)->where('project_id',$project_id)->delete();
 
       return "delete";
+
+     }
+
+     public function deleteQuestions(Request $request){
+
+
+       $project_id = $request->project_id;
+       $question_id = $request->question_id;
+
+       foreach ($question_id as $question_id) {
+
+        Question::where('id', $question_id)->where('project_id',$project_id)->delete();
+         
+       }
+ 
+      return "Delete_ques";
 
      }
 
