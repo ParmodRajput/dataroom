@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
   <!-- end -->
 
    <!-- endinject -->
@@ -40,6 +41,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fastselect/0.7.3/fastselect.standalone.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
  
 </head>
 <body>
@@ -68,6 +70,7 @@
 
   <script src="{{ asset('js/off-canvas.js')}}"></script>
   <script src="{{ asset('js/misc.js')}}"></script>
+  
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="{{ asset('js/dashboard.js')}}"></script>
@@ -227,13 +230,13 @@
 
                                   
 
-                                    html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='0'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='waiting_reply'>Awaiting reply</button></div></div></div>";
+                                    html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='0'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='waiting_reply'>Awaiting reply</button></div></div>";
 
                                    });
 
                                  $.each(response.question_by,function(key,value){
                         
-                                   html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='1'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='in_progress_ques'>In Progress</button></div></div></div>";
+                                   html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='1'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='in_progress_ques'>In Progress</button></div></div>";
 
                                    });
 
@@ -267,7 +270,8 @@
       // //end
 
       $(document).on('click','.question_list_qa',function(){
-          
+
+         $('.delete_items').removeClass('hidden'); 
          $('.reply_editor').addClass('hidden'); 
          $('.reply_answer').removeClass('hidden'); 
          
@@ -451,7 +455,7 @@
               if(response == 'reply_sent')
               {
 
-                html +="<button class='ques_ans_list action_button'><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+auth_name+"</H4><p class='reply_subject_ques'>"+reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><p class='reply_date_section'>"+time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+reply_content+"</p></div></button>";
+                html +="<button class='ques_ans_list action_button'><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+auth_name+"</H4><p class='reply_subject_ques'>"+reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><div class='question_action_move'><span class='reply_all_ques'><i class='fa fa-reply-all'></i></span> <span class='frwd_ques'><i class='fa fa-share'></i></span></div><div class='remove_question'><i class='fa fa-times-circle'></i></div><p class='reply_date_section'>"+time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+reply_content+"</p></div></button>";
                  
               }
 
@@ -473,40 +477,99 @@
         var project_id  = $('.project_id_qu').val();
         var question_id = $('.reply_question_id').val();
 
-         $.ajax({
-            type : "POST",
-            url : "{{url('/')}}/reply_delete",
-            data : {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this question!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                  if (willDelete) {
+                       
+                                $.ajax({
+                                    type : "POST",
+                                    url : "{{url('/')}}/reply_delete",
+                                    data : {
 
-              project_id : project_id,
-              reply_id    : reply_id,     
-              _token      : token,
+                                      project_id : project_id,
+                                      reply_id    : reply_id,     
+                                      _token      : token,
 
-            },
+                                    },
 
-            success:function(response){
+                                    success:function(response){
 
-                 if(response == 'delete')
-                 {
-                    getReplies(project_id,question_id);
-                 }
+                                         if(response == 'delete')
+                                         {
+                                            getReplies(project_id,question_id);
+                                         }
 
-            }
+                                    }
+                               });
+                  } 
+              });
+     });
 
-      });
+    // $(document).on('click','.frwd_ques',function(){
 
- });
 
-  $(document).on('click','.frwd_ques',function(){
-   
- 
+    // });   
 
-  });    
+    $(document).ajaxSend(function(event, request, settings) {
+      $('.overlay_body').removeClass('hidden');
+    });
+
+    $(document).ajaxComplete(function(event, request, settings) {
+      $('.overlay_body').addClass('hidden');
+    }); 
+
+            //left side bar
+
+         $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#dismiss, .overlay').on('click', function () {
+                    $('#sidebar').removeClass('active');
+                    $('.overlay').fadeOut();
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').addClass('active');
+                    $('.overlay').fadeIn();
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+
+            //end    
+
+           $(document).on('click','.new_data_room',function(){
+              $('#dismiss').click();
+           });
+
 
 </script>
 
   <!-- End custom js for this page-->
   @yield('page_specific_script')
+
+</body>
+      <!--  open -->
+ <div class="overlay_body hidden">
+
+          <div class="loader14">
+              <div class="loader-inner">
+                  <div class="box-1"></div>
+                  <div class="box-2"></div>
+                  <div class="box-3"></div>
+                  <div class="box-4"></div>
+              </div>
+              <span class="text">loading</span>
+          </div>
+  </div>
+
+   <!--  close -->
 </html>
   
   

@@ -52,6 +52,18 @@ class GroupsController extends Controller
 
       // add collaboration
 
+
+        if($collaborationWith == 'own_group')
+       {
+                $Collaboration = new Collaboration();
+
+                $Collaboration->group_id = $current_group_id;
+                $Collaboration->project_id = $project_id;
+                $Collaboration->collaboration_group_id = $current_group_id; 
+                $Collaboration->save();
+       }
+
+
        if($collaborationWith == 'all_group')
        {
              $getGroups = Group::where('project_id',$project_id)->pluck('id');
@@ -269,10 +281,12 @@ class GroupsController extends Controller
 
         }elseif($CurrentGroupUser == 'Collaboration_users'){
 
+
           $getGroups = [];
           $getGroupUsers = [];
 
           $getGroupsId = Collaboration::where('project_id',$project_id)->where('collaboration_group_id',$Auth_group_id)->pluck('group_id');
+
 
            foreach ($getGroupsId as $getGroupsId) {
 

@@ -69,7 +69,7 @@
 						    <a class="btn  folder document-btn1" data-toggle="modal" data-target="#genrate_folder">Priority</a>
 						    </div>
 				            <div class="delete_items hidden" permission = "3">
-				             <a class="btn delete_items_documents " ><i class='fas fa-trash-alt'></i></a>           
+				             <a class="btn delete_items_documents " ><i class='fas fa-trash-alt'></i></a>
 				            </div>
 				              </div>
 				                <div class="btn-export">
@@ -165,7 +165,7 @@
 			         <div class="cancle_reply_type">
                         <i class="fas fa-trash-alt"></i>
 			         </div>
-			         <button class='question_reply_qa btn btn-success'>Reply</button>
+			         <button class='question_reply_qa btn btn-success'>Send</button>
                 </div>
 			</div>
 		</div>	

@@ -441,7 +441,6 @@
 
 			success: function (response) { 
              
-
 				   var html = "";
 				   var html1 = "<option value='0'>Select group</option>";
 				
@@ -915,5 +914,38 @@ $('#hjgh').click(function(){
 						});  
                });
 
+ $(document).ajaxSend(function(event, request, settings) {
+      $('.overlay_body').removeClass('hidden');
+    });
+
+$(document).ajaxComplete(function(event, request, settings) {
+      $('.overlay_body').addClass('hidden');
+    }); 
+
+        //left side bar
+
+         $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#dismiss, .overlay').on('click', function () {
+                    $('#sidebar').removeClass('active');
+                    $('.overlay').fadeOut();
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').addClass('active');
+                    $('.overlay').fadeIn();
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+
+            //end   
+
+            $(document).on('click','.new_data_room',function(){
+               $('#dismiss').click();
+            });
+
+ 
 </script>
 @endsection

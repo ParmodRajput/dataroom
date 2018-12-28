@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.addons.css') }}">
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
@@ -38,6 +38,7 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
  
 </head>
 <body>
@@ -71,6 +72,19 @@
   <script src="{{ asset('js/dashboard.js')}}"></script>
   <!-- End custom js for this page-->
   @yield('page_specific_script')
+</body>
+ <div class="overlay_body hidden">
+
+          <div class="loader14">
+              <div class="loader-inner">
+                  <div class="box-1"></div>
+                  <div class="box-2"></div>
+                  <div class="box-3"></div>
+                  <div class="box-4"></div>
+              </div>
+              <span class="text">loading</span>
+          </div>
+  </div>
 </html>
   
   
