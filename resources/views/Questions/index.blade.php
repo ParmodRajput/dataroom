@@ -148,8 +148,8 @@
                 </div>
                 <div class="reply_editor hidden">
                    <div class="reply_center">
-                		<span>To:</span>
-			             <div class='reply_ques_docs_group'> 
+                		<div class='reply_ques_docs_group'> 
+                			 <span clsss='reply_to'>To:</span>
 			                 <select class="multipleSelectUsers" multiple name="language">
 			                 </select>
 			             </div>
@@ -200,7 +200,8 @@
 
              <input type="hidden" name="doc_path" id="doc_path_directory"/>
 
-             To:<div class='ques_ans_docs_group'>        
+             <div class='ques_ans_docs_group'>
+              <span class="to_user">To:</span>       
               <select class="multipleSelectUsers" multiple name="language"></select>
              </div>
              <div class="subject_section">

@@ -680,7 +680,8 @@
 
              <input type="hidden" name="doc_path" id="doc_path_directory"/>
 
-             To:<div class='ques_ans_docs_group'>        
+             <div class='ques_ans_docs_group'>   
+              <span class="to_user">To:</span>     
               <select class="multipleSelect" multiple name="language"></select>
              </div>
              <div class="subject_section">
