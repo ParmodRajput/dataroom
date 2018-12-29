@@ -177,11 +177,15 @@
 
                  });  
 
+                AutoLoadUsersForSelect();
 
+ 
                  $(document).on('click','.document_permission',function(event){
 
                         event.preventDefault();
                         event.stopPropagation(); 
+
+                        $('.delete_items').addClass('hidden');
 
                         $('.reply_section').addClass('hidden');
 
@@ -227,16 +231,17 @@
                               success: function (response) {  
 
                                  $.each(response.question_to,function(key,value){
+ 
 
-                                  
 
-                                    html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='0'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='waiting_reply'>Awaiting reply</button></div></div>";
+                                    html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='0'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' name='ques_check' class='question_check' data-ques_id='"+value.question_id+"'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><div class='note_ques_status'><button class='waiting_reply'>Awaiting reply</button></div></div></div>";
 
                                    });
 
                                  $.each(response.question_by,function(key,value){
                         
-                                   html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='1'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' class='question_check'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><button class='in_progress_ques'>In Progress</button></div></div>";
+                                   html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='1'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' name='ques_check' class='question_check' data-ques_id='"+value.question_id+"'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><div class='note_ques_status'><button class='in_progress_ques'>In Progress</button></div></div></div>";
+
 
                                    });
 
@@ -271,7 +276,8 @@
 
       $(document).on('click','.question_list_qa',function(){
 
-         $('.delete_items').removeClass('hidden'); 
+
+         $('.delete_items').removeClass('hidden');
          $('.reply_editor').addClass('hidden'); 
          $('.reply_answer').removeClass('hidden'); 
          
@@ -347,13 +353,17 @@
                 var reply_user = value.reply_by;
                 var get_reply_user = reply_user.split("@");
                 var length = get_reply_user.length;
+                var get_reply_to = value.reply_to;
+
+                var reply_to = get_reply_to.split(',');
+
 
                 if(length !== 1);
                 {
                     var reply_user = get_reply_user[0];
                 }
 
-                  html +="<button class='ques_ans_list action_button'><input type='hidden' id='reply_qu_id' value="+value.id+" ><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+reply_user+"</H4><p class='reply_subject_ques'>"+value.reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><div class='question_action_move'><span class='reply_all_ques'><i class='fa fa-reply-all'></i></span> <span class='frwd_ques'><i class='fa fa-share'></i></span></div><div class='remove_question'><i class='fa fa-times-circle'></i></div><p class='reply_date_section'>"+value.time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+value.reply_content+"</p></div></button>";
+                  html +="<button class='ques_ans_list action_button'><input type='hidden' id='reply_qu_id' value="+value.id+" ><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+reply_user+"</H4><p class='reply_subject_ques'>"+value.reply_subject+"</p><p class='reply_to'>To: "+get_reply_to+"</p></div><div class='question_block_second'><div class='question_action_move'><span class='reply_all_ques'><i class='fa fa-reply-all'></i></span> <span class='frwd_ques' data-for_subject="+value.reply_subject+" data-for_content="+value.reply_content+"><i class='fa fa-share'></i></span></div><div class='remove_question'><i class='fa fa-times-circle'></i></div><p class='reply_date_section'>"+value.time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+value.reply_content+"</p></div></button>";
                       
               });
 
@@ -380,31 +390,6 @@
           $(this).addClass('hidden');
           $('.reply_editor').removeClass('hidden');
 
-          var project_id  = $('.project_id_qu').val();
-          var token = $('#csrf-token').val(); 
-
-          $.ajax({
-            type : "POST",
-            url : "{{url('/')}}/project_users",
-            data : {
-              project_id : project_id,
-              _token      : token,
-            },
-            success:function(response){
-
-              var html ='';
-
-               $.each(response,function(key, value){
-
-                 html +=" <option value="+value+">"+value+"</option>";
-                      
-               });
-
-               $('.multipleSelectUsers').html(html);
-           
-            }
-
-           });
 
       });
 
@@ -423,6 +408,7 @@
         var token = $('#csrf-token').val();
         var project_id  = $('.project_id_qu').val();
         var send_to = $('.multipleSelectUsers').val();
+
         var reply_subject = $('.reply_subject').val(); 
         var reply_content  = $('.reply_question_content').val();
         var question_id =  $('.reply_question_id').val();
@@ -450,16 +436,20 @@
 
             success:function(response){
 
-              var html = '';
+              
+              var html1 = '<button class="answere_by_me">Answered by Me</button>';
 
               if(response == 'reply_sent')
               {
 
-                html +="<button class='ques_ans_list action_button'><div class='question_block_up'><div class='question_block_first'><H4 class='reply_sender_name'>"+auth_name+"</H4><p class='reply_subject_ques'>"+reply_subject+"</p><p class='reply_to'></p></div><div class='question_block_second'><div class='question_action_move'><span class='reply_all_ques'><i class='fa fa-reply-all'></i></span> <span class='frwd_ques'><i class='fa fa-share'></i></span></div><div class='remove_question'><i class='fa fa-times-circle'></i></div><p class='reply_date_section'>"+time+"</p></div></div><div class='question_block_bottom'><p class='reply_content_ques'>"+reply_content+"</p></div></button>";
+
+                 getReplies(project_id,question_id);
+
                  
               }
-
-              $('.replied_container').append(html);
+              
+              $('.right_header').html(html1);
+              $('.note_ques_status').html(html1);
               $('.reply_subject').val('');
               $('.reply_question_content').val('');
 
@@ -516,6 +506,7 @@
 
     // });   
 
+
     $(document).ajaxSend(function(event, request, settings) {
       $('.overlay_body').removeClass('hidden');
     });
@@ -540,13 +531,194 @@
                     $('.overlay').fadeIn();
                     $('.collapse.in').toggleClass('in');
                     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-            });
+                });
 
             //end    
 
            $(document).on('click','.new_data_room',function(){
               $('#dismiss').click();
            });
+           
+
+          $(document).on('click','.check-box-input-main',function(){
+
+             if ($(this).prop('checked')==true){ 
+
+               $('.indexing_qu input:checkbox').prop('checked', true);
+               $('.delete_items').removeClass('hidden');
+
+            }else{
+              
+               $('.indexing_qu input:checkbox').prop('checked', false);
+               $('.delete_items').addClass('hidden');
+            }
+
+           });
+
+
+          //delete question
+ 
+          $(document).on('click','.delete_items',function(){
+
+                var token = $('#csrf-token').val();
+                var project_id  = $('.project_id_qu').val();
+
+                var deleteQues = [];
+
+                $.each($("input[name='ques_check']:checked"), function(e)
+                {        
+   
+                      deleteQues.push($(this).data('ques_id')); 
+
+                });
+
+
+              swal({
+                  title: "Are you sure?",
+                  text: "Once deleted, you will not be able to recover this question!",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+              })
+              .then((willDelete) => {
+                  if (willDelete) {
+                        $.ajax({
+                            type:"POST",
+                            url:"{{ Url('/') }}/delete_question",
+                            data:{
+                              _token : token,
+                               question_id: deleteQues,
+                               project_id : project_id
+                            },  
+
+                            // multiple data sent using ajax//
+                            success: function (response) {
+                               
+                              if(response =='Delete_ques')
+                              {
+                                var dir = $('.current_dir_qa').val();
+
+                                var token =$('#csrf-token').val(); 
+
+                                ques_display(token,dir);
+
+                                $('.delete_items').addClass('hidden');
+
+                              }
+
+                             }
+                     });
+                  } 
+              });
+
+          });
+
+
+   $(document).on('click','.frwd_ques',function(e){
+   
+      $('.reply_editor').removeClass('hidden');
+      $('.reply_answer').addClass('hidden');
+
+      var content = $(this).data('for_content');
+      var subject = $(this).data('for_subject');
+
+      $('.reply_subject').val(subject);
+      $('.reply_question_content').val(content);
+
+       e.preventstop();
+      
+   });
+
+
+   function AutoLoadUsersForSelect(){
+
+    var project_id  = $('.project_id_qu').val();
+    var token = $('#csrf-token').val(); 
+
+              $.ajax({
+            type : "POST",
+            url : "{{url('/')}}/project_users",
+            data : {
+              project_id : project_id,
+              _token      : token,
+            },
+            success:function(response){
+
+              var html ='';
+
+               $.each(response,function(key, value){
+
+                 html +=" <option value="+value+">"+value+"</option>";
+                      
+               });
+
+               $('.multipleSelectUsers').html(html);
+           
+            }
+
+           });
+   }
+
+
+    
+     $(document).on('click','.reply_all_ques',function(e){
+   
+      $('.reply_editor').removeClass('hidden');
+      $('.reply_answer').addClass('hidden');
+
+
+      $('.reply_subject').val('');
+      $('.reply_question_content').val('');
+
+       e.preventstop();
+      
+   });
+
+
+  $(document).on('click','.send_question',function(){
+     $('#genrate_question').modal('hide');
+     // var directory_url  =  $('.directory_location #current_directory').val(); 
+
+     // var doc_path =  $('#doc_path_directory').data('value');
+     
+     // var project_id  = $('.directory_location #project_id_doc').val();
+
+     // var token = $('#csrf-token').val();  
+     // var users = $('.multipleSelect').val();
+
+     // var subject = $('.question_subject').val();
+     // var ques_content  = $('.question_content').val();
+     // var project_name  = $('.project_name').val();
+
+     // $.ajax({
+
+     //    type : "POST",
+     //    url : "{{url('/')}}/send_question",
+     //    message: swal("send successfully"," ","success"),
+     //    data : {
+     //      _token       : token,
+     //      doc_path     : doc_path,
+     //      project_id   : project_id,
+     //      users        : users,
+     //      subject      : subject,
+     //      ques_content : ques_content,
+     //      project_name : project_name,
+
+     //    },
+
+     //  success:function(response){
+        
+     //      if(response == 'send_question'){
+
+     //         data_display(token,directory_url);
+     //         $('#create_question_answer')[0].reset();
+
+     //      }
+     //    }
+
+     //   }); 
+
+   });
 
 
 </script>

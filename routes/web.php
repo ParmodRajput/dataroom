@@ -138,6 +138,9 @@ Route::get('project/{project_id}/question','QuestionsController@getQuestions')->
 
 Route::post('/show_questions','QuestionsController@getAllQuestions');
 
+//delete question
+Route::post('/delete_question','QuestionsController@deleteQuestions');
+
  // reply route
 
  Route::post('/reply_send','QuestionsController@sendReply');

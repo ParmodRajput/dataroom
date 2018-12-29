@@ -1916,6 +1916,7 @@ $(document).on('click','.check-box-input-main',function(){
 
                                     swal(response+" deleted successfully", "", "success");
                                 } 
+                              
                                data_display(token,directory_url);
                                $('input:checkbox').prop('checked', false);
                              }

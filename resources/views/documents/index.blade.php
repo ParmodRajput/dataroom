@@ -673,15 +673,10 @@
         <div class="form">
           <div id="directory_current">
             <form action="javascript:void(0)" id="create_question_answer" method="post" >
+              
              <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-             <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
-
-             <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}"/>
 
              <input type="hidden" name="slug_folder" class="slug_folder" />
-
-             <input type="hidden" name="current_dir" class="current_dir" id="current_directory" 
-             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
 
              <input type="hidden" name="doc_path" id="doc_path_directory"/>
 
