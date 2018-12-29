@@ -31,7 +31,7 @@ class QuestionsController extends Controller
     	$doc_path = $request->doc_path;
     	$get_document_id = Document::where('path',$doc_path)->first();
     	$doc_name= $get_document_id->document_name;
-        $Auth_id = Auth::user()->id;
+      $Auth_id = Auth::user()->id;
     	$document_id = $get_document_id->id; 
     	$project = $request->project_name; 
     	$project_id = $request->project_id;
@@ -57,6 +57,9 @@ class QuestionsController extends Controller
             $Question->updated_by = $Auth_id;
             $Question->save();
 
+            // for redirect to the questions 
+ 
+            $QuestionRedirecturl = url('/')."/project/".$project_id."/question";
 
         foreach ($users_email  as $users_email) {
 
@@ -70,6 +73,7 @@ class QuestionsController extends Controller
 	            'project'=> $project,
 	            'subject'=>$subject,
 	            'document_name'=>$doc_name,
+              'QuestionRedirecturl' => $QuestionRedirecturl,
 
 	            );
 
@@ -314,6 +318,8 @@ class QuestionsController extends Controller
         $project_name = $request->project_name;
         $doc_name = $request->document_name;
 
+        $QuestionRedirecturl = url('/')."/project/".$project_id."/question";
+
 
         $users_email1 = implode(',', $users_email);
 
@@ -341,6 +347,7 @@ class QuestionsController extends Controller
               'project'=> $project_name,
               'subject'=>$reply_subject,
               'document_name'=>$doc_name,
+              'QuestionRedirecturl' => $QuestionRedirecturl,
 
               );
 

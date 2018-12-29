@@ -133,6 +133,36 @@ class ProjectsController extends Controller
 	}
 
 
+
+   public function getAuthProjectsIn(Request $request){
+    //$projects = DB::table('projects')->select('projects.id','projects.company','projects.project_name');
+      $user_id = Auth::user()->id;
+      $authEmail = Auth::user()->email;
+
+        $group = Group_Member::where('member_email',$authEmail)->pluck('group_id');
+        $groupProject = Group::find($group);
+        $groupProjectId=array();
+
+      foreach ($groupProject as  $group_id) 
+      {
+               
+          $getGroupProject   =  $group_id->project_id;
+          array_push($groupProjectId, $getGroupProject);
+
+      }
+
+      //  $projects1 = DB::table('projects')->get()->whereIn('id', $groupProjectId);
+      //  print_r($projects1);
+      //  die();
+
+      // $projects = DB::table('projects')->get()->where('user_id', $user_id);
+
+      $projects = DB::table('projects')->whereIn('id', $groupProjectId)->orWhere('user_id', $user_id)->get();
+
+      return $projects;
+  }
+
+
   public function deleteProject($id)
   {
    

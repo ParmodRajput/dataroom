@@ -302,9 +302,8 @@
           </div>
      </div>
   </div>
+  <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}" />
 </div>
-
-@endsection
 
 <!-- Create new Folder Model-->
 <div id="genrate_folder" class="modal fade" role="dialog">
@@ -322,7 +321,6 @@
           <div id="directory_current">
             <form action="javascript:void(0)" id="folder_create" method="post" >
              <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-             <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}" />
              <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
 
              <input type="hidden" value="" class="document_indexing_count">
@@ -366,15 +364,14 @@
       <div class="modal-body">
 
         <div class="form">
-        	<div class="directory_location">
+          <div class="directory_location">
 
-        	<form action="upload_file" method="post"  id ="Allfiles"enctype="multipart/form-data"  files ="true" >
-        		<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-        	    <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}" />
-        	     <input type="hidden" name="projects_id" class="projects_id" id="project_id_doc" value="{{$project_id}}" />
-        	    <input type="hidden" name="current_dir" class="current_dir" id="current_directory" value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
+          <form action="upload_file" method="post"  id ="Allfiles"enctype="multipart/form-data"  files ="true" >
+            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />  
+               <input type="hidden" name="projects_id" class="projects_id" id="project_id_doc" value="{{$project_id}}" />
+              <input type="hidden" name="current_dir" class="current_dir" id="current_directory" value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
 
-        	    <div class="choose_file_upload">
+              <div class="choose_file_upload">
                 <div class="choose_upload_document">
               <input type="file" name="file[]" id="file" multiple required />
               <input type="submit" value="Upload" name="upload" class="btn btn-success hidden" id="submit_create_post">
@@ -660,6 +657,8 @@
 
 <!-- End -->
 
+<!-- Question modal -->
+
 <div id="genrate_question" class="modal fade" role="dialog">
   <div class="modal-dialog create_question">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
@@ -703,3 +702,7 @@
         
 </div>
 </div>
+
+<!-- End -->
+
+@endsection

@@ -399,6 +399,9 @@
      getAllGroups();
 	// A $( document ).ready() block.
 	$( document ).ready(function() {
+
+
+		getAuthAllProjects();
          
         // Accordion
         var acc = document.getElementsByClassName("accordion");
@@ -844,6 +847,33 @@
        });
     
  });
+
+    function getAuthAllProjects(){
+
+  var token = $('#csrf-token').val();  
+
+       $.ajax({
+        type : "POST",
+        url : "{{url('/')}}/check/projects",
+        data : {     
+          _token      : token,
+        },
+        success:function(response){
+
+          var html ='<li class="btn-block new_data_room" data-toggle="modal" data-target="#create_project"><span class="new_room"><i class="fas fa-plus"></i></span> Create New Project<i class=""></i> </li>';
+
+           $.each(response,function(key, value){
+
+             html +="<div class='btn-block new_data_room'><span><i class='fas fa-circle'></i></span><a href='{{url('/')}}/project/"+value.id+"/documents'>"+value.project_name+"</a></div>";
+                  
+           });
+
+         $('.list-unstyled').html(html);
+
+        }
+      });
+
+ }
 
 
 // $(document).on('click','.create_new_group',function(){

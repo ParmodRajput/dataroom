@@ -51,12 +51,12 @@ class GroupsController extends Controller
         $current_group_id = $group->id;
 
       // add collaboration
-
+        
+        
 
         if($collaborationWith == 'own_group')
        {
                 $Collaboration = new Collaboration();
-
                 $Collaboration->group_id = $current_group_id;
                 $Collaboration->project_id = $project_id;
                 $Collaboration->collaboration_group_id = $current_group_id; 
@@ -66,6 +66,7 @@ class GroupsController extends Controller
 
        if($collaborationWith == 'all_group')
        {
+
              $getGroups = Group::where('project_id',$project_id)->pluck('id');
              
              foreach ($getGroups as $Group_id) {

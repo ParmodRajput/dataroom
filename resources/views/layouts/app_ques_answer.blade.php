@@ -158,6 +158,8 @@
 
     $(document).ready(function(){
 
+                  getAuthAllProjects();
+
                   //fast select for select users
 
                   $('.multipleSelectUsers').fastselect();
@@ -190,6 +192,8 @@
                         $('.reply_section').addClass('hidden');
 
                         var directory_url = $(this).data("value");
+
+                        $('.related_to_doc').val(directory_url);
 
                         var current_directory = $('.current_dir_qa').val(directory_url);
 
@@ -493,6 +497,8 @@
                                          if(response == 'delete')
                                          {
                                             getReplies(project_id,question_id);
+                                            $('.check-box-input-main input:checkbox').prop('checked', false);
+
                                          }
 
                                     }
@@ -676,49 +682,76 @@
 
 
   $(document).on('click','.send_question',function(){
+
      $('#genrate_question').modal('hide');
-     // var directory_url  =  $('.directory_location #current_directory').val(); 
 
-     // var doc_path =  $('#doc_path_directory').data('value');
-     
-     // var project_id  = $('.directory_location #project_id_doc').val();
+     var doc_path =  $('.related_to_doc').val();
+     var project_id  = $('.project_id_qu').val();
+     var token = $('#csrf-token').val(); 
+     var users = $('.ques_ans_docs_group .multipleSelectUsers').val();
+     var subject = $('.question_subject').val();
+     var ques_content  = $('.question_content').val();
+     var project_name  = $('.project_name_in').val();
+     var directory_url = $('.current_dir_qa').val();
 
-     // var token = $('#csrf-token').val();  
-     // var users = $('.multipleSelect').val();
+     $.ajax({
 
-     // var subject = $('.question_subject').val();
-     // var ques_content  = $('.question_content').val();
-     // var project_name  = $('.project_name').val();
+        type : "POST",
+        url : "{{url('/')}}/send_question",
+        data : {
+          _token       : token,
+          doc_path     : doc_path,
+          project_id   : project_id,
+          users        : users,
+          subject      : subject,
+          ques_content : ques_content,
+          project_name : project_name,
 
-     // $.ajax({
+        },
 
-     //    type : "POST",
-     //    url : "{{url('/')}}/send_question",
-     //    message: swal("send successfully"," ","success"),
-     //    data : {
-     //      _token       : token,
-     //      doc_path     : doc_path,
-     //      project_id   : project_id,
-     //      users        : users,
-     //      subject      : subject,
-     //      ques_content : ques_content,
-     //      project_name : project_name,
-
-     //    },
-
-     //  success:function(response){
+      success:function(response){
         
-     //      if(response == 'send_question'){
+          if(response == 'send_question'){
 
-     //         data_display(token,directory_url);
-     //         $('#create_question_answer')[0].reset();
+             ques_display(token,directory_url);
+             $('.question_subject').val('');
+             $('.question_content').val('');
 
-     //      }
-     //    }
+          }
+        }
 
-     //   }); 
+       }); 
 
    });
+
+
+  function getAuthAllProjects(){
+
+  var token = $('#csrf-token').val();  
+
+       $.ajax({
+        type : "POST",
+        url : "{{url('/')}}/check/projects",
+        data : {     
+          _token      : token,
+        },
+        success:function(response){
+
+          var html ='<li class="btn-block new_data_room" data-toggle="modal" data-target="#create_project"><span class="new_room"><i class="fas fa-plus"></i></span> Create New Project<i class=""></i> </li>';
+
+           $.each(response,function(key, value){
+
+             html +="<div class='btn-block new_data_room'><span><i class='fas fa-circle'></i></span><a href='{{url('/')}}/project/"+value.id+"/documents'>"+value.project_name+"</a></div>";
+                  
+           });
+
+         $('.list-unstyled').html(html);
+
+        }
+      });
+
+ }
+
 
 
 </script>

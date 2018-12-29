@@ -80,6 +80,9 @@ Route::post('/create_project', 'ProjectsController@store');
 Route::post('create_folder/new_folder', 'DocumentsController@createFolder'); 
 //user project
 Route::get('projects', 'ProjectsController@getUserProjects');
+
+//auth project in
+Route::post('/check/projects', 'ProjectsController@getAuthProjectsIn');
 //upload file
 Route::post('upload_file', 'DocumentsController@uploadFile');
 //show document

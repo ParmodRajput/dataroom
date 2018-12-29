@@ -173,6 +173,9 @@
 <script>
 $(document).ready(function(){
 
+        getUserForSelectQues();
+        getAuthAllProjects();
+
 
         //left side bar
 
@@ -201,7 +204,7 @@ $(document).ready(function(){
         check_status = 1;
         response_status = '';
         // Document details
-         var GetFolderName = $('.project_name').val();
+         var GetFolderName = $('.content-wrapper .project_name').val();
          var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetFolderName+"";
          $('.checked_doc_details').html(showDocWithDoc); 
 
@@ -618,6 +621,7 @@ $(document).ready(function(){
                           var permission     = value.permission;
                           var fav            = value.fav;
                           var note           = value.note;
+                          var ques           = value.ques;
 
                           
                           var index         = value.doc_index;
@@ -666,7 +670,15 @@ $(document).ready(function(){
                               }
                                
 
-                               html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+                              if(ques == ''){
+
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+
+                                           }else{
+
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans 'data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+
+                                           }
 
                                if(permission == ''){
 
@@ -727,6 +739,7 @@ $(document).ready(function(){
                       var fav           = value.fav;
                       var note           = value.note;
                       var file_id        = value.doc_id;
+                      var ques           = value.ques;
 
 
                         if(document_index == '')
@@ -797,7 +810,15 @@ $(document).ready(function(){
                                              html+="<div class='notes_docs' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-thumb-tack'></i></span></div>";
                                           }
                                         
-                                        html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-value='"+path+"'><span><i class='fa fa-comment-o'></i></span></div>";
+                                        if(ques == ''){
+
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0'  data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+
+                                           }else{
+
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+
+                                           }
 
                                        if(permission == ''){
 
@@ -1044,6 +1065,7 @@ $(document).ready(function(){
                           var permission     = value.permission;
                           var fav            = value.fav;
                           var note           = value.note;
+                          var ques           = value.ques;
 
                           
                           var index         = value.doc_index;
@@ -1059,8 +1081,7 @@ $(document).ready(function(){
 
                              var document_name  = element1;
                           }
-                          
-                          
+
                           if(document_index == '')
                           {
                             DocumentIndex = index;
@@ -1091,8 +1112,15 @@ $(document).ready(function(){
                                  html+="<div class='notes_docs' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-thumb-tack'></i></span></div>";
                               }
                                
+                            if(ques == ''){
 
-                               html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+                               html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+
+                             }else{
+
+                                html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+
+                             }
 
                                if(permission == ''){
 
@@ -1155,6 +1183,7 @@ $(document).ready(function(){
                       var fav           = value.fav;
                       var note           = value.note;
                       var file_id        = value.doc_id;
+                      var ques           = value.ques;
 
 
                         if(document_index == '')
@@ -1224,7 +1253,15 @@ $(document).ready(function(){
                                              html+="<div class='notes_docs' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-thumb-tack'></i></span></div>";
                                           }
                                         
-                                        html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-value='"+path+"'><span><i class='fa fa-comment-o'></i></span></div>";
+                                        if(ques == ''){
+
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+
+                                           }else{
+
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+
+                                           }
 
                                        if(permission == ''){
 
@@ -2700,37 +2737,23 @@ $(document).on('click','.note1_doc_delete', function(){
 
    $(document).on('click','.ques_ans_docs',function(){
 
-    var project_id  = $('.directory_location #project_id_doc').val();
-     var token = $('#csrf-token').val();  
-
-       $.ajax({
-        type : "POST",
-        url : "{{url('/')}}/project_users",
-        data : {
-          project_id : project_id,
-          _token      : token,
-        },
-        success:function(response){
-
-          var html ='';
-
-           $.each(response,function(key, value){
-
-             
-             html +=" <option value="+value+">"+value+"</option>";
-                  
-           });
-
-           $('.multipleSelect').html(html);
-       
-        }
-
-       });
-
        $('input:checkbox').prop('checked', false);
        $(this).parent().prev().find('.check-box-input').trigger( "click" );
        var data_value = $(this).data('value');
-       $('#genrate_question').modal();
+       var data_ques = $(this).data('ques');
+       var project_id  = $('.directory_location #project_id_doc').val();
+
+       if(data_ques == 1)
+       {
+           window.open("{{ Url('/') }}/project/"+project_id+"/question",'_blank');
+
+       }else{
+
+         $('#genrate_question').modal();
+
+       }
+
+       
        $('#doc_path_directory').data('value',data_value);
 
    }); 
@@ -2804,8 +2827,66 @@ $(document).on('click','.note1_doc_delete', function(){
       $('.overlay_body').addClass('hidden');
     }); 
 
+
+ function getUserForSelectQues(){
+
+     var project_id  = $('.directory_location #project_id_doc').val();
+     var token = $('#csrf-token').val();  
+
+       $.ajax({
+        type : "POST",
+        url : "{{url('/')}}/project_users",
+        data : {
+          project_id : project_id,
+          _token      : token,
+        },
+        success:function(response){
+
+          var html ='';
+
+           $.each(response,function(key, value){
+
+             
+             html +=" <option value="+value+">"+value+"</option>";
+                  
+           });
+
+           $('.multipleSelect').html(html);
+       
+        }
+
+       });
+ }
+
+
+ function getAuthAllProjects(){
+
+  var token = $('#csrf-token').val();  
+
+       $.ajax({
+        type : "POST",
+        url : "{{url('/')}}/check/projects",
+        data : {     
+          _token      : token,
+        },
+        success:function(response){
+
+          var html ='<li class="btn-block new_data_room" data-toggle="modal" data-target="#create_project"><span class="new_room"><i class="fas fa-plus"></i></span> Create New Project<i class=""></i> </li>';
+
+           $.each(response,function(key, value){
+
+             html +="<div class='btn-block new_data_room'><span><i class='fas fa-circle'></i></span><a href='{{url('/')}}/project/"+value.id+"/documents'>"+value.project_name+"</a></div>";
+                  
+           });
+
+         $('.list-unstyled').html(html);
+
+        }
+      });
+
+ }
+
 </script>
 
 </html>
-  
   
