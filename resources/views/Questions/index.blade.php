@@ -3,6 +3,16 @@
 <div class="padding_top_users"></div>
 <div class="content-wrapper">
 
+	 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+     <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
+
+     <input type="hidden" name="projects" class="project_name_in"  value="{{$project_name}}"/>
+
+     <input type="hidden" name="slug_folder" class="slug_folder" />
+
+     <input type="hidden" name="current_dir" class="current_dir" id="current_directory" value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
+     
+
 	<div class="row">
 		<div class="col-md-12">
 			<input type="hidden" class='current_dir_qa'>
@@ -173,8 +183,6 @@
 </div>
 
 
-
-
 <div id="genrate_question" class="modal fade" role="dialog">
   <div class="modal-dialog create_question">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
@@ -188,17 +196,10 @@
         <div class="form">
           <div id="directory_current">
             <form action="javascript:void(0)" id="create_question_answer" method="post" >
-             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-             <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
-
-             <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}"/>
-
-             <input type="hidden" name="slug_folder" class="slug_folder" />
-
-             <input type="hidden" name="current_dir" class="current_dir" id="current_directory" 
-             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
 
              <input type="hidden" name="doc_path" id="doc_path_directory"/>
+
+             <input type='hidden' class='related_to_doc'>
 
              <div class='ques_ans_docs_group'>
               <span class="to_user">To:</span>       

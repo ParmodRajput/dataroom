@@ -35,7 +35,7 @@
    <p>Subject: {{$subject}}</p>
    <p>Related to: {{$document_name}}</p>
 
-  <a style="float:left; padding:10px 15px; margin:20px 0 0 0; background:#b56b7a; border:0px; color:#fff; text-decoration:none;" href="">Reply Question</a>
+  <a style="float:left; padding:10px 15px; margin:20px 0 0 0; background:#b56b7a; border:0px; color:#fff; text-decoration:none;" href="{{$QuestionRedirecturl}}">Reply Question</a>
 
 </p>
 
