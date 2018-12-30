@@ -617,7 +617,7 @@ span.index-and-name {
 
 .check-box.select_check.user_listing {
     float: left;
-    width: 40%;
+    width: 100%;
     padding:10px 0px 0 10px;
 }
 
@@ -1851,4 +1851,66 @@ input.send_question {
    padding-top: 0px;
 }*/
 
+.check_input {
+   float: left;
+}
+
+.question_containor_fir {
+   float: left;
+   width: 55%;
+   padding: 0 10px;
+}
+
+.question_containor_sec {
+   float: right;
+}
+
+span.date {
+   font-size: 12px;
+}
+
+button.answere_by_me {
+   margin-left: 20px;
+   font-size: 12px;
+   background: #333;
+   border: 0px;
+   padding: 5px;
+   color: #fff;
+   margin-top: 5px;
+}
+
+.question_list_qa {
+   background: #FAFAFA;
+   padding: 10px;
+   margin-top: 10px;
+   float: left;
+   width: 100%;
+}
+.question_block_first {
+   float: left;
+   width: 50%;
+}
+
+.question_block_second {
+   float: right;
+}
+
+p.date_section {
+   font-size: 12px;
+}
+
+.question_block_bottom {
+   float: left;
+   width: 100%;
+}
+
+.question_block_bottom p {
+   margin: 0px;
+   padding: 0px;
+}
+
+p.subject_ques {
+   margin: 0px;
+   padding: 0px;
+}
 

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Project;
 use App\Collaboration;
 use App\Group_Member;
+use App\Permission;
+use App\Document;
 use Mail;
 use Session;
 use Illuminate\Support\Facades\DB;
@@ -267,7 +269,20 @@ class GroupsController extends Controller
 
             $getGroupsInfo = Group::where('id',$getGroupsId)->first();
 
-              $getGroupsInfo1 = ['id'=>$getGroupsInfo->id,'group_user_type'=>$getGroupsInfo->group_user_type,'group_name'=>$getGroupsInfo->group_name];
+            $group_permission = Permission::where('group_id',$getGroupsId)->where('project_id',$project_id)->pluck('permission_id');
+
+            $count = count($group_permission);
+
+            if($count == '0')
+            {
+              $group_permission = '0';
+
+            }else{
+
+               $group_permission = '1';
+            }
+
+              $getGroupsInfo1 = ['id'=>$getGroupsInfo->id,'permission'=>$group_permission,'group_user_type'=>$getGroupsInfo->group_user_type,'group_name'=>$getGroupsInfo->group_name];
                
                              // get groups users
               $getGroupUser = Group_Member::where('group_id',$getGroupsId)->pluck('member_email'); 
@@ -293,8 +308,23 @@ class GroupsController extends Controller
               // get groups  
               $getGroupsInfo = Group::where('id',$getGroupsId)->first();
 
-              $getGroupsInfo1 = ['id'=>$getGroupsInfo->id,'group_user_type'=>$getGroupsInfo->group_user_type,'group_name'=>$getGroupsInfo->group_name];
-               
+              $group_permission = Permission::where('group_id',$getGroupsId)->where('project_id',$project_id)->pluck('permission_id');
+
+              $count = count($group_permission);
+
+              if($count == '0')
+              {
+                $group_permission = '0';
+
+              }else{
+
+                 $group_permission = '1';
+              }
+
+
+              $getGroupsInfo1 = ['id'=>$getGroupsInfo->id,'permission'=>$group_permission,'group_user_type'=>$getGroupsInfo->group_user_type,'group_name'=>$getGroupsInfo->group_name];
+
+
                              // get groups users
               $getGroupUser = Group_Member::where('group_id',$getGroupsId)->pluck('member_email'); 
 
@@ -333,6 +363,157 @@ class GroupsController extends Controller
          $getUsers = Group_Member::where('project_id',$project_id)->whereNotIn( 'member_email', [$authEmail])->pluck('member_email');
 
          return $getUsers;
+    }
+
+
+     public function get_FoldersAndFiles($project_path)
+
+             {
+             
+              $return = array();
+
+              $project_folders =  DB::table('documents')->select('path')->where('directory_url', '=', $project_path)->get()->toArray();
+
+              if ($project_folders) {
+
+                  foreach ($project_folders as $folder) {
+
+                      $folder_permission = $this->getPermission($folder->path);
+
+                      $folder_path_permission = $folder->path.'@?#'.$folder_permission;
+
+                      $return[$folder_path_permission] =  $this->get_FoldersAndFiles($folder->path);
+
+                  }
+              }
+              return $return;
+            }
+
+
+ 
+// Get the All document in folder of the document//
+
+public function getPermissionDocument($project_id)
+
+{
+
+  $project_id = $project_id;
+  $project = Project::where('id', $project_id)->first();
+  $folder_tree = array();
+  $project_name = $project->project_slug;
+  $projectCreaterId = $project->user_id; 
+
+  // get groups of the project
+
+  $groups = $this-> getGroupsByPermission($project_id);
+
+  // Auth checked
+  $authEmail = Auth::user()->email;
+  $authId    = Auth::user()->id;
+  $getProjectCreater = Project::find( $project_id);
+  $projectCreater = $getProjectCreater->user_id;
+  $group = Group_Member::where('member_email',$authEmail)->pluck('group_id');
+  $groupProject = Group::find($group);
+  $groupProjectId=array();
+
+
+          $CurrentGroupId = getAuthgroupId($project_id); 
+
+          $CurrentGroupUser = checkCurrentGroupUser($project_id);
+          
+         if($CurrentGroupUser == 'Administrator'){
+    
+                  $projectFolderPath = 'public/documents/'.$project->user_id."/".$project->project_slug;
+
+                  $document_id =  Document::where('path',$projectFolderPath)->pluck('id');
+
+                  $projectFolderPermission = $this->getPermission($projectFolderPath);
+
+                  if($projectFolderPermission == '')
+                  {
+                    $projectFolderPermission ='';
+                  }
+                  
+                  $folder_file_tree =  $this->get_FoldersAndFiles($projectFolderPath);
+
+
+                  return view('groups.index',compact('project_name','groups','projectFolderPermission','folder_file_tree','project_id','projectCreaterId','CurrentGroupUser'));
+
+      }elseif($CurrentGroupUser == 'Collaboration_users' || $CurrentGroupUser == 'Individual_users'){
+          
+
+                  $projectFolderPath = 'public/documents/'.$project->user_id."/".$project->project_slug;
+
+                  $document_id =  Document::where('path',$projectFolderPath)->pluck('id'); 
+
+                  $folder_tree = $this->get_Folders($projectFolderPath);
+
+                  if($CurrentGroupUser == 'Individual_users')
+                  {
+                    
+                    $projectFolderPermission ='';
+                    $folder_file_tree ='';
+
+                  }else{
+
+                    $projectFolderPermission = $this->getSingleGroupsPermission($projectFolderPath);
+                  
+                    $folder_file_tree = $this->get_FoldersAndFiles($projectFolderPath);
+
+                  }
+
+
+              return view('groups.index',compact('project_name','groups','projectFolderPermission','folder_file_tree','project_id','projectCreaterId','CurrentGroupUser'));
+
+    }else{
+                   
+            abort(403, 'Unauthorized action.');
+
+         }
+
+
+            if(isset($_SESSION["UserDocuments"])){
+
+              $UserEmail = $_SESSION["UserDocuments"]; 
+              $invitedUser = User::where('email',$UserEmail)->first();
+              $invitedUserId = $invitedUser['id'];
+
+            }
+ 
+   }
+
+     public function getGroupsByPermission($project_id){
+
+          $getGroups = Group::where('project_id',$project_id)->get();
+
+          return $getGroups;
+    }
+    
+
+ // get permission
+
+   public function getPermission($path)         
+    {         
+              
+              $document_permission1 ='';
+
+              $getDocumentId = Document::where('path',$path)->pluck('id');
+
+              if($getDocumentId !== '')
+              {
+                  $documentPermission = Permission::where('document_id',$getDocumentId)->get(); 
+
+                  foreach ($documentPermission as $documentPermission) {
+
+                      $document_permission = $documentPermission->group_id.'/'.$documentPermission->permission_id;
+                       
+                     $document_permission1 .= $document_permission.',';
+
+                  }
+
+                 return $document_permission1;
+              }
+
     }
 
 }

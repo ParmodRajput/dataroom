@@ -19,7 +19,7 @@ Route::get('/clients','PagesController@clients');
 Route::get('/pricing','PagesController@pricing');
 Route::get('/account','PagesController@profile');
 Route::get('/account/security','PagesController@security');
-Route::get('project/{project_id}/users','PagesController@users')->middleware('auth');
+Route::get('project/{project_id}/users','GroupsController@getPermissionDocument')->middleware('auth');
 
 //update user info
 Route::post('/updateUserInfo','UserInfoUpdateController@updateUserInfo');

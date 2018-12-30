@@ -104,11 +104,11 @@ if (!function_exists('folder_tree')) {
                 
                  if($isFile == '1')
                  {
-                    $output .= '<li data-permission="'.$document_permission.'" data-value="'. $key.'" class="document_permission" ><span class="document_folder_name">'. $name.'</span>';  
+                    $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_folder_name">'. $name.'</span>';  
 
                  }else{
 
-                    $output .= '<li data-permission="'.$document_permission.'" data-value="'. $key.'" class="document_permission" ><span class="  document_file_name">'. $name.'</span>';
+                    $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="  document_file_name">'. $name.'</span>';
                  }
                 
            }

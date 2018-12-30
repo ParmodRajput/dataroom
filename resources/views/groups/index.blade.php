@@ -45,7 +45,7 @@
                   </div>
 
                   @if(checkUserType($project_name) == 'Administrator')
-                  <div class="btn_upload">
+                  <div class="btn_upload" data-toggle="modal" data-target="#document_permission_modal">
                      <a class="btn  document-btn1"><i class="fas fa-lock"></i> Permissions</a>
                   </div>
 
@@ -253,6 +253,7 @@
 		</div>
 			<div class="modal-footer">
 				<input value="Invite" id="invite_form_submit" type="submit" class="btn btn-success mr-2"> 
+
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close
 				</button>
 			</div>
@@ -390,16 +391,305 @@
 
 	</div>
 </div>
+
+
+
+<!-- Document permission modal -->
+<div id="document_permission_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog new_permission_setup">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+           <h3>DOCUMENTS' PERMISSIONS</h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">         
+          <div class="outer_box">
+            <div class="outer_box_inner">
+              <div class="left_section">
+                <div class="select_group_and_user">
+                  <ul>
+                    <li><a href="#"><i class="fas fa-users"></i> Set By Groups</a></li>
+                    <li><a href="#">Files and folders</a></li>
+                  </ul>
+                </div>
+                <div class="folder_and_file_tree">
+                   <ul class="folders"> 
+                        <li>  
+                          <div class="folder_tree">    
+                            <ul id="tree4">
+                              <li id="document_permission" class="document_permission" data-verify='1' data-permission="{{$projectFolderPermission}}"  <?php 
+                                        if($CurrentGroupUser == 'Administrator')
+                                        {
+                                          echo "permission='none'";
+
+                                        }else{
+
+                                          if($projectFolderPermission == 1)
+                                          {
+                                             echo "permission='not'";
+
+                                          }else{
+
+                                             echo "permission=''";
+
+                                          }
+
+                                         
+                                        }                                     
+                                    ?> data-value="public/documents/{{$projectCreaterId}}/{{$project_name}}"><span class="document_name">{{$project_name}}</span>
+                                <div class="folder_file_structure">
+
+                                    <?php 
+                                        if($CurrentGroupUser == 'Administrator')
+                                        {
+                                          echo folder_file_tree($folder_file_tree);
+                                        }                                     
+                                    ?>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                    </ul>                     
+                </div>
+              </div>
+
+              <div class="right_table_section">
+                <input type="hidden" id="current_permission_document">
+              <div class="main_section">
+              <div class="section1 currentFolderName">{{$project_name}}</div>
+              <div class="section2"><i class='fas fa-upload'></i> Upload</div>
+              <div class="section2"><i class='fas fa-download'></i> Download original</div>
+              <div class="section2"><i class="fa fa-file-pdf-o"></i> Download pdf</div>
+              <div class="section2"><i class="fa fa-print"></i>Print</div>
+              <div class="section2"><i class='fas fa-lock'></i>Download encrypted file</div>
+              <div class="section2"><i class='fas fa-eye'></i>View</div>
+              <div class="section2"><i class='fas fa-eye'></i>Fence View</div>
+              <div class="section2"><i class="fa fa-close"></i>None</div>
+              </div>
+              <div class="all_groups">
+                <div class="new_user1">
+                  <h3>All groups</h3>
+                </div>
+                <div class="all_groups_check">
+                    <div class="new_user2">
+                      <label class="permission_input_check">
+                        <input type="checkbox"  value="1" data-id="" class="doc_permission1">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <div class="new_user2">
+                      <label class="permission_input_check">
+                        <input type="checkbox"  value="2" data-id="" class="doc_permission2">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div> 
+                    <div class="new_user2">
+                      <label class="permission_input_check">
+                        <input type="checkbox"  value="3" data-id="" class="doc_permission3">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div> 
+                    <div class="new_user2">
+                      <label class="permission_input_check">
+                        <input type="checkbox"  value="4" data-id="" class="doc_permission4">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div> 
+                    <div class="new_user2">
+                      <label class="permission_input_check">
+                        <input type="checkbox"  value="5" data-id="" class="doc_permission5">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div> 
+                    <div class="new_user2">
+                      <label class="permission_input_check">
+                        <input type="checkbox"  value="6" data-id="" class="doc_permission6">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div> 
+                    <div class="new_user2">
+                      <label class="permission_input_check">
+                        <input type="checkbox"  value="7" data-id="" class="doc_permission7">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div> 
+                   <div class="permission_cancle_main new_user2 section2">
+                      <i class="fa fa-close"></i>
+                   </div>
+                </div>
+              </div>
+               
+
+           @foreach($groups as $groups)
+
+             <?php if($groups->group_user_type !== 'Administrator')
+             {?>
+
+              <div class="new_user_pannel" id="group{{$groups->id}}">
+              <div class="new_user1"><b>{{$groups->group_name}}</b>/{{$groups->group_user_type}}</div>
+              <div class="new_user2">
+              <label class="permission_input_check">
+                <input type="checkbox" name ="set_permission" data-id="{{$groups->id}}"  data-value="{{$groups->id}}/1" class="doc_permission1 permission{{$groups->id}}">
+                <span class="checkmark"></span>
+              </label>
+              </div>
+              <div class="new_user2">
+              <label class="permission_input_check">
+                <input type="checkbox" name ="set_permission" data-id="{{$groups->id}}"  data-value="{{$groups->id}}/2" class="doc_permission2 permission{{$groups->id}}">
+                <span class="checkmark"></span>
+              </label>
+              </div>
+              <div class="new_user2">
+              <label class="permission_input_check">
+                <input type="checkbox" name ="set_permission" data-id="{{$groups->id}}"  data-value="{{$groups->id}}/3" class="doc_permission3 permission{{$groups->id}} ">
+                <span class="checkmark"></span>
+              </label>
+              </div>
+              <div class="new_user2">
+              <label class="permission_input_check">
+                <input type="checkbox" name ="set_permission" data-id="{{$groups->id}}"  data-value="{{$groups->id}}/4" class="doc_permission4 permission{{$groups->id}}">
+                <span class="checkmark"></span>
+              </label>
+              </div>
+              <div class="new_user2">
+              <label class="permission_input_check">
+                <input type="checkbox" name ="set_permission" data-id="{{$groups->id}}"  data-value="{{$groups->id}}/5" class="doc_permission5 permission{{$groups->id}}">
+                <span class="checkmark"></span>
+              </label>
+              </div>
+              <div class="new_user2">
+              <label class="permission_input_check">
+                <input type="checkbox" name ="set_permission" data-id="{{$groups->id}}"  data-value="{{$groups->id}}/6" class="doc_permission6 permission{{$groups->id}}">
+                <span class="checkmark"></span>
+              </label>
+              </div>
+              <div class="new_user2">
+              <label class="permission_input_check">
+                <input type="checkbox" name ="set_permission" data-id="{{$groups->id}}"  data-value="{{$groups->id}}/7" class="doc_permission7 permission{{$groups->id}}">
+                <span class="checkmark"></span>
+              </label>
+              </div>
+              <div class="permission_cancle new_user2 section2" group="{{$groups->id}}">
+                 <i class="fa fa-close"></i>
+              </div>
+              </div>
+            <?php }?>
+         @endforeach 
+              </div>
+
+              </div>
+
+
+              </div>
+        </div>
+
+    <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
+       <button type="button" class="btn btn-success" id="permission_store" data-dismiss="modal">Apply</button>
+    </div>
+  </div>
+     
+  </div>
+
+</div>
+
+<!-- End -->
+
+
 @endsection
 @section('page_specific_script')
 
 <script type="text/javascript">
+
+
+	   $.fn.extend({
+                      treed: function (o) {
+                        
+                        var MinusSign = 'glyphicon-triangle-bottom';
+                        var PlusSign = 'glyphicon-triangle-right';
+                        
+                        if (typeof o != 'undefined'){
+                          if (typeof o.openedClass != 'undefined'){
+                          openedClass = o.openedClass;
+                          }
+                          if (typeof o.closedClass != 'undefined'){
+                          closedClass = o.closedClass;
+                          }
+                        };
+                        
+                          //initialize each of the top levels
+                          var tree = $(this);
+                          if ( !tree.hasClass( "tree" )) {
+                             tree.addClass("tree");
+                          }
+                         
+                          // tree.find('li:not(:has(>.customspan))').prepend("<span class='inactive customspan'></i><i class='shuffle glyphicon " + PlusSign + "'></i><i class='indicator glyphicon " + closedClass + "'></span>");
+                          
+                          tree.find('li:not(:has(>.customspan))').has('ul').prepend("<span class='inactive customspan'></i><i class='shuffle glyphicon " + PlusSign + "'></i><i class='indicator glyphicon " + closedClass + "'></span>");
+
+                          tree.find('li:not(:has(>.customspan))').prepend("<span class='inactive customspan'></i><i class='indicator glyphicon " + closedClass + "'></span>");
+                          
+                          tree.find('li').each(function () {
+
+                              var branch = $(this); //li with children ul
+                              if ( !branch.hasClass( "branch" )) {
+                              
+                              branch.addClass('branch');
+                              branch.on('click', function (e) {
+
+                                  if (this == e.target) {
+                                  }
+                              })
+                              branch.find('ul').children().toggle();
+                            }
+                          });
+                          //fire event from the dynamically added icon
+                        tree.find('.branch .shuffle').each(function(){
+                          $(this).unbind( "click" );
+                          $(this).on('click', function () {
+
+                             var list =  $(this).closest('li');
+                             var icon = list.find('span').children('i:first');
+                             var icon_next = list.find('span').children('.indicator:first');
+                             icon.toggleClass(PlusSign + " " + MinusSign); 
+                             icon_next.toggleClass(closedClass + " " + openedClass);
+                             list.find('ul').children().toggle();
+
+                          });
+                        });
+                          //fire event to open branch if the li contains an anchor instead of text
+                          tree.find('.branch>a').each(function () {
+                              $(this).on('click', function (e) {
+                                  $(this).unbind( "click" );
+                                  // $(this).closest('li').click();
+                                  e.preventDefault();
+                              });
+                          });
+                          //fire event to open branch if the li contains a button instead of text
+                          tree.find('.branch>button').each(function () {
+                              $(this).unbind( "click" );
+                              $(this).on('click', function (e) {
+                                  $(this).closest('li').click();
+                                  e.preventDefault();
+                              });
+                          });
+                      }
+                  });
+
 
      getgroups();
      getAllGroups();
 	// A $( document ).ready() block.
 	$( document ).ready(function() {
 
+		$('#tree4').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+         
+         var clickEvent = $('.document_permission').find('span').first();
+         var triggerEvent  = clickEvent.find('.shuffle').first();
+         setTimeout(function(){ triggerEvent.trigger('click') },0);
 
 		getAuthAllProjects();
          
@@ -443,6 +733,7 @@
               },  
 
 			success: function (response) { 
+
              
 				   var html = "";
 				   var html1 = "<option value='0'>Select group</option>";
@@ -452,8 +743,10 @@
                        var group_id = value.groups.id;
                        var GroupUserRole = value.groups.group_user_type;
                        var group_name = value.groups.group_name;
+                       var permission  = value.groups.permission;
 
-					  	html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-value='"+group_id+"'><span class=' toggle_user'>";
+
+					  	html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-per='"+permission+"' data-value='"+group_id+"'><span class=' toggle_user'>";
                              
                             if( value.users != '')
                             {
@@ -484,6 +777,28 @@
 			}  
 		}); 
     }
+
+
+
+  //   function getPermisssionDocumentBy(){
+
+  //   	var token = $('#csrf-token').val();
+  //       var project_id = $('#project_id').val();
+
+		// $.ajax({
+		// 	type:"POST",
+		// 	url:"{{ Url('/') }}/getDocumentByPermission",
+  //           data:{
+  //               _token : token,
+  //                project_id :project_id, 
+  //             },  
+
+		// 	success: function (response) { 
+  //                alert();
+		// 	}
+
+        
+  //   }
  
 // create new group//
 
@@ -516,7 +831,7 @@
 
 		e.preventDefault();
 		var formData = new FormData(this);
-    
+		$('.overlay_body').removeClass('hidden');
 
 		$.ajax({
 
@@ -532,19 +847,20 @@
 				{
 					$('#invite_users').modal('hide');
 					swal("Invite Sent successfully","","success");
-					$(form).reset();
 					getgroups();
+
 					$('.list_group_user').addClass('hidden');
-					
+
 				}else{
 
-                     alert('Users with the following emails were already invited ' +response);
-
+                    alert('Users with the following emails were already invited ' +response);
 				} 
 
-			}  
-		}); 
 
+			}  
+
+			
+		}); 
 	});
 
 
@@ -778,10 +1094,16 @@
  $(document).on('click','.InviteUsers_icon',function(){
 
 	 	$('input:checkbox').prop('checked', false);
-
 	 	$('#invite_users').modal('show'); 
-
 	    $(this).parent().parent().find('.check-box-input').trigger( "click");
+        var data_value = $(this).parent().parent().find('.check-box-input').data('value');
+
+        var data_permission = $(this).parent().parent().find('.check-box-input').data('per');
+
+        if(data_permission == 0)
+        {
+        	$('#document_permission_modal').modal('show');
+        }
 
        	$('.GroupByinvite').addClass('hidden');
 	 	$('.security_setting').removeClass('hidden');
@@ -794,7 +1116,6 @@
 
 
   $(document).on('click','.delete_items_groups',function(){
-  
     
     var token = $('#csrf-token').val();
     //var projects_id = $('.directory_location #project_id_doc').val();
@@ -948,7 +1269,7 @@ $('#hjgh').click(function(){
       $('.overlay_body').removeClass('hidden');
     });
 
-$(document).ajaxComplete(function(event, request, settings) {
+ $(document).ajaxComplete(function(event, request, settings) {
       $('.overlay_body').addClass('hidden');
     }); 
 
@@ -976,6 +1297,219 @@ $(document).ajaxComplete(function(event, request, settings) {
                $('#dismiss').click();
             });
 
+
+
+     //document_permission
+
+     $(document).on('click','.document_permission',function(event){
+
+        event.preventDefault();
+        event.stopPropagation();
+
+
+        $('#document_permission_modal input:checkbox').removeAttr('disabled'); 
+
+           var token =$('#csrf-token').val();
+           var directory_url = $(this).data("value");
+           var folder = directory_url.split('/');
+           var folder_name = folder.pop();
+
+           $('#document_permission_modal input:checkbox').prop('checked', false);
+
+           $('#current_permission_document').val(directory_url);
  
+           $('.section1.currentFolderName').html(folder_name);
+
+           var get_permission_doc = $(this).data('permission');
+
+           var data_verify = $(this).data('verify');
+
+           showPermission(get_permission_doc,data_verify);
+          
+     
+     });        
+   
+
+   // trigger main project folder on reload. 
+
+        var clickEvent1 = $('.document_permission').find('span').first();
+        var triggerEvent1  = clickEvent1.find('.shuffle').first();
+        setTimeout(function(){ triggerEvent1.trigger('click') },0);
+        var getPermissionOnPopUp = $('.document_permission').first().data('permission');
+        var checkPermission = $('.document_permission').first().attr('permission');
+        // alert(getPermissionOnPopUp);
+
+        $('.projects').first().attr("data-permission",getPermissionOnPopUp);
+        $('.projects').first().attr("permission",checkPermission);
+
+   //end
+
+   // display set permission.
+     function showPermission(get_permission_doc,data_verify){
+         
+           var permission = get_permission_doc.split(",");
+
+           $.each(permission,function(key ,value){
+
+           var loatPermission = value.split('/');
+
+           var loatP  = loatPermission['1'];
+
+
+
+           if(loatP == 1 && data_verify == 0 )
+           {
+               $('#document_permission_modal input:checkbox').attr('disabled',"disabled");
+
+           }
+
+           var permission = value;
+
+           $('[data-value = "'+permission+'"]').prop('checked', true);
+
+           });
+     }   
+
+
+     function DocumentTree(token,project_id){
+
+              $.ajax({
+                              
+                  type:"GET",
+                    url:"{{ Url('/') }}/project/"+project_id+"/documents/action",
+
+                   data:{
+                    _token : token,
+                    },  
+                    // multiple data sent using ajax//
+                    success: function (response) { 
+
+                      var folderTree = response.folderTree;
+                      var folder_file_tree = response.folder_file_tree;
+                   
+                     $('.folder_struture').html(folderTree);
+
+                      $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+
+                     $('.folder_file_structure').html(folder_file_tree);
+
+                     $('#tree3').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+                         
+                    }
+
+         });
+    
+   }
+
+
+     //permission module
+
+   $(document).on('click','#document_permission_modal input[type="checkbox"]', function() {
+
+      var id = $(this).data('id');
+
+      if(id == '')
+      {
+        $('input:checkbox').not(this).prop('checked', false);
+
+        var getPerClass = $(this).attr('class');
+        var class_get = '.'+getPerClass;
+
+        $('.new_user_pannel '+class_get).prop('checked', true);
+
+      }else{
+
+        var getGroupClass = '#group'+id;
+        $(getGroupClass+'  input:checkbox').not(this).prop('checked', false);
+        $('.all_groups input:checkbox').prop('checked', false);
+
+      }
+
+   });
+
+  
+
+   $(document).on('click','#permission_store',function(){
+
+          var numberOfChecked1 = $('#document_permission_modal input:checkbox:checked').length;
+      
+          if(numberOfChecked1 == '0')
+          { 
+             alert('please select any permission of the document.');
+          }
+
+          var permission_array = [];
+
+          $.each($("input[name='set_permission']:checked"),function(){ 
+
+             permission_array.push($(this).data('value')); 
+
+          });
+
+
+         var Document = $('#current_permission_document').val();
+
+         var project_id  = $('#project_id').val(); 
+
+         var token = $('#csrf-token').val();  
+         
+
+          $.ajax({
+                                
+                    type:"POST",
+                    url:"{{ Url('/') }}/set_permission",
+                    data:{
+                      _token : token,
+                      permission_array   :  permission_array,
+                      Document  :  Document,
+                      project_id : project_id,
+
+                      },  
+                      // multiple data sent using ajax//
+                      success: function (response) { 
+
+                       if(response == 'success'){
+                             
+                            swal("permission set successfully", "", "success");
+
+                            DocumentTree(token,project_id);
+                        }
+ 
+                      }
+
+                });
+                       
+   });
+
+
+   $(document).on('click','.permission_cancle',function(){
+
+        var group_id =  $(this).attr('group');
+
+        $('#group'+group_id+' input:checkbox' ).prop('checked', false);
+        $('.all_groups input:checkbox' ).prop('checked', false);
+
+   });
+
+    $(document).on('click','.permission_cancle_main',function(){
+
+     $('#document_permission_modal input:checkbox').prop('checked', false);
+
+   });
+
+    // set the permission
+
+    $(document).on('click','.permission_docs',function(){
+          
+          var permission_doc = $(this).data('value');
+
+          $('#document_permission_modal').modal('show');
+          
+          var triggerEvent  = $('.document_permission [data-value = "'+permission_doc+'"]').click();
+
+    });
+
+
+
 </script>
 @endsection

@@ -92,7 +92,7 @@
         if (typeof o.closedClass != 'undefined'){
         closedClass = o.closedClass;
         }
-      };
+      }
       
         //initialize each of the top levels
         var tree = $(this);
@@ -319,9 +319,15 @@ $(document).ready(function(){
     //document_permission
 
      $(document).on('click','.document_permission',function(event){
-         
+
+
+
+
         event.preventDefault();
         event.stopPropagation();
+
+
+        $('#document_permission_modal input:checkbox').removeAttr('disabled'); 
 
            var token =$('#csrf-token').val();
            var directory_url = $(this).data("value");
@@ -336,7 +342,9 @@ $(document).ready(function(){
 
            var get_permission_doc = $(this).data('permission');
 
-           showPermission(get_permission_doc);
+           var data_verify = $(this).data('verify');
+
+           showPermission(get_permission_doc,data_verify);
           
           //  $.ajax({
               
@@ -371,12 +379,24 @@ $(document).ready(function(){
    //end
 
    // display set permission.
-     function showPermission(get_permission_doc){
+     function showPermission(get_permission_doc,data_verify){
          
            var permission = get_permission_doc.split(",");
 
            $.each(permission,function(key ,value){
-               
+
+           var loatPermission = value.split('/');
+
+           var loatP  = loatPermission['1'];
+
+
+
+           if(loatP == 1 && data_verify == 0 )
+           {
+               $('#document_permission_modal input:checkbox').attr('disabled',"disabled");
+
+           }
+
            var permission = value;
 
            $('[data-value = "'+permission+'"]').prop('checked', true);
