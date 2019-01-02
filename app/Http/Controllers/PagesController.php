@@ -82,6 +82,6 @@ class PagesController extends Controller
 
         return view('groups.index',compact('project_name','project_id'));
 
-}
+    }
 
 }

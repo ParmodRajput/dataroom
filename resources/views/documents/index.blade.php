@@ -478,7 +478,7 @@
                         <li>  
                           <div class="folder_tree">    
                             <ul id="tree3">
-                              <li id="document_permission" class="document_permission" data-permission="{{$projectFolderPermission}}"  <?php 
+                              <li id="document_permission" class="document_permission" data-verify='1' data-permission="{{$projectFolderPermission}}"  <?php 
                                         if($CurrentGroupUser == 'Administrator')
                                         {
                                           echo "permission='none'";
