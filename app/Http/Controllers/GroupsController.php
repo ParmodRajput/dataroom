@@ -378,6 +378,40 @@ class GroupsController extends Controller
     }
 
 
+    public function get_Folders($project_path)
+
+             {
+             
+              $return = array();
+
+              $project_folders = DB::table('documents')->select('path')->where('directory_url', '=', $project_path)->where('document_status','1')->get()->toArray();
+
+                  if ($project_folders) {
+                    foreach ($project_folders as $folder) {
+
+                       $folder_permission = $this->getSingleGroupsPermission($folder->path);
+
+                       $project_id =  Document::where('path',$folder->path)->pluck('project_id');
+
+                       $CurrentGroupUser = checkCurrentGroupUser($project_id);
+
+                       if($CurrentGroupUser == 'Individual_users')
+                       {
+                          $folder_path_permission = '';
+
+                       }else{
+
+                         $folder_path_permission = $folder->path.'@?#'.$folder_permission;
+                       }
+                       
+                       $return[$folder_path_permission]  =  $this->get_Folders($folder->path);
+
+                    }
+                  }
+              return $return;
+          }
+
+
      public function get_FoldersAndFiles($project_path)
 
              {
@@ -401,6 +435,47 @@ class GroupsController extends Controller
               return $return;
             }
 
+
+//get Single group permission
+    public function getSingleGroupsPermission($path){
+                   
+                $authEmail = Auth::user()->email;
+
+                $getProjectID = Document::where('path',$path)->first();
+
+                $project_id = $getProjectID->project_id;
+
+                $document_id = $getProjectID->id;
+
+               // current project group_id
+
+                $CurrentGroupId = getAuthgroupId($project_id); 
+
+                $CurrentGroupUser = checkCurrentGroupUser($project_id); 
+
+                $GetprojectFolderPermission = Permission::where('document_id',$document_id)->where('project_id',$project_id)->where('group_id',$CurrentGroupId)->first();
+
+                if($GetprojectFolderPermission == '')
+                {
+
+                  if($CurrentGroupUser == 'Administrator')
+                  {
+                    $projectFolderPermission = 'none';
+
+                  }else{
+
+                    $projectFolderPermission = '';
+                  }
+
+                }else{
+
+                   $projectFolderPermission = $GetprojectFolderPermission->permission_id;
+
+                }
+
+                return $projectFolderPermission;
+
+    }
 
  
 // Get the All document in folder of the document//

@@ -142,7 +142,7 @@
 
 
 <!--model for invite users-->
-<div id="invite_users" class="modal fade" role="dialog">
+<div id="invite_users" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
 	<div class="modal-dialog invite_new_user_block">
 
 		<!-- Modal content-->
@@ -264,7 +264,7 @@
 </div>
 
 <!--model for create new group-->
-<div id="create_group" class="modal fade" role="dialog">
+<div id="create_group" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
 
 	<div class="modal-dialog create_user_new_group">
 
@@ -395,7 +395,7 @@
 
 
 <!-- Document permission modal -->
-<div id="document_permission_modal" class="modal fade" role="dialog">
+<div id="document_permission_modal" data-backdrop="static" data-keyboard="false" class="modal fade" role="dialog">
   <div class="modal-dialog new_permission_setup">
 
     <!-- Modal content-->
@@ -1115,16 +1115,7 @@
         if(data_permission == 0)
         {
         	$('#document_permission_modal').modal('show');
-        	    var clickEvent1 = $('.document_permission').find('span').first();
-		        var triggerEvent1  = clickEvent1.find('.shuffle').first();
-		        setTimeout(function(){ triggerEvent1.trigger('click') },0);
 
-		        var getPermissionOnPopUp = $('.document_permission').first().data('permission');
-		        var checkPermission = $('.document_permission').first().attr('permission');
-
-		        var clickEvent1 = $('.document_permission').find('span').first();
-		        var triggerEvent1  = clickEvent1.find('.shuffle').first();
-		        setTimeout(function(){ triggerEvent1.trigger('click') },0);
         }
 
        	$('.GroupByinvite').addClass('hidden');
