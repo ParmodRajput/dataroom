@@ -320,9 +320,6 @@ $(document).ready(function(){
 
      $(document).on('click','.document_permission',function(event){
 
-
-
-
         event.preventDefault();
         event.stopPropagation();
 
@@ -541,6 +538,11 @@ $(document).ready(function(){
     }
 
     $(document).on('change','input:file',function(){
+
+      $('.upload_modal_check').removeClass('hidden');
+      $('.choose_around_file').addClass('hidden');
+      
+
        var getId = $(this).attr('id');
        if(getId == 'file')
          {
@@ -1692,6 +1694,11 @@ $(document).ready(function(){
 
  $('.table_section.document_scroll').css("height", documentIndexScrollHeight);
  $('.indexing').css("height",indexingHeight);
+
+ $('.scroll_upload_section').css('height',windowHeight-210);
+ $('.scroll_permissionDoc_section').css('height',windowHeight-170);
+
+
 
 
 
@@ -2905,6 +2912,22 @@ $(document).on('click','.note1_doc_delete', function(){
       });
 
  }
+
+ 
+ $('.choose_around_file').click(function(){
+
+  $('#file').click();
+
+ })
+
+
+ $('.upload_doc_upload').click(function(){
+
+  $('.choose_around_file').removeClass('hidden');
+  $('.upload_modal_check').addClass('hidden');
+
+ })
+ 
 
 </script>
 

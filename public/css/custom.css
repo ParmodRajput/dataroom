@@ -30,7 +30,9 @@ body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden;}
 .create_folder .modal-content .modal-title{ padding:10px;}
 
 ul.folders{ height:520px; overflow-x: hidden;}
+
 .document_scroll_done{
+     overflow:scroll;
      overflow-x: hidden;
 }
 
@@ -1913,4 +1915,42 @@ p.subject_ques {
    margin: 0px;
    padding: 0px;
 }
+
+.scroll_invite_section{
+
+    overflow:scroll;
+    overflow-x: hidden;
+}
+
+.scroll_group_section{
+     overflow:scroll;
+    overflow-x: hidden;
+
+}
+
+.scroll_permission_section{
+     overflow:scroll;
+    overflow-x: hidden;
+
+}
+
+.scroll_upload_section{
+     overflow:scroll;
+    overflow-x: hidden;
+
+}
+
+.scroll_permissionDoc_section
+{
+     overflow:scroll;
+    overflow-x: hidden;
+
+}
+
+.choose_around_file{
+
+    margin-left: 42%;
+    margin-top: 6%;
+}
+
 
