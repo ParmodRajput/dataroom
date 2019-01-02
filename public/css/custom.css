@@ -305,6 +305,92 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
 .extract{
     display: none;
 }
+.ques_ans_docs_group .fstElement {
+    width:100%;
+    float: left;
+     padding-left: 35px;
+}
+.ques_ans_docs_group .fstControls {
+    padding: 0px!important;
+    width: auto;
+    margin: 0px!important;
+    height: 40px;
+    line-height: 25px;
+    font-size: 13px!important;
+}
+.ques_ans_docs_group .subject_section span.subject_title {
+    font-size: 13px!important;
+}
+
+.ques_ans_docs_group span.subject_title {
+    float: left;
+    width: 16%;
+    font-size: 13px!important;
+}
+
+.ques_ans_docs_group .subject_section .question_subject {
+    float: left;
+    width:84%!important;
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.subject_section {
+    float: left;
+    width: 100%;
+    padding:0 0!important;
+    position: relative;
+}
+
+.subject_section span.subject_title {
+    font-size: 13px;
+    width: 16%;
+    position: absolute;
+    top:10px;
+    left:14px;
+}
+
+.subject_section input.question_subject {
+    float: left;
+    width:100%;
+    border: 1px solid #d7d7d7;
+    height: 40px;
+    border-top:none;
+    border-bottom:none;
+    padding-left: 75px;
+}
+.question_content_section {
+    float: left;
+    width: 100%;
+}
+.question_content_section textarea {
+    border: 1px solid #d7d7d7;
+    width: 100%;
+    height: 150px;
+}
+input.send_question {
+    border: none;
+    background: #333;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 13px;
+}
+button.in_progress_ques {
+    float: right;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.modal-dialog.create_question {
+    max-width: 1200px;
+}
+form#AllUploadFiles {
+    float: left;
+    width: 100%;
+    height: 100%;
+}
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -1596,6 +1682,7 @@ span.subject_title {
 
 .reply_center{
     float: left;
+    width: 100%;
 }
 
 .reply_section{
@@ -1749,19 +1836,22 @@ button.answere_by_me {
 .ques_ans_docs_group {
    float: left;
    width: 100%;
+   position:relative;
 }
 
 
 .ques_ans_docs_group input {
    float: left;
-   width: 84%;
-   padding: 10px!important;
-   height: auto!important;
+     width: 100%!important;
+    padding: 10px!important;
+    height: auto!important;
+    padding-left: 38px!important;
 }
 
 .ques_ans_docs_group span.to_user
 {
-    float: left; width: 16%; margin:0px; padding:0px; font-size:13px;
+    float: left; width:auto; margin:0px; padding:0px; font-size:13px; position: absolute; z-index: 9;
+    top:12px; left:12px;
  }
 
 /* span.to_user {
@@ -1954,4 +2044,18 @@ p.subject_ques {
     margin-top: 6%;
 }
 
+.section{ float:left; width: 100%; text-align: center;}
+        .section img{ margin: 20px 0; text-align:center;}
+        .section h3{  margin: 20px 0; font-size:18px; color:#d7d7d7;}
+        .section a.invite{ padding:10px 15px; color:#fff; text-decoration: none; font-size:13px; background:#333;
+}
+
+#genrate_question .modal-title {
+    margin-left: 43%;
+}
+
+#genrate_question .related_question_by {
+   
+    margin-left: 40%;
+}
 

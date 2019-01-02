@@ -306,7 +306,7 @@
 </div>
 
 <!-- Create new Folder Model-->
-<div id="genrate_folder" class="modal fade" role="dialog">
+<div id="genrate_folder" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
   <div class="modal-dialog create_folder">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
     <!-- Modal content-->
@@ -349,7 +349,7 @@
 
 <!--upload file model-->
 
-  <div id="myModal" class="modal fade" role="dialog">
+  <div id="myModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
   <div class="modal-dialog modal_upload">                                                                                                                                             
     <!-- Modal content-->
     <div class="modal-content upload_file_pannel">
@@ -421,7 +421,7 @@
 
 <!-- rename folder and file modal
  -->
-<div id="renameDocument" class="modal fade" role="dialog">
+<div id="renameDocument" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
   <div class="modal-dialog create_folder">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
     <!-- Modal content-->
@@ -457,7 +457,7 @@
 <!-- end rename modal -->
 
 <!-- Document permission modal -->
-<div id="document_permission_modal" class="modal fade" role="dialog">
+<div id="document_permission_modal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
   <div class="modal-dialog new_permission_setup">
 
     <!-- Modal content-->
@@ -662,15 +662,19 @@
 
 <!-- Question modal -->
 
-<div id="genrate_question" class="modal fade" role="dialog">
+<div id="genrate_question" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
   <div class="modal-dialog create_question">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
     <!-- Modal content-->
     <div class="modal-content">
        <div class="modal-header">
-        <h4 class="modal-title">NEW QUESTION</h4>
+        <h3 class="modal-title">NEW QUESTION</h3>
         <button type="button" class="close" data-dismiss="modal">&times;</button> 
       </div>
+       <div class='related_question_by'>
+          <span>Related To:</span>
+          <span class='related_question'></span>
+        </div>
       <div class="modal-body">
         <div class="form">
           <div id="directory_current">
@@ -707,5 +711,35 @@
 </div>
 
 <!-- End -->
+
+
+<!-- invite Users  -->
+
+<div id="users_invite" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+  <div class="modal-dialog">
+    <input type='hidden'  name='copy_document' id='copy_document_directory'>
+    <!-- Modal content-->
+    <div class="modal-content">
+       <div class="modal-header">
+        <h4 class="modal-title">DOCUMENTS' PERMISSIONS</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      </div>
+      <div class="modal-body">
+            <div class="section">
+              <img src="{{asset('/dist/img/')}}/permission_img.png" alt="img" />
+                <h3>You have no users to assign permissions yet</h3>
+                <a class="invite" href="#">Invite</a>
+            </div>
+      </div>
+    </div>
+     </div>
+  </div>    
+</div>
+</div>
+
+<!-- End -->
+
+
+
 
 @endsection

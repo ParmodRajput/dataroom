@@ -29,7 +29,7 @@ class CheckUserForPermissionDoc
         //user Email
         $userEmail = $request->route()->parameter('userEmail'); 
         $decryptedEmail = Crypt::decryptString($userEmail);  
-        
+
         //get project id
         $group = Group::find($decryptedGroupId);
         $project_id = $group->project_id;
