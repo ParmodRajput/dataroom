@@ -175,7 +175,7 @@
                     var triggerEvent  = clickEvent.find('.shuffle').first();
                     setTimeout(function(){ triggerEvent.trigger('click') },0);
 
-                    $('.indexing_qu').css('height',window_height-230);
+                    $('.document_scroll_done').css('height',window_height-210);
 
                  });  
 
