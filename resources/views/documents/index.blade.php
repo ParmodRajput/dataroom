@@ -708,4 +708,34 @@
 
 <!-- End -->
 
+
+<!-- invite Users  -->
+
+<div id="users_invite" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <input type='hidden'  name='copy_document' id='copy_document_directory'>
+    <!-- Modal content-->
+    <div class="modal-content">
+       <div class="modal-header">
+        <h4 class="modal-title">DOCUMENTS' PERMISSIONS</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      </div>
+      <div class="modal-body">
+            <div class="section">
+              <img src="{{asset('/dist/img/')}}/permission_img.png" alt="img" />
+                <h3>You have no users to assign permissions yet</h3>
+                <a class="invite" href="#">Invite</a>
+            </div>
+      </div>
+    </div>
+     </div>
+  </div>    
+</div>
+</div>
+
+<!-- End -->
+
+
+
+
 @endsection

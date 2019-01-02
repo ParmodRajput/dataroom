@@ -1953,4 +1953,10 @@ p.subject_ques {
     margin-top: 6%;
 }
 
+.section{ float:left; width: 100%; text-align: center;}
+        .section img{ margin: 20px 0; text-align:center;}
+        .section h3{  margin: 20px 0; font-size:18px; color:#d7d7d7;}
+        .section a.invite{ padding:10px 15px; color:#fff; text-decoration: none; font-size:13px; background:#333;
+}
+
 
