@@ -235,10 +235,22 @@ class GroupsController extends Controller
     public function deleteGroup(Request $request){
 
           $deleteGroups = $request->deletePath;
+          $project_id      =$request->project_id;
+
+          $check = checkCurrentGroupUser($project_id);
+
           foreach ($deleteGroups as $deleteGroups) {
-             print_r($deleteGroups);
-             die();
+
+            if($check = 'Administrator')
+            {
+               Group::where('id', $deleteGroups)->delete();
+
+               Group_Member::where('group_id', $deleteGroups)->delete();             
+            }
+
           }
+
+          return "deleteGroup";
          
     }
 

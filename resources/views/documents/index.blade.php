@@ -113,7 +113,7 @@
  -->
    <div class="upload_table">
            <div class="row document_index_buttons"> 
-                  <div class="btn_upload" permission ='1'>
+                  <div class="btn_upload upload_doc_upload" permission ='1'>
                     <a  class="btn  document-btn" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-upload " aria-hidden="true"></i> Upload
                     </a> 
@@ -361,7 +361,7 @@
    
       </div> 
 
-      <div class="modal-body">
+      <div class="modal-body scroll_upload_section">
 
         <div class="form">
           <div class="directory_location">
@@ -380,9 +380,8 @@
               <img src="{{ asset('dist/img/folder.png') }}" border="0" alt="img">
              Drop Documents Here
            </span>
-            </div>
-                  
-            </div>
+            </div>   
+           </div>
 
             <div class="file_status">
               <div class="row upload_file_details">
@@ -394,11 +393,15 @@
              </div> 
              <div id="fileDetails"></div>
             </div>
-         </div>
 
+            <div class='choose_here_upload '>
+               <button class='choose_around_file hidden btn btn-success'>Choose here</button>
+            </div>     
+         </div>
+           
       </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer upload_modal_check hidden">
         <div id="progress-div">
            <div id="progress-bar"></div>
       </div>
@@ -463,7 +466,7 @@
            <h3>DOCUMENTS' PERMISSIONS</h3>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body">         
+        <div class="modal-body scroll_permissionDoc_section">         
           <div class="outer_box">
             <div class="outer_box_inner">
               <div class="left_section">

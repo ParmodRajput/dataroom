@@ -404,7 +404,7 @@
            <h3>DOCUMENTS' PERMISSIONS</h3>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body">         
+        <div class="modal-body scroll_permission_section">         
           <div class="outer_box">
             <div class="outer_box_inner">
               <div class="left_section">
@@ -831,7 +831,7 @@
 
 		e.preventDefault();
 		var formData = new FormData(this);
-		$('.overlay_body').removeClass('hidden');
+		// $('.overlay_body').removeClass('hidden');
 
 		$.ajax({
 
@@ -866,7 +866,15 @@
 
  var windowHeight = $(window).height();
  var upload_table_height = windowHeight-40;
+ var inviteModalheight = windowHeight-180;
+
  $('.upload_table').css("height",upload_table_height);
+ $('.scroll_invite_section').css("height",inviteModalheight);
+ $('.scroll_group_section').css("height",inviteModalheight);
+ $('.scroll_permission_section').css("height",inviteModalheight);
+
+
+
 
  $(document).on('click','.InviteUsersByUp',function(){
 
@@ -881,14 +889,18 @@
 
      $('input:checkbox').prop('checked', this.checked); 
 
+     $('[data-value = "1"]').prop('checked', false);
+
+
  });
 
  // select check box 
  $(document).on('click','input[type="checkbox"]', function() {
 
+
     var showDocWithDoc = '';
 
-    var numberOfChecked = $('input:checkbox:checked').length;
+    var numberOfChecked = $('.user_gruoups_list input:checkbox:checked').length;
 
       if(numberOfChecked == 1)
       {
@@ -1103,6 +1115,16 @@
         if(data_permission == 0)
         {
         	$('#document_permission_modal').modal('show');
+        	    var clickEvent1 = $('.document_permission').find('span').first();
+		        var triggerEvent1  = clickEvent1.find('.shuffle').first();
+		        setTimeout(function(){ triggerEvent1.trigger('click') },0);
+
+		        var getPermissionOnPopUp = $('.document_permission').first().data('permission');
+		        var checkPermission = $('.document_permission').first().attr('permission');
+
+		        var clickEvent1 = $('.document_permission').find('span').first();
+		        var triggerEvent1  = clickEvent1.find('.shuffle').first();
+		        setTimeout(function(){ triggerEvent1.trigger('click') },0);
         }
 
        	$('.GroupByinvite').addClass('hidden');
@@ -1118,7 +1140,7 @@
   $(document).on('click','.delete_items_groups',function(){
     
     var token = $('#csrf-token').val();
-    //var projects_id = $('.directory_location #project_id_doc').val();
+    var project_id = $('#project_id').val();
 
     var deletePath = [];
 
@@ -1126,7 +1148,6 @@
     {        
         
           deletePath.push($(this).data('value')); 
-
 
     });
 
@@ -1144,26 +1165,22 @@
                             url:"{{ Url('/') }}/delete_group",
                             data:{
                               _token : token,
-                               url: deletePath,
+                               deletePath: deletePath,
+                               project_id: project_id,
                             },  
 
                             // multiple data sent using ajax//
                             success: function (response) {
-                               alert(response);
-                               //  if (response != "error") {
+                              
+                             if (response = "deleteGroup") {
 
-                               //       $.each( deletePath,function( key, value ) {
+                                getgroups();
 
-                               //       $('[data-value = "'+value+'"]').remove();
-
-                               //    });
-
-                               //      swal(response+" deleted successfully", "", "success");
-                               //  } 
-                               // data_display(token,directory_url);
-                               // $('input:checkbox').prop('checked', false);
+                                $("input[name='groups_select']").prop("checked","false");
+                               
                              }
-                     });
+                         }
+                   });
               } 
        });
     
@@ -1330,19 +1347,7 @@ $('#hjgh').click(function(){
      });        
    
 
-   // trigger main project folder on reload. 
 
-        var clickEvent1 = $('.document_permission').find('span').first();
-        var triggerEvent1  = clickEvent1.find('.shuffle').first();
-        setTimeout(function(){ triggerEvent1.trigger('click') },0);
-        var getPermissionOnPopUp = $('.document_permission').first().data('permission');
-        var checkPermission = $('.document_permission').first().attr('permission');
-        // alert(getPermissionOnPopUp);
-
-        $('.projects').first().attr("data-permission",getPermissionOnPopUp);
-        $('.projects').first().attr("permission",checkPermission);
-
-   //end
 
    // display set permission.
      function showPermission(get_permission_doc,data_verify){
@@ -1356,11 +1361,9 @@ $('#hjgh').click(function(){
            var loatP  = loatPermission['1'];
 
 
-
            if(loatP == 1 && data_verify == 0 )
            {
                $('#document_permission_modal input:checkbox').attr('disabled',"disabled");
-
            }
 
            var permission = value;
@@ -1471,6 +1474,8 @@ $('#hjgh').click(function(){
                        if(response == 'success'){
                              
                             swal("permission set successfully", "", "success");
+
+                            getgroups();
 
                             DocumentTree(token,project_id);
                         }
