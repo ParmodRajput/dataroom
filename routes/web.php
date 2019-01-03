@@ -137,7 +137,7 @@ Route::post('/project_users', 'GroupsController@getAllUserInProject');
 Route::post('send_question', 'QuestionsController@create_Question');
 
 //question answer route.
-Route::get('project/{project_id}/question','QuestionsController@getQuestions')->middleware('auth');
+Route::get('project/{project_id}/questions','QuestionsController@getQuestions')->middleware('auth');
 
 Route::post('/show_questions','QuestionsController@getAllQuestions');
 
@@ -153,6 +153,15 @@ Route::post('/delete_question','QuestionsController@deleteQuestions');
 
 
 //question route end
+
+
+ // Reports route start
+
+//reports route.
+ Route::get('project/{project_id}/reports','QuestionsController@getQuestions')->middleware('auth');
+
+
+ // Reports route end
 
 
 
