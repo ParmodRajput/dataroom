@@ -308,7 +308,7 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
 .ques_ans_docs_group .fstElement {
     width:100%;
     float: left;
-     padding-left: 35px;
+     padding-left:0px;
 }
 .ques_ans_docs_group .fstControls {
     padding: 0px!important;
@@ -482,6 +482,10 @@ input.reply_subject {
     border-bottom: none!important;
 }
 
+
+input.reply_subject a:focus, input:focus{ border:1px solid #d7d7d7!important; 
+    border-top:none!important; border-bottom:none!important; }
+
 .cancle_reply_type {
     float: right;
     width: 18px;
@@ -496,6 +500,11 @@ button.question_reply_qa.btn.btn-success {
 .ques_create_new {
     margin-right:3px;
 }
+form#create_question_answer .subject_section input.question_subject {
+    border-top: 1px solid #d7d7d7!important;
+}
+
+.fstMultipleMode.fstActive, .fstMultipleMode.fstActive .fstResults{ box-shadow: none!important; border-bottom:none!important; }
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -1362,6 +1371,7 @@ background:#ffffff;     max-width: 78%;}
 a.btn.btn_export_doc {
     float: left;
     margin-left: 15px;
+    margin-right:5px;
 }
 
 .btn.btn_dote_doc {
