@@ -158,7 +158,7 @@ Route::post('/delete_question','QuestionsController@deleteQuestions');
  // Reports route start
 
 //reports route.
- Route::get('project/{project_id}/reports','QuestionsController@getQuestions')->middleware('auth');
+ Route::get('project/{project_id}/reports','ReportsController@Report')->middleware('auth');
 
 
  // Reports route end
