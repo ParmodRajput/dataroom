@@ -266,7 +266,7 @@ class QuestionsController extends Controller
 	       $ques_content = $getQuestion1->ques_content;
 	       $time = $getQuestion1->time;
 	       // date
-	       $date = date('M/D/Y H:i:s', $time );
+	       $date = date('M/d/Y H:i:s', $time );
 
 	       $sender_id = $getQuestion1->send_by;
 

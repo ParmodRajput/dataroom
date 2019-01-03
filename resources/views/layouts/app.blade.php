@@ -2767,6 +2767,9 @@ $(document).on('click','.note1_doc_delete', function(){
        $('input:checkbox').prop('checked', false);
        $(this).parent().prev().find('.check-box-input').trigger( "click" );
        var data_value = $(this).data('value');
+       var getName  = data_value.split('/');
+       var Name = getName[getName.length-1];
+
        var data_ques = $(this).data('ques');
        var project_id  = $('.directory_location #project_id_doc').val();
 
@@ -2777,6 +2780,9 @@ $(document).on('click','.note1_doc_delete', function(){
        }else{
 
          $('#genrate_question').modal();
+         $('#genrate_question .related_question').html(Name);
+         $('.question_subject').val('');
+         $('.question_content').val('');
 
        }
 
@@ -2816,6 +2822,7 @@ $(document).on('click','.note1_doc_delete', function(){
      var ques_content  = $('.question_content').val();
      var project_name  = $('.project_name').val();
 
+
      $.ajax({
 
         type : "POST",
@@ -2837,8 +2844,6 @@ $(document).on('click','.note1_doc_delete', function(){
           if(response == 'send_question'){
 
              data_display(token,directory_url);
-             $('#create_question_answer')[0].reset();
-
           }
         }
 
