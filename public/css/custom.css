@@ -308,7 +308,7 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
 .ques_ans_docs_group .fstElement {
     width:100%;
     float: left;
-     padding-left:0px;
+     padding-left: 35px;
 }
 .ques_ans_docs_group .fstControls {
     padding: 0px!important;
@@ -392,45 +392,46 @@ form#AllUploadFiles {
     height: 100%;
 }
 
-.reply_ques_docs_group {
+.reply_section .reply_ques_docs_group {
     float: left;
     width: 100%;
     position: relative;
 }
 
-.reply_ques_docs_group span {
-    position: absolute;
+.reply_section .reply_ques_docs_group span {
+   /* position: relative;
     z-index: 9;
     font-size: 13px;
     top: 15px;
     left: 15px;
+    display: block;*/
 }
 
-.fstElement.fstMultipleMode.fstNoneSelected.fstActive.fstResultsOpened.fstResultsFilpped {
+.reply_section .fstElement.fstMultipleMode.fstNoneSelected.fstActive.fstResultsOpened.fstResultsFilpped {
     padding: 0px;
     background: transparent;
     box-shadow: none!important;
     border: none;
 }
 
-.fstMultipleMode.fstActive, .fstMultipleMode.fstActive .fstResults {
+.reply_section .fstMultipleMode.fstActive, .fstMultipleMode.fstActive .fstResults {
     box-shadow: none;
 }
 
-.fstElement {
+.reply_section .fstElement {
     border: none!important;
     box-shadow: none;
     float: left;
     width: 100%;
 }
 
-.fstControls {
+.reply_section .fstControls {
     padding: 0px!important;
     width: 100%!important;
     float: left;
 }
 
-input.fstQueryInput.fstQueryInputExpanded {
+.reply_section input.fstQueryInput.fstQueryInputExpanded {
     float: left;
     width: 100%;
     background: #fff;
@@ -441,40 +442,39 @@ input.fstQueryInput.fstQueryInputExpanded {
     border-bottom: none;
 }
 
-.reply_subject_section {
+.reply_section .reply_subject_section {
     float: left;
     width: 100%;
     position: relative;
 }
 
-span.reply_subject_title {
+.reply_section span.reply_subject_title {
     position: absolute;
     font-size: 13px;
     top:14px;
     left: 10px;
 }
 
-input.reply_subject {
+.reply_section nput.reply_subject {
     border: 1px solid #d7d7d7;
     padding: 10px 10px 10px 70px;
     width: 100%;
 }
 
-.reply_content_section {
+.reply_section .reply_content_section {
     float: left;
     width: 100%;
 }
 
 
-textarea.reply_question_content {
+.reply_section textarea.reply_question_content {
     float: left;
     width: 100%;
     border: 1px solid #d7d7d7;
     height: 130px;
-    padding:10px;
 }
 
-input.reply_subject {
+.reply_section input.reply_subject {
     border: 1px solid #d7d7d7;
     padding: 10px 10px 10px 70px;
     width: 100%;
@@ -483,28 +483,6 @@ input.reply_subject {
 }
 
 
-input.reply_subject a:focus, input:focus{ border:1px solid #d7d7d7!important; 
-    border-top:none!important; border-bottom:none!important; }
-
-.cancle_reply_type {
-    float: right;
-    width: 18px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-button.question_reply_qa.btn.btn-success {
-    margin-top: 10px;
-}
-
-.ques_create_new {
-    margin-right:3px;
-}
-form#create_question_answer .subject_section input.question_subject {
-    border-top: 1px solid #d7d7d7!important;
-}
-
-.fstMultipleMode.fstActive, .fstMultipleMode.fstActive .fstResults{ box-shadow: none!important; border-bottom:none!important; }
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -1371,7 +1349,6 @@ background:#ffffff;     max-width: 78%;}
 a.btn.btn_export_doc {
     float: left;
     margin-left: 15px;
-    margin-right:5px;
 }
 
 .btn.btn_dote_doc {
