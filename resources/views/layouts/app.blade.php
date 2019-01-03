@@ -1873,7 +1873,7 @@ $('#myModal').on('hidden.bs.modal', function () {
 
              $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
-             var GetDocumentName = $('.project_name').val();
+             var GetDocumentName = $('#getProject_name').val();
              var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
              $('.checked_doc_details').html(showDocWithDoc);
              $('.create_notes_get').addClass('hidden');

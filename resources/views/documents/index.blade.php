@@ -243,7 +243,7 @@
                     </div>
                     <div class="choose_file_upload overlay"  id="overlay"><form action="upload_file" method="post"  id ="AllUploadFiles" enctype="multipart/form-data"  files ="true" >
             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-              <input type="hidden" name="projects" class="project_name"  value="{{$project_name}}" />
+              <input type="hidden" name="projects" class="project_name"  id='getProject_name'value="{{$project_name}}"/>
                <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
 
               <input type="hidden" name="current_dir" class="current_dir_down" id="current_directory" value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
