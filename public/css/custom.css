@@ -392,6 +392,111 @@ form#AllUploadFiles {
     height: 100%;
 }
 
+.reply_ques_docs_group {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+.reply_ques_docs_group span {
+    position: absolute;
+    z-index: 9;
+    font-size: 13px;
+    top: 15px;
+    left: 15px;
+}
+
+.fstElement.fstMultipleMode.fstNoneSelected.fstActive.fstResultsOpened.fstResultsFilpped {
+    padding: 0px;
+    background: transparent;
+    box-shadow: none!important;
+    border: none;
+}
+
+.fstMultipleMode.fstActive, .fstMultipleMode.fstActive .fstResults {
+    box-shadow: none;
+}
+
+.fstElement {
+    border: none!important;
+    box-shadow: none;
+    float: left;
+    width: 100%;
+}
+
+.fstControls {
+    padding: 0px!important;
+    width: 100%!important;
+    float: left;
+}
+
+input.fstQueryInput.fstQueryInputExpanded {
+    float: left;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #d7d7d7!important;
+    padding: 12px 12px 12px 40px;
+    margin: 0px;
+    box-shadow: none!important;
+    border-bottom: none;
+}
+
+.reply_subject_section {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+span.reply_subject_title {
+    position: absolute;
+    font-size: 13px;
+    top:14px;
+    left: 10px;
+}
+
+input.reply_subject {
+    border: 1px solid #d7d7d7;
+    padding: 10px 10px 10px 70px;
+    width: 100%;
+}
+
+.reply_content_section {
+    float: left;
+    width: 100%;
+}
+
+
+textarea.reply_question_content {
+    float: left;
+    width: 100%;
+    border: 1px solid #d7d7d7;
+    height: 130px;
+    padding:10px;
+}
+
+input.reply_subject {
+    border: 1px solid #d7d7d7;
+    padding: 10px 10px 10px 70px;
+    width: 100%;
+    border-top: none!important;
+    border-bottom: none!important;
+}
+
+.cancle_reply_type {
+    float: right;
+    width: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+button.question_reply_qa.btn.btn-success {
+    margin-top: 10px;
+}
+
+.ques_create_new {
+    margin-right:3px;
+}
+
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
 }
@@ -1505,7 +1610,7 @@ canvas {
 
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */ 
 @media screen and (max-width: 500px) {
-  .header a {
+.header a {
     float: none;
     display: block;
     text-align: left;
