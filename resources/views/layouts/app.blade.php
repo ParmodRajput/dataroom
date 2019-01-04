@@ -454,54 +454,62 @@ $(document).ready(function(){
            var project_id = $('.projects_id').val();
            var project_name = $('.project_name').val();
            var get_genrate_folder = $('#folder_created').val();
-           var document_index = $('.document_indexing_count').val();
 
-           var genrate_folder = get_genrate_folder.replace(' ', '_');
+           if(get_genrate_folder !== '')
+           {
+                       
+                       var document_index = $('.document_indexing_count').val();
 
-           var getPath = path+"/"+genrate_folder; 
-           var box = $('.indexing');
-           var folder =$('#tree2');
-           
-           var html="";
-           var html1="";
-           var token =$('#csrf-token').val();
-           
-            $.ajax({
-                  type:"POST",
-                  url:"{{ Url('/') }}/create_folder/new_folder",
-                  data:{
-                    _token : token,
-                     project_id : project_id,
-                     genrate_folder : genrate_folder,
-                     path: path,
-                     document_index : document_index,
-                     getPath     : getPath
-                  },  
-              success: function (response) {  
+                       var genrate_folder = get_genrate_folder.replace(' ', '_');
 
-                if(response !== 'error')
-                  { 
-          
-                    if (!$('[data-value = "'+path+'"]').find('ul').length) {
-                         
-                        $('[data-value = "'+path+'"]').append('<ul> </ul>');
-                    }
+                       var getPath = path+"/"+genrate_folder; 
+                       var box = $('.indexing');
+                       var folder =$('#tree2');
+                       
+                       var html="";
+                       var html1="";
+                       var token =$('#csrf-token').val();
+                       
+                        $.ajax({
+                              type:"POST",
+                              url:"{{ Url('/') }}/create_folder/new_folder",
+                              data:{
+                                _token : token,
+                                 project_id : project_id,
+                                 genrate_folder : genrate_folder,
+                                 path: path,
+                                 document_index : document_index,
+                                 getPath     : getPath
+                              },  
+                          success: function (response) {  
 
-                    html1 +="<li id='projects' data-value='"+getPath+"'class='projects'><span class='doucment_name'>"+response+"</span></li>";
-                 
-                      $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
-                       $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
-                      var directory_url= path;
+                            if(response !== 'error')
+                              { 
+                      
+                                if (!$('[data-value = "'+path+'"]').find('ul').length) {
+                                     
+                                    $('[data-value = "'+path+'"]').append('<ul> </ul>');
+                                }
 
-                      DocumentTree(token,project_id);
+                                html1 +="<li id='projects' data-value='"+getPath+"'class='projects'><span class='doucment_name'>"+response+"</span></li>";
+                             
+                                  $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
+                                   $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+                                  var directory_url= path;
 
-                      data_display(token,directory_url);
+                                  DocumentTree(token,project_id);
+
+                                  data_display(token,directory_url);
 
 
 
-                  }
-          }   
-       });   
+                              }
+                      }   
+                   });   
+           }else{
+             alert('Please enter folder name');
+           }
+   
     }); 
    
   
@@ -2769,7 +2777,7 @@ $(document).on('click','.note1_doc_delete', function(){
 
        if(data_ques == 1)
        {
-           window.open("{{ Url('/') }}/project/"+project_id+"/question",'_blank');
+           window.open("{{ Url('/') }}/project/"+project_id+"/questions",'_blank');
 
        }else{
 

@@ -418,7 +418,7 @@
                    <ul class="folders"> 
                         <li>  
                           <div class="folder_tree">    
-                            <ul id="tree4">
+                            <ul id="tree3">
                               <li id="document_permission" class="document_permission" data-verify='1' data-permission="{{$projectFolderPermission}}"  <?php 
                                         if($CurrentGroupUser == 'Administrator')
                                         {
@@ -521,8 +521,9 @@
                    </div>
                 </div>
               </div>
-              <div class='projets_group_list'>
-              @foreach($groups as $groups)
+               
+
+           @foreach($groups as $groups)
 
              <?php if($groups->group_user_type !== 'Administrator')
              {?>
@@ -577,8 +578,6 @@
               </div>
             <?php }?>
          @endforeach 
-
-          </div>
               </div>
 
               </div>
@@ -684,7 +683,7 @@
 	// A $( document ).ready() block.
 	$( document ).ready(function() {
 
-		$('#tree4').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+		$('#tree3').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
          
          var clickEvent = $('.document_permission').find('span').first();
          var triggerEvent  = clickEvent.find('.shuffle').first();
@@ -777,28 +776,6 @@
 		}); 
     }
 
-
-
-  //   function getPermisssionDocumentBy(){
-
-  //   	var token = $('#csrf-token').val();
-  //       var project_id = $('#project_id').val();
-
-		// $.ajax({
-		// 	type:"POST",
-		// 	url:"{{ Url('/') }}/getDocumentByPermission",
-  //           data:{
-  //               _token : token,
-  //                project_id :project_id, 
-  //             },  
-
-		// 	success: function (response) { 
-  //                alert();
-		// 	}
-
-        
-  //   }
- 
 // create new group//
 
 	$('#group_form').submit(function (e) {
@@ -816,7 +793,8 @@
 				if (response == "success")
 				{
 					$('#create_group').modal('hide'); 
-					swal("group created successfully","", "success");
+					// swal("group created successfully","", "success");
+					location.reload();
                     getgroups();
 				}           
 			}  
@@ -855,9 +833,7 @@
                     alert('Users with the following emails were already invited ' +response);
 				} 
 
-
 			}  
-
 			
 		}); 
 	});
@@ -1468,6 +1444,8 @@ $('#hjgh').click(function(){
                             getgroups();
 
                             DocumentTree(token,project_id);
+
+                            location.reload();
                         }
  
                       }

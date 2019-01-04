@@ -27,7 +27,7 @@
 						<ul>
 							<li id='Report1'><i class="material-icons">search</i><a href="#overview">Groups overview</a></li>
 							<li id='Report2'><i class="material-icons">lock</i><a href="#access">Folder access</a></li>
-							<li id='Report3'><i class="fa fa-folder-open"></i><a href="#3">Files and folders</a></li>
+							<li id='Report3'><i class="fa fa-folder-open" style='font-size: 20px;'></i><a href="#3">Files and folders</a></li>
 							<li id='Report4'><i class="material-icons">group</i><a href="#4">Groups and users</a></li>
 							<li id='Report5'><i class="material-icons">chat</i><a href="#5">Q&A activity</a></li>
 							<li id='Report6'><i class="material-icons">history</i><a href="#">History of actions</a></li>

@@ -1,10 +1,10 @@
 
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-        <a class="navbar-brand brand-logo" href="index.html">
+        <a class="navbar-brand brand-logo" href="{{url('/')}}">
           <img src="{{url('/')}}/dist/img/prodats_logo.png" alt="logo" />
         </a>
-        <a class="navbar-brand brand-logo-mini" href="index.html">
+        <a class="navbar-brand brand-logo-mini" href="{{url('/')}}">
           <img src="{{url('/')}}/dist/img/avatar5.png" alt="logo" />
         </a>
       </div>
@@ -12,7 +12,7 @@
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown d-none d-xl-inline-block">
 
-                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#"  aria-expanded="false">
+              <a class="nav-link dropdown-toggle" id="UserDropdown" href="#"  aria-expanded="false">
               <span class="profile-text">{{ Auth::user()->name }}</span>
               <img class="img-xs rounded-circle" src="{{url('/')}}/dist/img/avatar5.png" alt="Profile image">
             </a>

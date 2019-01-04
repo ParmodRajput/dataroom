@@ -107,11 +107,12 @@ class RecyclebinController extends Controller
                                   }
 
                 $CheckDocIsFolderAsFile = Delete_Doc::where('deleted_file',$deleteEntry)->delete();
+
    
                 if($DocIdentify == '1')
                 {
 
-                    $deletedTime = $restoreDocPath['deleted_time'];
+                     $deletedTime = $restoreDocPath['deleted_time'];
 
                      Delete_Doc::where('deleted_folder',$deleteEntry)->delete();
 
@@ -119,7 +120,7 @@ class RecyclebinController extends Controller
 
                       if($getDocInFolder !=='')
                       {
-                              foreach ($getDocInFolder as $getDocInFolder) {
+                            foreach ($getDocInFolder as $getDocInFolder) {
 
                              $documentId = $getDocInFolder->id;
                              $documentPath =  $getDocInFolder->path;
@@ -148,6 +149,9 @@ class RecyclebinController extends Controller
                             $document->deleted_by  = '0';
                             $document->restored_by  = '0';
                             $document->save();
+
+
+                            Document:: where('path','LIKE',"%{$NewPath}%")->where('project_id',$projects_id)->update(['deleted_by'=>'0']);
 
                             $report = new Report();
                             $report->action = '9';
@@ -212,10 +216,8 @@ class RecyclebinController extends Controller
 
                                  $this->createThumbnail($filePathtoThumb , $getThumbpath, $thumbnail_width, $thumbnail_height, $background=false); 
                        }
-                
                           
                 }
-               
 
          }
          return "restore";
