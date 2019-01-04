@@ -419,10 +419,11 @@ form#AllUploadFiles {
 }
 
 .reply_section .fstElement {
-    border: none!important;
     box-shadow: none;
     float: left;
     width: 100%;
+     border: 1px solid #d7d7d7!important;
+    height: 47px;
 }
 
 .reply_section .fstControls {
@@ -435,11 +436,11 @@ form#AllUploadFiles {
     float: left;
     width: 100%;
     background: #fff;
-    border: 1px solid #d7d7d7!important;
     padding: 12px 12px 12px 40px;
     margin: 0px;
     box-shadow: none!important;
     border-bottom: none;
+
 }
 
 .reply_section .reply_subject_section {
@@ -482,7 +483,31 @@ form#AllUploadFiles {
     border-bottom: none!important;
 }
 
+.reply_section .cancle_reply_type {
+    float: right;
+    margin-top: 10px;
+    cursor: pointer;
+}
 
+.reply_section .question_reply_qa {
+    float: left;
+    margin-top: 10px;
+}
+
+.reply_section .reply_ques_docs_group span.reply_to {
+    position: absolute;
+    z-index: 1;
+    top: 13px;
+    left: 8px;
+    font-size: 13px;
+}
+.reply_answer_section .fstElement.fstMultipleMode.fstActive {
+    height: 40px;
+}
+
+.reply_answer_section .fstChoiceItem {
+    margin-left: 35px;
+}
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
