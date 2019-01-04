@@ -940,6 +940,7 @@ span.drag_document_texts {
     height: 34px;
     border: 1px solid #dfdfdf!important;
     float:left;
+    padding: 10px;
 }
 
  .content-wrapper.all-projects {
