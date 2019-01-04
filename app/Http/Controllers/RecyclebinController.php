@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Delete_Doc;
 use App\Project;
+use App\Report;
 use App\User;
 use App\Note;
 use App\Document;
@@ -32,6 +33,8 @@ class RecyclebinController extends Controller
 
         $projects_id = $request->projects_id;
         $GetDelFolder = Delete_Doc::where('project_id',$projects_id)->delete();
+        document::where('project_id',$projects_id)->where('deleted_by','1')->delete();
+
         $project_directory =  $request->project_directory;
         $recycleBinFolderDir = $project_directory."/RecycleBin";
         
@@ -48,8 +51,12 @@ class RecyclebinController extends Controller
      	$projects_id = $request->projects_id;
       $restoreDocPath = $request->restorePath;
 
+      
+
          foreach ($restoreDocPath as  $restoreDocPath) {
-                
+
+                $DocIdentify = $restoreDocPath['Identify'];
+
                 $NewPath = $restoreDocPath['Rpath'];
 
                 $usePath = $restoreDocPath['Rpath'];
@@ -79,10 +86,8 @@ class RecyclebinController extends Controller
                               if($folderCheckExit == 'exits')
                                {
 
-                                
                                   $get = 'exits';
                                   $folderLiseCount = $this->folderCheckExitsInDoc($NewPath,$document_Name,$CurrentDir,$get);
-
 
                                   $get_document_name = explode('/',$folderLiseCount);
                                   $NewPath        = $folderLiseCount;
@@ -101,32 +106,12 @@ class RecyclebinController extends Controller
                                       $index = intval($getIndex)+1;
                                   }
 
-                //end
-
-                if($count == 3)
+                $CheckDocIsFolderAsFile = Delete_Doc::where('deleted_file',$deleteEntry)->delete();
+   
+                if($DocIdentify == '1')
                 {
-                	 Delete_Doc::where('deleted_file',$deleteEntry)->delete();
 
-                      $document = new document();
-                            $document->project_id = $projects_id;
-                            $document->doc_index = $index;
-                            $document->document_name  = $document_Name;    
-                            $document->path = $NewPath;
-                            $document->directory_url = $CurrentDir;
-                            $document->document_status = '0';
-                            $document->type = '';
-                            $document->deleted_at = '0';
-                            $document->restored_at ='0';
-                            $document->uploaded_by = $user_id;
-                            $document->updated_by  = $user_id;
-                            $document->deleted_by = '0';
-                            $document->restored_by  = '0';
-                            $document->save();
-
-                }else
-                {
-                     
-                    $deletedTime =$restoreDocPath['deleted_time'];
+                    $deletedTime = $restoreDocPath['deleted_time'];
 
                      Delete_Doc::where('deleted_folder',$deleteEntry)->delete();
 
@@ -164,12 +149,40 @@ class RecyclebinController extends Controller
                             $document->restored_by  = '0';
                             $document->save();
 
+                            $report = new Report();
+                            $report->action = '9';
+                            $report->document_path = $NewPath;
+                            $report->Auth = Auth::user()->id;
+                            $report->save();
 
-                            // update notes indexing
 
-                            // $getDocumentId = $document->id;
+                }else{
+                     
+                     
+                      Delete_Doc::where('deleted_file',$deleteEntry)->delete();
 
-                            // Note::where('document_id',$NewPath)->update(['restored_by' =>$user_id]);
+                      $document = new document();
+                            $document->project_id = $projects_id;
+                            $document->doc_index = $index;
+                            $document->document_name  = $document_Name;    
+                            $document->path = $NewPath;
+                            $document->directory_url = $CurrentDir;
+                            $document->document_status = '0';
+                            $document->type = '';
+                            $document->deleted_at = '0';
+                            $document->restored_at ='0';
+                            $document->uploaded_by = $user_id;
+                            $document->updated_by  = $user_id;
+                            $document->deleted_by = '0';
+                            $document->restored_by  = '0';
+                            $document->save();
+
+                            $report = new Report();
+                            $report->action = '10';
+                            $report->document_path = $NewPath;
+                            $report->Auth = Auth::user()->id;
+                            $report->save();
+
                             
                 }
                               
@@ -183,8 +196,6 @@ class RecyclebinController extends Controller
                 }
                 else{
                       
-                       
-
                        $FileExtension = $this->getExtension($NewPath);
 
                        if($FileExtension == 'jpg' || $FileExtension == 'jpeg' ||$FileExtension == 'png' ){
@@ -223,28 +234,29 @@ class RecyclebinController extends Controller
 
                 $OldPath = $deleteDocPath['Cpath'];
 
+                $DocIdentify = $deleteDocPath['Identify'];
+
                 $getRecycleDocName = explode('/',$OldPath);
 
                 $deleteEntry = end($getRecycleDocName);
 
                 $RemovedGet = explode('.',$deleteEntry);
+
                 $count = sizeof($RemovedGet);
 
-                if($count == 3)
+
+                if($DocIdentify == 0)
                 {
+
                 	 Delete_Doc::where('project_id',$projects_id)->where('deleted_file',$deleteEntry)->delete();
 
-                	 Document::where('path',$NewPath)->where('project_id',$projects_id)->where('restored_by','0')->delete();
-
-                     Storage::delete($OldPath);
-                	 // Delete_Doc::where('deleted_file',$deleteEntry)->delete();
-                	 //document::where('path',$NewPath)->update(['restored_by' =>$user_id]);
-                }else
-                {
+                   Storage::delete($OldPath);
+                	
+                }else{
 
                      Delete_Doc::where('project_id',$projects_id)->where('deleted_folder',$deleteEntry)->delete();
 
-                     Document::where('path',$NewPath)->where('project_id',$projects_id)->where('restored_by','0')->delete();
+                     Document:: where('path','LIKE',"%{$NewPath}%")->where('project_id',$projects_id)->where('restored_by','0')->delete();
 
                      Storage::deleteDirectory($OldPath);
                 }
@@ -290,6 +302,7 @@ class RecyclebinController extends Controller
 
     public function folderCheckExitsInDoc($checkFolderIsExitInDir,$folderName,$current_directory,$get){
 
+
        for ($i=2; $i<=1000; $i++) { 
 
           if($get == 'exits')
@@ -300,7 +313,6 @@ class RecyclebinController extends Controller
 
               if($count == '1')
               {
-
 
                  $getDocIs = explode('.',$folderName);
                  $countDoc = count($getDocIs);

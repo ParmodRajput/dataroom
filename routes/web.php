@@ -158,8 +158,8 @@ Route::post('/delete_question','QuestionsController@deleteQuestions');
  // Reports route start
 
 //reports route.
- Route::get('project/{project_id}/reports','ReportsController@Report')->middleware('auth');
-
+ Route::get('project/{project_id}/reports','ReportsController@getDocsAndGroups')->middleware('auth');
+ Route::get('project/{project_id}/reports?folder-access','ReportsController@ReportOverview');
 
  // Reports route end
 

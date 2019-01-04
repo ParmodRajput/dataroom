@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Project;
+use App\Report;
 use App\User;
 use App\Group;
 use App\Delete_Doc;
@@ -188,7 +189,7 @@ public function getDocument($project_id)
 
    public function getPermission($path)         
     {         
-              
+    
               $document_permission1 ='';
 
               $getDocumentId = Document::where('path',$path)->pluck('id');
@@ -417,8 +418,16 @@ public function createFolder(Request $request) {
  $storeFolder->deleted_by  = '0';
  $storeFolder->restored_by = '0';
  $storeFolder->save();
-
+ 
  $getCurrentDocumentId = $storeFolder->id;
+ // Save record
+
+ $report = new Report();
+ $report->action = '1';
+ $report->document_path = $store_path;
+ $report->Auth = $authId;
+ $report->save();
+ 
 
  $this->AllActionStorePermission ($current_directory,$getCurrentDocumentId,$project_id);
 
@@ -514,6 +523,13 @@ public function uploadFile(Request $request) {
                     $document->save();
 
                     $getCurrentDocumentId = $document->id;
+                    //save record
+
+                    $report = new Report();
+                    $report->action = '2';
+                    $report->document_path = $fullPath;
+                    $report->Auth = $uploaded_by;
+                    $report->save();
 
                     $this->AllActionStorePermission ($current_directory,$getCurrentDocumentId,$project_id);
 
@@ -717,7 +733,7 @@ public function deleteDocument(Request $request)
 
           $timestamp = time();
 
-          $getDocInFolder = document::where('path','LIKE',"%{$DeletePathOne}%")->update(['deleted_at' => $timestamp,'restored_at'=>'0']);
+          $getDocInFolder = document::where('path','LIKE',"%{$DeletePathOne}%")->update(['deleted_at' => $timestamp,'restored_at'=>'0' ,'deleted_by'=>'1']);
 
           //$status = Storage::deleteDirectory($DeletePathOne);
           $recycleBinPath = "public/documents/".$firstPara.'/'.$secondPara."/RecycleBin/";
@@ -744,6 +760,16 @@ public function deleteDocument(Request $request)
           $recycle->restored_time = "0"; 
           $recycle->project_id = $projects_id;
           $recycle->save();
+
+
+          
+          //save record
+
+          $report = new Report();
+          $report->action = '5';
+          $report->document_path = $DeletePathOne;
+          $report->Auth = Auth::user()->id;
+          $report->save();
 
           $k = 0;
 
@@ -781,6 +807,13 @@ public function deleteDocument(Request $request)
           $recycle->project_id = $projects_id;
           $recycle->save();
 
+
+          $report = new Report();
+          $report->action = '6';
+          $report->document_path = $DeletePathOne;
+          $report->Auth = Auth::user()->id;
+          $report->save();
+
           $k = 1;
      }
  } 
@@ -791,29 +824,46 @@ public function deleteDocument(Request $request)
 public function download (Request $request){
  
   // $zip = new ZipArchive;
+  $DocPath = $request->download;
   $path =  storage_path()."/app/".$request->download;
   $file = explode('/',$request->download);
   $file_name = end($file);
-   if (!is_dir($path)) {
-   $file = Storage::get($request->download);
-  $mimetype = Storage::mimeType($request->download);
-  $headers = array(
-    'Content-Type'=> 'application/octet-stream',   
-  );
-   return response()->download($path,$file_name,$headers);
 
-}
+     if (!is_dir($path)) {
+           $file = Storage::get($request->download);
+          $mimetype = Storage::mimeType($request->download);
+          $headers = array(
+            'Content-Type'=> 'application/octet-stream',   
+          );
+         
 
-else{
+          // save folder download record 
+
+              $report = new Report();
+              $report->action = '26';
+              $report->document_path = $DocPath;
+              $report->Auth = Auth::user()->id;
+              $report->save();
+
+
+           return response()->download($path,$file_name,$headers);
+
+    }else{
   
-  $headers = array(
-    'Content-Type'=> 'application/octet-stream',   
-  );
-  $this->zipDir(storage_path()."/app/".$request->download,storage_path()."/app/".$request->download.".zip");
+            $headers = array(
+              'Content-Type'=> 'application/octet-stream',   
+            );
+            $this->zipDir(storage_path()."/app/".$request->download,storage_path()."/app/".$request->download.".zip");
 
-  return response()->download(storage_path()."/app/".$request->download.".zip",$file_name.".zip",$headers);
+                $report = new Report();
+                $report->action = '25';
+                $report->document_path = $DocPath;
+                $report->Auth = Auth::user()->id;
+                $report->save();
 
-}
+            return response()->download(storage_path()."/app/".$request->download.".zip",$file_name.".zip",$headers);
+
+        }
 }
 
 
@@ -826,7 +876,6 @@ public function move_documents(Request $request){
   $fileUrl    = $request->moveFile;
 
   $directoryPath = $request->directoryPath;
-
   $project_id = $request->projects_id;
   $get        = explode('/',$fileUrl);
   $file_name  = end($get);
@@ -860,7 +909,7 @@ public function move_documents(Request $request){
           $index = intval($getIndex)+1;
       }
 
-               $document = new document();
+                    $document = new document();
                     $document->project_id = $project_id;
                     $document->doc_index = $index;
                     $document->document_name  = $file_name;    
@@ -876,11 +925,17 @@ public function move_documents(Request $request){
                     $document->restored_by  = '0';
                     $document->save();
 
+                // save rename record 
+                    $report = new Report();
+                    $report->action = '11';
+                    $report->document_path = $fileUrl;
+                    $report->Auth = Auth::user()->id;
+                    $report->save();
+
 
   document::where('path',$fileUrl)->where('project_id',$project_id)->delete();
 
   return "moved";
-
 }
 
  //Copy document //
@@ -890,7 +945,9 @@ public function copy_documents(Request $request){
     $user_id    = Auth::user()->id;   
     $projects_id = $request->projects_id;
     $pasted_directory = $request->pasted_directory;
+
     $copied_directory = $request->copied_directory;
+
     $get = explode('/',$copied_directory);
     $editableDocumentName = end($get);
     $src = storage_path()."/app/".$copied_directory;
@@ -901,6 +958,12 @@ public function copy_documents(Request $request){
         $dst = storage_path()."/app/".$pasted_directory.'/'. $editableDocumentName;
         $this->checkFolderIsExits($src,$dst,$projects_id,$pasted_directory);
         $this->copy_status = true;
+
+        $report = new Report();
+        $report->action = '12';
+        $report->document_path = $copied_directory;
+        $report->Auth = Auth::user()->id;
+        $report->save();
 
         if ($this->copy_status = true) {    
 
@@ -918,7 +981,13 @@ public function copy_documents(Request $request){
               return 'copied file';
          }
 
-      }
+          $report = new Report();
+          $report->action = '13';
+          $report->document_path = $copied_directory;
+          $report->Auth = Auth::user()->id;
+          $report->save();
+
+    }
 
 }
 
@@ -929,7 +998,7 @@ public function rename_documents(Request $request){
     $editableDocumentName = $request->editableDocumentName;
 
     $editableDocumentUrl = $request->editableDocumentUrl;
-    
+
     $renameDocumentFullPath = $request->renameDocumentFullPath;
 
     $renameThumbnailImagePath = $request->renameThumbnailImagePath;
@@ -953,7 +1022,14 @@ public function rename_documents(Request $request){
          
          $new_path = $editableDocumentUrl.'/'. $editableDocumentName;
          $document_name = $editableDocumentName;
-         //$thumbnailPath = $editableDocumentUrl.'/thumbnail_img/'. $editableDocumentName;
+
+          $report = new Report();
+          $report->action = '3';
+          $report->document_path = $renameDocumentFullPath;
+          $report->Auth = Auth::user()->id;
+          $report->save();
+ 
+        
     }
     else{
            
@@ -969,24 +1045,32 @@ public function rename_documents(Request $request){
                  Storage::move($thumbnailOldPath,$thumbnailPath);
          }
 
+
+          $report = new Report();
+          $report->action = '4';
+          $report->document_path = $renameDocumentFullPath;
+          $report->Auth = Auth::user()->id;
+          $report->save();
+
+
     }
  
 
     $getDocInFolder = document::where('directory_url','LIKE',"%{$renameDocumentFullPath}%")->get();
 
-     
-  foreach ($getDocInFolder as $getDocInFolder) {
+       
+    foreach ($getDocInFolder as $getDocInFolder) {
 
-     $documentId = $getDocInFolder->id;
-     $documentPath =  $getDocInFolder->path;
-     $documentDirUrl = $getDocInFolder->directory_url;
+       $documentId = $getDocInFolder->id;
+       $documentPath =  $getDocInFolder->path;
+       $documentDirUrl = $getDocInFolder->directory_url;
 
-     $updateDocumentPath = str_replace($renameDocumentFullPath, $new_path, $documentPath); 
-     $updateDocumentDirUrl = str_replace($renameDocumentFullPath, $new_path, $documentDirUrl);
+       $updateDocumentPath = str_replace($renameDocumentFullPath, $new_path, $documentPath); 
+       $updateDocumentDirUrl = str_replace($renameDocumentFullPath, $new_path, $documentDirUrl);
 
-     document::where('path',$documentPath)->update(['path' => $updateDocumentPath,'directory_url'=>$updateDocumentDirUrl]);
+       document::where('path',$documentPath)->update(['path' => $updateDocumentPath,'directory_url'=>$updateDocumentDirUrl]);
 
-  }  
+    }  
 
     Storage::move($renameDocumentFullPath,$new_path);
 
@@ -1155,7 +1239,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
    public function Folder_copy($src,$dst,$projects_id,$pasted_directory) { 
 
 
-
        $permission_pasted_dir = $pasted_directory;
 
        $user_id = Auth::user()->id;   
@@ -1295,11 +1378,11 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
         $return = array();
         $project_id = $project_id;
         $project_folders = Storage::directories($zip_path);
-
         $project_file = Storage::files($zip_path);
+    
         $user_id  = Auth::user()->id;
 
-        foreach ( $project_file as $value) {
+        foreach ($project_file as $value) {
 
           $getIndex =$this->getIndexOfDocument($project_id,$zip_path); 
           $getFileName = explode('/',$value);
@@ -1356,11 +1439,10 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
             }
       
         if ($project_folders) {
+
           foreach ($project_folders as $folder) {
             
             $getFolderName = explode('/',$folder);
-            // $getFolderDirectory = array_pop($getFolderName);
-            // $FolderDirectory   = implode('/',$getFolderName);
             $folderName  = end($getFolderName);
 
             if($folderName == 'thumbnail_img')
@@ -1403,8 +1485,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
             $return[$folder] = $this->get_Zip_Documents($folder,$project_id);
             }
-
-
          }
       }
         return $return;
@@ -1426,93 +1506,98 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
         $path = storage_path()."/app/".$extractDocumentPath;
         $project_id  = $request->project_id;
       
-        if($zip->open($path) == TRUE) {
+       if($zip->open($path) == TRUE) 
+       {
 
-        $dir_zip = trim($zip->getNameIndex(0), '/');
+                    $dir_zip = trim($zip->getNameIndex(0), '/');
 
-        $getFolderName =  explode('/',$dir_zip);
+                    $getFolderName =  explode('/',$dir_zip);
 
-        $zipFolder = $getFolderName[0];
-     
-        $address = __DIR__;
+                    $zipFolder = $getFolderName[0];
+                 
+                    $address = __DIR__;
 
-        $zip->extractTo(storage_path()."/app/".$direcctoryName);
-        
-        $zip_path = storage_path()."/app/".$direcctoryName;
+                    $zipFolderFullPath = $direcctoryName.'/'.$zipFolder;
 
-        $zip->close();
+                    if(Storage::exists($zipFolderFullPath))
+                     {
+                        $get = 'exits';
+                        $folderLiseCount = $this->folderCheckExitsInDoc($direcctoryName,$zipFolder,$direcctoryName,$get);
 
-        $zipFolderFullPath = $direcctoryName.'/'.$zipFolder;
-        
-        $getIndex =$this->getIndexOfDocument($project_id,$direcctoryName);
+                        $get_document_name = explode('/',$folderLiseCount);
+                        $store_path        = $folderLiseCount;
+                        $document_name_exit     = end($get_document_name);
 
-            if($getIndex == ''){
+                        $zipFolder = $document_name_exit;
 
-                  $index = 1; 
+                        Storage::makeDirectory($folderLiseCount);
 
-              }else{
+                        $zip->extractTo(storage_path()."/app/".$folderLiseCount);
 
-             $index = intval($getIndex)+1;
 
-          }
-          
-        if($zipFolder !== 'thumbnail_img')  
-        {
-           $document = new document();
+                        $zip_path = storage_path()."/app/".$folderLiseCount;
 
-                    $document->project_id = $project_id;
-                    $document->doc_index = $index;
-                    $document->document_name  = $zipFolder;    
-                    $document->path = $zipFolderFullPath;
-                    $document->directory_url = $direcctoryName;
-                    $document->document_status = '1';
-                    $document->type = '';
-                     $document->deleted_at = '0';
-                    $document->restored_at ='0';
-                    $document->uploaded_by = $user_id;
-                    $document->updated_by  = $user_id;
-                    $document->deleted_by = '0';
-                    $document->restored_by  = '0';
-                    $document->save();
-        }
+                        $zipFolderFullPath = $folderLiseCount;
 
-        Storage::makeDirectory($zipFolderFullPath.'/thumbnail_img');           
-        
+                     }else{
 
-        $this->get_Zip_Documents($zipFolderFullPath,$project_id);
+                                  $zip->extractTo(storage_path()."/app/".$direcctoryName);                                
+                                  $zip_path = storage_path()."/app/".$direcctoryName;
 
-        echo 'ok';
+                           }
+
+                                  $zip->close();
+                                  $getIndex =$this->getIndexOfDocument($project_id,$direcctoryName);
+
+                                      if($getIndex == ''){
+
+                                            $index = 1; 
+
+                                        }else{
+
+                                       $index = intval($getIndex)+1;
+
+                                    }
+                                    
+                                  if($zipFolder !== 'thumbnail_img')  
+                                  {
+                                     $document = new document();
+
+                                              $document->project_id = $project_id;
+                                              $document->doc_index = $index;
+                                              $document->document_name  = $zipFolder;    
+                                              $document->path = $zipFolderFullPath;
+                                              $document->directory_url = $direcctoryName;
+                                              $document->document_status = '1';
+                                              $document->type = '';
+                                              $document->deleted_at = '0';
+                                              $document->restored_at ='0';
+                                              $document->uploaded_by = $user_id;
+                                              $document->updated_by  = $user_id;
+                                              $document->deleted_by = '0';
+                                              $document->restored_by  = '0';
+                                              $document->save();
+                                  }
+
+                                  Storage::makeDirectory($zipFolderFullPath.'/thumbnail_img');           
+                                  
+                                  $this->get_Zip_Documents($zipFolderFullPath,$project_id);
+
+                                    $report = new Report();
+                                    $report->action = '27';
+                                    $report->document_path = $extractDocumentPath;
+                                    $report->Auth = Auth::user()->id;
+                                    $report->save();
+
+                                  echo 'ok';
+
+                    
 
        }
      else{
            echo 'failed';
       }
    }
-
- 
-   // {
-   //  $zip = new ZipArchive();
-   //  $extractDocumentPath = $request->extractDocumentPath; 
-   //  $getDirectoryName = explode('/',$extractDocumentPath);
-   //  array_pop($getDirectoryName);
-   //  $direcctoryName       = implode('/',$getDirectoryName);
-   //  $path = storage_path()."/app/".$extractDocumentPath; 
-
-
-
-   //        if ($zip->open($path)) 
-   //        { 
-   //             for($i = 0; $i < $zip->numFiles; $i++) 
-   //             {   
-   //                  echo 'Filename: '. $zip->getNameIndex($i) . '<br />'; 
-   //             } 
-   //        } 
-   //        else 
-   //        { 
-   //             echo 'Error reading zip-archive!'; 
-   //        } 
-
-   //      }
 
 
    // create thumnail image 

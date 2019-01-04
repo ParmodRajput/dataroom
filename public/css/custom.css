@@ -32,7 +32,6 @@ body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden;}
 ul.folders{ height:520px; overflow-x: hidden;}
 
 .document_scroll_done{
-     overflow:scroll;
      overflow-x: hidden;
 }
 
@@ -344,7 +343,7 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
 
 .subject_section span.subject_title {
     font-size: 13px;
-    width: 16%;
+    width: 5%;
     position: absolute;
     top:10px;
     left:14px;
@@ -1215,13 +1214,13 @@ span.radio_down_content {float: left; margin: 0 0 0 24px;}
 
 /*permission modal  date-21 nov 2018*/
 
-.left_section{ float:left;  width:300px; max-width: 20%;}
-.left_section ul{  margin:0px; padding:0px;}
-.left_section ul li{ display:block; font-size:11px; padding-left:5px; padding-top:5px; border-top:1px solid #dfdfdf;}
+#document_permission_modal .left_section{ float:left;  width:300px; max-width: 20%;}
+#document_permission_modal .left_section ul{  margin:0px; padding:0px;}
+#document_permission_modal .left_section ul li{ display:block; font-size:11px; padding-left:5px; padding-top:5px; border-top:1px solid #dfdfdf;}
 .select_group_and_user ul li:hover{background:#18cad7!important}
 .select_group_and_user ul li:hover a{ color:#fff;}
-.left_section ul li a{ color:#9c9c9c; font-size:15px;  text-decoration:none;}
-.left_section ul li a i{ margin-right:5px; float:left;}
+#document_permission_modal .left_section ul li a{ color:#9c9c9c; font-size:15px;  text-decoration:none;}
+#document_permission_modal .left_section ul li a i{ margin-right:5px; float:left;}
 .right_table_section{ float:left;  margin-left:15px; border:1px solid #dfdfdf; width:calc(100% - 300px); height:auto; 
 background:#ffffff;     max-width: 78%;}
 
@@ -1837,6 +1836,8 @@ p.reply_content_ques {
 .loader14 .loader-inner .box-3{top:auto;left:auto;right:10px;bottom:10px;transform-origin:-4px -4px;-webkit-animation:loading-143 2s infinite cubic-bezier(.5,0,.5,1);animation:loading-143 2s infinite cubic-bezier(.5,0,.5,1)}
 .loader14 .loader-inner .box-4{top:auto;bottom:10px;transform-origin:20px -4px;-webkit-animation:loading-144 2s infinite cubic-bezier(.5,0,.5,1);animation:loading-144 2s infinite cubic-bezier(.5,0,.5,1)}
 .loader14 .text{display:block;font-size:12px;color:#00bee0;text-align:center}
+
+
 @-webkit-keyframes loading-14{
     0%{transform:rotate(90deg)}
     50%{transform:rotate(180deg)}
@@ -2060,3 +2061,16 @@ p.subject_ques {
     margin-left: 40%;
 }
 
+/*Report page*/
+
+    .reports_record .left_section{ float:left; width:100%;}
+    .reports_record .left_section ul{ margin:0px; padding: 0px; font-size: 13px;}
+    .reports_record .left_section ul li{ width: 100%;  display: inline-block; list-style: none; border-bottom: 1px solid gray;}
+    .reports_record .left_section ul li a{ float:left; width: 100%;  color:#333; padding:8px 10px; text-decoration:none; font-size:14px;}
+    .listofgroup {
+    
+       background: #F2F2F2;
+     }
+
+     
+/*end*/

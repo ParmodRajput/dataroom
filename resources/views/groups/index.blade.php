@@ -15,7 +15,7 @@
 
             <div class="btn_upload">
                 <button class="btn btn-success btn-block create_new_group" data-toggle="modal" data-target="#create_group">New Group
-							<i class=""></i>
+					<i class=""></i>
 				</button>
             </div>
 
@@ -42,7 +42,7 @@
                                   </li>
                               </ul>
                       </div>
-                  </div>
+                </div>
 
                   @if(checkUserType($project_name) == 'Administrator')
                   <div class="btn_upload" data-toggle="modal" data-target="#document_permission_modal">
@@ -521,9 +521,8 @@
                    </div>
                 </div>
               </div>
-               
-
-           @foreach($groups as $groups)
+              <div class='projets_group_list'>
+              @foreach($groups as $groups)
 
              <?php if($groups->group_user_type !== 'Administrator')
              {?>
@@ -578,11 +577,11 @@
               </div>
             <?php }?>
          @endforeach 
+
+          </div>
               </div>
 
               </div>
-
-
               </div>
         </div>
 
