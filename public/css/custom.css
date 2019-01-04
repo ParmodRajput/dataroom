@@ -502,12 +502,21 @@ form#AllUploadFiles {
     font-size: 13px;
 }
 .reply_answer_section .fstElement.fstMultipleMode.fstActive {
-    height: 40px;
+    height: 42px;
 }
 
 .reply_answer_section .fstChoiceItem {
     margin-left: 35px;
 }
+
+.ques_create_new { margin-right: 5px;}
+
+.question_containor_fir h5 {  font-size:14px; line-height:18px;}
+.question_block_first h4 { font-size: 14px;}
+
+span.index-and-name { font-size: 14px; text-transform: capitalize;  margin-left:5px;
+    font-weight: 500;}
+
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -734,10 +743,6 @@ span.drag_document_texts {
 .black_notes{ margin-top:5px; }
 .black_permission{margin-top:5px;}
 
-span.index-and-name {
-    margin-left: 29px;
-}
-
 .add_frd {
     float: left;
     width: 100%;
@@ -863,6 +868,7 @@ span.index-and-name {
     float: left;
     width: 100%;
     margin: 4px 0px;
+    font-size:12px;
 }
 
 .fav_filter {
@@ -888,11 +894,20 @@ span.index-and-name {
      margin: 5px 0 0 0;
 }
 
-.search_document_Byname i {
+.search_document_Byname i.fas.fa-search {
+    background: #000;
+    width: 33px;
+    height: 33px;
+    text-align: center;
+    float: left;
+    margin-top: 0px;
+    top: 0;
+    line-height: 33px;
+    border-radius: 2px;
+    right: 10px;
+    color: #fff;
     position: absolute;
-    right: 8px;
-    top: 8px;
-    color: #dfdfdf;
+    cursor: pointer;
 }
 
 .upone i {
@@ -924,6 +939,7 @@ span.index-and-name {
 .search_document_Byname input {
     height: 34px;
     border: 1px solid #dfdfdf!important;
+    float:left;
 }
 
  .content-wrapper.all-projects {
@@ -1373,7 +1389,7 @@ background:#ffffff;     max-width: 78%;}
 
 a.btn.btn_export_doc {
     float: left;
-    margin-left: 15px;
+    margin-left: 17px;
 }
 
 .btn.btn_dote_doc {
