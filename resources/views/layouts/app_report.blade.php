@@ -169,6 +169,7 @@
 
                     $('.all_action').css('height',window_height-90);
                     $('.report_display').css('height',window_height-90);
+                    $('.content-wrapper').css('height',window_height-90);
 
                     $('#tree4').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
                   
@@ -226,7 +227,7 @@
         },
         success:function(response){
 
-          var html ='<li class="btn-block new_data_room" data-toggle="modal" data-target="#create_project"><span class="new_room"><i class="fas fa-plus"></i></span> Create New Project<i class=""></i> </li>';
+          var html ='<li class="btn-block new_data_room" data-toggle="modal" data-target="#create_project"><span class="new_room"><i class="fas fa-plus"></i></span> Create New Project<i class=""></i></li>';
 
            $.each(response,function(key, value){
 
@@ -250,6 +251,7 @@
   $('.all_action').addClass('hidden'); 
   $('.all_action input[type="checkbox"]').prop('checked',false);
   $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+  $('.groupAndUsers').addClass('hidden');
   
 
  });
@@ -268,23 +270,28 @@
   $('.report_display').addClass('hidden'); 
   $('.all_action input[type="checkbox"]').prop('checked',false);
   $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+  $('.groupAndUsers').addClass('hidden');
 
 
  });
 
 $(document).on('click','#Report4',function(){
 
-    $('.group_list_reports').removeClass('hidden');
+    getGroupAndUser();
+    
+    $('.groupAndUsers').removeClass('hidden');
     $('.folder_and_file_tree_qa').addClass('hidden');
     $('.all_action').addClass('hidden');
     $('.report_display').addClass('hidden'); 
     $('.all_action input[type="checkbox"]').prop('checked',false);
     $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+    $('.group_list_reports').addClass('hidden');
 
  });
 
 $(document).on('click','#Report5',function(){
 
+    $('.groupAndUsers').addClass('hidden');
     $('.group_list_reports').removeClass('hidden');
     $('.folder_and_file_tree_qa').addClass('hidden');
     $('.all_action').addClass('hidden');
@@ -302,6 +309,7 @@ $(document).on('click','#Report6',function(){
     $('.report_display').addClass('hidden'); 
     $('.all_action input[type="checkbox"]').prop('checked',false);
     $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+    $('.groupAndUsers').addClass('hidden');
 
 
 });
@@ -424,6 +432,9 @@ $(document).on('click','#Report6',function(){
 
         event.preventDefault();
         event.stopPropagation(); 
+        
+        $('.document_permission').children("span").removeClass("docActive"); 
+        $(this).children("span").addClass("docActive");
   
         var doc = $(this).data('value');
 
@@ -450,7 +461,7 @@ $(document).on('click','#Report6',function(){
 
                     var token = $('#csrf-token').val();  
 
-                    var html = "<div class='indexingOfReports col-md-12'><div class='auther_main col-md-4'>Author</div><div class='action_main col-md-3'>Action</div> <div class='description_main col-md-3'>Description</div><div class='time_at_main col-md-2'>Date and time</div></div>";
+                    var html = "<div class='indexingOfReports col-md-12'><div class='auther_main col-md-4'><h4>Author</h4></div><div class='action_main col-md-3'><h4>Action</h4></div> <div class='description_main col-md-3'><h4>Description</h4></div><div class='time_at_main col-md-2'><h4>Date and time</h4></div></div>";
 
                        $.ajax({
 
@@ -484,6 +495,78 @@ $(document).on('click','#Report6',function(){
 
                       });
           }
+
+
+          function getGroupAndUser(){
+
+              var token = $('#csrf-token').val();
+              var project_id = $('.project_id_report').val();
+            
+              $.ajax({
+                type:"POST",
+                url:"{{ Url('/') }}/get_allgroups",
+                      data:{
+                          _token : token,
+                           project_id :project_id,       
+                        },  
+
+                success: function (response) { 
+
+                      var html = "";
+                    
+                      $.each( response, function( key, value) {
+                                  
+                                   var group_id = value.groups.id;
+                                   var GroupUserRole = value.groups.group_user_type;
+                                   var group_name = value.groups.group_name;
+                                   var permission  = value.groups.permission;
+
+
+                          html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-group_type='"+GroupUserRole+"' data-per='"+permission+"' data-value='"+group_id+"'><span class=' toggle_user'>";
+                                         
+                                        if( value.users != '')
+                                        {
+                               html+="<i class='fa fa-caret-down '></i>";
+                                        }
+                              
+                              html+="</span></form><a href='javascript:void(0)' data-value='"+group_id+"' id='' class='groups'><i class='fas fa-user-cog'></i> "+value.groups.group_name+"</a></div></div></div><div class='users_list'>";
+
+                                    $.each( value.users, function( key, value){
+
+                                        html+="<div class='drop_box_document'><div class='document_index index-drop' ><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='users_select'></form>";
+
+                                        if(GroupUserRole == 'Administrator')
+                                        {
+                                          html+='<i class="fas fa-user-shield"></i>';
+
+                                        }else{
+
+                                          html+="<i class='fa fa-user' aria-hidden='true'></i>";
+                                        }   
+
+                                        html+=" <a href='javascript:void(0)' id='' class='groups'>"+value+"</a></div></div></div>";
+                                    });
+
+                                    html+="</div>";
+
+                                                          
+                              });
+
+                           $('.groupAndUsers').html(html);  
+
+                    }
+
+
+                });
+
+          }
+
+
+        $(document).on('click','.toggle_user',function(){
+      
+              $(this).parent().parent().parent().parent().next().toggle();
+
+        });
 
 </script>
 
