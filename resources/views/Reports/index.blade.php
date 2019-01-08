@@ -77,6 +77,8 @@
                         </ul>
                 	</div>
                 </div>
+                <div class="groupAndUsers hidden">
+                </div>
                 <div class='all_action hidden'>
                   <div class='actions_check_record'>
                     <h4>All Action</h4>

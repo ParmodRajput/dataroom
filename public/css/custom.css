@@ -132,7 +132,7 @@ a.nav-link b{/* float:left; width:100%;*/}
 .content-block:hover ul a{ text-decoration: none; color:#18cad7; }
 .content-wrapper.all-projects button.search{ background:#18cad7;  }
 #create_project .modal-dialog .modal-header h3 { font-size:20px; text-align:center; float:left; width: 100%;}
-.document_index{ word-wrap: break-word; white-space: normal;}
+.user_gruoups_list .document_index{ word-wrap: break-word; white-space: normal;}
 #uploadForm {border-top:#F0F0F0 2px solid;background:#FAF8F8;padding:10px;}
 #uploadForm label {margin:2px; font-size:1em; font-weight:bold;}
 .demoInputBox{padding:5px; border:#F0F0F0 1px solid; border-radius:4px; background-color:#FFF;}
@@ -1779,9 +1779,7 @@ span.subject_title {
 .reply_answer_section {
     margin-top: 20px;
 }
-.waiting_reply{
-    color: red;
-}
+
 .in_progress_ques{
     color: green;
 
@@ -2135,4 +2133,29 @@ p.subject_ques {
 
 .document_permission {
     cursor: pointer;
+}
+
+.group_overview {
+    background: #F2F2F2;
+}
+
+.reports_record .users_list {
+     display: none; 
+}
+
+.reports_record .document_index{ word-wrap: break-word; white-space: normal; margin-top: 10px;}
+
+.docActive{
+
+    color:blue;
+}
+
+button.waiting_reply {
+    float: right;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 12px;
 }
