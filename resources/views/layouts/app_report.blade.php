@@ -167,18 +167,19 @@
                    var window_width = $(window).width();
                    var window_height = $(window).height();
 
-                   $('.reply_section').css('height',window_height-90);
+                    $('.all_action').css('height',window_height-90);
+                    $('.report_display').css('height',window_height-90);
 
                     $('#tree4').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
-
-                    var clickEvent = $('.document_permission').find('span').first();
-                    var triggerEvent  = clickEvent.find('.shuffle').first();
-                    setTimeout(function(){ triggerEvent.trigger('click') },0);
                   
                     var clickEvent1 = $('.reports_record').find('#Report1');
                     setTimeout(function(){ clickEvent1.trigger('click') },10);
 
                     $('.document_scroll_done').css('height',window_height-210);
+
+                    var getProjectPath = $('.document_permission').first().data('value');
+
+                    $('.reports_record #project_path').val(getProjectPath);
 
                  });  
 
@@ -244,18 +245,245 @@
  $(document).on('click','#Report1',function(){
 
   $('.group_list_reports').removeClass('hidden');
- $('.folder_and_file_tree_qa').addClass('hidden');
+  $('.folder_and_file_tree_qa').addClass('hidden');
+  $('.report_display').addClass('hidden');
+  $('.all_action').addClass('hidden'); 
+  $('.all_action input[type="checkbox"]').prop('checked',false);
+  $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+  
 
  });
 
 
- $(document).on('click','#Report2',function(){
+ $(document).on('click','#Report3',function(){
+
+  var clickEvent = $('.document_permission').find('span').first();
+  var triggerEvent  = clickEvent.find('.shuffle').first();
+  setTimeout(function(){ triggerEvent.trigger('click') },0);
+
 
   $('.folder_and_file_tree_qa').removeClass('hidden');
   $('.group_list_reports').addClass('hidden');
+  $('.all_action').addClass('hidden');
+  $('.report_display').addClass('hidden'); 
+  $('.all_action input[type="checkbox"]').prop('checked',false);
+  $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+
 
  });
 
+$(document).on('click','#Report4',function(){
+
+    $('.group_list_reports').removeClass('hidden');
+    $('.folder_and_file_tree_qa').addClass('hidden');
+    $('.all_action').addClass('hidden');
+    $('.report_display').addClass('hidden'); 
+    $('.all_action input[type="checkbox"]').prop('checked',false);
+    $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+
+ });
+
+$(document).on('click','#Report5',function(){
+
+    $('.group_list_reports').removeClass('hidden');
+    $('.folder_and_file_tree_qa').addClass('hidden');
+    $('.all_action').addClass('hidden');
+    $('.report_display').addClass('hidden'); 
+    $('.all_action input[type="checkbox"]').prop('checked',false); 
+    $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+
+});
+
+$(document).on('click','#Report6',function(){
+
+    $('.all_action').removeClass('hidden');
+    $('.group_list_reports').addClass('hidden');
+    $('.folder_and_file_tree_qa').addClass('hidden');
+    $('.report_display').addClass('hidden'); 
+    $('.all_action input[type="checkbox"]').prop('checked',false);
+    $('.groups_check_record input[type="checkbox"]').prop('checked',false);
+
+
+});
+
+  $(document).on('click','#all_action_check',function(){
+
+     $('.all_action input:checkbox').prop('checked', this.checked); 
+
+  });
+
+
+  $(document).on('click','#all_group_check',function(){
+
+     $('.group_list_reports input:checkbox').prop('checked', this.checked); 
+
+  });
+
+
+// display action
+
+  $(document).on('click','.all_action input[type="checkbox"]', function() {
+
+    var numberOfChecked = $('.all_action input:checkbox:checked').length;
+
+    if(numberOfChecked !== 0)
+    {
+            
+            var data_value = [];
+
+            $.each($('.all_action input:checkbox:checked'), function(e)
+            {        
+                
+                  data_value.push($(this).data('value')); 
+
+            });
+
+            $('.report_display').removeClass('hidden');
+
+            var doc = $('.project_name_report').val();
+
+            getAllActionReport(doc,data_value);
+
+
+      }else{
+             
+             $('.report_display').addClass('hidden'); 
+      }
+
+
+  });
+
+
+
+  // group action
+
+ $(document).on('click','.groups_check_record input[type="checkbox"]', function() {
+
+    var numberOfChecked = $('.groups_check_record input:checkbox:checked').length;
+
+    var project_id = $('.project_id_report').val();
+
+    var project_name = $('.project_name_report').val();
+
+    if(numberOfChecked !== 0)
+    {
+
+            var data_value = [];
+
+            $.each($('.group_report_status input:checkbox:checked'), function(e)
+            {        
+                
+                  data_value.push($(this).data('value')); 
+
+            });
+
+
+            var token = $('#csrf-token').val();  
+
+            var html = '';
+
+               $.ajax({
+
+                type : "POST",
+                url : "{{url('/')}}/get_group/report",
+                data : {     
+                  _token       : token,
+                  project_id   : project_id,
+                  data_value   : data_value,
+                  project_name : project_name,
+
+                },
+                success:function(response){
+
+                  $.each(response,function(key,value){
+
+                    html+="<div class='group_overview'><div class='group_overview_first'> <div class='group_overview_sfert'><h4>"+value.group_name+"</h4></div><div class='group_overview_overall'><h5>OverAll</h5></div></div><div class='group_overview_second'><div class='sfert_dis'><h4>Users invited:</h4></div><div class='overall_dis'>"+value.invitedUser+"</div></div><div class='group_overview_second'><div class='sfert_dis'><h4>Users logged in:</h4></div><div class='overall_dis'>"+value.loginUser+"</div></div><div class='group_overview_second'><div class='sfert_dis'><h4>Documents permitted:</h4></div><div class='overall_dis'>"+value.permittedDoc+"</div></div><div class='group_overview_second'><div class='sfert_dis'><h4>Questions posted:</h4></div><div class='overall_dis'>"+value.GroupPosted+"</div></div></div>";
+
+                  });
+
+
+                  $('.report_display').html(html);
+                  $('.report_display').removeClass('hidden');
+
+                   
+                }
+
+            });
+
+    }else{
+
+      $('.report_display').addClass('hidden');
+
+       }
+
+  });
+
+   // folder and file module for get the action reports
+
+  $(document).on('click','.document_permission', function(event) {
+
+        event.preventDefault();
+        event.stopPropagation(); 
+  
+        var doc = $(this).data('value');
+
+        var data_value = "0";
+
+        getAllActionReport(doc,data_value);
+
+        $('.report_display').removeClass('hidden');
+
+
+ });
+
+
+      // get the all action of the report module.
+
+      function getAllActionReport(doc,data_value)
+
+          {
+                    var project_id = $('.project_id_report').val();
+
+                    var project_path = $('.reports_record #project_path').val();
+
+                    var project_name = doc;
+
+                    var token = $('#csrf-token').val();  
+
+                    var html = "<div class='indexingOfReports col-md-12'><div class='auther_main col-md-4'>Author</div><div class='action_main col-md-3'>Action</div> <div class='description_main col-md-3'>Description</div><div class='time_at_main col-md-2'>Date and time</div></div>";
+
+                       $.ajax({
+
+                        type : "POST",
+                        url : "{{url('/')}}/get_action",
+                        data : {     
+                          _token       : token,
+                          project_id   : project_id,
+                          data_value   : data_value,
+                          project_name : project_name,
+                          project_path : project_path,
+
+                        },
+                        success:function(response){
+                        
+                          $.each(response,function(key,value){
+
+                           var author = value.auther;
+                           var action = value.action;
+                           var document_action = value.document;
+                           var time = value.time;
+
+
+                           html+="<div class='report_list col-md-12'><div class='auther_detail col-md-4'>"+author+"</div><div class='action_type col-md-3'>"+action+"</div><div class='description col-md-3'>"+document_action+"</div><div class='time_at col-md-2'>"+time+"</div></div>";
+                         
+                          });
+
+                          $('.report_display').html(html);
+
+                        }
+
+                      });
+          }
 
 </script>
 

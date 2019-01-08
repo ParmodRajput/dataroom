@@ -1789,6 +1789,13 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
           $docx_data = '';
         }
 
+          $report = new Report();
+          $report->action = '7';
+          $report->document_path = $filePath;
+          $report->Auth = Auth::user()->id;
+          $report->save();
+
+
        return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data'));
 
     }
@@ -1818,14 +1825,13 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                 while ($zip_entry = zip_read($zip)) {
                     
                   if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
-
                     
                   if (zip_entry_name($zip_entry) != "word/document.xml") continue;
-
 
                   $kv_texts .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
                     
                   zip_entry_close($zip_entry);
+                  
                 }
                 
                 zip_close($zip);

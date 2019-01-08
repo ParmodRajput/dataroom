@@ -2117,3 +2117,23 @@ p.subject_ques {
 
      
 /*end*/
+
+/*07 jan 2019*/
+
+.all_action{
+
+ overflow:scroll;
+ overflow-x: hidden;
+
+}
+
+
+.report_display{
+
+    overflow:scroll;
+    overflow-x: hidden;
+}
+
+.document_permission {
+    cursor: pointer;
+}
