@@ -159,7 +159,7 @@
                 <div class="reply_editor hidden">
                    <div class="reply_center">
                 		<div class='reply_ques_docs_group'> 
-                			 <span clsss='reply_to'>To:</span>
+                			 <span class='reply_to'>To:</span>
 			                 <select class="multipleSelectUsers" multiple name="language">
 			                 </select>
 			             </div>
@@ -198,12 +198,7 @@
             <form action="javascript:void(0)" id="create_question_answer" method="post" >
 
              <input type="hidden" name="doc_path" id="doc_path_directory"/>
-
-<<<<<<< HEAD
-=======
              <input type='hidden' class='related_to_doc'>
-
->>>>>>> 36084feeb4b1495138ec0026df3b922df5c6e123
              <div class='ques_ans_docs_group'>
               <span class="to_user">To:</span>       
               <select class="multipleSelectUsers" multiple name="language"></select>

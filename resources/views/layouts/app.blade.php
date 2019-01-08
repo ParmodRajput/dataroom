@@ -454,54 +454,62 @@ $(document).ready(function(){
            var project_id = $('.projects_id').val();
            var project_name = $('.project_name').val();
            var get_genrate_folder = $('#folder_created').val();
-           var document_index = $('.document_indexing_count').val();
 
-           var genrate_folder = get_genrate_folder.replace(' ', '_');
+           if(get_genrate_folder !== '')
+           {
+                       
+                       var document_index = $('.document_indexing_count').val();
 
-           var getPath = path+"/"+genrate_folder; 
-           var box = $('.indexing');
-           var folder =$('#tree2');
-           
-           var html="";
-           var html1="";
-           var token =$('#csrf-token').val();
-           
-            $.ajax({
-                  type:"POST",
-                  url:"{{ Url('/') }}/create_folder/new_folder",
-                  data:{
-                    _token : token,
-                     project_id : project_id,
-                     genrate_folder : genrate_folder,
-                     path: path,
-                     document_index : document_index,
-                     getPath     : getPath
-                  },  
-              success: function (response) {  
+                       var genrate_folder = get_genrate_folder.replace(' ', '_');
 
-                if(response !== 'error')
-                  { 
-          
-                    if (!$('[data-value = "'+path+'"]').find('ul').length) {
-                         
-                        $('[data-value = "'+path+'"]').append('<ul> </ul>');
-                    }
+                       var getPath = path+"/"+genrate_folder; 
+                       var box = $('.indexing');
+                       var folder =$('#tree2');
+                       
+                       var html="";
+                       var html1="";
+                       var token =$('#csrf-token').val();
+                       
+                        $.ajax({
+                              type:"POST",
+                              url:"{{ Url('/') }}/create_folder/new_folder",
+                              data:{
+                                _token : token,
+                                 project_id : project_id,
+                                 genrate_folder : genrate_folder,
+                                 path: path,
+                                 document_index : document_index,
+                                 getPath     : getPath
+                              },  
+                          success: function (response) {  
 
-                    html1 +="<li id='projects' data-value='"+getPath+"'class='projects'><span class='doucment_name'>"+response+"</span></li>";
-                 
-                      $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
-                       $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
-                      var directory_url= path;
+                            if(response !== 'error')
+                              { 
+                      
+                                if (!$('[data-value = "'+path+'"]').find('ul').length) {
+                                     
+                                    $('[data-value = "'+path+'"]').append('<ul> </ul>');
+                                }
 
-                      DocumentTree(token,project_id);
+                                html1 +="<li id='projects' data-value='"+getPath+"'class='projects'><span class='doucment_name'>"+response+"</span></li>";
+                             
+                                  $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
+                                   $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+                                  var directory_url= path;
 
-                      data_display(token,directory_url);
+                                  DocumentTree(token,project_id);
+
+                                  data_display(token,directory_url);
 
 
 
-                  }
-          }   
-       });   
+                              }
+                      }   
+                   });   
+           }else{
+             alert('Please enter folder name');
+           }
+   
     }); 
    
   
@@ -1519,9 +1527,16 @@ $(document).ready(function(){
               // multiple data sent using ajax//
               success: function (response) { 
 
-                 var directory_url = $('#current_directory').val();
-                 var token =$('#csrf-token').val(); 
-                 data_display(token,directory_url);
+                if(response == 'exits')
+                {
+                     alert('Directory already exit in folder');
+
+                }else{
+
+                   var directory_url = $('#current_directory').val();
+                   var token =$('#csrf-token').val(); 
+                   data_display(token,directory_url);
+                }
               }
 
             });
@@ -1873,7 +1888,7 @@ $('#myModal').on('hidden.bs.modal', function () {
 
              $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
-             var GetDocumentName = $('.project_name').val();
+             var GetDocumentName = $('#getProject_name').val();
              var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
              $('.checked_doc_details').html(showDocWithDoc);
              $('.create_notes_get').addClass('hidden');
@@ -2096,16 +2111,18 @@ $(document).on('mouseleave','.drop_box_document', function(){
           var project_directory =  $('#project_directory').val();
           
           var restorePath = [];
+          var docIdentify = '';
 
-          $.each($("input[name='recycle_documents_select']:checked"), function(e)
-          {        
+              $.each($("input[name='recycle_documents_select']:checked"), function(e)
+              {        
 
-                var restore_path = $(this).data('value');
-                var current_path = $(this).val();
-                var delete_time = $(this).data('time');
-                
-                restorePath.push({Rpath:restore_path , Cpath:current_path, deleted_time:delete_time});
-          });
+                    var restore_path = $(this).data('value');
+                    var current_path = $(this).val();
+                    var delete_time = $(this).data('time');
+                    var docIdentify = $(this).data('doc');
+
+                    restorePath.push({Rpath:restore_path , Cpath:current_path, deleted_time:delete_time, Identify:docIdentify});
+              });
 
               $.ajax({
                       
@@ -2114,11 +2131,12 @@ $(document).on('mouseleave','.drop_box_document', function(){
                       data:{
                         _token : token,
                         projects_id : projects_id,
-                        restorePath  :restorePath
+                        restorePath  :restorePath,
 
                         },  
                         // multiple data sent using ajax//
                         success: function (response) { 
+
                             if( response = "restore"){
 
                                 swal("restore successfully", "", "success");
@@ -2187,7 +2205,7 @@ $(document).on('mouseleave','.drop_box_document', function(){
                            var cuurent_recycle_doc_path = "public/documents/"+getthirdPara+"/"+getfourthPara+"/RecycleBin/"+value;
                         
       
-                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list_recycle'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value='"+cuurent_recycle_doc_path+"' data-value='"+key+"' data-time='"+getlastElementTime+"' name='recycle_documents_select' ></form></div><h4><a href='javascript:void(0)' value='"+cuurent_recycle_doc_path+"' data-value='"+key+"' data-time='"+getlastElement +"' class='projects'><i class='fa fa-folder' aria-hidden='true'></i> "+value+"</a></h4></div><div class='delete_from_dir'><span>"+restoreFolderLoc+"</span></div> <div class='delete_time_dir'><span>"+DeleteDate+"</span></div></div></div>";
+                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list_recycle'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' data-doc='1' class='check-box-input' value='"+cuurent_recycle_doc_path+"' data-value='"+key+"' data-time='"+getlastElementTime+"' name='recycle_documents_select' ></form></div><h4><a href='javascript:void(0)' value='"+cuurent_recycle_doc_path+"' data-value='"+key+"' data-time='"+getlastElement +"' class='projects'><i class='fa fa-folder' aria-hidden='true'></i> "+value+"</a></h4></div><div class='delete_from_dir'><span>"+restoreFolderLoc+"</span></div> <div class='delete_time_dir'><span>"+DeleteDate+"</span></div></div></div>";
      
                         });
 
@@ -2199,8 +2217,8 @@ $(document).on('mouseleave','.drop_box_document', function(){
                         // delete file time or date
                           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
                            var myarr = value.split(".");
-                           var getlastElement = myarr[0];
-                           var date = new Date(getlastElement*1000);
+                           var getlastElementTime = myarr[0];
+                           var date = new Date(getlastElementTime*1000);
                            var myDate = new Date(date);
                            var getDate = myDate.getDate();
                            var getMonth = months[myDate.getMonth()];
@@ -2218,7 +2236,7 @@ $(document).on('mouseleave','.drop_box_document', function(){
                            var cuurent_recycle_doc_path = "public/documents/"+getthirdPara+"/"+getfourthPara+"/RecycleBin/"+value;
                           
 
-                          html +="<div class='drop_box_document'><div class='document_index index-drag'><div class='doc_index_list_recycle'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='recycle_documents_select'  value='"+cuurent_recycle_doc_path+"' data-value='"+key+"'></form></div><h4><a href='javascript:void(0)' value='"+cuurent_recycle_doc_path+"' data-value='"+key+"' id='"+key+"' class='drap'><i class='fa fa-file' aria-hidden='true'></i> "+value+"</a></h4></div><div class='delete_from_dir'><p>"+restoreFolderLoc+"</p></div> <div class='delete_time_dir'><p>"+DeleteDate+"</p></div></div></div></div>";
+                          html +="<div class='drop_box_document'><div class='document_index index-drag'><div class='doc_index_list_recycle'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' name='recycle_documents_select' data-doc='0'   value='"+cuurent_recycle_doc_path+"' data-value='"+key+"' data-time='"+getlastElementTime+"'></form></div><h4><a href='javascript:void(0)' value='"+cuurent_recycle_doc_path+"' data-value='"+key+"' id='"+key+"' class='drap'><i class='fa fa-file' aria-hidden='true'></i> "+value+"</a></h4></div><div class='delete_from_dir'><p>"+restoreFolderLoc+"</p></div> <div class='delete_time_dir'><p>"+DeleteDate+"</p></div></div></div></div>";
 
                           });
                           
@@ -2258,25 +2276,6 @@ $(document).on('click','.close_note_aside',function(){
 
 
 
-// $(document).on('click','.create_note_aside.second',function(){
-     
-//      $('.notes_aside_2').removeClass('hidden');
-//      $(this).addClass('hidden');
-//      $('.close_note_aside').removeClass('hidden');
-
-// });
-
-// $(document).on('click','.close_note_aside.second',function(){
-       
-//        alert('fsf');
-       
-//        $('.notes_aside_2').addClass('hidden');
-//        $('.close_note_aside').addClass('hidden');
-//  });
-
-//
-
-
 // Delete the recycle bin documents 
 
 $(document).on ('click','.btn_delete_doc_recycle',function(){
@@ -2287,6 +2286,7 @@ $(document).on ('click','.btn_delete_doc_recycle',function(){
           var project_directory =  $('#project_directory').val();
           
           var deletePath = [];
+          var docIdentify = '';
 
           $.each($("input[name='recycle_documents_select']:checked"), function(e)
           {        
@@ -2297,7 +2297,9 @@ $(document).on ('click','.btn_delete_doc_recycle',function(){
 
                 var restore_path = $(this).data('value');
                 var current_path = $(this).val();
-                deletePath.push({Rpath:restore_path , Cpath:current_path});
+                var docIdentify = $(this).data('doc');
+
+                deletePath.push({Rpath:restore_path , Cpath:current_path ,Identify:docIdentify });
 
           });
 
@@ -2775,7 +2777,7 @@ $(document).on('click','.note1_doc_delete', function(){
 
        if(data_ques == 1)
        {
-           window.open("{{ Url('/') }}/project/"+project_id+"/question",'_blank');
+           window.open("{{ Url('/') }}/project/"+project_id+"/questions",'_blank');
 
        }else{
 

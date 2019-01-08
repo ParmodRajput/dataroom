@@ -32,7 +32,6 @@ body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden;}
 ul.folders{ height:520px; overflow-x: hidden;}
 
 .document_scroll_done{
-     overflow:scroll;
      overflow-x: hidden;
 }
 
@@ -344,7 +343,7 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
 
 .subject_section span.subject_title {
     font-size: 13px;
-    width: 16%;
+    width: 5%;
     position: absolute;
     top:10px;
     left:14px;
@@ -391,6 +390,132 @@ form#AllUploadFiles {
     width: 100%;
     height: 100%;
 }
+
+.reply_section .reply_ques_docs_group {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+.reply_section .reply_ques_docs_group span {
+   /* position: relative;
+    z-index: 9;
+    font-size: 13px;
+    top: 15px;
+    left: 15px;
+    display: block;*/
+}
+
+.reply_section .fstElement.fstMultipleMode.fstNoneSelected.fstActive.fstResultsOpened.fstResultsFilpped {
+    padding: 0px;
+    background: transparent;
+    box-shadow: none!important;
+    border: none;
+}
+
+.reply_section .fstMultipleMode.fstActive, .fstMultipleMode.fstActive .fstResults {
+    box-shadow: none;
+}
+
+.reply_section .fstElement {
+    box-shadow: none;
+    float: left;
+    width: 100%;
+     border: 1px solid #d7d7d7!important;
+    height: 47px;
+}
+
+.reply_section .fstControls {
+    padding: 0px!important;
+    width: 100%!important;
+    float: left;
+}
+
+.reply_section input.fstQueryInput.fstQueryInputExpanded {
+    float: left;
+    width: 100%;
+    background: #fff;
+    padding: 12px 12px 12px 40px;
+    margin: 0px;
+    box-shadow: none!important;
+    border-bottom: none;
+
+}
+
+.reply_section .reply_subject_section {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+.reply_section span.reply_subject_title {
+    position: absolute;
+    font-size: 13px;
+    top:14px;
+    left: 10px;
+}
+
+.reply_section nput.reply_subject {
+    border: 1px solid #d7d7d7;
+    padding: 10px 10px 10px 70px;
+    width: 100%;
+}
+
+.reply_section .reply_content_section {
+    float: left;
+    width: 100%;
+}
+
+
+.reply_section textarea.reply_question_content {
+    float: left;
+    width: 100%;
+    border: 1px solid #d7d7d7;
+    height: 130px;
+}
+
+.reply_section input.reply_subject {
+    border: 1px solid #d7d7d7;
+    padding: 10px 10px 10px 70px;
+    width: 100%;
+    border-top: none!important;
+    border-bottom: none!important;
+}
+
+.reply_section .cancle_reply_type {
+    float: right;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.reply_section .question_reply_qa {
+    float: left;
+    margin-top: 10px;
+}
+
+.reply_section .reply_ques_docs_group span.reply_to {
+    position: absolute;
+    z-index: 1;
+    top: 13px;
+    left: 8px;
+    font-size: 13px;
+}
+.reply_answer_section .fstElement.fstMultipleMode.fstActive {
+    height: 42px;
+}
+
+.reply_answer_section .fstChoiceItem {
+    margin-left: 35px;
+}
+
+.ques_create_new { margin-right: 5px;}
+
+.question_containor_fir h5 {  font-size:14px; line-height:18px;}
+.question_block_first h4 { font-size: 14px;}
+
+span.index-and-name { font-size: 14px; text-transform: capitalize;  margin-left:5px;
+    font-weight: 500;}
+
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -617,10 +742,6 @@ span.drag_document_texts {
 .black_notes{ margin-top:5px; }
 .black_permission{margin-top:5px;}
 
-span.index-and-name {
-    margin-left: 29px;
-}
-
 .add_frd {
     float: left;
     width: 100%;
@@ -746,6 +867,7 @@ span.index-and-name {
     float: left;
     width: 100%;
     margin: 4px 0px;
+    font-size:12px;
 }
 
 .fav_filter {
@@ -771,11 +893,20 @@ span.index-and-name {
      margin: 5px 0 0 0;
 }
 
-.search_document_Byname i {
+.search_document_Byname i.fas.fa-search {
+    background: #000;
+    width: 33px;
+    height: 33px;
+    text-align: center;
+    float: left;
+    margin-top: 0px;
+    top: 0;
+    line-height: 33px;
+    border-radius: 2px;
+    right: 10px;
+    color: #fff;
     position: absolute;
-    right: 8px;
-    top: 8px;
-    color: #dfdfdf;
+    cursor: pointer;
 }
 
 .upone i {
@@ -807,6 +938,8 @@ span.index-and-name {
 .search_document_Byname input {
     height: 34px;
     border: 1px solid #dfdfdf!important;
+    float:left;
+    padding: 10px;
 }
 
  .content-wrapper.all-projects {
@@ -1123,13 +1256,13 @@ span.radio_down_content {float: left; margin: 0 0 0 24px;}
 
 /*permission modal  date-21 nov 2018*/
 
-.left_section{ float:left;  width:300px; max-width: 20%;}
-.left_section ul{  margin:0px; padding:0px;}
-.left_section ul li{ display:block; font-size:11px; padding-left:5px; padding-top:5px; border-top:1px solid #dfdfdf;}
+#document_permission_modal .left_section{ float:left;  width:300px; max-width: 20%;}
+#document_permission_modal .left_section ul{  margin:0px; padding:0px;}
+#document_permission_modal .left_section ul li{ display:block; font-size:11px; padding-left:5px; padding-top:5px; border-top:1px solid #dfdfdf;}
 .select_group_and_user ul li:hover{background:#18cad7!important}
 .select_group_and_user ul li:hover a{ color:#fff;}
-.left_section ul li a{ color:#9c9c9c; font-size:15px;  text-decoration:none;}
-.left_section ul li a i{ margin-right:5px; float:left;}
+#document_permission_modal .left_section ul li a{ color:#9c9c9c; font-size:15px;  text-decoration:none;}
+#document_permission_modal .left_section ul li a i{ margin-right:5px; float:left;}
 .right_table_section{ float:left;  margin-left:15px; border:1px solid #dfdfdf; width:calc(100% - 300px); height:auto; 
 background:#ffffff;     max-width: 78%;}
 
@@ -1256,7 +1389,7 @@ background:#ffffff;     max-width: 78%;}
 
 a.btn.btn_export_doc {
     float: left;
-    margin-left: 15px;
+    margin-left: 17px;
 }
 
 .btn.btn_dote_doc {
@@ -1505,7 +1638,7 @@ canvas {
 
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */ 
 @media screen and (max-width: 500px) {
-  .header a {
+.header a {
     float: none;
     display: block;
     text-align: left;
@@ -1745,6 +1878,8 @@ p.reply_content_ques {
 .loader14 .loader-inner .box-3{top:auto;left:auto;right:10px;bottom:10px;transform-origin:-4px -4px;-webkit-animation:loading-143 2s infinite cubic-bezier(.5,0,.5,1);animation:loading-143 2s infinite cubic-bezier(.5,0,.5,1)}
 .loader14 .loader-inner .box-4{top:auto;bottom:10px;transform-origin:20px -4px;-webkit-animation:loading-144 2s infinite cubic-bezier(.5,0,.5,1);animation:loading-144 2s infinite cubic-bezier(.5,0,.5,1)}
 .loader14 .text{display:block;font-size:12px;color:#00bee0;text-align:center}
+
+
 @-webkit-keyframes loading-14{
     0%{transform:rotate(90deg)}
     50%{transform:rotate(180deg)}
@@ -1853,96 +1988,6 @@ button.answere_by_me {
     float: left; width:auto; margin:0px; padding:0px; font-size:13px; position: absolute; z-index: 9;
     top:12px; left:12px;
  }
-
-/* span.to_user {
-   width: 16%;
-   float: left;
-   font-size: 13px;
-}
-
-.subject_section {
-   padding: 0px;
-   font-size: 13px;
-   width:100%;
-}
-
-.fstMultipleMode .fstControls {
-   box-sizing: border-box;
-   padding: 0px;
-   overflow: hidden;
-   width: 100%;
-   cursor: text;
-}
-
-input.fstQueryInput.fstQueryInputExpanded {
-   border: 1px solid #dfdfdf;
-   background: #fff;
-   width: 100%;
-   font-size: 13px;
-   padding: 10px;
-}
-
-.fstControls {
-   border: 1px solid #dfdfdf;
-   background: #fff;
-   height: 40px;
-   margin-bottom: 10px;
-}
-
-span.fstResultItem {
-   font-size: 13px;
-   padding: 10px;
-   box-shadow: none!important;
-}
-
-.fstResults {
-   top: 38px;
-}
-
-span.subject_title {
-   width: 16%;
-}
-
-input.question_subject {
-   float: left;
-   width: 83%;
-   padding: 7px;
-   border: 1px solid #dfdfdf;
-   margin-bottom: 10px;
-   height: 40px;
-}
-
-.question_content_section {
-   float: left;
-   width: 100%;
-}
-
-.question_content_section textarea {
-   width: 99%;
-   border: 1px solid #dfdfdf;
-   height: 137px;
-}
-
-input.send_question {
-   background: #333;
-   border: 1px solid #333;
-   color: #fff;
-   font-size: 13px;
-   padding: 7px 15px;
-}
-
-.modal-footer button.btn.btn-default {
-   border: 1px solid #dfdfdf;
-   background: #e6e6e6;
-   border-radius: 0px;
-   padding: 11px 15px;
-   font-size: 13px;
-   color: #000;
-}
-
-.modal-footer {
-   padding-top: 0px;
-}*/
 
 .check_input {
    float: left;
@@ -2059,3 +2104,16 @@ p.subject_ques {
     margin-left: 40%;
 }
 
+/*Report page*/
+
+    .reports_record .left_section{ float:left; width:100%;}
+    .reports_record .left_section ul{ margin:0px; padding: 0px; font-size: 13px;}
+    .reports_record .left_section ul li{ width: 100%;  display: inline-block; list-style: none; border-bottom: 1px solid gray;}
+    .reports_record .left_section ul li a{ float:left; width: 100%;  color:#333; padding:8px 10px; text-decoration:none; font-size:14px;}
+    .listofgroup {
+    
+       background: #F2F2F2;
+     }
+
+     
+/*end*/
