@@ -1420,6 +1420,24 @@ $(document).ready(function(){
 
           var rightClickPositionTop  = e.pageY-63;
 
+           var menuHeight=$('.right_click.drop-holder').height();
+          //alert(e.pageY);
+
+          //var comformHeight = windowHeight-e.pageY;
+         var comformHeight = windowHeight-menuHeight;
+
+          if(e.pageY > comformHeight+20) 
+          {
+           rightClickPositionTop  = e.pageY-320;
+
+             $('.right_click.drop-holder:before').css('top',e.pageY);
+
+          }
+
+
+
+
+
           var value = $(this).find('a').data('value'); 
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
@@ -1428,10 +1446,10 @@ $(document).ready(function(){
 
           $(this).find('input:checkbox').trigger("click");
 
-          $('.right_click.drop-holder').css("top" ,rightClickPositionTop);
-          $('.right_click.drop-holder').css("left",rightClickPositionLeft);
+          //$('.right_click.drop-holder').css("top" ,rightClickPositionTop);
+          //$('.right_click.drop-holder').css("left",rightClickPositionLeft);
 
-          $('.right_click.drop-holder').css("display", "block");
+          $('.right_click.drop-holder').css({"display":"block","top":rightClickPositionTop,"left":rightClickPositionLeft});
 
           $('.view_doc_file a').attr('href',"{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +file_id ,
           '_blank');
@@ -2933,7 +2951,7 @@ $(document).on('click','.note1_doc_delete', function(){
   $('.choose_around_file').removeClass('hidden');
   $('.upload_modal_check').addClass('hidden');
 
- })
+ });
  
 
 </script>

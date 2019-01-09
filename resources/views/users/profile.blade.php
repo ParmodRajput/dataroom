@@ -22,11 +22,7 @@
                     </div>
                   </div>
                 </div>
-                   @if ($errors->has('name'))
-                        <span class="help-block">
-                          <strong>{{ $errors->first('name') }}</strong>
-                        </span>
-                       @endif
+                <div style="display: none" id="alert_updated_name"></div>
                 <div class="form-group  {{ $errors->has('email') ? ' has-error' : '' }}">
                   <div class="input-group">
                     <input type="text" class="form-control" id="update_email" value="{{ Auth::user()->email }}" name ="email" placeholder="Email" readonly>
@@ -38,14 +34,10 @@
                     </div>
                   </div>
                 </div>
-                  @if ($errors->has('email'))
-                        <span class="help-block">
-                          <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
+                  <div style="display: none" id="alert_update_email"></div>
                 <div class="form-group {{ $errors->has('phone_no') ? ' has-error' : '' }}">
                   <div class="input-group">
-                    <input type="number" value="{{ Auth::user()->phone_no}}"class="form-control" id="update_phone" name="phone_no" placeholder="Phone No">
+                    <input type="text" value="{{ Auth::user()->phone_no}}"class="form-control" id="update_phone" name="phone_no" placeholder="Phone No">
                     
                     <div class="input-group-append">
                       <span class="input-group-text">
@@ -54,12 +46,7 @@
                     </div>
                   </div>
                 </div>
-                 @if ($errors->has('phone_no'))
-                        <span class="help-block">
-                          <strong>{{ $errors->first('phone_no') }}</strong>
-                        </span>
-                    @endif
-                
+              <div style="display: none" id="alert_updated_phone"></div>               
                 <div class="form-group">
                   <input type="button" value="Save" class="btn btn-primary submit-btn btn-block" id="updateUserInfo">
                 </div>

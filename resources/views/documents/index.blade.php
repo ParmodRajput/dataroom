@@ -23,6 +23,7 @@
            
            </div>
         </div>
+        
  <!--  rigth click open the option popup for more action of document. -->
 
         <div class='right_click drop-holder'>
