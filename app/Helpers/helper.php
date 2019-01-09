@@ -78,7 +78,9 @@ if (!function_exists('folder_tree')) {
 
             $new =  explode("/",  $key);
             $name1 =  end($new);
-            
+
+            //$getExtenstion = explode('.',$name1);
+
             $name2 = substr($name1,0,20);
             $length = strlen($name1); 
 
@@ -108,7 +110,33 @@ if (!function_exists('folder_tree')) {
 
                  }else{
 
-                    $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="  document_file_name">'. $name.'</span>';
+                  $Extenstion = explode('.',$key);
+                  $getExtenstion =  end($Extenstion);
+                  //print_r($getExtenstion);die();
+
+                    $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_file_name inactive customspan">';
+
+                    //print_r($getExtenstion);die();
+
+                    if($getExtenstion == 'jpg' || $getExtenstion == 'png' || $getExtenstion == 'jepg'){
+                        $output .= '<i class="fa fa-photo"></i>';
+                    }
+
+                    if($getExtenstion == 'pdf')
+                    {
+                       $output .= '<i class="fas fa-file-pdf"></i>';
+                    }
+                    if($getExtenstion == 'xlsx' || $getExtenstion == 'xls' || $getExtenstion == 'xlsb')
+                    {
+                       $output .= '<i class="fas fa-file-excel"></i>';
+                    }   
+                    if($getExtenstion == 'zip')
+                    {
+                       $output .= '<i class="far fa-file-archive"></i>';
+                    }                                      
+                    
+
+                    $output .=' '.$name.'</span>';
                  }
                 
            }

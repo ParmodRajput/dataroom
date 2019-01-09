@@ -6,6 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Pro Data Room</title>
   <!-- plugins:css -->
+  <style>
+  .right_click.drop-holder.arrow:before {
+    position: absolute;
+    left: -16px;
+    border-right: 15px solid #18cad7;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    content: "";
+    top: 307px!important;
+}
+</style>
   <link rel="stylesheet" href="{{ asset('css/materialdesignicons.min.css ')}}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.addons.css') }}">
@@ -455,10 +466,9 @@ $(document).ready(function(){
            var project_name = $('.project_name').val();
            var get_genrate_folder = $('#folder_created').val();
 
-           if(get_genrate_folder !== '')
-           {
-                       
-                       var document_index = $('.document_indexing_count').val();
+           if(get_genrate_folder !== ''){
+              if( /[^a-zA-Z0-9\-\/]/.test(get_genrate_folder) == false){
+                                      var document_index = $('.document_indexing_count').val();
 
                        var genrate_folder = get_genrate_folder.replace(' ', '_');
 
@@ -506,8 +516,23 @@ $(document).ready(function(){
                               }
                       }   
                    });   
+
+              }else{
+
+                   $('#alert_create_folder').show().html('<span class="help-block">Not allowed special characters  </span>');
+                   $('#folder_created').click (function(){
+                   $('#alert_create_folder').hide(); 
+                   });               
+
+              }
+                       
+ 
            }else{
-             alert('Please enter folder name');
+                 //alert('Please enter folder name');
+                 $('#alert_create_folder').show().html('<span class="help-block">Please enter folder name</span>');
+                 $('#folder_created').click (function(){
+                 $('#alert_create_folder').hide();
+                 });
            }
    
     }); 
@@ -1426,15 +1451,19 @@ $(document).ready(function(){
           //var comformHeight = windowHeight-e.pageY;
          var comformHeight = windowHeight-menuHeight;
 
-          if(e.pageY > comformHeight+20) 
-          {
+          if(e.pageY >= comformHeight+20) {
+            
            rightClickPositionTop  = e.pageY-320;
 
-             $('.right_click.drop-holder:before').css('top',e.pageY);
+           var arrow = e.pageY-25;
+
+             $('.right_click.drop-holder').addClass("arrow");
+
+          }else{
+
+            $('.right_click.drop-holder').removeClass("arrow");
 
           }
-
-
 
 
 

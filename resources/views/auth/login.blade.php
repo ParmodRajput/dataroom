@@ -39,7 +39,7 @@
                 <div class="form-group  {{ $errors->has('project_name') ? ' has-error' : '' }}" >
                   <label class="label">email </label>
                   <div class="input-group">
-                    <input type="text"  name="email" class="form-control" placeholder="Email">
+                    <input type="text"  name="email" class="form-control" placeholder="Email" required>
                    
                     <div class="input-group-append">
                       <span class="input-group-text">
@@ -56,7 +56,7 @@
                 <div class="form-group">
                   <label class="label">Password</label>
                   <div class="input-group">
-                    <input type="password" name="password" class="form-control" placeholder="*********">
+                    <input type="password" name="password" class="form-control" placeholder="*********" required>
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="fa fa-key" aria-hidden="true"></i>
@@ -64,6 +64,11 @@
                     </div>
                   </div>
                 </div>
+                @if ($errors->has('password'))
+                    <span class="invalid-feedback">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
                 <div class="form-group">
                   <input type="submit" value="login" class="btn btn-primary submit-btn btn-block">
                 </div>
