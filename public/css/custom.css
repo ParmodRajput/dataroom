@@ -826,7 +826,7 @@ span.drag_document_texts {
 
 .check-box.select_check.user_listing {
     float: left;
-    width: 100%;
+    width: 70%;
     padding:10px 0px 0 10px;
 }
 
@@ -2106,11 +2106,10 @@ p.subject_ques {
     .reports_record .left_section{ float:left; width:100%;}
     .reports_record .left_section ul{ margin:0px; padding: 0px; font-size: 13px;}
     .reports_record .left_section ul li{ width: 100%;  display: inline-block; list-style: none; border-bottom: 1px solid gray;}
-    .reports_record .left_section ul li a{ float:left; width: 100%;  color:#333; padding:8px 10px; text-decoration:none; font-size:14px;}
-    .listofgroup {
-    
-       background: #F2F2F2;
-     }
+    .reports_record .left_section ul li a{ float:left; width: calc(100% - 30px);  color:#333; padding:8px 10px; text-decoration:none; font-size:14px;}
+    .listofgroup {   background:#d2edf1; }
+    .reports_record .left_section ul li i { float:left;  width:30px; margin-top:10px;}
+
 
      
 /*end*/
@@ -2135,10 +2134,6 @@ p.subject_ques {
     cursor: pointer;
 }
 
-.group_overview {
-    background: #F2F2F2;
-}
-
 .reports_record .users_list {
      display: none; 
 }
@@ -2158,4 +2153,79 @@ button.waiting_reply {
     margin-top: 10px;
     margin-left: 20px;
     font-size: 12px;
+}
+
+.group_overview_first {
+    float: left;
+    width: 100%;
+}
+
+.group_overview_sfert {
+    float: left;
+    width: 50%;
+}
+
+.group_overview_overall {
+    float: left;
+    width: 50%;
+}
+
+.group_overview_second {
+    float: left;
+    width: 100%;
+}
+
+.sfert_dis {
+    float: left;
+    width: 50%;
+}
+
+.overall_dis {
+    float: left;
+    width: 50%;
+}
+
+.groups_check_record {
+    float: left;
+    width: 100%;
+}
+
+.groups_check_record ul.group_list {
+    margin: 0px;
+    padding: 0px;
+}
+
+.groups_check_record ul.group_list li {
+    float: left;
+    width: 100%;
+    display: inline-block;
+    list-style: none;
+}
+
+.groups_check_record ul.group_list li input {
+    float: left;
+    margin: 2px 5px 0 0;
+}
+
+.groups_check_record ul.group_list li .listofgroup {
+    padding: 10px;
+}
+
+.groups_check_record ul.group_list li .listofgroup h5{ margin:0px; padding:0px; }
+
+.actions_check_record ul.action_list {
+    margin: 0px;
+    padding: 0px;
+}
+
+.actions_check_record ul.action_list li {
+    display: inline-block;
+    width: 100%;
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.actions_check_record ul.action_list li .list_of_type input {
+    float: left;
+    margin-right: 10px;
 }

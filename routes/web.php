@@ -129,6 +129,8 @@ Route::post('/groups/get_group_info', 'GroupsController@getGroupInfo');
 Route::post('/delete_group', 'GroupsController@deleteGroup');
 Route::post('/get_allgroups', 'GroupsController@getAllGroups');
 Route::post('/get_group_users', 'GroupsController@GroupsUsersGet');
+Route::post('/user/move_to_group', 'GroupsController@MoveUser');
+
 // all project all users
 Route::post('/project_users', 'GroupsController@getAllUserInProject');
 

@@ -98,8 +98,9 @@ class GroupsController extends Controller
              }
        }
 
+       $ReturnData = $request->group_name.'?#'.$current_group_id.'?#'.$setGroupUserType;;
 
-        return "success";
+        return $ReturnData;
 
     }
     public function GroupInvites(Request $request)
@@ -235,22 +236,52 @@ class GroupsController extends Controller
     public function deleteGroup(Request $request){
 
           $deleteGroups = $request->deletePath;
-          $project_id      =$request->project_id;
+          $project_id   = $request->project_id;
+          $deleteUser   = $request->deleteUser;
 
           $check = checkCurrentGroupUser($project_id);
 
-          foreach ($deleteGroups as $deleteGroups) {
+          if(!empty($deleteGroups))
+          {
 
-            if($check = 'Administrator')
-            {
-               Group::where('id', $deleteGroups)->delete();
+                      foreach ($deleteGroups as $deleteGroups) {
 
-               Group_Member::where('group_id', $deleteGroups)->delete();             
-            }
+                        if($check = 'Administrator')
+                        {
+                           Group::where('id', $deleteGroups)->delete();
 
+                           Group_Member::where('group_id', $deleteGroups)->delete();             
+                        }
+
+                      }
+
+                 return "deleteGroup";
           }
 
-          return "deleteGroup";
+          if(!empty($deleteUser))
+          {
+
+              foreach ($deleteUser as $deleteUser) {
+
+                         $getGroupId = explode('/',$deleteUser);
+
+                         $group_id = $getGroupId['0'];
+
+                         $DeleteUserEmail = $getGroupId['1'];
+
+                        if($check = 'Administrator')
+                        {
+
+                           Group_Member::where('group_id',$group_id)->where('member_email', $DeleteUserEmail)->delete();             
+                        }
+
+                      }
+
+
+               return "userGroup";
+          }
+
+          
          
     }
 
@@ -600,6 +631,89 @@ public function getPermissionDocument($project_id)
 
                  return $document_permission1;
               }
+
+    }
+
+    public function MoveUser(Request $request){
+
+      $project_id = $request->project_id;
+      $movedGroupId = $request->movedGroupId;
+      $userEmail = $request->userEmail;
+      $current_group_id = $request->current_group_id;
+
+
+                  $getGroupIs = Group::where('id',$movedGroupId)->first();
+                  $groupRoleIs = $getGroupIs->group_user_type;
+
+                  if($groupRoleIs == 'Administrator')
+                  {
+                    $User_type ='Administrator';
+                    $user_role ='Administrator';
+
+                  }
+
+                  if($groupRoleIs == 'Collaboration_users')
+                    {
+                    $User_type ='user';
+                    $user_role ='1';
+
+                     $getUserInfoLastGroup = Group_Member::where('group_id',$current_group_id)->where('member_email', $userEmail)->first();
+
+                  $access_limit = $getUserInfoLastGroup->access_limit;
+                  $active_date = $getUserInfoLastGroup->active_date;
+                  $access_qa   = $getUserInfoLastGroup->access_qa;
+
+                  }
+
+                  if($groupRoleIs == 'Individual_users')
+                    {
+                    $User_type ='user';
+                    $user_role ='2';
+
+                     $getUserInfoLastGroup = Group_Member::where('group_id',$current_group_id)->where('member_email', $userEmail)->first();
+
+                  $access_limit = $getUserInfoLastGroup->access_limit;
+                  $active_date = $getUserInfoLastGroup->active_date;
+                  $access_qa   = $getUserInfoLastGroup->access_qa;
+
+                  }
+                
+
+                  if($groupRoleIs == 'Administrator')
+                  {
+                    $User_type ='Administrator';
+                    $user_role ='Administrator';
+                    $access_limit = '1';
+                    $active_date = null;
+                    $access_qa  = '00';
+
+
+                  }
+
+
+
+
+                  Group_Member::where('group_id',$current_group_id)->where('member_email', $userEmail)->delete();
+
+                
+                  $group_members = new Group_Member();
+                  $group_members->group_id = $movedGroupId;
+                  $group_members->project_id = $project_id; 
+                  $group_members->member_email = $userEmail; 
+                  $group_members->user_type = $User_type;
+                  $group_members->role = $user_role ;
+                  $group_members->access_limit = $access_limit;
+                  $group_members->active_date =  $active_date;
+                  $group_members->access_qa = $access_qa;
+
+                  $group_members->created_by = Auth::user()->id;
+                  $group_members->updated_by = Auth::user()->id; 
+                         
+                  $group_members->save();
+
+
+                  return "moveUser";
+
 
     }
 
