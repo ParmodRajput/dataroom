@@ -12,11 +12,9 @@
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown d-none d-xl-inline-block">
 
-              <a class="nav-link dropdown-toggle" id="UserDropdown" href="#"  aria-expanded="false">
-              <span class="profile-text">{{ Auth::user()->name }}</span>
-              <img class="img-xs rounded-circle" src="{{url('/')}}/dist/img/avatar5.png" alt="Profile image">
-            </a>
-             <i class="fa fa-angle-down down-arrow" data-toggle="dropdown" aria-hidden="true"></i>
+            <i class="fas fa-user"></i>
+            <span class="profile-text">{{ Auth::user()->name }}</span>
+            <i class="fa fa-caret-down down-arrow"  data-toggle="dropdown" aria-hidden="true"></i>
             <div class="dropdown-menu list-iteam">
               <ul>
                 <li><a href="{{url('/')}}/account" >My Personal Info</a></li>

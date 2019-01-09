@@ -728,6 +728,7 @@
             data:{
                 _token : token,
                  project_id :project_id, 
+                
               },  
 
 			success: function (response) { 
@@ -744,7 +745,7 @@
                        var permission  = value.groups.permission;
 
 
-					  	html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-per='"+permission+"' data-value='"+group_id+"'><span class=' toggle_user'>";
+					  	html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-group_type='"+GroupUserRole+"' data-per='"+permission+"' data-value='"+group_id+"'><span class=' toggle_user'>";
                              
                             if( value.users != '')
                             {
@@ -794,7 +795,6 @@
 				{
 					$('#create_group').modal('hide'); 
 					// swal("group created successfully","", "success");
-					location.reload();
                     getgroups();
 				}           
 			}  
@@ -864,7 +864,7 @@
 
      $('input:checkbox').prop('checked', this.checked); 
 
-     $('[data-value = "1"]').prop('checked', false);
+     $('[data-group_type = "Administrator"]').prop('checked', false);
 
 
  });
@@ -1143,6 +1143,7 @@
                                 getgroups();
 
                                 $("input[name='groups_select']").prop("checked","false");
+                                $(".check-box-input-main").prop("checked","false");
                                
                              }
                          }
@@ -1445,7 +1446,6 @@ $('#hjgh').click(function(){
 
                             DocumentTree(token,project_id);
 
-                            location.reload();
                         }
  
                       }

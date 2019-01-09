@@ -51,7 +51,6 @@ class RecyclebinController extends Controller
      	$projects_id = $request->projects_id;
       $restoreDocPath = $request->restorePath;
 
-      
 
          foreach ($restoreDocPath as  $restoreDocPath) {
 
