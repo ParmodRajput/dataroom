@@ -1492,7 +1492,7 @@ $('#hjgh').click(function(){
 
    	      var setPermissionAccess = $('.founder_permission input:checkbox:checked').length;
 
-   	      alert(setPermissionAccess);
+   	      alert(g);
 
           var numberOfChecked1 = $('#document_permission_modal input:checkbox:checked').length;
       
