@@ -8,44 +8,28 @@
           <div class="col-lg-4 mx-auto">
             <h2 class="text-center mb-4">Change Your Password</h2>
             <div class="auto-form-wrapper">
-              <form class="form-horizontal" role="form" method="POST" action=#">
+              <form class="form-horizontal" role="form" id="changepassword" method="POST" action=#">
 			    {{ csrf_field() }}
           <label>Current password</label>
                 <input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}'/>
 
-               <div class="form-group">
-                  <div class="input-group">
-                    <input type="Password" class="form-control" name="current_password" id="current_password">
-                   
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                      
-                      </span>
-                    </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="Password" class="form-control" name="current_password" id="current_password">    <div style="display: none" id="alert_current_password"></div>
                   </div>
                 </div>
                 <label>New password</label>
                 <div class="form-group">
                   <div class="input-group">
                     <input type="Password" class="form-control" id="new_password" value="" name ="new_password" >
-                  
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                       
-                      </span>
-                    </div>
+                      <div style="display: none" id="alert_new_password"></div>
                   </div>
                 </div>
                   <label>Confirm password</label>
                 <div class="form-group">
                   <div class="input-group">
                     <input type="Password" value=""class="form-control" id="confirm_password" name="confirm_password" >
-                    
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                       
-                      </span>
-                    </div>
+                      <div style="display: none" id="alert_confirm_password"></div>
                   </div>
                 </div>
                 
