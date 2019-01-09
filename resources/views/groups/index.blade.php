@@ -1141,17 +1141,21 @@
 
  $(document).on('click','.InviteUsers_icon',function(){
 
+ 	    var group_id = $(this).data('id');
+
 	 	$('input:checkbox').prop('checked', false);
 	 	
+	    $(this).parent().parent().find('.check-box-input').trigger( "click");
+        var data_value = $(this).parent().parent().find('.check-box-input').data('value');
 
-	 	$(this).parent().parent().find('.check-box-input').trigger( "click");
-            var data_value = $(this).parent().parent().find('.check-box-input').data('value');
         var data_permission = $(this).parent().parent().find('.check-box-input').data('per');
-	   
 
         if(data_permission == 0)
         {
         	$('#document_permission_modal').modal('show');
+        	$('#document_permission_modal #group'+group_id).css('background','lightgray');
+        	$('#document_permission_modal #group'+group_id).addClass('founder_permission');
+     	 
         }
 
        	$('.GroupByinvite').addClass('hidden');
@@ -1159,6 +1163,11 @@
 	 	$('.access_Ques_ans').removeClass('hidden');
 	 	$('.EnterGroupByinvite').addClass('hidden');
 	 	$('#invite_users').modal('show'); 
+
+
+	 	var clickEvent = $('.document_permission').find('span').first();
+        var triggerEvent  = clickEvent.find('.shuffle').first();
+        setTimeout(function(){ triggerEvent.trigger('click') },0);
       
  });
 
@@ -1367,6 +1376,7 @@ $('#hjgh').click(function(){
 
      $(document).on('click','.document_permission',function(event){
 
+     
         event.preventDefault();
         event.stopPropagation();
 
@@ -1477,9 +1487,12 @@ $('#hjgh').click(function(){
 
    });
 
-  
 
    $(document).on('click','#permission_store',function(){
+
+   	      var setPermissionAccess = $('.founder_permission input:checkbox:checked').length;
+
+   	      alert(setPermissionAccess);
 
           var numberOfChecked1 = $('#document_permission_modal input:checkbox:checked').length;
       
