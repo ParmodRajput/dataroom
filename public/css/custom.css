@@ -2134,11 +2134,6 @@ p.subject_ques {
     cursor: pointer;
 }
 
-.group_overview {
-    background:#d2edf1;
-    padding:20px;
-}
-
 .reports_record .users_list {
      display: none; 
 }
