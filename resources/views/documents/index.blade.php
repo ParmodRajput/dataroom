@@ -23,6 +23,7 @@
            
            </div>
         </div>
+        
  <!--  rigth click open the option popup for more action of document. -->
 
         <div class='right_click drop-holder'>
@@ -331,9 +332,10 @@
              <input type="hidden" name="project_dir" class="project_dir" id="project_directory" 
              value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
              <input type="text"  id="folder_created" name="create_folder"  placeholder="Enter folder name" class="created_folder" />
-
              <input type="button" value="create" name="submit" class="submit_folder" >
            </form>
+             <div id="alert_create_folder" style="display: none"></div>
+           
          </div>
        </div>
      </div>

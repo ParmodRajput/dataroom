@@ -60,7 +60,7 @@
                <div class="table table-hover table-bordered table_color group_and_user_list">
                         <div class="check-box select_check_group"><form  action="#" method="post">
                         	
-                        	<input type="checkbox" class="check-box-input-main">
+                        	<input type="checkbox" id='check_main_select' class="check-box-input-main">
                         	<span  class="main-user_list"><i class='fa fa-caret-down '></i></span>
                         </form> 
                               <span>Group / Name</span>
@@ -311,7 +311,7 @@
 						   
 						<div class="input_pannel_sec">
 						<label><strong>Group</strong></label>
-						<input type="text"  name ="group_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Group Name">
+						<input type="text"  name ="group_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Group Name" required>
 
 						<input type="hidden"  name ="project_id" class="form-control" id="project_id" value = "{{$project_id}}" placeholder="Enter Group Name">
 
@@ -597,6 +597,54 @@
 <!-- End -->
 
 
+<!-- Create move user to group-->
+
+<div id="MoveUser" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+  <div class="modal-dialog create_folder">
+    <input type='hidden'  name='copy_document' id='copy_document_directory'>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">MOVE TO GROUP</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      </div>
+      <div class="modal-body">
+
+        <div class="form">
+          <div id="directory_current">
+            <form action="javascript:void(0)" id="folder_create" method="post" >
+             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+             <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
+
+             <input type="hidden" value="" class="document_indexing_count">
+             
+             <input type="hidden" name="slug_folder" class="slug_folder" />
+             <input type="hidden" name="current_dir" class="current_dir" id="current_directory" 
+             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
+             <input type="hidden" name="project_dir" class="project_dir" id="project_directory" 
+             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
+
+             <input type="hidden" id="movedUserEmail">
+             <input type="hidden" id="userCurrentGroupId">
+
+             <select name="group_move_user" class="group_move_user"></select>
+
+           </form>
+         </div>
+       </div>
+     </div>
+     <div class="modal-footer">
+
+      <button type="button" name="submit" class="btn btn-primary UserMoveIngroup">Ok</button>
+      
+    </div>
+  </div>
+        
+</div>
+</div>
+<!--end create folder-->
+
+
 @endsection
 @section('page_specific_script')
 
@@ -711,6 +759,7 @@
 
         $('.Select_groupOfUser').select2();
         $('.group_type_collaboration').select2();
+        $('.group_move_user').select2();
 
 
 	});
@@ -736,6 +785,7 @@
              
 				   var html = "";
 				   var html1 = "<option value='0'>Select group</option>";
+				   var group_id = '';
 				
 					$.each( response, function( key, value) {
                       
@@ -743,6 +793,7 @@
                        var GroupUserRole = value.groups.group_user_type;
                        var group_name = value.groups.group_name;
                        var permission  = value.groups.permission;
+                       var group = group_id;
 
 
 					  	html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-group_type='"+GroupUserRole+"' data-per='"+permission+"' data-value='"+group_id+"'><span class=' toggle_user'>";
@@ -756,7 +807,7 @@
 
                         $.each( value.users, function( key, value){
 
-                            html+="<div class='drop_box_document'><div class='document_index index-drop' ><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='users_select'></form><i class='fa fa-user' aria-hidden='true'></i> <a href='javascript:void(0)' id='' class='groups'>"+value+"</a></div></div></div>";
+                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><i class='fa fa-user' aria-hidden='true'></i> <a href='javascript:void(0)' id='' class='groups'>"+value+"</a><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'><i class='fa fa-user' aria-hidden='true'></i><i class='fa fa-arrow-right'></i></span></div></div></div>";
                         });
 
                         html+="</div>";
@@ -791,11 +842,22 @@
 			contentType: false,
 			success: function (response) {  
 
-				if (response == "success")
+				if (response !== "error")
 				{
+                     
+                    var getDetails = response.split('?#');
+                    
+                    var group_name   = getDetails[0];
+					var currentGroupId = getDetails[1];
+					var group_user_type = getDetails[2];
+
+
 					$('#create_group').modal('hide'); 
-					// swal("group created successfully","", "success");
                     getgroups();
+
+                    html='<div class="new_user_pannel" id="group'+currentGroupId+'"><div class="new_user1"><b>'+group_name+'</b>/'+group_user_type+'</div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/1" class="doc_permission1 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/2" class="doc_permission2 permission'+currentGroupId+'"><span class="checkmark"></span></label></div> <div class="new_user2"> <label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/3" class="doc_permission3 permission'+currentGroupId+'"><span class="checkmark"></span> </label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/4" class="doc_permission4 permission'+currentGroupId+'"> <span class="checkmark"></span> </label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/5" class="doc_permission5 permission'+currentGroupId+'"><span class="checkmark"></span></label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/6" class="doc_permission6 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/7" class="doc_permission7 permission'+currentGroupId+'"><span class="checkmark"></span></label></div><div class="permission_cancle new_user2 section2" group="'+currentGroupId+'"><i class="fa fa-close"></i> </div></div>';
+
+                    $('.all_groups').append(html);
 				}           
 			}  
 		}); 
@@ -871,7 +933,6 @@
 
  // select check box 
  $(document).on('click','input[type="checkbox"]', function() {
-
 
     var showDocWithDoc = '';
 
@@ -1080,8 +1141,10 @@
 
  $(document).on('click','.InviteUsers_icon',function(){
 
+ 	    var group_id = $(this).data('id');
+
 	 	$('input:checkbox').prop('checked', false);
-	 	$('#invite_users').modal('show'); 
+	 	
 	    $(this).parent().parent().find('.check-box-input').trigger( "click");
         var data_value = $(this).parent().parent().find('.check-box-input').data('value');
 
@@ -1090,13 +1153,21 @@
         if(data_permission == 0)
         {
         	$('#document_permission_modal').modal('show');
-
+        	$('#document_permission_modal #group'+group_id).css('background','lightgray');
+        	$('#document_permission_modal #group'+group_id).addClass('founder_permission');
+     	 
         }
 
        	$('.GroupByinvite').addClass('hidden');
 	 	$('.security_setting').removeClass('hidden');
 	 	$('.access_Ques_ans').removeClass('hidden');
 	 	$('.EnterGroupByinvite').addClass('hidden');
+	 	$('#invite_users').modal('show'); 
+
+
+	 	var clickEvent = $('.document_permission').find('span').first();
+        var triggerEvent  = clickEvent.find('.shuffle').first();
+        setTimeout(function(){ triggerEvent.trigger('click') },0);
       
  });
 
@@ -1109,11 +1180,23 @@
     var project_id = $('#project_id').val();
 
     var deletePath = [];
+    var deleteUser = [];
 
     $.each($("input[name='groups_select']:checked"), function(e)
     {        
         
           deletePath.push($(this).data('value')); 
+
+    });
+
+    $.each($("input[name='users_select']:checked"), function(e)
+    {        
+        var userEmail = $(this).data('value'); 
+        var group      =   $(this).attr('data_group');
+
+        var add = group+"/"+userEmail;
+
+        deleteUser.push(add); 
 
     });
 
@@ -1132,20 +1215,19 @@
                             data:{
                               _token : token,
                                deletePath: deletePath,
+                               deleteUser : deleteUser,
                                project_id: project_id,
                             },  
 
                             // multiple data sent using ajax//
                             success: function (response) {
                               
-                             if (response = "deleteGroup") {
-
                                 getgroups();
 
                                 $("input[name='groups_select']").prop("checked","false");
                                 $(".check-box-input-main").prop("checked","false");
                                
-                             }
+                             
                          }
                    });
               } 
@@ -1199,17 +1281,24 @@ function getAllGroups(){
 			success: function (response) { 
 
 				    var html1 = "<option value='own_group'>Own group</option><option value='all_group'>All group</option><option value='users_group'>Users group</option>";
+
+				    var html2 = '';
 				
 					$.each( response, function( key, value) {
 
                        var group_id = value.id;
                        var GroupUserRole = value.group_user_type;
 
-					   html1 += " <option value='"+value.id+"'>"+value.group_name+"</option>";
+					   html1 += "<option value='"+value.id+"'>"+value.group_name+"</option>";
+
+					   html2+="<option value='"+value.id+"'>"+value.group_name+"</option>";
 
 					});
                      
                     $('.group_type_collaboration').html(html1);
+                    $('.group_move_user').html(html2);
+
+                    
 
                        
 			}  
@@ -1287,6 +1376,7 @@ $('#hjgh').click(function(){
 
      $(document).on('click','.document_permission',function(event){
 
+     
         event.preventDefault();
         event.stopPropagation();
 
@@ -1397,9 +1487,12 @@ $('#hjgh').click(function(){
 
    });
 
-  
 
    $(document).on('click','#permission_store',function(){
+
+   	      var setPermissionAccess = $('.founder_permission input:checkbox:checked').length;
+
+   	      alert(g);
 
           var numberOfChecked1 = $('#document_permission_modal input:checkbox:checked').length;
       
@@ -1440,8 +1533,6 @@ $('#hjgh').click(function(){
 
                        if(response == 'success'){
                              
-                            swal("permission set successfully", "", "success");
-
                             getgroups();
 
                             DocumentTree(token,project_id);
@@ -1482,6 +1573,69 @@ $('#hjgh').click(function(){
 
     });
 
+
+    $(document).on('click','[data-group_type = "Administrator"]',function(){
+         
+        if($('#check_main_select').prop("checked") == true){
+
+        	    
+            }else{
+
+            	
+            }
+    	
+    });
+
+    $(document).on('click','.move_icon_user',function(){
+        
+           data_value = $(this).data('value');
+           
+           var current_group_id = $(this).parent().find('input:checkbox').attr('data_group');
+
+           $('#userCurrentGroupId').val(current_group_id);
+
+           $('#movedUserEmail').val(data_value);
+           
+           $(this).parent().find('input:checkbox').click();   
+          
+
+    });
+
+
+     $(document).on('click','.UserMoveIngroup',function(){
+          
+         var movedGroupId =  $('.group_move_user').val();  
+         var current_group_id =  $('#userCurrentGroupId').val();
+         var project_id = $('#project_id').val();
+         var userEmail  =$('#movedUserEmail').val();
+         var token = $('#csrf-token').val();
+
+
+				$.ajax({
+
+					type:"POST",
+					url:"{{ Url('/') }}/user/move_to_group",
+		            data:{
+		                _token : token,
+		                 project_id :project_id, 
+		                 movedGroupId  : movedGroupId,
+		                 userEmail  : userEmail,
+		                 current_group_id : current_group_id,
+		                
+		              },  
+
+					success: function (response) { 
+					
+						getgroups();
+
+						$('#MoveUser').modal('hide');
+						$('.display_groups input:checkbox').prop('checked', this.checked); 
+
+					}
+
+				});
+
+     });
 
 
 </script>

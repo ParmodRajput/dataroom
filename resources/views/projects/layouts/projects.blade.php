@@ -167,8 +167,8 @@
       var updated_name = $('#update_name').val();
       var updated_email = $('#update_email').val();
       var updated_phone = $('#update_phone').val();
-      var token =$('#csrf-token').val();    
-      
+      var token =$('#csrf-token').val();
+      if(updated_name && updated_phone){
            $.ajax({
               type:"POST",
               url:"{{ Url('/') }}/updateUserInfo",
@@ -185,11 +185,35 @@
                       {
 
                         swal("Information updated successfully", "", "success");
-                        location.reload();    
+                        $('.profile-text').html(updated_name);
+                           
                       }
               }
       
       });
+
+      }else{
+
+        if(!updated_name){
+            $("#alert_updated_name").show();
+            $("#alert_updated_name").html('<span class="help-block"">Name is required</span>');
+            $("#update_name").click(function(){
+              $("#alert_updated_name").hide();
+            });        
+
+        }
+        if(!updated_phone){
+            $("#alert_updated_phone").show();
+            $("#alert_updated_phone").html('<span class="help-block"">Name is required</span>');
+            $("#update_phone").click(function(){
+              $("#alert_updated_phone").hide();
+            });        
+
+        }        
+
+
+      }   
+      
   });
 
 // update password 
@@ -207,16 +231,45 @@
 
                 _token : token,
                 current_password : current_password,
-                new_password : new_password 
+                new_password : new_password,
+                confirm_password:confirm_password,
               },   
                success: function (response) { 
                       if(response == 'changePassword')
                       {
-
                         swal("Password updated successfully", "", "success");
-                        location.reload();    
+                        $('#changepassword').each(function(){
+                            this.reset();
+                        });                          
                       }
-              }
+                      if(response.validation_failed == true){
+                         var arr = response.errors;
+                          $.each(arr, function(index, value){
+                              if (value.length != 0){
+                                $("#alert_"+index).show();
+                                $("#alert_"+index).html('<span class="help-block">'+ value +'</span>');
+                                $("#"+index).click(function(){
+                                  $("#alert_"+index).hide();
+                                });
+                              }                        
+                          });
+                      }
+                      if(response.message == 'notmatchpassword'){
+                          $("#alert_current_password").show();
+                          $("#alert_current_password").html('<span class="help-block"">'+ response.errors +'</span>');
+                          $("#current_password").click(function(){
+                            $("#alert_current_password").hide();
+                          });
+                      } 
+                       if(response.message == 'notmatchcomfirm'){
+                          $("#alert_confirm_password").show();
+                          $("#alert_confirm_password").html('<span class="help-block"">'+ response.errors +'</span>');
+                          $("#confirm_password").click(function(){
+                            $("#alert_confirm_password").hide();
+                          });
+                      }                     
+
+              },
             });
 
 
