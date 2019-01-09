@@ -38,8 +38,10 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fastselect/0.7.3/fastselect.standalone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
  
@@ -512,7 +514,7 @@ $(document).on('click','#Report6',function(){
 
                 success: function (response) { 
 
-                      var html = "";
+                      var html = '<div class="table table-hover table-bordered table_color group_and_user_list"><div class="check-box select_check_group">  <input type="hidden" class="check-box-input-main"><span class="main-user_list"><i class="fa fa-caret-down "></i></span><span>All groups</span></div></div>';
                     
                       $.each( response, function( key, value) {
                                   
@@ -522,7 +524,7 @@ $(document).on('click','#Report6',function(){
                                    var permission  = value.groups.permission;
 
 
-                          html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='groups_select' data-group_type='"+GroupUserRole+"' data-per='"+permission+"' data-value='"+group_id+"'><span class=' toggle_user'>";
+                          html += "<div class='drop_box_document groups_list'><div class='document_index index-drop' ><div class='check-box select_check group_listing'>  <form  action='#' method='post'><input type='hidden' class='check-box-input'  name='groups_select' data-group_type='"+GroupUserRole+"' data-per='"+permission+"' data-value='"+group_id+"'><span class=' toggle_user'>";
                                          
                                         if( value.users != '')
                                         {
@@ -533,7 +535,7 @@ $(document).on('click','#Report6',function(){
 
                                     $.each( value.users, function( key, value){
 
-                                        html+="<div class='drop_box_document'><div class='document_index index-drop' ><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input'  name='users_select'></form>";
+                                        html+="<div class='drop_box_document'><div class='document_index index-drop' ><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='hidden' class='check-box-input'  name='users_select'></form>";
 
                                         if(GroupUserRole == 'Administrator')
                                         {
@@ -565,6 +567,12 @@ $(document).on('click','#Report6',function(){
         $(document).on('click','.toggle_user',function(){
       
               $(this).parent().parent().parent().parent().next().toggle();
+
+        });
+
+        $(document).on('click','.main-user_list',function(){
+      
+          $('.users_list').toggle();
 
         });
 
