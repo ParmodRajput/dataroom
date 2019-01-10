@@ -26,11 +26,35 @@ class GroupsController extends Controller
       $project_id = $request->project_id;
       $userId =Auth::user()->id;
 
-    	$group = new Group();
+
         $userForGroup = $request->userGroup;
-        $setGroupUserType = $request->choose_user_type;
-        $collaborationWith = $request->group_type_collaboration;
-        $setGroupTime = $request->group_time_limit;
+
+        if($userForGroup == 'Administrator')
+        {
+           $setGroupUserType = 'Administrator';
+           $collaborationWith = 'all_groups';
+           $setGroupTime = '1';
+           $access_limit = '1';
+           $active_date = null;  
+
+        }
+        else{
+
+           $setGroupUserType = $request->choose_user_type;
+           $collaborationWith = $request->group_type_collaboration;
+           $setGroupTime = $request->group_time_limit;
+           $access_limit = $request->access_limit;
+           $active_date = $request->validOnDate; 
+
+            if($access_limit == 1)
+            {
+              $active_date = null;
+            }
+
+        }
+      
+    	  $group = new Group();
+
       	$group->group_name = $request->group_name;
       	$group->project_id = $project_id;
       	$group->created_by = $userId;
@@ -38,13 +62,6 @@ class GroupsController extends Controller
         $group->group_for  = $userForGroup;
         $group->group_user_type = $setGroupUserType;
         $group->collaboration_with = $collaborationWith;
-        $access_limit = $request->access_limit;
-        $active_date = $request->validOnDate;  
-
-          if($access_limit == 1)
-          {
-            $active_date = null;
-          }
         $group->access_limit = $access_limit;
         $group->active_date  = $active_date;
         $group->QA_access_limit = $setGroupTime;    

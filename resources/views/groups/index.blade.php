@@ -296,7 +296,7 @@
 						</div>
 
 						<div class="basic_setting_input">
-						<div class="input_pannel_m_p" id="set_user_group_type_block">
+						<div class="input_pannel_m_p set_user_group_type_block" id="set_user_group_type_block">
 						<label><strong>Role</strong></label>
 						<label class="input_radio_new">
 						<input type="radio" name="choose_user_type" value="Collaboration_users" class="choose_user_type1" checked>
@@ -811,9 +811,7 @@
                         });
 
                         html+="</div>";
-
-
-					  	 html1 += " <option value='"+group_id+"' data-value='"+GroupUserRole+"'>"+group_name+"</option>";
+					  	html1 += " <option value='"+group_id+"' data-value='"+GroupUserRole+"'>"+group_name+"</option>";
 
 
 					});
@@ -855,9 +853,15 @@
 					$('#create_group').modal('hide'); 
                     getgroups();
 
+                    if(group_user_type !== 'Administrator')
+                    {
+
+
                     html='<div class="new_user_pannel" id="group'+currentGroupId+'"><div class="new_user1"><b>'+group_name+'</b>/'+group_user_type+'</div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/1" class="doc_permission1 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/2" class="doc_permission2 permission'+currentGroupId+'"><span class="checkmark"></span></label></div> <div class="new_user2"> <label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/3" class="doc_permission3 permission'+currentGroupId+'"><span class="checkmark"></span> </label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/4" class="doc_permission4 permission'+currentGroupId+'"> <span class="checkmark"></span> </label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/5" class="doc_permission5 permission'+currentGroupId+'"><span class="checkmark"></span></label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/6" class="doc_permission6 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/7" class="doc_permission7 permission'+currentGroupId+'"><span class="checkmark"></span></label></div><div class="permission_cancle new_user2 section2" group="'+currentGroupId+'"><i class="fa fa-close"></i> </div></div>';
 
-                    $('.all_groups').append(html);
+                         $('.all_groups').append(html);
+
+                      }
 				}           
 			}  
 		}); 
@@ -1094,7 +1098,7 @@
   });
 
  $(document).on('change','.security_setting input:radio',function(){
-        
+
     if ($(this).val() == "2") {
        
        $('.validOnDate').removeClass('hidden');
@@ -1112,17 +1116,18 @@
     if ($(this).val() == "Administrator") {
        
        $('.UserRole_block').addClass('hidden');
-
+       
     } else{
  
         $('.UserRole_block').removeClass('hidden');
+        
     }
 
  });
 
 
- $(document).on('change','input:radio',function(){
-        
+ $(document).on('change','#create_group input:radio',function(){
+
     if ($(this).val() == "Individual_users") {
        
        $('#create_group .security_setting').addClass('hidden');
@@ -1131,6 +1136,21 @@
 
     } else{
  
+       $('#create_group .security_setting').removeClass('hidden');
+       $('#create_group .questions_limit').removeClass('hidden');
+       $('#create_group .collaboration_setting').removeClass('hidden');
+    }
+
+    if ($(this).val() == "Administrator") {
+
+       $('#create_group .set_user_group_type_block').addClass('hidden');
+       $('#create_group .security_setting').addClass('hidden');
+       $('#create_group .questions_limit').addClass('hidden');
+       $('#create_group .collaboration_setting').addClass('hidden');
+
+    }else{
+  	
+       $('#create_group .set_user_group_type_block').removeClass('hidden');
        $('#create_group .security_setting').removeClass('hidden');
        $('#create_group .questions_limit').removeClass('hidden');
        $('#create_group .collaboration_setting').removeClass('hidden');
@@ -1462,7 +1482,7 @@ $('#hjgh').click(function(){
    }
 
 
-     //permission module
+    //permission module
 
    $(document).on('click','#document_permission_modal input[type="checkbox"]', function() {
 
@@ -1636,6 +1656,22 @@ $('#hjgh').click(function(){
 				});
 
      });
+
+
+    $(document).on('change','.choose_user2 input:radio',function(){
+
+    	
+alert($(this).val());        
+    // if ($(this).val() == "2") {
+       
+    //    $('.validOnDate').removeClass('hidden');
+
+    // }else{
+       
+    //    $('.validOnDate').addClass('hidden');
+    // }
+
+ });
 
 
 </script>
