@@ -183,7 +183,7 @@ ul.folders li {
     border-top: 1px solid #dfdfdf;
  }
 
-  .folder_and_file_tree_qa .folders ul li{
+ .reports_record .folders ul li{
         background: #e8f2f3;
     margin-bottom: 3px;
     border: 1px solid #d2e1e3;
