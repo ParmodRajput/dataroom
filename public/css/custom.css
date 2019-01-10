@@ -27,7 +27,7 @@ body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden; background
 .navbar.default-layout .navbar-brand-wrapper .navbar-brand img{ width:70%!important; height:auto!important;}
 .create_folder .modal-header { float: left; width: 100%; padding: 10px; border-bottom: 1px solid #dfdfdf;}
 .create_folder .modal-content{ background:#fff!important;}
-.create_folder .modal-content .modal-title{ padding:10px;}
+.create_folder .modal-content .modal-title{ padding:10px; font-size: 15px;}
 
 ul.folders{ height:520px; overflow-x: hidden;}
 
@@ -36,8 +36,9 @@ ul.folders{ height:520px; overflow-x: hidden;}
 }
 
 .create_folder div#directory_current input[type="text"] { float:left; padding:10px; 
-border: 1px solid #dfdfdf; height:46px; width: calc(100% - 100px);}
-.create_folder input.submit_folder {float:left; width:100px; font-size:15px;  height:46px;  border:none;  background:#333;  color:#fff;  text-transform:capitalize;}
+border: 1px solid #dfdfdf; height:40px; width: calc(100% - 100px);}
+.create_folder input.submit_folder {float:left; width:100px; font-size:15px;  height:40px;
+  border:none;      background: #18cad7!important; border: 1px solid #18bac6!important;  color:#fff;  text-transform:capitalize;}
 
 .create_folder input.submit_folder:hover{ background:#2387de;}
 .create_folder .modal-body{ float:left; width:100%; padding:10px;}
@@ -98,8 +99,9 @@ span.download_file form i.fa.fa-download{ position:relative; right:15px;  }
 span.download_file form input[type="submit"] { width:30px; position:absolute; right:8px;
     top:-4px; z-index:5;}
 
-span.help-block { float: left!important; padding:10px; margin-bottom:15px; width: 100%!important; color: #a94442;
-    background-color: #f2dede;  border-color: #ebccd1;}
+span.help-block {     float: left!important; padding: 5px; margin-bottom: 15px;
+ width: 100%!important;  color: #a94442; background-color: #f2dede; border-color: #ebccd1;
+  font-size: 13px; margin-top: 10px;}
 
 .navbar.default-layout .navbar-menu-wrapper .navbar-nav.header-links .nav-item .nav-link { float:left; width:100%; padding:16px 15px!important;}
 a.nav-link b{/* float:left; width:100%;*/}
@@ -433,6 +435,7 @@ form#AllUploadFiles {
     width: 100%;
      border: 1px solid #d7d7d7!important;
     height:auto;
+    padding: 0px 0 0 30px;
 }
 
 .reply_section .fstControls {
@@ -445,7 +448,7 @@ form#AllUploadFiles {
     float: left;
     width: 100%;
     background: #fff;
-    padding: 12px 12px 12px 40px;
+    padding: 12px 12px 12px 30px;
     margin: 0px;
     box-shadow: none!important;
     border-bottom: none;
