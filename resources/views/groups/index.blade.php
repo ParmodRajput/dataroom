@@ -159,7 +159,7 @@
                     <form class="form-horizontal" role="form" id="invite_form" method="POST" action="{{url('/')}}/invite_users">
 										{{ csrf_field() }}
 					    <div class="dynamic_input">
-							<input type="text"  name ="user_email" class="form-control" id="invite_users" data-role="tagsinput" placeholder="Enter email,use enter or comma to separate">
+							<input type="text"  name ="user_email" class="form-control" id="invite_users" data-role="tagsinput" placeholder="Enter email,use enter or comma to separate" required>
 						</div>
 						<div class="clearfix"></div>
 						<input type="hidden"  name ="group_id" class="form-control" id="group_id" value = "" placeholder="Enter Group Id">

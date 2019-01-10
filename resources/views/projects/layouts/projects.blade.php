@@ -95,13 +95,27 @@
               },  
               // multiple data sent using ajax//
               success: function (response) { 
-                     
-                     window.location.href = '{{url("/")}}/project/'+response+'/documents'; 
+                if(response.validation_failed == true){
+                   var arr = response.errors;
+                   $.each(arr, function(index, value){
+                       if (value.length != 0){
+                         $("#alert_"+index).show();
+                         $("#alert_"+index).html('<span class="help-block">'+ value +'</span>');
+                         $("#"+index).click(function(){
+                           $("#alert_"+index).hide();
+                         });
+                       }                        
+                   });
+                }else{
+
+                  window.location.href = '{{url("/")}}/project/'+response+'/documents';
+
+                }
+                         
               }
           });
 
      });
-
  //end
 
 // project delete
@@ -322,11 +336,12 @@ No
 <label>Company name or contract number</label>
  <input type="text"  name ="company_name" id ="company_name" class="form-control" id="exampleInputEmail1" placeholder="Enter comapny">
 </div>
-
+<div id="alert_company_name" style="display: none"></div>
 <div class="input_pannel {{ $errors->has('project_name') ? ' has-error' : '' }}">
 <label>New project name *</label>
  <input type="text" id ="project_name" name ="project_name" class="form-control"  placeholder="Project name">
 </div>
+<div id="alert_project_name" style="display: none"></div>
 
  @if ($errors->has('project_name'))
                    <script>
@@ -356,7 +371,7 @@ No
 
 <div class="input_pannel">
 <label>Server location *</label>
-<select class="sever_location">
+<select class="sever_location" id="server_location">
   <option></option>
   <option value="India" >India</option>
   <option value="Usa" >Usa</option>
@@ -365,6 +380,7 @@ No
   <option value="Canada" >Canada</option> 
 </select>
 </div>
+<div id="alert_server_location" style="display: none"></div>
 
 </div>
 

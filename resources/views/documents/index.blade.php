@@ -690,15 +690,24 @@
 
              <div class='ques_ans_docs_group'>   
               <span class="to_user">To:</span>     
-              <select class="multipleSelect" multiple name="language"></select>
+              <select class="multipleSelect" id="users" multiple name="language"></select>
              </div>
+
+             <div style="display:none;" id="alert_users"></div>
+
              <div class="subject_section">
                 <span class="subject_title">Subject:</span>
-                <input type="text" class="question_subject">
+                <input type="text" class="question_subject" id="subject">
              </div>
+
+             <div style="display: none;" id="alert_subject"></div>
+
              <div class="question_content_section">
-              <textarea class="question_content" data-value="0" rows="10" cols="55"></textarea>
+              <textarea class="question_content" data-value="0" rows="10" cols="55" id="ques_content"></textarea>
              </div>
+
+             <div style="display: none;" id="alert_ques_content"></div>
+
            </form>
          </div>
        </div>

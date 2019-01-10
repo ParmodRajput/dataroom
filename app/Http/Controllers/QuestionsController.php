@@ -15,6 +15,7 @@ use App\Group_Member;
 use App\FavDocument;
 use Mail;
 use Session;
+use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpWord\IOFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -27,6 +28,17 @@ use Illuminate\Http\Request;
 class QuestionsController extends Controller
 {
      public function create_Question(Request $request){
+
+      $validator = Validator::make($request->all(), [
+                  'users' => 'required',
+                  'subject' => 'required',
+                  'ques_content' => 'required'
+      ]);
+
+      if ($validator->fails()) {
+          $errors = $validator->getMessageBag()->toArray();
+          return response()->json(['validation_failed'=>true,'errors'=>$errors]);   
+      } else{
 
     	$doc_path = $request->doc_path;
     	$get_document_id = Document::where('path',$doc_path)->first();
@@ -88,6 +100,8 @@ class QuestionsController extends Controller
         }
  
         return "send_question";
+
+      }
     
     }
 

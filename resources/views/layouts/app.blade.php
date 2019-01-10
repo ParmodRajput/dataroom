@@ -448,8 +448,23 @@ $(document).ready(function(){
               },  
               // multiple data sent using ajax//
               success: function (response) { 
-                     
-                     window.location.href = '{{url("/")}}/project/'+response+'/documents'; 
+                if(response.validation_failed == true){
+                   var arr = response.errors;
+                   $.each(arr, function(index, value){
+                       if (value.length != 0){
+                         $("#alert_"+index).show();
+                         $("#alert_"+index).html('<span class="help-block">'+ value +'</span>');
+                         $("#"+index).click(function(){
+                           $("#alert_"+index).hide();
+                         });
+                       }                        
+                   });
+                }else{
+
+                  window.location.href = '{{url("/")}}/project/'+response+'/documents';
+
+                }
+                         
               }
           });
 
@@ -2856,8 +2871,8 @@ $(document).on('click','.note1_doc_delete', function(){
 
 
 
-   $(document).on('click','.send_question',function(){
-     $('#genrate_question').modal('hide');
+  $(document).on('click','.send_question',function(){
+     
      var directory_url  =  $('.directory_location #current_directory').val(); 
 
      var doc_path =  $('#doc_path_directory').data('value');
@@ -2870,13 +2885,12 @@ $(document).on('click','.note1_doc_delete', function(){
      var subject = $('.question_subject').val();
      var ques_content  = $('.question_content').val();
      var project_name  = $('.project_name').val();
-
-
+     
      $.ajax({
 
         type : "POST",
         url : "{{url('/')}}/send_question",
-        message: swal("send successfully"," ","success"),
+        //message: swal("send successfully"," ","success"),
         data : {
           _token       : token,
           doc_path     : doc_path,
@@ -2888,17 +2902,32 @@ $(document).on('click','.note1_doc_delete', function(){
 
         },
 
-      success:function(response){
-        
-          if(response == 'send_question'){
+        success:function(response){
 
-             data_display(token,directory_url);
-          }
+            if(response.validation_failed == true){
+                var arr = response.errors;
+                 $.each(arr, function(index, value){
+                     if (value.length != 0){
+                       $("#alert_"+index).show();
+                       $("#alert_"+index).html('<span class="help-block">'+ value +'</span>');
+                       $("#"+index).click(function(){
+                       $("#alert_"+index).hide();                      
+                       });
+                     }                        
+                 });
+               
+            }else{
+
+              $('#genrate_question').modal('hide');
+              message: swal("send successfully"," ","success"),
+              data_display(token,directory_url);
+
+            }
         }
 
        }); 
 
-   });
+  });
 
  $(document).ajaxSend(function(event, request, settings) {
       $('.overlay_body').removeClass('hidden');
@@ -2982,6 +3011,11 @@ $(document).on('click','.note1_doc_delete', function(){
 
  });
  
+
+ $(document).on('click','.fstQueryInput.fstQueryInputExpanded',function(){
+
+    $('#alert_users').hide();
+ });
 
 </script>
 
