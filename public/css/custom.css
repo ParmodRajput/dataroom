@@ -2120,7 +2120,7 @@ p.subject_ques {
 }
 
 #genrate_question .modal-title {
-    margin-left: 43%;
+    width: 30%;
 }
 
 #genrate_question .related_question_by {
@@ -2339,3 +2339,19 @@ button.waiting_reply {
     float: left;
     margin-left: 15px;
 }
+
+.users__settings-panel {
+    padding: 20px 25px 10px;
+}
+
+.GroupTitleFirst {
+   
+    width: 84%;
+    float: left;
+    
+}
+
+.GroupTitle{
+    padding: 7px;
+}
+

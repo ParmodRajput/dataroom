@@ -84,6 +84,11 @@
 
   @if(checkUserType($project_name) == 'Administrator')
     <div class="indexing-group-user col-md-6">
+
+    	<input type='hidden' id='checkGroupIdEditRole'>
+
+    	<div class="GroupTitle"></div>
+
     	<div class="list_group_user hidden">
     		<div class="users_groups">
     		 <button class="accordion">Users <i class="fa fa-caret-down "></i> <span class="edit_user"><i class="fa fa-pencil"></i> edit
@@ -96,11 +101,14 @@
 			</div>	
 
     		<div class="role_groups">
-    		 <button class="accordion">Role<i class="fa fa-caret-down "></i><span class="edit_role"><i class="fa fa-pencil"></i> edit
+    		 <button class="accordion">Role<i class="fa fa-caret-down "></i> <span class="apply_new_role btn btn-primary">Apply</span> 
+    		 	<span class="edit_role"><i class="fa fa-pencil"></i> edit
     		 </span></button>
 				<div class="panel">
-					<div class="group_user_role">
-						
+					<div class="group_user_role">	
+					</div>
+					<div class="edit_role_ofuser hidden">
+						<div class="users__settings-panel group-role-settings"><div class="form-horizontal ng-scope" style=""><div class="form-group"><div class="radio col-xs-12 ng-scope" ><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="760" value="2"> <span class="theme-radio"></span> <strong  class="ng-binding">Collaboration users</strong> <span class="help-block ng-binding">Access to: group members and their activity, personal and group notes, communication with group members and Q&amp;A coordinators</span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="763" value="1"> <span class="theme-radio"></span> <strong class="ng-binding">Individual users</strong> <span class="help-block ng-binding">Access to: personal notes, own activity and communication with Q&amp;A coordinators </span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="766" value="4"> <span class="theme-radio"></span> <strong class="ng-binding">Full administrators</strong> <span class="help-block ng-binding" >Full rights: invite and manage users, view activity reports, manage permissions and Q&amp;A section</span></label></div></div></div></div>
 					</div>
 				 
 				</div>
@@ -998,14 +1006,13 @@
   
                                     var groupUsers  = response.userInfo;
                                     var groupInfo   = response.groupInfo;
-                                    
+
                                     var user_html1 = '';
 
                                      $.each(groupUsers, function(key ,value) {
 
                                      	var userEmmail = value.member_email; 
-
-                                        user_html1 += "<h5> </h5><p>"+userEmmail+"</p>";
+                                     	user_html1 += "<h5> </h5><p>"+userEmmail+"</p>";
                                      
                                      });
 
@@ -1020,6 +1027,15 @@
                                         var group_collaboration = value.collaboration_with;
                                         var group_security_setting = value.access_limit;
                                         var security_setting = '';
+                                        var group_name = value.group_name;
+                                        var group_id = value.id;
+
+
+                                        var htmlGroupName ="<div class='GroupTitleFirst'>"+group_name+"</div><div class='edit_group_name'><i class='fa fa-pencil'></i>Rename</div>";
+
+                                        $('#checkGroupIdEditRole').val(group_id);
+
+                                        $('.GroupTitle').html(htmlGroupName);
 
                                         if(group_security_setting == 2)
                                         {
@@ -1043,17 +1059,15 @@
 											{
 												 var QA_limit = "1 Month "; 
 											}
-											
+			
                                         
                         if(GroupUserRole == 'Collaboration_users'){
 
                            group_html1 +="<h5>Collaboration users</h5><p class=''>Access to: group members and their activity, personal and group notes, communication with group members and Q&A coordinators</p>"; 
 
-                        }else if(GroupUserRole == 'Admintrator')	
-					    {
-                           group_html1 +="<h5>Full administrators</h5><p class=''>Full rights: invite and manage users, view activity reports, manage permissions and Q&A section</p>";  
-					    	
-					    }else{
+                        }
+
+					    if(GroupUserRole == 'Individual_users'){
 
                             group_html1 +="<h5>Individual users</h5><p class=''>Access to: personal notes, own activity and communication with Q&A coordinators</p>"; 
 
@@ -1066,7 +1080,37 @@
 
                         group_html4+="<h5>Group questions limit</h5><p>"+QA_limit+"</p>";
 
+
+                        if(GroupUserRole == 'Administrator')	
+					    {
+                           group_html1 +="<h5>Full administrators</h5><p class=''>Full rights: invite and manage users, view activity reports, manage permissions and Q&A section</p>";  
+
+                           group_html2 = '';
+
+                           group_html4 = '';
+					    	
+					    }
+
                     });
+                                    if(user_html1 == '')
+                                     	{                                        
+                                             $('.users_groups').addClass('hidden');      
+                                     	}else{
+                                     		 $('.users_groups').removeClass('hidden'); 
+                                     	}
+
+
+
+                                    if(group_html2 == '')
+                                     	{                                        
+                                             $('.collaboration_setting_groups').addClass('hidden'); 
+                                             $('.ques_ans_groups').addClass('hidden');   
+                                                
+                                     	}else{
+                                     		 $('.collaboration_setting_groups').removeClass('hidden'); 
+                                     		 $('.ques_ans_groups').removeClass('hidden'); 
+                                     		 
+                                     	}
  
                                     // group info
                                     $('.group_user_role').html(group_html1);
@@ -1077,7 +1121,6 @@
                                      //group Users
 
                                      $('.group_user_listing').html(user_html1);
-
 		                            }
 
 		                       }); 
@@ -1098,8 +1141,9 @@
         $('.security_setting').addClass('hidden');
 		$('.access_Ques_ans').addClass('hidden');
 
-
 		var project_id = $('#project_id').val();
+
+		$('.GroupTitle').html('');
 
 
       }else{
@@ -1108,6 +1152,8 @@
       	 $('.delete_group').addClass('hidden'); 
       	 $('.delete_group').removeClass('hidden');
       	 $('.GroupByinvite').removeClass('hidden');
+
+      	 $('.GroupTitle').html('');
 
       }
 
@@ -1700,6 +1746,21 @@ $('#hjgh').click(function(){
         	}
 
        });
+
+
+       $(document).on('click','.edit_role',function(){
+
+       	 $('.edit_role_ofuser').removeClass('hidden');
+       	 $('.group_user_role').addClass('hidden');
+
+       	 var groupId =  $('#checkGroupIdEditRole').val();
+
+       	 $('.apply_new_role').removeClass('hidden');
+       	 $(this).addClass('hidden');
+
+       });
+
+       
      
 
 </script>

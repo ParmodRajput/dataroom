@@ -1796,7 +1796,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
           $report->save();
 
 
-       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data'));
+       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id'));
 
     }
 
