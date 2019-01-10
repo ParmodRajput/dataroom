@@ -70,7 +70,7 @@
                                <span>Role</span> 
                         </div>
                         <div class="Invite-user-ac">
-                           <span><i class='fa fa-user-plus' aria-hidden='true'></i></span> Invite user
+                           <span><i class='fa fa-user-plus' aria-hidden='true'></i></span> Invite user/Move user
                         </div>
 
                 </div>
@@ -397,12 +397,13 @@
 <!-- Document permission modal -->
 <div id="document_permission_modal" data-backdrop="static" data-keyboard="false" class="modal fade" role="dialog">
   <div class="modal-dialog new_permission_setup">
+  	<input type="hidden" id ='CheckUserChangePermission'>
 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
            <h3>DOCUMENTS' PERMISSIONS</h3>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close_permission_modal">&times;</button>
         </div>
         <div class="modal-body scroll_permission_section">         
           <div class="outer_box">
@@ -585,7 +586,6 @@
         </div>
 
     <div class="modal-footer">
-       <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
        <button type="button" class="btn btn-success" id="permission_store" data-dismiss="modal">Apply</button>
     </div>
   </div>
@@ -803,11 +803,22 @@
 					  	     html+="<i class='fa fa-caret-down '></i>";
                             }
 					        
-					  	    html+="</span></form><a href='javascript:void(0)' data-value='"+group_id+"' id='' class='groups'>"+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' type='button' data-id='"+group_id+"'><i class='fa fa-user-plus' aria-hidden='true'></i></a></div></div></div><div class='users_list'>";
+					  	    html+="</span></form><a href='javascript:void(0)' data-value='"+group_id+"' id='' class='groups'>";
+
+					  	    if(GroupUserRole == 'Administrator')
+					  	    {
+                                 html+="<img src='{{url('/')}}/dist/img/admin.png'></img>";
+
+					  	    }else{
+                                 
+                                 html+="<img src='{{url('/')}}/dist/img/group.png'></img>";
+					  	    }
+
+					  	    html+= '  '+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' type='button' data-id='"+group_id+"'><i class='fa fa-user-plus' aria-hidden='true'></i></a></div></div></div><div class='users_list'>";
 
                         $.each( value.users, function( key, value){
 
-                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><i class='fa fa-user' aria-hidden='true'></i> <a href='javascript:void(0)' id='' class='groups'>"+value+"</a><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'><i class='fa fa-user' aria-hidden='true'></i><i class='fa fa-arrow-right'></i></span></div></div></div>";
+                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><i class='fa fa-user' aria-hidden='true'></i> <a href='javascript:void(0)' id='' class='groups'>"+value+"</a><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'></span></div><img src='{{url('/')}}/dist/img/moveUser.png'></img></div></div>";
                         });
 
                         html+="</div>";
@@ -849,17 +860,22 @@
 					var currentGroupId = getDetails[1];
 					var group_user_type = getDetails[2];
 
+					var lastGroup = parseInt(currentGroupId) - parseInt("1");
 
 					$('#create_group').modal('hide'); 
                     getgroups();
 
+                    $('#document_permission_modal').modal('show'); 
+
                     if(group_user_type !== 'Administrator')
                     {
-
+                        
 
                     html='<div class="new_user_pannel" id="group'+currentGroupId+'"><div class="new_user1"><b>'+group_name+'</b>/'+group_user_type+'</div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/1" class="doc_permission1 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/2" class="doc_permission2 permission'+currentGroupId+'"><span class="checkmark"></span></label></div> <div class="new_user2"> <label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/3" class="doc_permission3 permission'+currentGroupId+'"><span class="checkmark"></span> </label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/4" class="doc_permission4 permission'+currentGroupId+'"> <span class="checkmark"></span> </label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/5" class="doc_permission5 permission'+currentGroupId+'"><span class="checkmark"></span></label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/6" class="doc_permission6 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/7" class="doc_permission7 permission'+currentGroupId+'"><span class="checkmark"></span></label></div><div class="permission_cancle new_user2 section2" group="'+currentGroupId+'"><i class="fa fa-close"></i> </div></div>';
 
-                         $('.all_groups').append(html);
+                         $('#document_permission_modal #group'+lastGroup).append(html);
+
+                         $('#document_permission_modal #group'+currentGroupId).css('background','#fff');
 
                       }
 				}           
@@ -1129,16 +1145,19 @@
  $(document).on('change','#create_group input:radio',function(){
 
     if ($(this).val() == "Individual_users") {
-       
+
+
        $('#create_group .security_setting').addClass('hidden');
        $('#create_group .questions_limit').addClass('hidden');
        $('#create_group .collaboration_setting').addClass('hidden');
+       $('#create_group .set_user_group_type_block').removeClass('hidden');
 
     } else{
  
        $('#create_group .security_setting').removeClass('hidden');
        $('#create_group .questions_limit').removeClass('hidden');
        $('#create_group .collaboration_setting').removeClass('hidden');
+       $('#create_group .set_user_group_type_block').removeClass('hidden');
     }
 
     if ($(this).val() == "Administrator") {
@@ -1150,7 +1169,7 @@
 
     }else{
   	
-       $('#create_group .set_user_group_type_block').removeClass('hidden');
+       c
        $('#create_group .security_setting').removeClass('hidden');
        $('#create_group .questions_limit').removeClass('hidden');
        $('#create_group .collaboration_setting').removeClass('hidden');
@@ -1173,6 +1192,7 @@
         if(data_permission == 0)
         {
         	$('#document_permission_modal').modal('show');
+        	$('#CheckUserChangePermission').val('1');
         	$('#document_permission_modal #group'+group_id).css('background','lightgray');
         	$('#document_permission_modal #group'+group_id).addClass('founder_permission');
      	 
@@ -1512,8 +1532,6 @@ $('#hjgh').click(function(){
 
    	      var setPermissionAccess = $('.founder_permission input:checkbox:checked').length;
 
-   	      alert(g);
-
           var numberOfChecked1 = $('#document_permission_modal input:checkbox:checked').length;
       
           if(numberOfChecked1 == '0')
@@ -1556,6 +1574,8 @@ $('#hjgh').click(function(){
                             getgroups();
 
                             DocumentTree(token,project_id);
+
+                            $('#CheckUserChangePermission').val('');
 
                         }
  
@@ -1657,22 +1677,30 @@ $('#hjgh').click(function(){
 
      });
 
+     // $('#document_permission_modal').on('show.bs.modal', function (e) {
 
-    $(document).on('change','.choose_user2 input:radio',function(){
+          
+     // });
+       $(document).on('click','.checkmark',function(){
+           
+           $('#CheckUserChangePermission').val('1');
 
-    	
-alert($(this).val());        
-    // if ($(this).val() == "2") {
-       
-    //    $('.validOnDate').removeClass('hidden');
+       });
 
-    // }else{
-       
-    //    $('.validOnDate').addClass('hidden');
-    // }
+       $(document).on('click','.close_permission_modal',function(){
 
- });
+        	var checker =  $('#CheckUserChangePermission').val();
+        	if(checker == 1){
+                 
+                 alert('Do you want to apply set permission ?');
 
+        	}else{
+
+        		$('#document_permission_modal').modal('hide');
+        	}
+
+       });
+     
 
 </script>
 @endsection
