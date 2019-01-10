@@ -1997,7 +1997,7 @@ button.answere_by_me {
      width: 100%!important;
     padding: 10px!important;
     height: auto!important;
-    padding-left: 38px!important;
+    padding-left:0px!important;
 }
 
 .ques_ans_docs_group span.to_user
