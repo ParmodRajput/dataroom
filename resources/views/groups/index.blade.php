@@ -10,11 +10,11 @@
           
             @if(checkUserType($project_name) == 'Administrator')
         	<div class="btn_upload InviteUsersByUp ">
-           		 <button class='btn btn-primary InviteUsers' type='button' data-id=''>InviteUsers</button>
+           		 <button class='btn btn-primary InviteUsers' type='button' data-id=''><img src='{{url('/')}}/dist/img/invite1.png'></img> InviteUsers</button>
            </div>
 
             <div class="btn_upload">
-                <button class="btn btn-success btn-block create_new_group" data-toggle="modal" data-target="#create_group">New Group
+                <button class="btn btn-success btn-block create_new_group" data-toggle="modal" data-target="#create_group"><img src='{{url('/')}}/dist/img/newGroup.png'></img>  New Group
 					<i class=""></i>
 				</button>
             </div>
@@ -70,7 +70,7 @@
                                <span>Role</span> 
                         </div>
                         <div class="Invite-user-ac">
-                           <span><i class='fa fa-user-plus' aria-hidden='true'></i></span> Invite user/Move user
+                           <span>Invite/Move user</span> 
                         </div>
 
                 </div>
@@ -814,11 +814,11 @@
                                  html+="<img src='{{url('/')}}/dist/img/group.png'></img>";
 					  	    }
 
-					  	    html+= '  '+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' type='button' data-id='"+group_id+"'><i class='fa fa-user-plus' aria-hidden='true'></i></a></div></div></div><div class='users_list'>";
+					  	    html+= '  '+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' type='button' data-id='"+group_id+"'><img src='{{url('/')}}/dist/img/invite.png'></img></a></div></div></div><div class='users_list'>";
 
                         $.each( value.users, function( key, value){
 
-                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><i class='fa fa-user' aria-hidden='true'></i> <a href='javascript:void(0)' id='' class='groups'>"+value+"</a><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'></span></div><img src='{{url('/')}}/dist/img/moveUser.png'></img></div></div>";
+                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><a href='javascript:void(0)' id='' class='groups'>"+value+"</a></div><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'><img src='{{url('/')}}/dist/img/moveUser.png'></img></span></div></div>";
                         });
 
                         html+="</div>";
