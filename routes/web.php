@@ -120,6 +120,10 @@ Route::get('project/delete/{id}',  'ProjectsController@deleteProject');
 Route::get('project/edit/{id}',  'ProjectsController@editProject');
 Route::post('project/update',  'ProjectsController@updateProject');
 
+// search document route
+
+Route::post('doc/search_doc_content',  'DocumentsController@SearchDocument');
+Route::post('fav/search_doc_content',  'DocumentsController@SearchFavDocument');
 
 //group routes
 Route::post('create_group', 'GroupsController@store');
@@ -133,6 +137,9 @@ Route::post('/user/move_to_group', 'GroupsController@MoveUser');
 Route::post('/change_groupName', 'GroupsController@ChangeGroupName');
 Route::post('/change_groupRole', 'GroupsController@ChangeGroupRole');
 
+Route::post('update/collaboration_setting', 'GroupsController@ChangeCollaborationSetting');
+Route::post('/update/access_setting', 'GroupsController@ChangeAccessRoomSetting');
+Route::post('/update/quesAns_setting', 'GroupsController@ChangeQuesAnsSetting');
 
 // all project all users
 Route::post('/project_users', 'GroupsController@getAllUserInProject');
@@ -154,7 +161,10 @@ Route::post('/delete_question','QuestionsController@deleteQuestions');
  Route::post('/reply_send','QuestionsController@sendReply');
  Route::post('/reply_get','QuestionsController@GetAllReply');
  Route::post('/reply_delete','QuestionsController@deleteReply');
- 
+
+ //create route by parmod for question searching
+
+ Route::post('/search/question','QuestionsController@GetSearchedQues'); 
 
 
 //question route end

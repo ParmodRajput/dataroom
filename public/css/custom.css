@@ -151,7 +151,7 @@ a.nav-link b{/* float:left; width:100%;*/}
 
 .drop_box_document { float:left; width:100%; position: relative;}
 .right_click.drop-holder { position: absolute; background: #fff!important;
-    width: 300px; z-index: 999; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
+    width: 300px; z-index:1100; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
 
 .drop-menu { float: left; width: 100%;}
 
@@ -240,7 +240,7 @@ li.ng-scope.paste { display: none;}
 .rightClickPopUpWithOutValue{display:none;}
 
 .rightClickPopUpWithOutValue { position: absolute; background: #fff!important; width: 300px;
-    z-index: 999; border: 1px solid #18cad7; padding: 10px; box-shadow: 0 0 3px #dfdfdf;}
+    z-index:1100; border: 1px solid #18cad7; padding: 10px; box-shadow: 0 0 3px #dfdfdf;}
 
 ul.context-menu_list_document { margin: 0px; padding: 0px;}
 ul.context-menu_list_document li { float: left; width: 100%; border-bottom: 1px solid #18cad7;
@@ -919,7 +919,6 @@ span.drag_document_texts {
     top: 0;
     line-height: 33px;
     border-radius: 2px;
-    right: 10px;
     color: #fff;
     position: absolute;
     cursor: pointer;
@@ -956,6 +955,7 @@ span.drag_document_texts {
     border: 1px solid #dfdfdf!important;
     float:left;
     padding: 10px;
+    width: 300px;
 }
 
  .content-wrapper.all-projects {
@@ -2353,5 +2353,15 @@ button.waiting_reply {
 
 .GroupTitle{
     padding: 7px;
+}
+
+.right_click.drop-holder.arrow:before {
+    position: absolute;
+    left: -16px;
+    border-right: 15px solid #18cad7;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    content: "";
+    top: 307px!important;
 }
 
