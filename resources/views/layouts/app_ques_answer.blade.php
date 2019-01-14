@@ -417,8 +417,8 @@
         var document_name = $('.reply_document_name').val();
         var auth_name =  $('.auth_name').val();
         var time = new Date();
-
-
+       // alert(reply_content);
+        if(send_to && reply_subject && reply_content){
          $.ajax({
             type : "POST",
             url : "{{url('/')}}/reply_send",
@@ -456,6 +456,48 @@
             }
 
         });
+
+        }else{
+         // alert("gfdgfdgfdg");
+          if(send_to == ''){
+           // alert("users");
+          $('#alert_reply_user').show().html('<span class="help-block">Please select users</span>');
+
+             $('#reply_user').click (function(){
+
+                 $('#alert_reply_user').hide();
+
+             });
+
+          }  
+
+          if(reply_subject == ''){
+           // alert("users");
+          $('#alert_reply_subject').show().html('<span class="help-block">Please enter subjet</span>');
+
+             $('#reply_subject').click (function(){
+
+                 $('#alert_reply_subject').hide();
+
+             });
+
+          } 
+
+          if(reply_content == ''){
+           // alert("users");
+          $('#alert_reply_content').show().html('<span class="help-block">Please enter content</span>');
+
+             $('#reply_content').click (function(){
+
+                 $('#alert_reply_content').hide();
+
+             });
+
+          }                     
+          
+
+
+        }
          
       });
 
@@ -678,7 +720,7 @@
 
   $(document).on('click','.send_question',function(){
 
-     $('#genrate_question').modal('hide');
+    // $('#genrate_question').modal('hide');
 
      var doc_path =  $('.related_to_doc').val();
      var project_id  = $('.project_id_qu').val();
@@ -688,36 +730,136 @@
      var ques_content  = $('.question_content').val();
      var project_name  = $('.project_name_in').val();
      var directory_url = $('.current_dir_qa').val();
+     //alert(doc_path);
+     if(users && subject && ques_content){
+             $.ajax({
+
+                type : "POST",
+                url : "{{url('/')}}/send_question",
+                data : {
+                  _token       : token,
+                  doc_path     : doc_path,
+                  project_id   : project_id,
+                  users        : users,
+                  subject      : subject,
+                  ques_content : ques_content,
+                  project_name : project_name,
+
+                },
+
+              success:function(response){
+                
+                  if(response == 'send_question'){
+
+                     ques_display(token,directory_url);
+                     $('.question_subject').val('');
+                     $('.question_content').val('');
+                     $('#genrate_question').modal('hide');
+
+                  }
+                }
+
+               }); 
+     }else{
+
+          if(users == ''){
+           // alert("users");
+          $('#alert_user_select').show().html('<span class="help-block">Please select users</span>');
+
+             $('#user_select').click (function(){
+
+                 $('#alert_user_select').hide();
+
+             });
+
+          }
+
+          if(subject == ''){
+          //  alert("subject");
+           $('#alert_question_subject').show().html('<span class="help-block">Please enter subject</span>');
+          
+             $('#question_subject').click (function(){
+
+                 $('#alert_question_subject').hide();
+
+             });         
+          }   
+
+          if(ques_content == ''){
+           // alert("ques_content");
+           $('#alert_question_content').show().html('<span class="help-block">Please enter content</span>');
+          
+             $('#question_content').click (function(){
+
+                 $('#alert_question_content').hide();
+
+             });          
+          }
+
+     }
+
+   });
+
+
+    $(document).on('click','.search_filter_btn',function(){
+
+     var directory_url = $('.current_dir_qa').val();
+
+     var project_id  = $('.project_id_qu').val();
+
+     var field_content  = $('.search_filter').val();
+
+     var token = $('#csrf-token').val(); 
+
 
      $.ajax({
 
         type : "POST",
-        url : "{{url('/')}}/send_question",
+        url : "{{url('/')}}/search/question",
         data : {
           _token       : token,
-          doc_path     : doc_path,
           project_id   : project_id,
-          users        : users,
-          subject      : subject,
-          ques_content : ques_content,
-          project_name : project_name,
+          field_content : field_content,
 
         },
 
       success:function(response){
+
+
+          var html ='';
         
-          if(response == 'send_question'){
+                    $.each(response.question_to,function(key,value){
+ 
 
-             ques_display(token,directory_url);
-             $('.question_subject').val('');
-             $('.question_content').val('');
+                      html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='0'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' name='ques_check' class='question_check' data-ques_id='"+value.question_id+"'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><div class='note_ques_status'><button class='waiting_reply'>Awaiting reply</button></div></div></div>";
 
-          }
-        }
+                    });
+                   
 
-       }); 
+                      $.each(response.question_by,function(key,value){
+                        
+                                   html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='1'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' name='ques_check' class='question_check' data-ques_id='"+value.question_id+"'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><div class='note_ques_status'><button class='in_progress_ques'>In Progress</button></div></div></div>";
+
+                      });
+                    // alert(html);
+
+                      $('.indexing_qu').html(html);
+
+
+      }
+
+    });
+
 
    });
+
+
+
+
+
+
+
+
 
 
   function getAuthAllProjects(){
@@ -746,7 +888,6 @@
       });
 
  }
-
 
 
 </script>

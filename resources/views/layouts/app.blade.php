@@ -3079,8 +3079,13 @@ $(document).on('click','.fav_filter',function(){
               },
               success:function(response){
 
-                 $('.filteredTextContent').removeClass('hidden');
-                 GetDocumentInfoByResponse(response,document_index);
+                    $('.filteredTextContent').removeClass('hidden');
+                    $('.move_last_folder').addClass('hidden');
+                    $('.ui-droppable').addClass('hidden');
+                    $('.text_filter').html('Favorite');
+                    
+                    GetDocumentInfoByResponse(response,document_index);
+
 
               }
 

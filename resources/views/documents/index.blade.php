@@ -90,7 +90,7 @@
           <span><i class="fa fa-star-o"></i></span>
       </div>
 
-      <div class="new_filter">
+<!--       <div class="new_filter">
           <select>
             <option>New</option>
             <option>Last 24 hours</option>
@@ -98,7 +98,7 @@
             <option>Last 7 days</option>
             <option>Last 30 days</option>
           </select>
-      </div>
+      </div> -->
 
       <div class="search_document_Byname">
           <input type="text" name="search_filter" class="search_filter" id='search_doc_content'>
