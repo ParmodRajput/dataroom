@@ -155,7 +155,10 @@ Route::post('/delete_question','QuestionsController@deleteQuestions');
  Route::post('/reply_send','QuestionsController@sendReply');
  Route::post('/reply_get','QuestionsController@GetAllReply');
  Route::post('/reply_delete','QuestionsController@deleteReply');
- 
+
+ //create route by parmod for question searching
+
+ Route::post('/search/question','QuestionsController@GetSearchedQues'); 
 
 
 //question route end

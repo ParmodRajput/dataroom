@@ -2010,8 +2010,10 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
               $group_id            = getAuthgroupId($projects_id);
 
               $getFavDocOfProject = FavDocument::where('project_id',$projects_id)->get();
-
-                 foreach ($getFavDocOfProject as $getFavDocOfProject) {
+              $IndexOfFile   = [];
+              $IndexOfFolder = [];
+            
+                foreach ($getFavDocOfProject as $getFavDocOfProject) {
                       
                         $doc_id = $getFavDocOfProject->document_id;
                         $getDocPath = Document::where('id',$doc_id)->first();
@@ -2020,138 +2022,135 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                         // get the all document indexing//
 
-                        $IndexOfFolder = [];
 
                         $getIndexOfFolder = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '1')->where('deleted_by', '0')->get();
 
-                        print_r($getIndexOfFolder);die();
 
+                          foreach ($getIndexOfFolder as $getIndexOfFolder){
 
-                  //         foreach ($getIndexOfFolder as $getIndexOfFolder){
+                                $path = $getIndexOfFolder->path;
+                                $document_name = $getIndexOfFolder->document_name;
+                                $getDocumentId = $getIndexOfFolder->id;
+                                $doc_index    = $getIndexOfFolder->doc_index;
 
-                  //               $path = $getIndexOfFolder->path;
-                  //               $document_name = $getIndexOfFolder->document_name;
-                  //               $getDocumentId = $getIndexOfFolder->id;
-                  //               $doc_index    = $getIndexOfFolder->doc_index;
-
-                  //                //get the all fav document in this directory
+                                 //get the all fav document in this directory
                          
-                  //               $getFavFolder = FavDocument::where('document_id',$getDocumentId)->where('user_id', $user_id)->pluck('document_id');
+                                $getFavFolder = FavDocument::where('document_id',$getDocumentId)->where('user_id', $user_id)->pluck('document_id');
 
-                  //               // $getFavFolder = $getFavFolder[0];
+                                // $getFavFolder = $getFavFolder[0];
 
-                  //               $Folderpermission = Permission::where('document_id',$getDocumentId)->where('project_id',$projects_id)->where('group_id',$group_id)->pluck('permission_id');
+                                $Folderpermission = Permission::where('document_id',$getDocumentId)->where('project_id',$projects_id)->where('group_id',$group_id)->pluck('permission_id');
 
-                  //               $FolderNote = Note::where('document_id',$getDocumentId)->where('user_id',$user_id)->pluck('id');
+                                $FolderNote = Note::where('document_id',$getDocumentId)->where('user_id',$user_id)->pluck('id');
 
-                  //               $folder_ques = Question::where('document_id',$getDocumentId)->where('project_id',$projects_id)->pluck('id');
+                                $folder_ques = Question::where('document_id',$getDocumentId)->where('project_id',$projects_id)->pluck('id');
 
-                  //               // $Folderpermission = $Folderpermission[0];
+                                // $Folderpermission = $Folderpermission[0];
 
-                  //               $Foldercount = count($Folderpermission);
+                                $Foldercount = count($Folderpermission);
 
-                  //               if($getProjectCreaterId == "Administrator"){ 
+                                if($getProjectCreaterId == "Administrator"){ 
 
-                  //                    $Folderpermission  =  [];
+                                     $Folderpermission  =  [];
 
-                  //                    $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
+                                     $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
 
-                  //                    print_r($Folder_array);die();
+                                     array_push($IndexOfFolder,$Folder_array);
 
-                  //                    array_push($IndexOfFolder,$Folder_array);
+                                }else{
 
-                  //               }else{
+                                      if($Foldercount !== 0){
 
-                  //                     if($Foldercount !== 0){
-
-                  //                       if($getProjectCreaterId == "Individual_users"){
+                                        if($getProjectCreaterId == "Individual_users"){
                                             
-                  //                          $Folder_array = [];
+                                           $Folder_array = [];
 
-                  //                       }else{
+                                        }else{
                                            
-                  //                           $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
+                                            $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
 
                                            
-                  //                       }
+                                        }
 
-                  //                          array_push($IndexOfFolder,$Folder_array);
+                                           array_push($IndexOfFolder,$Folder_array);
                                       
-                  //                     }
+                                      }
 
-                  //               }
+                                }
                               
-                  //         }
+                          }
 
 
-                  //         //end
+                          //end
 
-                  //         //for file document.
+                          //for file document.
 
-                  //         $IndexOfFile   = [];
+                          
 
-                  //         $getIndexOfFile = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '0')->where('deleted_by', '0')->get();
+                          $getIndexOfFile = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '0')->where('deleted_by', '0')->get();
 
 
-                  //          foreach ($getIndexOfFile as $getIndexOfFile) {
+                           foreach ($getIndexOfFile as $getIndexOfFile) {
 
-                  //               $path = $getIndexOfFile->path;
-                  //               $getFileId = $getIndexOfFile->id;
-                  //               $document_name = $getIndexOfFile->document_name;
-                  //               $doc_index    = $getIndexOfFile->doc_index;
+                                $path = $getIndexOfFile->path;
+                                $getFileId = $getIndexOfFile->id;
+                                $document_name = $getIndexOfFile->document_name;
+                                $doc_index    = $getIndexOfFile->doc_index;
 
-                  //               $Filepermission = Permission::where('document_id',$getFileId)->where('project_id',$projects_id)->where('group_id',$group_id)->pluck('permission_id');
+                                $Filepermission = Permission::where('document_id',$getFileId)->where('project_id',$projects_id)->where('group_id',$group_id)->pluck('permission_id');
 
-                  //               //get the all fav document in this directory
+                                //get the all fav document in this directory
                          
-                  //               $getFavFile = FavDocument::where('document_id',$getFileId)->where('user_id', $user_id)->pluck('document_id'); 
+                                $getFavFile = FavDocument::where('document_id',$getFileId)->where('user_id', $user_id)->pluck('document_id'); 
 
-                  //               $FileNote = Note::where('document_id',$getFileId)->where('user_id',$user_id)->pluck('id');
+                                $FileNote = Note::where('document_id',$getFileId)->where('user_id',$user_id)->pluck('id');
 
-                  //               $file_ques = Question::where('document_id',$getFileId)->where('project_id',$projects_id)->pluck('id');
+                                $file_ques = Question::where('document_id',$getFileId)->where('project_id',$projects_id)->pluck('id');
 
 
-                  //               $Filecount = count($Filepermission);
+                                $Filecount = count($Filepermission);
+                                //print_r($Filecount);
 
-                  //               if($getProjectCreaterId == "Administrator"){
+                                if($getProjectCreaterId == "Administrator"){
 
-                  //                 $Filepermission  = [];
+                                  $Filepermission  = [];
 
-                  //                 $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
+                                  $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
 
-                  //                  array_push($IndexOfFile,$File_array);
+                                   array_push($IndexOfFile,$File_array);
+                                   //print_r($IndexOfFile);
 
-                  //               }else{
+                                }else{
                                             
 
-                  //                 if($Filecount !== 0){
+                                  if($Filecount !== 0){
 
-                  //                     if($getProjectCreaterId == "Individual_users"){ 
+                                      if($getProjectCreaterId == "Individual_users"){ 
 
-                  //                       $File_array = [];
+                                        $File_array = [];
 
-                  //                     }else{
+                                      }else{
 
-                  //                       $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
-                  //                     }      
+                                        $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
+                                      }      
 
-                  //                    array_push($IndexOfFile,$File_array);
+                                     array_push($IndexOfFile,$File_array);
+                                     //print_r($IndexOfFile);
                                       
-                  //                 }
+                                  }
 
-                  //               }
+                                }
 
-                  //         }
+                          }
 
                         
-                  //          $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
-                 
-
-                  // return $data;
-                      
-
-                      
+                         
+                                        
                 }
+
+                           $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
+              return $data; 
+
 
 
       }

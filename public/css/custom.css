@@ -2340,9 +2340,6 @@ button.waiting_reply {
     margin-left: 15px;
 }
 
-<<<<<<< HEAD
-  .right_click.drop-holder.arrow:before {
-=======
 .users__settings-panel {
     padding: 20px 25px 10px;
 }
@@ -2359,7 +2356,6 @@ button.waiting_reply {
 }
 
 .right_click.drop-holder.arrow:before {
->>>>>>> 1823bb7c0eaee15f0fc8071f923e23f6708c6814
     position: absolute;
     left: -16px;
     border-right: 15px solid #18cad7;
@@ -2367,8 +2363,5 @@ button.waiting_reply {
     border-bottom: 15px solid transparent;
     content: "";
     top: 307px!important;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 1823bb7c0eaee15f0fc8071f923e23f6708c6814
+

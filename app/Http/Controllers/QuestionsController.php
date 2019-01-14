@@ -115,13 +115,14 @@ class QuestionsController extends Controller
         $projectCreaterId = $project->user_id;
         $project_name = $project->project_slug;
 
-    	$projectFolderPath = 'public/documents/'.$projectCreaterId."/".$project_name;
+    	 $projectFolderPath = 'public/documents/'.$projectCreaterId."/".$project_name;
 
-    	$folder_file_tree =  $this->get_FoldersAndFiles($projectFolderPath);
+    	 $folder_file_tree =  $this->get_FoldersAndFiles($projectFolderPath);
 
         return view('Questions.index',compact('project_name','folder_file_tree','project_id','projectCreaterId'));
 
     }
+
 
 
      public function get_FoldersAndFiles($project_path)
@@ -209,6 +210,7 @@ class QuestionsController extends Controller
           
 
           }else{
+
              $getQuestion =[];
 
 
@@ -314,6 +316,148 @@ class QuestionsController extends Controller
 
     }
 
+
+
+    //find searched question
+
+    
+ public function GetSearchedQues(Request $request){
+
+      $project_id = $request->project_id;
+      $fieldContent = $request->field_content;
+       $auth_id = Auth::user()->id;
+       $auth_email = Auth::user()->email;
+
+      $Question_array = []; 
+      $Question_sec_array = [];
+
+      $getDocument_id = Question::where('subject','LIKE',"{$fieldContent}%")->get();
+
+
+      // get path related documents questions
+
+      foreach ($getDocument_id as $getDocument_id) {
+
+        $document_id = $getDocument_id->document_id;
+        
+        $Questdata = Question::where('document_id',$document_id)->where('project_id',$project_id)->pluck('send_to')->toArray();
+
+        foreach ($Questdata as $Questdata) {
+         
+          $certi_id = explode(",",$Questdata);
+
+          if(in_array($auth_email,$certi_id)){
+
+               $getQuestion = Question::where('document_id',$document_id)->where('project_id',$project_id)->where('send_to',$Questdata)->get();
+          
+
+          }else{
+
+             $getQuestion =[];
+
+
+          }
+
+          foreach ($getQuestion  as $getQuestion){
+
+             $document_id = $getQuestion->document_id; 
+
+             $getDocument_name = Document::where('id',$document_id)->first();
+
+           //document name
+           $documet_name = $getDocument_name->document_name;
+
+             //subject
+           $subject = $getQuestion->subject;
+
+             //question id
+           $question_id =$getQuestion->id;
+
+           //question content
+           $ques_content = $getQuestion->ques_content;
+           $time = $getQuestion->time;
+           // date
+           $date = date('M/d/Y H:i:s', $time );
+           $sender_id = $getQuestion->send_by;
+           $getSenderName = User::where('id',$sender_id)->first();
+             // sender name
+           $sender_name = $getSenderName->name;
+           // sender email
+             $sender_email = $getSenderName->email;
+
+             $getSenderGroup = Group_Member::where('member_email',$sender_email)->first(); 
+             $sendergroup_id = $getSenderGroup->group_id;
+
+             $GetGroupName = group::where('id',$sendergroup_id)->first();
+
+             // group_name 
+             $groupName = $GetGroupName->group_name;
+
+             $Question_array1 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
+
+             array_push($Question_array,$Question_array1);
+
+         }
+
+
+        }
+
+
+        $getQuestion1 = Question::where('document_id',$document_id)->where('project_id',$project_id)->where('send_by',$auth_id)->get(); 
+
+
+        foreach ($getQuestion1  as $getQuestion1){
+
+           $document_id = $getQuestion1->document_id; 
+
+           $getDocument_name = Document::where('id',$document_id)->first();
+
+         //document name
+         $documet_name = $getDocument_name->document_name;
+
+         //question id
+         $question_id =$getQuestion1->id;
+
+           //subject
+         $subject = $getQuestion1->subject;
+
+         //question content
+         $ques_content = $getQuestion1->ques_content;
+         $time = $getQuestion1->time;
+         // date
+         $date = date('M/d/Y H:i:s', $time );
+
+         $sender_id = $getQuestion1->send_by;
+
+         $getSenderName = User::where('id',$sender_id)->first();
+           // sender name
+         $sender_name = $getSenderName->name;
+         // sender email
+           $sender_email = $getSenderName->email;
+
+           $getSenderGroup = Group_Member::where('member_email',$sender_email)->first(); 
+           $sendergroup_id = $getSenderGroup->group_id;
+
+           $GetGroupName = group::where('id',$sendergroup_id)->first();
+
+           // group_name 
+           $groupName = $GetGroupName->group_name;
+
+
+           $Question_array2 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
+
+           array_push($Question_sec_array,$Question_array2);
+
+       }
+
+        //print_r($Question_sec_array);
+      $Question_array_main = ['question_to'=>$Question_array,'question_by'=>$Question_sec_array];
+        
+      }
+
+      return $Question_array_main;
+
+ }
 
     //question reply store
 
