@@ -101,13 +101,18 @@
       </div>
 
       <div class="search_document_Byname">
-          <input type="text" name="search_filter" class="search_filter">
-          <i class="fas fa-search"></i>
+          <input type="text" name="search_filter" class="search_filter" id='search_doc_content'>
+          <span id='go_search_doc'><i class="fas fa-search"></i></span>
       </div>
    </div>
-   <div class="back-arrow move_last_folder">
-     {{$project_name}}
-   </div>
+   <div class="searchTextAndCurrentDirectory">
+     <div class="back-arrow move_last_folder">
+       {{$project_name}}
+     </div>
+     <div class="filteredTextContent hidden">
+       <div class="text_filter"></div>
+       <span class="icon_close_filter"><i class="fa fa-times" aria-hidden="true"></i></span>
+     </div>
 </section>
 
 <!-- <iframe src="http://docs.google.com/gview?url={{url('public/16 wdfsdfsd_Index.pdf')}}&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
@@ -237,7 +242,7 @@
                                   </h4>
                                 </div>
                               </div>
-                            </div>
+                             </div>
                             <div class="documents_index_section">
                                 <div class="indexing" ></div>
                             </div>

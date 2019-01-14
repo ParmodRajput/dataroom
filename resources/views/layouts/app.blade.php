@@ -232,6 +232,8 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
+
+        $('.ui-droppable').removeClass('hidden');
         var getPermission = $(this).data('permission');
         var checkPermission = $(this).attr('permission');
 
@@ -472,12 +474,12 @@ $(document).ready(function(){
            var get_genrate_folder = $('#folder_created').val();
            
            if(get_genrate_folder !== ''){
+
               if((new RegExp('[~#%\&{}+\|]|\\.\\.|^\\.|\\.$')).test(get_genrate_folder) == false){
 
-                                      var document_index = $('.document_indexing_count').val();
 
+                       var document_index = $('.document_indexing_count').val();
                        var genrate_folder = get_genrate_folder.replace(' ', '_');
-
                        var getPath = path+"/"+genrate_folder; 
                        var box = $('.indexing');
                        var folder =$('#tree2');
@@ -1088,8 +1090,7 @@ $(document).ready(function(){
     $('.fav_filter').removeClass('hidden');
     $('.new_filter').removeClass('hidden');
     var projects_id = $('.directory_location #project_id_doc').val();
-    var document_index = $('.document_indexing_count').val();
-    
+    var document_index = $('.document_indexing_count').val();    
     var html="";
     var html2 ="";
     var box = $('.indexing');
@@ -1106,7 +1107,20 @@ $(document).ready(function(){
               // multiple data sent using ajax//
               success: function (response) { 
        
-                //first inner array
+                   GetDocumentInfoByResponse(response,document_index);
+                   $('.ui-droppable').droppable("disable");
+
+                 }//success
+        });//ajax
+   }
+
+    function GetDocumentInfoByResponse(response,document_index){
+
+                var html="";
+                var html2 ="";
+                var box = $('.indexing');
+
+                  //first inner array
 
                 var getfolder = response.folder_index;
 
@@ -1432,11 +1446,9 @@ $(document).ready(function(){
                                       });
                                }
                        });
-                
-                 }//success
-        });//ajax
-   }
-
+            
+    }
+    
 
    // right click on document// 
     $(document).on('contextmenu','.document_index' ,function(e) {
@@ -3007,6 +3019,91 @@ $(document).on('click','.note1_doc_delete', function(){
     $('#alert_users').hide();
  });
 
+
+ $(document).on('click','#go_search_doc',function(){
+
+   var token = $('#csrf-token').val();  
+   var serachContent = $('#search_doc_content').val();
+   var directory_url = $('#current_directory').val();
+
+   if(serachContent == '')
+   {
+        data_display(token,directory_url);
+
+   }else{
+         
+         $('.move_last_folder').addClass('hidden');
+         $('.ui-droppable').addClass('hidden');
+
+         var project_id = $('.projects_id').val();
+         var document_index = $('.document_indexing_count').val();
+
+             $.ajax({
+              type : "POST",
+              url : "{{url('/')}}/doc/search_doc_content",
+              data : {     
+                _token      : token,
+                serachContent : serachContent,
+                project_id   : project_id,
+
+              },
+              success:function(response){
+
+
+                $('.filteredTextContent .text_filter').html(serachContent);
+                $('.filteredTextContent').removeClass('hidden');
+                GetDocumentInfoByResponse(response,document_index);
+
+              }
+
+            });
+
+       }
+
+ });
+
+$(document).on('click','.fav_filter',function(){
+
+   var token = $('#csrf-token').val();  
+   var project_id = $('.projects_id').val();
+   var document_index = $('.document_indexing_count').val();
+   var directory_url = $('#current_directory').val();
+
+   $.ajax({
+              type : "POST",
+              url : "{{url('/')}}/fav/search_doc_content",
+              data : {     
+                _token      : token,
+                project_id   : project_id,
+
+              },
+              success:function(response){
+
+                 $('.filteredTextContent').removeClass('hidden');
+                 GetDocumentInfoByResponse(response,document_index);
+
+              }
+
+          });
+   
+
+
+});
+
+
+$(document).on('click','.icon_close_filter',function(){
+
+  var token = $('#csrf-token').val();  
+  $('#search_doc_content').val('');
+  var directory_url = $('#current_directory').val();
+
+  $('.filteredTextContent').addClass('hidden');
+  $('.move_last_folder').removeClass('hidden');
+  $('.ui-droppable').removeClass('hidden');
+
+  data_display(token,directory_url);
+
+});
 
 </script>
 

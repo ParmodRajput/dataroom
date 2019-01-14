@@ -190,6 +190,10 @@
     <div class="modal-content">
        <div class="modal-header">
         <h4 class="modal-title">NEW QUESTION</h4>
+        <div class="related_question_by">
+          <span>Related To:</span>
+          <span class="back_arrow_qa move_last_folder_qa"></span>
+        </div>
         <button type="button" class="close" data-dismiss="modal">&times;</button> 
       </div>
       <div class="modal-body">

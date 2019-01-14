@@ -120,6 +120,10 @@ Route::get('project/delete/{id}',  'ProjectsController@deleteProject');
 Route::get('project/edit/{id}',  'ProjectsController@editProject');
 Route::post('project/update',  'ProjectsController@updateProject');
 
+// search document route
+
+Route::post('doc/search_doc_content',  'DocumentsController@SearchDocument');
+Route::post('fav/search_doc_content',  'DocumentsController@SearchFavDocument');
 
 //group routes
 Route::post('create_group', 'GroupsController@store');
