@@ -134,6 +134,9 @@ Route::post('/delete_group', 'GroupsController@deleteGroup');
 Route::post('/get_allgroups', 'GroupsController@getAllGroups');
 Route::post('/get_group_users', 'GroupsController@GroupsUsersGet');
 Route::post('/user/move_to_group', 'GroupsController@MoveUser');
+Route::post('update/collaboration_setting', 'GroupsController@ChangeCollaborationSetting');
+Route::post('/update/access_setting', 'GroupsController@ChangeAccessRoomSetting');
+Route::post('/update/quesAns_setting', 'GroupsController@ChangeQuesAnsSetting');
 
 // all project all users
 Route::post('/project_users', 'GroupsController@getAllUserInProject');

@@ -1856,6 +1856,10 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
               $auth_email = Auth::user()->email;
               $user_id    = Auth::user()->id;
 
+              $IndexOfFolder = [];
+
+              $IndexOfFile   = [];
+
 
               // verify project creater
 
@@ -1870,7 +1874,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                 $Doc_path = $FindedDoc->path;
 
                       // get the all document indexing// 
-                      $IndexOfFolder = [];
+                      
 
                       $getIndexOfFolder = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '1')->where('deleted_by', '0')->get();
 
@@ -1934,7 +1938,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                         //for file document.
 
-                        $IndexOfFile   = [];
+                       
 
                         $getIndexOfFile = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '0')->where('deleted_by', '0')->get();
 
@@ -1989,13 +1993,13 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                         }
 
-                      
-                         $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
+
+            }  
+
+             $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
                
 
                 return $data;
-
-            }  
 
           
 

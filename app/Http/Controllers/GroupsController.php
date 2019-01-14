@@ -771,4 +771,115 @@ public function getPermissionDocument($project_id)
 
     }
 
+      public function ChangeCollaborationSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $collaborationWith = $request->updatedCollabVAlue;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+
+          Group::where('id',$group_id)->update(['collaboration_with'=>$collaborationWith]);
+
+
+          // delete last collaborate groups
+
+           Collaboration::where('group_id',$group_id)->delete();
+
+          // add collaboration
+
+            if($collaborationWith == 'own_group')
+           {
+                    $Collaboration = new Collaboration();
+
+                    $Collaboration->group_id = $group_id;
+                    $Collaboration->project_id = $project_id;
+                    $Collaboration->collaboration_group_id = $group_id; 
+                    $Collaboration->save();
+           }
+
+
+           if($collaborationWith == 'all_group')
+           {
+                 $getGroups = Group::where('project_id',$project_id)->pluck('id');
+                 
+                 foreach ($getGroups as $GroupId) {
+
+                    $Collaboration = new Collaboration();
+
+                    $Collaboration->group_id = $GroupId;
+                    $Collaboration->project_id = $project_id;
+                    $Collaboration->collaboration_group_id = $group_id; 
+                    $Collaboration->save();
+                     
+                 }
+           }
+
+          if($collaborationWith == 'users_group')
+           {
+
+                 $getGroups = Group::where('project_id',$project_id)->where('group_user_type','Collaboration_users')->orWhere('group_user_type','Individual_users')->pluck('id');
+                 
+                 foreach ($getGroups as $GroupId) {
+
+                    $Collaboration = new Collaboration();
+                    $Collaboration->group_id = $GroupId;
+                    $Collaboration->project_id = $project_id;
+                    $Collaboration->collaboration_group_id = $group_id; 
+                    $Collaboration->save();
+                     
+                 }
+           }
+
+           return "success";
+
+      } 
+
+      public function ChangeAccessRoomSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $access_limit = $request->updatedsecurityValue1;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+          $active_date = '';
+
+            if($access_limit == '1')
+            {
+
+              print_r('sddsd');
+              // $access_limit = '1';
+              // $active_date = 'null';
+
+            }else{
+
+
+                 print_r('dfdf');
+               // $access_limit = '2';
+               // $active_date = $access_limit;
+
+            }
+
+            die();
+
+         Group::where('id',$group_id)->update(['access_limit'=>$access_limit,'access_limit'=>$active_date]);
+ 
+         return "success";
+
+
+      }
+
+
+     public function ChangeQuesAnsSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $access_ques_limit = $request->updatedQuestionValue;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+
+
+        Group::where('id',$group_id)->update(['QA_access_limit'=>$access_ques_limit]);
+ 
+         return "success";
+
+    }
+
 }
