@@ -151,7 +151,7 @@ a.nav-link b{/* float:left; width:100%;*/}
 
 .drop_box_document { float:left; width:100%; position: relative;}
 .right_click.drop-holder { position: absolute; background: #fff!important;
-    width: 300px; z-index: 999; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
+    width: 300px; z-index:1100; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
 
 .drop-menu { float: left; width: 100%;}
 
@@ -2340,6 +2340,9 @@ button.waiting_reply {
     margin-left: 15px;
 }
 
+<<<<<<< HEAD
+  .right_click.drop-holder.arrow:before {
+=======
 .users__settings-panel {
     padding: 20px 25px 10px;
 }
@@ -2356,6 +2359,7 @@ button.waiting_reply {
 }
 
 .right_click.drop-holder.arrow:before {
+>>>>>>> 1823bb7c0eaee15f0fc8071f923e23f6708c6814
     position: absolute;
     left: -16px;
     border-right: 15px solid #18cad7;
@@ -2363,4 +2367,8 @@ button.waiting_reply {
     border-bottom: 15px solid transparent;
     content: "";
     top: 307px!important;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 1823bb7c0eaee15f0fc8071f923e23f6708c6814
