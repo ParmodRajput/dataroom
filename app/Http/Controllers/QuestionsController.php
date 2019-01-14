@@ -325,22 +325,23 @@ class QuestionsController extends Controller
 
       $project_id = $request->project_id;
       $fieldContent = $request->field_content;
-       $auth_id = Auth::user()->id;
-       $auth_email = Auth::user()->email;
+      $auth_id = Auth::user()->id;
+      $auth_email = Auth::user()->email;
+
+      $Question_array_main = [];
 
       $Question_array = []; 
       $Question_sec_array = [];
 
       $getDocument_id = Question::where('subject','LIKE',"{$fieldContent}%")->get();
 
-
       // get path related documents questions
 
       foreach ($getDocument_id as $getDocument_id) {
 
-        $document_id = $getDocument_id->document_id;
+        $document_id = $getDocument_id->id;
         
-        $Questdata = Question::where('document_id',$document_id)->where('project_id',$project_id)->pluck('send_to')->toArray();
+        $Questdata = Question::where('id',$document_id)->where('project_id',$project_id)->pluck('send_to')->toArray();
 
         foreach ($Questdata as $Questdata) {
          
@@ -348,7 +349,7 @@ class QuestionsController extends Controller
 
           if(in_array($auth_email,$certi_id)){
 
-               $getQuestion = Question::where('document_id',$document_id)->where('project_id',$project_id)->where('send_to',$Questdata)->get();
+               $getQuestion = Question::where('id',$document_id)->where('project_id',$project_id)->where('send_to',$Questdata)->get();
           
 
           }else{
@@ -403,7 +404,7 @@ class QuestionsController extends Controller
         }
 
 
-        $getQuestion1 = Question::where('document_id',$document_id)->where('project_id',$project_id)->where('send_by',$auth_id)->get(); 
+        $getQuestion1 = Question::where('id',$document_id)->where('project_id',$project_id)->where('send_by',$auth_id)->get(); 
 
 
         foreach ($getQuestion1  as $getQuestion1){

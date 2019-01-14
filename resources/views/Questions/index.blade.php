@@ -49,7 +49,7 @@
 						    <section class="content-header">
 						   
 						    <div class="search_filter_document">
-						      <div class="new_filter">
+						   <!--    <div class="new_filter">
 						          <select>
 						            <option>New</option>
 						            <option>Last 24 hours</option>
@@ -57,10 +57,10 @@
 						            <option>Last 7 days</option>
 						            <option>Last 30 days</option>
 						          </select>
-						      </div>
+						      </div> -->
 
 						      <div class="search_document_Byname">
-						          <input type="text" name="search_filter" class="search_filter">
+						          <input type="text" name="search_filter" class="search_filter" placeholder="Search by question subject">
 						          <span class="search_filter_btn">
 						          <i class="fas fa-search"></i>
 						      </span>
@@ -69,6 +69,10 @@
 						   <div class="back_arrow_qa move_last_folder_qa">
 						     {{$project_name}}
 						   </div>
+						   <div class="filteredTextContent hidden">
+						       <div class="text_filter"></div>
+						       <span class="icon_close_filter"><i class="fa fa-times" aria-hidden="true"></i></span>
+						    </div>
 						</section>
 
 						   <div class="upload_table">

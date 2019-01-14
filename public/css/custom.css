@@ -919,7 +919,6 @@ span.drag_document_texts {
     top: 0;
     line-height: 33px;
     border-radius: 2px;
-    right: 10px;
     color: #fff;
     position: absolute;
     cursor: pointer;
@@ -956,6 +955,7 @@ span.drag_document_texts {
     border: 1px solid #dfdfdf!important;
     float:left;
     padding: 10px;
+    width: 300px;
 }
 
  .content-wrapper.all-projects {
