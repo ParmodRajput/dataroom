@@ -13,6 +13,7 @@ use App\Permission;
 use App\Document;
 use Mail;
 use Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use storage\app;
@@ -120,13 +121,44 @@ class GroupsController extends Controller
         return $ReturnData;
 
     }
-    public function GroupInvites(Request $request)
-    {
-       
+
+
+
+    public function GroupInvites(Request $request){
+
+      //echo $request->choose_group; die();
+      $validator = Validator::make($request->all(), [
+                  'user_email' => 'required',
+                  'choose_group' => 'required|min:1'
+      ]);
+
+      if ($request->choose_group == '0' || $request->user_email == '') {
+         // $errors = $validator->getMessageBag()->toArray();
+         // return response()->json(['validation_failed'=>true,'errors'=>$errors]);
+         if ($request->choose_group == '0' &&  $request->user_email == '') {
+
+          return response()->json(['choose_group'=>'Choose group','user_email'=>'Choose users email']);
+
+         }
+
+          if($request->choose_group == '0'){
+
+           return response()->json(['choose_group'=>'Choose group']);
+
+          }
+
+          if($request->user_email == ''){
+
+            return response()->json(['user_email'=>'Choose users email']);
+
+          }
+ 
+      } else{   
+
        $check = '';
        $ExitsUser;
        $group_id = $request->choose_group;
-       $userEmail = $request->user_email;
+       $userEmail = $request->user_email;      
        $User_type = $request->forUser;
        $user_role = $request->user_role;
        $access_limit = $request->access_limit;
@@ -205,13 +237,18 @@ class GroupsController extends Controller
 
          if($check == 'alreadyExit')
          {
-            return $ExitsUser;
+             //print_r($ExitsUser); die();
+
+          return response()->json(['alreadyExit'=>true,'errors'=>$ExitsUser]);
+            //return 'alreadyExit';
 
          }else{
 
            return "inviteSent";
          }
-         
+
+      }
+
     }
 
     public function getGroups($project_id)

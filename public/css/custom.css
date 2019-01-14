@@ -151,7 +151,7 @@ a.nav-link b{/* float:left; width:100%;*/}
 
 .drop_box_document { float:left; width:100%; position: relative;}
 .right_click.drop-holder { position: absolute; background: #fff!important;
-    width: 300px; z-index: 999; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
+    width: 300px; z-index:1100; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
 
 .drop-menu { float: left; width: 100%;}
 
@@ -2338,4 +2338,14 @@ button.waiting_reply {
 .upload_table .btn-export {
     float: left;
     margin-left: 15px;
+}
+
+  .right_click.drop-holder.arrow:before {
+    position: absolute;
+    left: -16px;
+    border-right: 15px solid #18cad7;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    content: "";
+    top: 307px!important;
 }

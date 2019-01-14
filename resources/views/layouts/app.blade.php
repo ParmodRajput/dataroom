@@ -6,17 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Pro Data Room</title>
   <!-- plugins:css -->
-  <style>
-  .right_click.drop-holder.arrow:before {
-    position: absolute;
-    left: -16px;
-    border-right: 15px solid #18cad7;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    content: "";
-    top: 307px!important;
-}
-</style>
+
   <link rel="stylesheet" href="{{ asset('css/materialdesignicons.min.css ')}}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.addons.css') }}">
@@ -480,9 +470,10 @@ $(document).ready(function(){
            var project_id = $('.projects_id').val();
            var project_name = $('.project_name').val();
            var get_genrate_folder = $('#folder_created').val();
-
+           
            if(get_genrate_folder !== ''){
-              if( /[^a-zA-Z0-9\-\/]/.test(get_genrate_folder) == false){
+              if((new RegExp('[~#%\&{}+\|]|\\.\\.|^\\.|\\.$')).test(get_genrate_folder) == false){
+
                                       var document_index = $('.document_indexing_count').val();
 
                        var genrate_folder = get_genrate_folder.replace(' ', '_');
@@ -985,7 +976,7 @@ $(document).ready(function(){
                                       
                                       if(response == 'moved')
                                       {
-                                         swal("file moved successfully", "", "success");
+                                         //swal("file moved successfully", "", "success");
                                          
                                       }
                                     } 
@@ -1405,7 +1396,6 @@ $(document).ready(function(){
                                          $(ui.draggable).css('display','none');
                                          var moveFile = $(ui.draggable).find('a').data('value');
                                          var directoryPath = $('#current_directory_project').val();
-
                                          var projects_id = $('.directory_location #project_id_doc').val();
                                          //alert(moveFile);
                                          $.ajax({
@@ -1434,7 +1424,7 @@ $(document).ready(function(){
                                                 
                                                 if(response == 'moved')
                                                 {
-                                                   swal("file moved successfully", "", "success");
+                                                   //swal("file moved successfully", "", "success");
                                                    
                                                 }
                                               } 
@@ -3016,6 +3006,7 @@ $(document).on('click','.note1_doc_delete', function(){
 
     $('#alert_users').hide();
  });
+
 
 </script>
 

@@ -880,6 +880,10 @@ public function move_documents(Request $request){
   $get        = explode('/',$fileUrl);
   $file_name  = end($get);
 
+  $getFilePathWithOutThumb = array_pop($get);
+  $withOutThumb = implode('/',$get);
+
+
   $getExt     = explode('.',$file_name);
 
   $file_ext   = end($getExt);
@@ -888,12 +892,12 @@ public function move_documents(Request $request){
 
       if($file_ext == 'jpg' || $file_ext == 'png' || $file_ext == 'jpeg')
       {
-              $thumbnailPath = $directoryPath.'/thumbnail_img/'.$file_name;
-
-              $MoveThumbnail = $folderUrl.'/thumbnail_img/'.$file_name;
+              $thumbnailPath = $withOutThumb.'/thumbnail_img/'.$file_name;
+               $MoveThumbnail = $folderUrl.'/thumbnail_img/'.$file_name;
 
               // move thumbnail image .
               Storage::move($thumbnailPath,$MoveThumbnail);
+
       }
 
   Storage::move($fileUrl,$new_path);

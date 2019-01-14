@@ -159,8 +159,11 @@
                     <form class="form-horizontal" role="form" id="invite_form" method="POST" action="{{url('/')}}/invite_users">
 										{{ csrf_field() }}
 					    <div class="dynamic_input">
-							<input type="text"  name ="user_email" class="form-control" id="invite_users" data-role="tagsinput" placeholder="Enter email,use enter or comma to separate" required>
+							<input type="text"  name ="user_email" class="form-control" id="invite_users" data-role="tagsinput" placeholder="Enter email,use enter or comma to separate">
 						</div>
+
+						<div style="display: none;" id="alert_invite_users"></div>
+
 						<div class="clearfix"></div>
 						<input type="hidden"  name ="group_id" class="form-control" id="group_id" value = "" placeholder="Enter Group Id">
 
@@ -202,6 +205,8 @@
 		                       <select class="select_dynamic Select_groupOfUser" name="choose_group" id="choose_group_dym">
 						       </select>
 							</div>
+
+							<div style="display: none;" id="alert_choose_group_dym"></div>
 
 					</div>
 
@@ -901,6 +906,38 @@
 			contentType: false,
 			success: function (response) { 
 
+
+
+				if(response.choose_group){
+					//alert(response.errors.choose_group);
+					var ema1 = response.choose_group;
+					$("#alert_choose_group_dym").show();
+					$("#alert_choose_group_dym").html('<span class="help-block">'+ ema1 +'</span>');
+					$("#choose_group_dym").click(function(){
+                       $("#alert_choose_group_dym").hide();
+                     });
+
+				}
+				if(response.user_email){
+					//alert(response.errors.user_email);
+					var ema = response.user_email;
+					$("#alert_invite_users").show();
+					$("#alert_invite_users").html('<span class="help-block">'+ ema +'</span>');
+					$("#invite_users").click(function(){
+                       $("#alert_invite_users").hide();
+                     });
+
+				}
+
+				if(response.alreadyExit == true){
+						var email = response.errors;
+                    //alert('Users with the following emails were already invited'+email);
+						$("#alert_invite_users").show();
+						$("#alert_invite_users").html('<span class="help-block"> Users with the following emails were already invited'+' '+ email +'</span>');
+						$("#invite_users").click(function(){
+                           $("#alert_invite_users").hide();
+                         });                    
+				} 
 				
 				if (response == "inviteSent")
 				{
@@ -910,10 +947,7 @@
 
 					$('.list_group_user').addClass('hidden');
 
-				}else{
-
-                    alert('Users with the following emails were already invited ' +response);
-				} 
+				}
 
 			}  
 			
@@ -1702,5 +1736,8 @@ $('#hjgh').click(function(){
        });
      
 
+       $(document).on('click','.selection',function(){
+ 			$("#alert_choose_group_dym").hide();
+       });
 </script>
 @endsection
