@@ -125,8 +125,12 @@
 				   <div class="edit_collab_setting_update">
 					   <span class="edit_collab_setting"><i class="fa fa-pencil"></i> edit
 	    		       </span>
-	    		       <span class="btn btn-danger apply_collab_setting hidden "> apply
+	    		       <div class="hidden" style="margin: 10px 10px 10px 0px;" id="collab_btn">
+	    		       <span class="btn btn-danger apply_collab_setting"> apply
 	    		       </span>
+    		            <span class="btn btn-primary cancle_edit_collab_setting"> Cancle
+    		            </span>	 
+    		            </div>   		       
     		        </div>
 				</div>
 			</div>	
@@ -155,8 +159,12 @@
 				  <div class="security_setting_edit">
 					  <span class="edit_security"><i class="fa fa-pencil"></i> edit
 	    		      </span> 
-	    		      <span class="btn btn-danger apply_change_security hidden">apply
+	    		      <div class="hidden" id="change_security_btn">
+	    		      <span class="btn btn-danger apply_change_security">apply
 	    		      </span> 
+    		            <span class="btn btn-primary cancle_edit_security"> Cancle
+    		            </span>	
+    		            </div>    		      
 
     		      </div>
 				</div>
@@ -181,10 +189,13 @@
 				     <div class="edit_ques_ans_setting">
 					  <span class="edit_ques_ans"><i class="fa fa-pencil"></i> edit
     		            </span>
-    		            <span class="btn btn-danger apply_ques_ans hidden"> Apply
+    		            <div class="hidden" id="edit_ques_ans_setting">
+
+    		            <span class="btn btn-danger apply_ques_ans"> Apply
     		            </span>
-    		            <span class="btn btn-primary cancle_ques_ans hidden"> Cancle
+    		            <span class="btn btn-primary cancle_ques_ans"> Cancle
     		            </span>
+    		        </div>
     		      </div>
 				  </div>
 				  
@@ -1859,7 +1870,10 @@ $('#hjgh').click(function(){
  			$('.updated_group_collab').removeClass('hidden');
  			$('.group_collaboration_setting').addClass('hidden');
  			$(this).addClass('hidden');
- 			$('.apply_collab_setting').removeClass('hidden');
+ 			//$('.apply_collab_setting').removeClass('hidden');
+ 			//$('.cancle_edit_collab_setting').removeClass('hidden');
+ 			$('#collab_btn').removeClass('hidden');
+ 			
 
 
        });
@@ -1885,7 +1899,7 @@ $('#hjgh').click(function(){
 
 					success: function (response) { 
 
-						alert(response);
+						//alert(response);
 
 						getgroups();
 						
@@ -1894,7 +1908,7 @@ $('#hjgh').click(function(){
 						$('.updated_group_collab').addClass('hidden');
  			            $('.group_collaboration_setting').removeClass('hidden');
  			            $('.edit_collab_setting').removeClass('hidden');
- 			            $('.apply_collab_setting').addClass('hidden');
+ 			            $('#collab_btn').addClass('hidden');
 				
 
 					}
@@ -1907,11 +1921,14 @@ $('#hjgh').click(function(){
 
   
 
- $(document).on('click','.security_setting_edit',function(){
+ $(document).on('click','.security_setting_edit .edit_security',function(){
 
      $('.update_question_change').removeClass('hidden');
      $('.group_security_setting').addClass('hidden');
-     $('.apply_change_security').removeClass('hidden');
+     //$('.apply_change_security').removeClass('hidden');
+     //$('.cancle_edit_security').removeClass('hidden');
+     $('#change_security_btn').removeClass('hidden');
+     
      $('.edit_security').addClass('hidden');
 
  });
@@ -1969,7 +1986,7 @@ $(document).on('change','.security_setting_groups input:radio',function(){
 					     $('.list_group_user').addClass('hidden'); 
 					     $('.update_question_change').addClass('hidden');
 					     $('.group_security_setting').removeClass('hidden');
-					     $('.apply_change_security').addClass('hidden');
+					     $('#change_security_btn').addClass('hidden');
 					     $('.edit_security').removeClass('hidden');
 				
 
@@ -1987,10 +2004,10 @@ $(document).on('change','.security_setting_groups input:radio',function(){
 
 
      $('.radio_pannel_setting_change').removeClass('hidden');
-     $('.apply_ques_ans').removeClass('hidden');
+     //$('.apply_ques_ans').removeClass('hidden');
      $('.group_qa_setting').addClass('hidden');
-     $('.cancle_ques_ans').removeClass('hidden');
-     
+	//$('.cancle_ques_ans').removeClass('hidden');
+     $('#edit_ques_ans_setting').removeClass('hidden');
      $(this).addClass('hidden');
 
  });
@@ -2022,8 +2039,8 @@ $(document).on('click','.apply_ques_ans',function(){
 						$('.display_groups input:checkbox').prop('checked', this.checked);
 
 					    $('.list_group_user').addClass('hidden'); 
-					    $('.cancle_ques_ans').addClass('hidden');
-					    $('.apply_ques_ans').addClass('hidden');
+					    $('#edit_ques_ans_setting').addClass('hidden');
+					   // $('.apply_ques_ans').addClass('hidden');
                         $('.group_qa_setting').removeClass('hidden');
                         $('.radio_pannel_setting_change').addClass('hidden');
                         $('.edit_ques_ans').removeClass('hidden');
@@ -2035,6 +2052,27 @@ $(document).on('click','.apply_ques_ans',function(){
 
     });
 
+
+  $(document).on('click','.cancle_edit_collab_setting',function(){
+			$('.updated_group_collab').addClass('hidden');
+			$('.group_collaboration_setting').removeClass('hidden');
+			$('.edit_collab_setting').removeClass('hidden');
+			$('#collab_btn').addClass('hidden');
+  });
+
+  $(document).on('click','.cancle_edit_security',function(){
+
+			$('.update_question_change').addClass('hidden');
+			$('.group_security_setting').removeClass('hidden');
+			$('.edit_security').removeClass('hidden');			
+			$('#change_security_btn').addClass('hidden');
+
+  });
+  $(document).on('click','.cancle_ques_ans',function(){
+			$('.radio_pannel_setting_change').addClass('hidden');
+			$('.edit_ques_ans').removeClass('hidden');			
+			$('#edit_ques_ans_setting').addClass('hidden');
+  });
 
 
 </script>
