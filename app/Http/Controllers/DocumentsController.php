@@ -2020,7 +2020,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                         $getIndexOfFolder = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '1')->where('deleted_by', '0')->get();
 
-                        print_r($getIndexOfFolder);die();
+                      //  print_r($getIndexOfFolder);
 
 
                   //         foreach ($getIndexOfFolder as $getIndexOfFolder){
@@ -2148,6 +2148,8 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                       
                 }
+
+                die();
 
 
       }
