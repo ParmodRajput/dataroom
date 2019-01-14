@@ -964,7 +964,7 @@
 
     var showDocWithDoc = '';
 
-    var numberOfChecked = $('.user_gruoups_list input:checkbox:checked').length;
+    var numberOfChecked = $('.groups_list input:checkbox:checked').length;
 
       if(numberOfChecked == 1)
       {

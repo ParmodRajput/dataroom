@@ -2355,3 +2355,12 @@ button.waiting_reply {
     padding: 7px;
 }
 
+.right_click.drop-holder.arrow:before {
+    position: absolute;
+    left: -16px;
+    border-right: 15px solid #18cad7;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    content: "";
+    top: 307px!important;
+}
