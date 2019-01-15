@@ -49,7 +49,7 @@
 						    <section class="content-header">
 						   
 						    <div class="search_filter_document">
-						      <div class="new_filter">
+						   <!--    <div class="new_filter">
 						          <select>
 						            <option>New</option>
 						            <option>Last 24 hours</option>
@@ -57,16 +57,22 @@
 						            <option>Last 7 days</option>
 						            <option>Last 30 days</option>
 						          </select>
-						      </div>
+						      </div> -->
 
 						      <div class="search_document_Byname">
-						          <input type="text" name="search_filter" class="search_filter">
+						          <input type="text" name="search_filter" class="search_filter" placeholder="Search by question subject">
+						          <span class="search_filter_btn">
 						          <i class="fas fa-search"></i>
+						      </span>
 						      </div>
 						   </div>
 						   <div class="back_arrow_qa move_last_folder_qa">
 						     {{$project_name}}
 						   </div>
+						   <div class="filteredTextContent hidden">
+						       <div class="text_filter"></div>
+						       <span class="icon_close_filter"><i class="fa fa-times" aria-hidden="true"></i></span>
+						    </div>
 						</section>
 
 						   <div class="upload_table">
@@ -158,19 +164,26 @@
                 </div>
                 <div class="reply_editor hidden">
                    <div class="reply_center">
-                		<div class='reply_ques_docs_group'> 
+                		<div class='reply_ques_docs_group' id="reply_user"> 
                 			 <span class='reply_to'>To:</span>
 			                 <select class="multipleSelectUsers" multiple name="language">
 			                 </select>
 			             </div>
+			             <div style="display: none;" id="alert_reply_user"></div>
+
 			             <div class="reply_subject_section">
 			                <span class="reply_subject_title">Subject:</span>
-			                <input type="text" class="reply_subject">
+			                <input type="text" class="reply_subject" id="reply_subject">
 			             </div>
+
+			             <div style="display: none;" id="alert_reply_subject"></div>
+
 			             <div class="reply_content_section">
-				              <textarea class="reply_question_content" data-value="0" rows="6" cols="55"> 	
+				              <textarea class="reply_question_content" id ="reply_content" data-value="0" rows="6" cols="55"> 	
 				              </textarea>
 			             </div>
+
+			             <div style="display: none;" id="alert_reply_content"></div>
 			         </div>
 			         <div class="cancle_reply_type">
                         <i class="fas fa-trash-alt"></i>
@@ -190,6 +203,10 @@
     <div class="modal-content">
        <div class="modal-header">
         <h4 class="modal-title">NEW QUESTION</h4>
+        <div class="related_question_by">
+          <span>Related To:</span>
+          <span class="back_arrow_qa move_last_folder_qa"></span>
+        </div>
         <button type="button" class="close" data-dismiss="modal">&times;</button> 
       </div>
       <div class="modal-body">
@@ -199,17 +216,25 @@
 
              <input type="hidden" name="doc_path" id="doc_path_directory"/>
              <input type='hidden' class='related_to_doc'>
-             <div class='ques_ans_docs_group'>
+             <div class='ques_ans_docs_group' id="user_select">
+
               <span class="to_user">To:</span>       
               <select class="multipleSelectUsers" multiple name="language"></select>
              </div>
+             <div style="display: none;" id="alert_user_select"></div>
+
              <div class="subject_section">
                 <span class="subject_title">Subject:</span>
-                <input type="text" class="question_subject">
+                <input type="text" class="question_subject" id="question_subject">
              </div>
+
+             <div style="display: none;" id="alert_question_subject"></div>
+
              <div class="question_content_section">
-              <textarea class="question_content" data-value="0" rows="10" cols="55"></textarea>
+              <textarea class="question_content" id="question_content" data-value="0" rows="10" cols="55"></textarea>
              </div>
+
+             <div style="display: none;" id="alert_question_content"></div>
            </form>
          </div>
        </div>

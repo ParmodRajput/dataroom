@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Project;
 use Session;
 use App\Document;
@@ -21,10 +22,18 @@ class ProjectsController extends Controller
 
       $userEmail = Auth::user()->email;
 
-      $request->validate([
-          'project_name' => 'required|unique:projects|max:255',
-          
+      $validator = Validator::make($request->all(), [
+        'company_name' => 'required',
+        'project_name' => 'required|unique:projects|alpha_dash|max:255',
+        'server_location' => 'required',
+
+
       ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->getMessageBag()->toArray();
+            return response()->json(['validation_failed'=>true,'errors'=>$errors]);   
+        } else{ 
 
        $project_slug = str_slug($request->project_name, '_');
        
@@ -99,8 +108,9 @@ class ProjectsController extends Controller
 
        //end     
 
-       return  $project_id; 
-       //return redirect( url('/').'/project/'.$project_id.'/documents');                 
+        return  $project_id; 
+        //return redirect( url('/').'/project/'.$project_id.'/documents');   
+      }              
 
     }
 

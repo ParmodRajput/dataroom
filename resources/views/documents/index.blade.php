@@ -90,7 +90,7 @@
           <span><i class="fa fa-star-o"></i></span>
       </div>
 
-      <div class="new_filter">
+<!--       <div class="new_filter">
           <select>
             <option>New</option>
             <option>Last 24 hours</option>
@@ -98,16 +98,21 @@
             <option>Last 7 days</option>
             <option>Last 30 days</option>
           </select>
-      </div>
+      </div> -->
 
       <div class="search_document_Byname">
-          <input type="text" name="search_filter" class="search_filter">
-          <i class="fas fa-search"></i>
+          <input type="text" name="search_filter" class="search_filter" id='search_doc_content'>
+          <span id='go_search_doc'><i class="fas fa-search"></i></span>
       </div>
    </div>
-   <div class="back-arrow move_last_folder">
-     {{$project_name}}
-   </div>
+   <div class="searchTextAndCurrentDirectory">
+     <div class="back-arrow move_last_folder">
+       {{$project_name}}
+     </div>
+     <div class="filteredTextContent hidden">
+       <div class="text_filter"></div>
+       <span class="icon_close_filter"><i class="fa fa-times" aria-hidden="true"></i></span>
+     </div>
 </section>
 
 <!-- <iframe src="http://docs.google.com/gview?url={{url('public/16 wdfsdfsd_Index.pdf')}}&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
@@ -237,7 +242,7 @@
                                   </h4>
                                 </div>
                               </div>
-                            </div>
+                             </div>
                             <div class="documents_index_section">
                                 <div class="indexing" ></div>
                             </div>
@@ -690,15 +695,24 @@
 
              <div class='ques_ans_docs_group'>   
               <span class="to_user">To:</span>     
-              <select class="multipleSelect" multiple name="language"></select>
+              <select class="multipleSelect" id="users" multiple name="language"></select>
              </div>
+
+             <div style="display:none;" id="alert_users"></div>
+
              <div class="subject_section">
                 <span class="subject_title">Subject:</span>
-                <input type="text" class="question_subject">
+                <input type="text" class="question_subject" id="subject">
              </div>
+
+             <div style="display: none;" id="alert_subject"></div>
+
              <div class="question_content_section">
-              <textarea class="question_content" data-value="0" rows="10" cols="55"></textarea>
+              <textarea class="question_content" data-value="0" rows="10" cols="55" id="ques_content"></textarea>
              </div>
+
+             <div style="display: none;" id="alert_ques_content"></div>
+
            </form>
          </div>
        </div>

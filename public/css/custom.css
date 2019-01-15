@@ -1,5 +1,5 @@
 
-body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden;}
+body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden; background:#F2F8F9!important;}
 
 .table_color{ float:left; width:100%; background:#fff; padding:10px;}
 .table_section { float: left; width: 100%; background: #fff; border:1px solid #dfdfdf;padding: 5px; margin-top:0px;height: auto; position: relative;}
@@ -27,7 +27,7 @@ body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden;}
 .navbar.default-layout .navbar-brand-wrapper .navbar-brand img{ width:70%!important; height:auto!important;}
 .create_folder .modal-header { float: left; width: 100%; padding: 10px; border-bottom: 1px solid #dfdfdf;}
 .create_folder .modal-content{ background:#fff!important;}
-.create_folder .modal-content .modal-title{ padding:10px;}
+.create_folder .modal-content .modal-title{ padding:10px; font-size: 15px;}
 
 ul.folders{ height:520px; overflow-x: hidden;}
 
@@ -36,8 +36,9 @@ ul.folders{ height:520px; overflow-x: hidden;}
 }
 
 .create_folder div#directory_current input[type="text"] { float:left; padding:10px; 
-border: 1px solid #dfdfdf; height:46px; width: calc(100% - 100px);}
-.create_folder input.submit_folder {float:left; width:100px; font-size:15px;  height:46px;  border:none;  background:#333;  color:#fff;  text-transform:capitalize;}
+border: 1px solid #dfdfdf; height:40px; width: calc(100% - 100px);}
+.create_folder input.submit_folder {float:left; width:100px; font-size:15px;  height:40px;
+  border:none;      background: #18cad7!important; border: 1px solid #18bac6!important;  color:#fff;  text-transform:capitalize;}
 
 .create_folder input.submit_folder:hover{ background:#2387de;}
 .create_folder .modal-body{ float:left; width:100%; padding:10px;}
@@ -98,8 +99,9 @@ span.download_file form i.fa.fa-download{ position:relative; right:15px;  }
 span.download_file form input[type="submit"] { width:30px; position:absolute; right:8px;
     top:-4px; z-index:5;}
 
-span.help-block { float: left!important; padding:10px; margin-bottom:15px; width: 100%!important; color: #a94442;
-    background-color: #f2dede;  border-color: #ebccd1;}
+span.help-block {     float: left!important; padding: 5px; margin-bottom: 15px;
+ width: 100%!important;  color: #a94442; background-color: #f2dede; border-color: #ebccd1;
+  font-size: 13px; margin-top: 10px;}
 
 .navbar.default-layout .navbar-menu-wrapper .navbar-nav.header-links .nav-item .nav-link { float:left; width:100%; padding:16px 15px!important;}
 a.nav-link b{/* float:left; width:100%;*/}
@@ -149,7 +151,7 @@ a.nav-link b{/* float:left; width:100%;*/}
 
 .drop_box_document { float:left; width:100%; position: relative;}
 .right_click.drop-holder { position: absolute; background: #fff!important;
-    width: 300px; z-index: 999; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
+    width: 300px; z-index:1100; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
 
 .drop-menu { float: left; width: 100%;}
 
@@ -179,6 +181,14 @@ ul.folders li {
 
  .folders ul li{
     border-top: 1px solid #dfdfdf;
+ }
+
+ .reports_record .folders ul li{
+        background: #e8f2f3;
+    margin-bottom: 3px;
+    border: 1px solid #d2e1e3;
+    font-size: 13px;
+    font-weight: normal;
  }
 
 .tree ul li:before {display:block; width:10px; height:0; border-top:1px solid;
@@ -230,7 +240,7 @@ li.ng-scope.paste { display: none;}
 .rightClickPopUpWithOutValue{display:none;}
 
 .rightClickPopUpWithOutValue { position: absolute; background: #fff!important; width: 300px;
-    z-index: 999; border: 1px solid #18cad7; padding: 10px; box-shadow: 0 0 3px #dfdfdf;}
+    z-index:1100; border: 1px solid #18cad7; padding: 10px; box-shadow: 0 0 3px #dfdfdf;}
 
 ul.context-menu_list_document { margin: 0px; padding: 0px;}
 ul.context-menu_list_document li { float: left; width: 100%; border-bottom: 1px solid #18cad7;
@@ -366,6 +376,8 @@ ul.context-menu_list_document li:last-child { border-bottom: none;}
     border: 1px solid #d7d7d7;
     width: 100%;
     height: 150px;
+    padding: 10px;
+    font-size: 13px;
 }
 input.send_question {
     border: none;
@@ -422,7 +434,8 @@ form#AllUploadFiles {
     float: left;
     width: 100%;
      border: 1px solid #d7d7d7!important;
-    height: 47px;
+    height:auto;
+    padding: 0px 0 0 30px;
 }
 
 .reply_section .fstControls {
@@ -435,7 +448,7 @@ form#AllUploadFiles {
     float: left;
     width: 100%;
     background: #fff;
-    padding: 12px 12px 12px 40px;
+    padding: 12px 12px 12px 30px;
     margin: 0px;
     box-shadow: none!important;
     border-bottom: none;
@@ -505,8 +518,9 @@ form#AllUploadFiles {
 }
 
 .reply_answer_section .fstChoiceItem {
-    margin-left: 35px;
+   /* margin-left: 35px;*/
 }
+.reply_section .fstMultipleMode .fstControls{ padding-right:33px;}
 
 .ques_create_new { margin-right: 5px;}
 
@@ -529,11 +543,13 @@ span#total_file {
 i.indicator.glyphicon.glyphicon-folder-close {
     padding-left: 6px;
     font-size:17px;
+    color: #ccc1a9;
 }
 
 i.indicator.glyphicon.glyphicon-folder-open {
     padding-left: 6px;
     font-size:17px;
+    color: #ccc1a9;
 }
 .active{
    color: green;
@@ -788,7 +804,7 @@ span.drag_document_texts {
     width: 40%;
     text-align: left;
     font-size: 13px;
-    padding:10px 0;
+    padding:5px;
 }
 
 .check-box.select_check_group form {
@@ -813,7 +829,7 @@ span.drag_document_texts {
 .check-box.select_check.group_listing {
     float: left;
     width: 40%;
-    padding:10px 0px 0 10px;
+    padding:5px 10px;
 }
 
 .check-box.select_check.group_listing a {
@@ -903,7 +919,6 @@ span.drag_document_texts {
     top: 0;
     line-height: 33px;
     border-radius: 2px;
-    right: 10px;
     color: #fff;
     position: absolute;
     cursor: pointer;
@@ -940,6 +955,7 @@ span.drag_document_texts {
     border: 1px solid #dfdfdf!important;
     float:left;
     padding: 10px;
+    width: 300px;
 }
 
  .content-wrapper.all-projects {
@@ -955,10 +971,9 @@ span.drag_document_texts {
 .content-wrapper.all-projects fieldset {
     padding: 10px;
     border: 1px solid #f3f3f3;
-    background: white;
-     margin-bottom: 20px;
-    display: inline-block;
-    width: 100%;
+    width:300px;
+    margin:0 auto;
+    background: #fff;
 }
 
 .content-wrapper.all-projects input[type="text"] {
@@ -1065,6 +1080,8 @@ border-bottom:1px solid #dfdfdf;}
 
 li#RecycleBin {
     font-size: 14px;
+ background: #eaeaea;
+    padding: 1px 0 0 10px;
 }
 
 .doc_index_list_recycle {
@@ -1163,8 +1180,16 @@ span.document_name { cursor: pointer;}
 .padding_top_users{ padding-top: 80px;}
 .input_pannel_sec input { float: left; width: 50%; padding: 20px; border: 1px solid #dfdfdf;}
 .input_pannel_sec label { float: left; width: 45%; padding-left: 15px; font-size: 13px;}
-.input_pannel_sec { float: left; width: 100%; margin: 0 0 15px 0;}
+<<<<<<< HEAD
+.input_pannel_sec { float: left; width: 100%; margin: 0 0 15px 0; margin-top: 10px;}
 .add-new{ background-color: #edfeff;}
+=======
+.input_pannel_sec { float: left; width: 100%; margin: 0 0 15px 0;}
+.add-new{ background-color:transparent; border:1px dashed #18cad7;}
+
+.content-wrapper.all-projects .content-block:nth-child(1) { border: none;}
+
+>>>>>>> a572e10f1cc0230580ab2fb152ee7ad4f9ac46a5
 .modal-dialog.create_user_new_group .modal-header h3 { text-align: center; float: left; width: 100%;}
 .modal-dialog.invite_new_user_block { max-width: 1000px!important;}
 .invite_input .bootstrap-tagsinput { float: left; width: 100%; border-radius: 0px; padding: 10px;}
@@ -1452,7 +1477,7 @@ margin-top: 3px;}
     height: 35px;
     line-height: 35px;
     text-align: center;
-    background:#7777;
+    background:#333;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -1460,6 +1485,7 @@ margin-top: 3px;}
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
+    color: #fff;
 }
 #dismiss:hover {
     background: #fff;
@@ -1478,7 +1504,8 @@ margin-top: 3px;}
 #sidebar .sidebar-header {
     padding: 11px;
     background:transparent;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid #dfdfdf;
+    color: #333;
 }
 
 #sidebar ul.components {
@@ -1978,7 +2005,7 @@ button.answere_by_me {
      width: 100%!important;
     padding: 10px!important;
     height: auto!important;
-    padding-left: 38px!important;
+    padding-left:0px!important;
 }
 
 .ques_ans_docs_group span.to_user
@@ -2094,7 +2121,7 @@ p.subject_ques {
 }
 
 #genrate_question .modal-title {
-    margin-left: 43%;
+    width: 30%;
 }
 
 #genrate_question .related_question_by {
@@ -2108,7 +2135,7 @@ p.subject_ques {
     .reports_record .left_section ul{ margin:0px; padding: 0px; font-size: 13px;}
     .reports_record .left_section ul li{ width: 100%;  display: inline-block; list-style: none; border-bottom: 1px solid gray;}
     .reports_record .left_section ul li a{ float:left; width: calc(100% - 30px);  color:#333; padding:8px 10px; text-decoration:none; font-size:14px;}
-    .listofgroup {   background:#d2edf1; }
+    .listofgroup {   }
     .reports_record .left_section ul li i { float:left;  width:30px; margin-top:10px;}
 
 
@@ -2159,31 +2186,44 @@ button.waiting_reply {
 .group_overview_first {
     float: left;
     width: 100%;
+    background:#5E5E5E;
 }
 
 .group_overview_sfert {
     float: left;
     width: 50%;
+    color: #fff;
 }
 
 .group_overview_overall {
     float: left;
     width: 50%;
+    color: #fff;
 }
 
 .group_overview_second {
     float: left;
     width: 100%;
+    margin-bottom: 3px;
 }
 
 .sfert_dis {
     float: left;
     width: 50%;
+    background: #fff;
+    border: 1px solid #dfdfdf;
+    padding: 5px;
 }
+
+.sfert_dis h4{ margin:0px; padding: 0px; font-size: 13px; }
 
 .overall_dis {
     float: left;
     width: 50%;
+    background: #fff;
+    border: 1px solid #dfdfdf;
+    padding:3px;
+    font-size: 13px;
 }
 
 .groups_check_record {
@@ -2201,6 +2241,10 @@ button.waiting_reply {
     width: 100%;
     display: inline-block;
     list-style: none;
+        background: #e8f2f3;
+    margin-bottom:3px;
+    border: 1px solid #d2e1e3;
+
 }
 
 .groups_check_record ul.group_list li input {
@@ -2212,7 +2256,7 @@ button.waiting_reply {
     padding: 10px;
 }
 
-.groups_check_record ul.group_list li .listofgroup h5{ margin:0px; padding:0px; }
+.groups_check_record ul.group_list li .listofgroup h5{ margin:0px; padding:0px; font-size:13px; }
 
 .actions_check_record ul.action_list {
     margin: 0px;
@@ -2223,10 +2267,102 @@ button.waiting_reply {
     display: inline-block;
     width: 100%;
     list-style: none;
-    margin-bottom: 5px;
+        background: #e8f2f3;
+    margin-bottom: 3px;
+    border: 1px solid #d2e1e3;
+    padding: 5px;
+}
+
+.actions_check_record ul.action_list li .list_of_type h5 {
+    font-size: 13px;
+    margin: 0px;
+}
+
+.indexingOfReports div h4 {
+    margin: 0px;
+    font-size: 13px;
+    color: #fff;
+    padding: 5px 0;
+}
+
+.indexingOfReports {
+    background: #5e5e5e;
+}
+
+.report_list {
+    background: #fff;
+    border: 1px solid #dfdfdf;
+    margin-bottom: 3px;
+    font-size: 13px;
+    word-break: break-word;
 }
 
 .actions_check_record ul.action_list li .list_of_type input {
     float: left;
     margin-right: 10px;
 }
+
+.fstMultipleMode .fstControls{ width:100%!important; position:relative!important; }
+.fstMultipleMode .fstControls{overflow:visible!important;}
+
+.group_overview {
+    float: left;
+    width: 100%;
+    margin-bottom:20px;
+    padding:10px;
+}
+
+.group_overview_sfert h4 {
+    margin:5px;
+    padding:0px;
+    font-size: 13px;
+}
+
+.group_overview_overall h5{
+    margin:5px;
+    padding:0px;
+    font-size: 13px;
+
+}
+
+.upload_table a.btn.btn_export_doc {
+    margin: 0 5px 0 0;
+}
+
+.create_question .related_question_by {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    margin-left:0px!important;
+}
+
+.upload_table .btn-export {
+    float: left;
+    margin-left: 15px;
+}
+
+.users__settings-panel {
+    padding: 20px 25px 10px;
+}
+
+.GroupTitleFirst {
+   
+    width: 84%;
+    float: left;
+    
+}
+
+.GroupTitle{
+    padding: 7px;
+}
+
+.right_click.drop-holder.arrow:before {
+    position: absolute;
+    left: -16px;
+    border-right: 15px solid #18cad7;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    content: "";
+    top: 307px!important;
+}
+

@@ -13,6 +13,7 @@ use App\Permission;
 use App\Document;
 use Mail;
 use Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use storage\app;
@@ -26,11 +27,35 @@ class GroupsController extends Controller
       $project_id = $request->project_id;
       $userId =Auth::user()->id;
 
-    	$group = new Group();
+
         $userForGroup = $request->userGroup;
-        $setGroupUserType = $request->choose_user_type;
-        $collaborationWith = $request->group_type_collaboration;
-        $setGroupTime = $request->group_time_limit;
+
+        if($userForGroup == 'Administrator')
+        {
+           $setGroupUserType = 'Administrator';
+           $collaborationWith = 'all_groups';
+           $setGroupTime = '1';
+           $access_limit = '1';
+           $active_date = null;  
+
+        }
+        else{
+
+           $setGroupUserType = $request->choose_user_type;
+           $collaborationWith = $request->group_type_collaboration;
+           $setGroupTime = $request->group_time_limit;
+           $access_limit = $request->access_limit;
+           $active_date = $request->validOnDate; 
+
+            if($access_limit == 1)
+            {
+              $active_date = null;
+            }
+
+        }
+      
+    	  $group = new Group();
+
       	$group->group_name = $request->group_name;
       	$group->project_id = $project_id;
       	$group->created_by = $userId;
@@ -38,13 +63,6 @@ class GroupsController extends Controller
         $group->group_for  = $userForGroup;
         $group->group_user_type = $setGroupUserType;
         $group->collaboration_with = $collaborationWith;
-        $access_limit = $request->access_limit;
-        $active_date = $request->validOnDate;  
-
-          if($access_limit == 1)
-          {
-            $active_date = null;
-          }
         $group->access_limit = $access_limit;
         $group->active_date  = $active_date;
         $group->QA_access_limit = $setGroupTime;    
@@ -103,13 +121,44 @@ class GroupsController extends Controller
         return $ReturnData;
 
     }
-    public function GroupInvites(Request $request)
-    {
-       
+
+
+
+    public function GroupInvites(Request $request){
+
+      //echo $request->choose_group; die();
+      $validator = Validator::make($request->all(), [
+                  'user_email' => 'required',
+                  'choose_group' => 'required|min:1'
+      ]);
+
+      if ($request->choose_group == '0' || $request->user_email == '') {
+         // $errors = $validator->getMessageBag()->toArray();
+         // return response()->json(['validation_failed'=>true,'errors'=>$errors]);
+         if ($request->choose_group == '0' &&  $request->user_email == '') {
+
+          return response()->json(['choose_group'=>'Choose group','user_email'=>'Choose users email']);
+
+         }
+
+          if($request->choose_group == '0'){
+
+           return response()->json(['choose_group'=>'Choose group']);
+
+          }
+
+          if($request->user_email == ''){
+
+            return response()->json(['user_email'=>'Choose users email']);
+
+          }
+ 
+      } else{   
+
        $check = '';
        $ExitsUser;
        $group_id = $request->choose_group;
-       $userEmail = $request->user_email;
+       $userEmail = $request->user_email;      
        $User_type = $request->forUser;
        $user_role = $request->user_role;
        $access_limit = $request->access_limit;
@@ -188,13 +237,18 @@ class GroupsController extends Controller
 
          if($check == 'alreadyExit')
          {
-            return $ExitsUser;
+             //print_r($ExitsUser); die();
+
+          return response()->json(['alreadyExit'=>true,'errors'=>$ExitsUser]);
+            //return 'alreadyExit';
 
          }else{
 
            return "inviteSent";
          }
-         
+
+      }
+
     }
 
     public function getGroups($project_id)
@@ -714,6 +768,117 @@ public function getPermissionDocument($project_id)
 
                   return "moveUser";
 
+
+    }
+
+      public function ChangeCollaborationSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $collaborationWith = $request->updatedCollabVAlue;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+
+          Group::where('id',$group_id)->update(['collaboration_with'=>$collaborationWith]);
+
+
+          // delete last collaborate groups
+
+           Collaboration::where('group_id',$group_id)->delete();
+
+          // add collaboration
+
+            if($collaborationWith == 'own_group')
+           {
+                    $Collaboration = new Collaboration();
+
+                    $Collaboration->group_id = $group_id;
+                    $Collaboration->project_id = $project_id;
+                    $Collaboration->collaboration_group_id = $group_id; 
+                    $Collaboration->save();
+           }
+
+
+           if($collaborationWith == 'all_group')
+           {
+                 $getGroups = Group::where('project_id',$project_id)->pluck('id');
+                 
+                 foreach ($getGroups as $GroupId) {
+
+                    $Collaboration = new Collaboration();
+
+                    $Collaboration->group_id = $GroupId;
+                    $Collaboration->project_id = $project_id;
+                    $Collaboration->collaboration_group_id = $group_id; 
+                    $Collaboration->save();
+                     
+                 }
+           }
+
+          if($collaborationWith == 'users_group')
+           {
+
+                 $getGroups = Group::where('project_id',$project_id)->where('group_user_type','Collaboration_users')->orWhere('group_user_type','Individual_users')->pluck('id');
+                 
+                 foreach ($getGroups as $GroupId) {
+
+                    $Collaboration = new Collaboration();
+                    $Collaboration->group_id = $GroupId;
+                    $Collaboration->project_id = $project_id;
+                    $Collaboration->collaboration_group_id = $group_id; 
+                    $Collaboration->save();
+                     
+                 }
+           }
+
+           return "success";
+
+      } 
+
+      public function ChangeAccessRoomSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $access_limit = $request->updatedsecurityValue1;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+          $active_date = '';
+
+            if($access_limit == '1')
+            {
+
+              print_r('sddsd');
+              // $access_limit = '1';
+              // $active_date = 'null';
+
+            }else{
+
+
+                 print_r('dfdf');
+               // $access_limit = '2';
+               // $active_date = $access_limit;
+
+            }
+
+            die();
+
+         Group::where('id',$group_id)->update(['access_limit'=>$access_limit,'access_limit'=>$active_date]);
+ 
+         return "success";
+
+
+      }
+
+
+     public function ChangeQuesAnsSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $access_ques_limit = $request->updatedQuestionValue;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+
+
+        Group::where('id',$group_id)->update(['QA_access_limit'=>$access_ques_limit]);
+ 
+         return "success";
 
     }
 

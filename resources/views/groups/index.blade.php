@@ -10,11 +10,11 @@
           
             @if(checkUserType($project_name) == 'Administrator')
         	<div class="btn_upload InviteUsersByUp ">
-           		 <button class='btn btn-primary InviteUsers' type='button' data-id=''>InviteUsers</button>
+           		 <button class='btn btn-primary InviteUsers' type='button' data-id=''><img src='{{url('/')}}/dist/img/invite1.png'></img> InviteUsers</button>
            </div>
 
             <div class="btn_upload">
-                <button class="btn btn-success btn-block create_new_group" data-toggle="modal" data-target="#create_group">New Group
+                <button class="btn btn-success btn-block create_new_group" data-toggle="modal" data-target="#create_group"><img src='{{url('/')}}/dist/img/newGroup.png'></img>  New Group
 					<i class=""></i>
 				</button>
             </div>
@@ -70,7 +70,7 @@
                                <span>Role</span> 
                         </div>
                         <div class="Invite-user-ac">
-                           <span><i class='fa fa-user-plus' aria-hidden='true'></i></span> Invite user
+                           <span>Invite/Move user</span> 
                         </div>
 
                 </div>
@@ -84,10 +84,15 @@
 
   @if(checkUserType($project_name) == 'Administrator')
     <div class="indexing-group-user col-md-6">
+
+    	<input type='hidden' id='checkGroupIdEditRole'>
+
+
     	<div class="list_group_user hidden">
+
+    		<div class="GroupTitle"></div>
     		<div class="users_groups">
-    		 <button class="accordion">Users <i class="fa fa-caret-down "></i> <span class="edit_user"><i class="fa fa-pencil"></i> edit
-    		 </span></button>
+    		 <button class="accordion">Users <i class="fa fa-caret-down "></i></button>
 				<div class="panel">
 					<div class="group_user_listing">
 						
@@ -96,39 +101,104 @@
 			</div>	
 
     		<div class="role_groups">
-    		 <button class="accordion">Role<i class="fa fa-caret-down "></i><span class="edit_role"><i class="fa fa-pencil"></i> edit
+    		 <button class="accordion">Role<i class="fa fa-caret-down "></i> <span class="apply_new_role btn btn-primary">Apply</span> 
+    		 	<span class="edit_role"><i class="fa fa-pencil"></i> edit
     		 </span></button>
 				<div class="panel">
-					<div class="group_user_role">
-						
+					<div class="group_user_role">	
+					</div>
+					<div class="edit_role_ofuser hidden">
+						<div class="users__settings-panel group-role-settings"><div class="form-horizontal ng-scope" style=""><div class="form-group"><div class="radio col-xs-12 ng-scope" ><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="760" value="2"> <span class="theme-radio"></span> <strong  class="ng-binding">Collaboration users</strong> <span class="help-block ng-binding">Access to: group members and their activity, personal and group notes, communication with group members and Q&amp;A coordinators</span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="760" value="1"> <span class="theme-radio"></span> <strong class="ng-binding">Individual users</strong> <span class="help-block ng-binding">Access to: personal notes, own activity and communication with Q&amp;A coordinators </span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="760" value="4"> <span class="theme-radio"></span> <strong class="ng-binding">Full administrators</strong> <span class="help-block ng-binding" >Full rights: invite and manage users, view activity reports, manage permissions and Q&amp;A section</span></label></div></div></div></div>
 					</div>
 				 
 				</div>
 			</div>	
 			<div class="collaboration_setting_groups">
-    		 <button class="accordion">Collaboration Setting <i class="fa fa-caret-down "></i><span class="edit_collab_setting"><i class="fa fa-pencil"></i> edit
-    		 </span></button>
+    		 <button class="accordion">Collaboration Setting <i class="fa fa-caret-down "></i></button>
 				<div class="panel">
 				   <div class="group_collaboration_setting">	
 				   </div>
+				   <div class="updated_group_collab hidden">
+                     <select name="group_type_collaboration" class="collaboration_with_second_check" id="collaboration_with_second"></select>
+
+				   </div>
+				   <div class="edit_collab_setting_update">
+					   <span class="edit_collab_setting"><i class="fa fa-pencil"></i> edit
+	    		       </span>
+	    		       <div class="hidden" style="margin: 10px 10px 10px 0px;" id="collab_btn">
+	    		       <span class="btn btn-danger apply_collab_setting"> apply
+	    		       </span>
+    		            <span class="btn btn-primary cancle_edit_collab_setting"> Cancle
+    		            </span>	 
+    		            </div>   		       
+    		        </div>
 				</div>
 			</div>	
 			<div class="security_setting_groups">       
-    		 <button class="accordion">Security setting <i class="fa fa-caret-down "></i> <span class="edit_security"><i class="fa fa-pencil"></i> edit
-    		 </span> </button>
+    		 <button class="accordion">Security setting <i class="fa fa-caret-down "></i> </button>
 				<div class="panel">
 				  <div class="group_security_setting">
 
 				  </div>
+				  <div class="update_question_change hidden">
+                     <div class="radio_pannel">
+							<div class="radio_text">
+								<strong>Access to data room</strong>
+							</div>
+								<div class="radio_btns">
+								<label> 
+									<input type="radio" value="1" name="updateGroupSecuritySetting" checked="">Unlimited</label><br>
+
+								<label> <input type="radio" value="2" id="access_limit_till_change" name="updateGroupSecuritySetting">Till date</label><br>
+
+								<input type="date" name="validOnDate" class="validOnDateChangeSec hidden"> 
+
+							</div>
+						</div>
+				  </div>
+				  <div class="security_setting_edit">
+					  <span class="edit_security"><i class="fa fa-pencil"></i> edit
+	    		      </span> 
+	    		      <div class="hidden" id="change_security_btn">
+	    		      <span class="btn btn-danger apply_change_security">apply
+	    		      </span> 
+    		            <span class="btn btn-primary cancle_edit_security"> Cancle
+    		            </span>	
+    		            </div>    		      
+
+    		      </div>
 				</div>
 			</div>	
 			<div class="ques_ans_groups">
-    		 <button class="accordion">Q&A Setting <i class="fa fa-caret-down "></i><span class="edit_ques_ans"><i class="fa fa-pencil"></i> edit
-    		 </span></button>
+    		 <button class="accordion">Q&A Setting <i class="fa fa-caret-down "></i></button>
 				<div class="panel">
 				  <div class="group_qa_setting">
-						
 				  </div>
+					<div class="radio_pannel_setting_change hidden">
+							<div class="radio_btns">
+							<label> <input type="radio" value="0" name="access_Ques_ans1"><strong>No limit</strong></label><br>
+
+							<label> <input type="radio" value="7" name="access_Ques_ans1"><strong>Per Week</strong><br>
+							
+
+							<label> <input type="radio" value="30" name="access_Ques_ans1"><strong>Per Month</strong><br>
+		
+							</div>
+
+				     </div>
+				     <div class="edit_ques_ans_setting">
+					  <span class="edit_ques_ans"><i class="fa fa-pencil"></i> edit
+    		            </span>
+    		            <div class="hidden" id="edit_ques_ans_setting">
+
+    		            <span class="btn btn-danger apply_ques_ans"> Apply
+    		            </span>
+    		            <span class="btn btn-primary cancle_ques_ans"> Cancle
+    		            </span>
+    		        </div>
+    		      </div>
+				  </div>
+				  
 				</div>
 			</div>		
     	 </div>
@@ -161,6 +231,9 @@
 					    <div class="dynamic_input">
 							<input type="text"  name ="user_email" class="form-control" id="invite_users" data-role="tagsinput" placeholder="Enter email,use enter or comma to separate">
 						</div>
+
+						<div style="display: none;" id="alert_invite_users"></div>
+
 						<div class="clearfix"></div>
 						<input type="hidden"  name ="group_id" class="form-control" id="group_id" value = "" placeholder="Enter Group Id">
 
@@ -202,6 +275,8 @@
 		                       <select class="select_dynamic Select_groupOfUser" name="choose_group" id="choose_group_dym">
 						       </select>
 							</div>
+
+							<div style="display: none;" id="alert_choose_group_dym"></div>
 
 					</div>
 
@@ -296,7 +371,7 @@
 						</div>
 
 						<div class="basic_setting_input">
-						<div class="input_pannel_m_p" id="set_user_group_type_block">
+						<div class="input_pannel_m_p set_user_group_type_block" id="set_user_group_type_block">
 						<label><strong>Role</strong></label>
 						<label class="input_radio_new">
 						<input type="radio" name="choose_user_type" value="Collaboration_users" class="choose_user_type1" checked>
@@ -397,12 +472,13 @@
 <!-- Document permission modal -->
 <div id="document_permission_modal" data-backdrop="static" data-keyboard="false" class="modal fade" role="dialog">
   <div class="modal-dialog new_permission_setup">
+  	<input type="hidden" id ='CheckUserChangePermission'>
 
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
            <h3>DOCUMENTS' PERMISSIONS</h3>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close_permission_modal">&times;</button>
         </div>
         <div class="modal-body scroll_permission_section">         
           <div class="outer_box">
@@ -585,7 +661,6 @@
         </div>
 
     <div class="modal-footer">
-       <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
        <button type="button" class="btn btn-success" id="permission_store" data-dismiss="modal">Apply</button>
     </div>
   </div>
@@ -803,17 +878,26 @@
 					  	     html+="<i class='fa fa-caret-down '></i>";
                             }
 					        
-					  	    html+="</span></form><a href='javascript:void(0)' data-value='"+group_id+"' id='' class='groups'>"+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' type='button' data-id='"+group_id+"'><i class='fa fa-user-plus' aria-hidden='true'></i></a></div></div></div><div class='users_list'>";
+					  	    html+="</span></form><a href='javascript:void(0)' data-value='"+group_id+"' id='' class='groups'>";
+
+					  	    if(GroupUserRole == 'Administrator')
+					  	    {
+                                 html+="<img src='{{url('/')}}/dist/img/admin.png'></img>";
+
+					  	    }else{
+                                 
+                                 html+="<img src='{{url('/')}}/dist/img/group.png'></img>";
+					  	    }
+
+					  	    html+= '  '+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' type='button' data-id='"+group_id+"'><img src='{{url('/')}}/dist/img/invite.png'></img></a></div></div></div><div class='users_list'>";
 
                         $.each( value.users, function( key, value){
 
-                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><i class='fa fa-user' aria-hidden='true'></i> <a href='javascript:void(0)' id='' class='groups'>"+value+"</a><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'><i class='fa fa-user' aria-hidden='true'></i><i class='fa fa-arrow-right'></i></span></div></div></div>";
+                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><a href='javascript:void(0)' id='' class='groups'>"+value+"</a></div><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'><img src='{{url('/')}}/dist/img/moveUser.png'></img></span></div></div>";
                         });
 
                         html+="</div>";
-
-
-					  	 html1 += " <option value='"+group_id+"' data-value='"+GroupUserRole+"'>"+group_name+"</option>";
+					  	html1 += " <option value='"+group_id+"' data-value='"+GroupUserRole+"'>"+group_name+"</option>";
 
 
 					});
@@ -851,13 +935,24 @@
 					var currentGroupId = getDetails[1];
 					var group_user_type = getDetails[2];
 
+					var lastGroup = parseInt(currentGroupId) - parseInt("1");
 
 					$('#create_group').modal('hide'); 
                     getgroups();
 
+                    $('#document_permission_modal').modal('show'); 
+
+                    if(group_user_type !== 'Administrator')
+                    {
+                        
+
                     html='<div class="new_user_pannel" id="group'+currentGroupId+'"><div class="new_user1"><b>'+group_name+'</b>/'+group_user_type+'</div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/1" class="doc_permission1 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/2" class="doc_permission2 permission'+currentGroupId+'"><span class="checkmark"></span></label></div> <div class="new_user2"> <label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/3" class="doc_permission3 permission'+currentGroupId+'"><span class="checkmark"></span> </label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/4" class="doc_permission4 permission'+currentGroupId+'"> <span class="checkmark"></span> </label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/5" class="doc_permission5 permission'+currentGroupId+'"><span class="checkmark"></span></label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/6" class="doc_permission6 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/7" class="doc_permission7 permission'+currentGroupId+'"><span class="checkmark"></span></label></div><div class="permission_cancle new_user2 section2" group="'+currentGroupId+'"><i class="fa fa-close"></i> </div></div>';
 
-                    $('.all_groups').append(html);
+                         $('#document_permission_modal #group'+lastGroup).append(html);
+
+                         $('#document_permission_modal #group'+currentGroupId).css('background','#fff');
+
+                      }
 				}           
 			}  
 		}); 
@@ -881,6 +976,38 @@
 			contentType: false,
 			success: function (response) { 
 
+
+
+				if(response.choose_group){
+					//alert(response.errors.choose_group);
+					var ema1 = response.choose_group;
+					$("#alert_choose_group_dym").show();
+					$("#alert_choose_group_dym").html('<span class="help-block">'+ ema1 +'</span>');
+					$("#choose_group_dym").click(function(){
+                       $("#alert_choose_group_dym").hide();
+                     });
+
+				}
+				if(response.user_email){
+					//alert(response.errors.user_email);
+					var ema = response.user_email;
+					$("#alert_invite_users").show();
+					$("#alert_invite_users").html('<span class="help-block">'+ ema +'</span>');
+					$("#invite_users").click(function(){
+                       $("#alert_invite_users").hide();
+                     });
+
+				}
+
+				if(response.alreadyExit == true){
+						var email = response.errors;
+                    //alert('Users with the following emails were already invited'+email);
+						$("#alert_invite_users").show();
+						$("#alert_invite_users").html('<span class="help-block"> Users with the following emails were already invited'+' '+ email +'</span>');
+						$("#invite_users").click(function(){
+                           $("#alert_invite_users").hide();
+                         });                    
+				} 
 				
 				if (response == "inviteSent")
 				{
@@ -890,10 +1017,7 @@
 
 					$('.list_group_user').addClass('hidden');
 
-				}else{
-
-                    alert('Users with the following emails were already invited ' +response);
-				} 
+				}
 
 			}  
 			
@@ -936,7 +1060,7 @@
 
     var showDocWithDoc = '';
 
-    var numberOfChecked = $('.user_gruoups_list input:checkbox:checked').length;
+    var numberOfChecked = $('.groups_list input:checkbox:checked').length;
 
       if(numberOfChecked == 1)
       {
@@ -978,14 +1102,13 @@
   
                                     var groupUsers  = response.userInfo;
                                     var groupInfo   = response.groupInfo;
-                                    
+
                                     var user_html1 = '';
 
                                      $.each(groupUsers, function(key ,value) {
 
                                      	var userEmmail = value.member_email; 
-
-                                        user_html1 += "<h5> </h5><p>"+userEmmail+"</p>";
+                                     	user_html1 += "<h5> </h5><p>"+userEmmail+"</p>";
                                      
                                      });
 
@@ -1000,6 +1123,15 @@
                                         var group_collaboration = value.collaboration_with;
                                         var group_security_setting = value.access_limit;
                                         var security_setting = '';
+                                        var group_name = value.group_name;
+                                        var group_id = value.id;
+
+
+                                        var htmlGroupName ="<div class='GroupTitleFirst'>"+group_name+"</div><div class='edit_group_name'><i class='fa fa-pencil'></i>Rename</div>";
+
+                                        $('#checkGroupIdEditRole').val(group_id);
+
+                                        $('.GroupTitle').html(htmlGroupName);
 
                                         if(group_security_setting == 2)
                                         {
@@ -1017,23 +1149,21 @@
 
 										if(QA_setting == 7)
 											{
-												 var QA_limit = "Only 7 days"; 
+												 var QA_limit = "Weekly"; 
 											}
 										if(QA_setting == 30)
 											{
-												 var QA_limit = "1 Month "; 
+												 var QA_limit = "Monthly"; 
 											}
-											
+			
                                         
                         if(GroupUserRole == 'Collaboration_users'){
 
                            group_html1 +="<h5>Collaboration users</h5><p class=''>Access to: group members and their activity, personal and group notes, communication with group members and Q&A coordinators</p>"; 
 
-                        }else if(GroupUserRole == 'Admintrator')	
-					    {
-                           group_html1 +="<h5>Full administrators</h5><p class=''>Full rights: invite and manage users, view activity reports, manage permissions and Q&A section</p>";  
-					    	
-					    }else{
+                        }
+
+					    if(GroupUserRole == 'Individual_users'){
 
                             group_html1 +="<h5>Individual users</h5><p class=''>Access to: personal notes, own activity and communication with Q&A coordinators</p>"; 
 
@@ -1042,11 +1172,41 @@
                         group_html2 +="<h5>Collaboration with</h5><p>"+group_collaboration+"</p>"; 
 
 
-                        group_html3 +="<h5>Access to data room</h5><p class=''>till "+security_setting+"</p>";
+                        group_html3 +="<h5>Access to data room</h5><p class=''>"+security_setting+"</p>";
 
                         group_html4+="<h5>Group questions limit</h5><p>"+QA_limit+"</p>";
 
+
+                        if(GroupUserRole == 'Administrator')	
+					    {
+                           group_html1 +="<h5>Full administrators</h5><p class=''>Full rights: invite and manage users, view activity reports, manage permissions and Q&A section</p>";  
+
+                           group_html2 = '';
+
+                           group_html4 = '';
+					    	
+					    }
+
                     });
+                                    if(user_html1 == '')
+                                     	{                                        
+                                             $('.users_groups').addClass('hidden');      
+                                     	}else{
+                                     		 $('.users_groups').removeClass('hidden'); 
+                                     	}
+
+
+
+                                    if(group_html2 == '')
+                                     	{                                        
+                                             $('.collaboration_setting_groups').addClass('hidden'); 
+                                             $('.ques_ans_groups').addClass('hidden');   
+                                                
+                                     	}else{
+                                     		 $('.collaboration_setting_groups').removeClass('hidden'); 
+                                     		 $('.ques_ans_groups').removeClass('hidden'); 
+                                     		 
+                                     	}
  
                                     // group info
                                     $('.group_user_role').html(group_html1);
@@ -1057,7 +1217,6 @@
                                      //group Users
 
                                      $('.group_user_listing').html(user_html1);
-
 		                            }
 
 		                       }); 
@@ -1078,8 +1237,9 @@
         $('.security_setting').addClass('hidden');
 		$('.access_Ques_ans').addClass('hidden');
 
-
 		var project_id = $('#project_id').val();
+
+		$('.GroupTitle').html('');
 
 
       }else{
@@ -1089,12 +1249,14 @@
       	 $('.delete_group').removeClass('hidden');
       	 $('.GroupByinvite').removeClass('hidden');
 
+      	 $('.GroupTitle').html('');
+
       }
 
   });
 
  $(document).on('change','.security_setting input:radio',function(){
-        
+
     if ($(this).val() == "2") {
        
        $('.validOnDate').removeClass('hidden');
@@ -1107,30 +1269,51 @@
  });
 
 
+
+
  $(document).on('change','input:radio',function(){
         
     if ($(this).val() == "Administrator") {
        
        $('.UserRole_block').addClass('hidden');
-
+       
     } else{
  
         $('.UserRole_block').removeClass('hidden');
+        
     }
 
  });
 
 
- $(document).on('change','input:radio',function(){
-        
+ $(document).on('change','#create_group input:radio',function(){
+
     if ($(this).val() == "Individual_users") {
-       
+
+
+       $('#create_group .security_setting').addClass('hidden');
+       $('#create_group .questions_limit').addClass('hidden');
+       $('#create_group .collaboration_setting').addClass('hidden');
+       $('#create_group .set_user_group_type_block').removeClass('hidden');
+
+    } else{
+ 
+       $('#create_group .security_setting').removeClass('hidden');
+       $('#create_group .questions_limit').removeClass('hidden');
+       $('#create_group .collaboration_setting').removeClass('hidden');
+       $('#create_group .set_user_group_type_block').removeClass('hidden');
+    }
+
+    if ($(this).val() == "Administrator") {
+
+       $('#create_group .set_user_group_type_block').addClass('hidden');
        $('#create_group .security_setting').addClass('hidden');
        $('#create_group .questions_limit').addClass('hidden');
        $('#create_group .collaboration_setting').addClass('hidden');
 
-    } else{
- 
+    }else{
+  	
+       c
        $('#create_group .security_setting').removeClass('hidden');
        $('#create_group .questions_limit').removeClass('hidden');
        $('#create_group .collaboration_setting').removeClass('hidden');
@@ -1153,6 +1336,7 @@
         if(data_permission == 0)
         {
         	$('#document_permission_modal').modal('show');
+        	$('#CheckUserChangePermission').val('1');
         	$('#document_permission_modal #group'+group_id).css('background','lightgray');
         	$('#document_permission_modal #group'+group_id).addClass('founder_permission');
      	 
@@ -1296,6 +1480,7 @@ function getAllGroups(){
 					});
                      
                     $('.group_type_collaboration').html(html1);
+                    $('.collaboration_with_second_check').html(html1);
                     $('.group_move_user').html(html2);
 
                     
@@ -1462,7 +1647,7 @@ $('#hjgh').click(function(){
    }
 
 
-     //permission module
+    //permission module
 
    $(document).on('click','#document_permission_modal input[type="checkbox"]', function() {
 
@@ -1492,8 +1677,6 @@ $('#hjgh').click(function(){
 
    	      var setPermissionAccess = $('.founder_permission input:checkbox:checked').length;
 
-   	      alert(g);
-
           var numberOfChecked1 = $('#document_permission_modal input:checkbox:checked').length;
       
           if(numberOfChecked1 == '0')
@@ -1508,7 +1691,6 @@ $('#hjgh').click(function(){
              permission_array.push($(this).data('value')); 
 
           });
-
 
          var Document = $('#current_permission_document').val();
 
@@ -1536,6 +1718,8 @@ $('#hjgh').click(function(){
                             getgroups();
 
                             DocumentTree(token,project_id);
+
+                            $('#CheckUserChangePermission').val('');
 
                         }
  
@@ -1636,6 +1820,259 @@ $('#hjgh').click(function(){
 				});
 
      });
+
+     // $('#document_permission_modal').on('show.bs.modal', function (e) {
+
+          
+     // });
+       $(document).on('click','.checkmark',function(){
+           
+           $('#CheckUserChangePermission').val('1');
+
+       });
+
+       $(document).on('click','.close_permission_modal',function(){
+
+        	var checker =  $('#CheckUserChangePermission').val();
+        	if(checker == 1){
+                 
+                 alert('Do you want to apply set permission ?');
+
+        	}else{
+
+        		$('#document_permission_modal').modal('hide');
+        	}
+
+       });
+
+
+       $(document).on('click','.edit_role',function(){
+
+       	 $('.edit_role_ofuser').removeClass('hidden');
+       	 $('.group_user_role').addClass('hidden');
+
+       	 var groupId =  $('#checkGroupIdEditRole').val();
+
+       	 $('.apply_new_role').removeClass('hidden');
+       	 $(this).addClass('hidden');
+
+       });
+
+       
+     
+
+      $(document).on('click','.selection',function(){
+ 			$("#alert_choose_group_dym").hide();
+      });
+
+      $(document).on('click','.edit_collab_setting',function(){
+
+ 			$('.updated_group_collab').removeClass('hidden');
+ 			$('.group_collaboration_setting').addClass('hidden');
+ 			$(this).addClass('hidden');
+ 			//$('.apply_collab_setting').removeClass('hidden');
+ 			//$('.cancle_edit_collab_setting').removeClass('hidden');
+ 			$('#collab_btn').removeClass('hidden');
+ 			
+
+
+       });
+
+  $(document).on('click','.apply_collab_setting',function(){
+
+  	 var updatedCollabVAlue  = $('#collaboration_with_second').val();
+  	 var project_id = $('#project_id').val();
+  	 var group_id = $('#checkGroupIdEditRole').val();
+     var token = $('#csrf-token').val();
+
+     $.ajax({
+
+					type:"POST",
+					url:"{{ Url('/') }}/update/collaboration_setting",
+		            data:{
+		                _token : token,
+		                 project_id :project_id, 
+		                 group_id : group_id,
+		                 updatedCollabVAlue  : updatedCollabVAlue,
+		               
+		              },  
+
+					success: function (response) { 
+
+						//alert(response);
+
+						getgroups();
+						
+						$('.display_groups input:checkbox').prop('checked', this.checked);
+						$('.list_group_user').addClass('hidden'); 
+						$('.updated_group_collab').addClass('hidden');
+ 			            $('.group_collaboration_setting').removeClass('hidden');
+ 			            $('.edit_collab_setting').removeClass('hidden');
+ 			            $('#collab_btn').addClass('hidden');
+				
+
+					}
+
+				});
+
+
+    });
+
+
+  
+
+ $(document).on('click','.security_setting_edit .edit_security',function(){
+
+     $('.update_question_change').removeClass('hidden');
+     $('.group_security_setting').addClass('hidden');
+     //$('.apply_change_security').removeClass('hidden');
+     //$('.cancle_edit_security').removeClass('hidden');
+     $('#change_security_btn').removeClass('hidden');
+     
+     $('.edit_security').addClass('hidden');
+
+ });
+
+
+$(document).on('change','.security_setting_groups input:radio',function(){
+
+    if ($(this).val() == "2") {
+       
+       $('.validOnDateChangeSec').removeClass('hidden');
+
+    }else{
+       
+       $('.validOnDateChangeSec').addClass('hidden');
+    }
+
+ });
+
+
+  $(document).on('click','.apply_change_security',function(){
+
+  	 var updatedsecurityValue  = $("input[name='updateGroupSecuritySetting']:checked").val();
+
+  	 if(updatedsecurityValue == '1')
+  	 {
+  	 	var updatedsecurityValue1 = 1;
+
+  	 }else{
+
+          var updatedsecurityValue1 = $('.validOnDateChangeSec').val();
+
+  	 }
+
+  	 var project_id = $('#project_id').val();
+  	 var group_id = $('#checkGroupIdEditRole').val();
+     var token = $('#csrf-token').val();
+
+     $.ajax({
+
+					type:"POST",
+					url:"{{ Url('/') }}/update/access_setting",
+		            data:{
+		                _token : token,
+		                 project_id :project_id, 
+		                 group_id : group_id,
+		                 updatedsecurityValue1  : updatedsecurityValue1,
+		               
+		              },  
+
+					success: function (response) { 
+
+						getgroups();
+						
+						 $('.display_groups input:checkbox').prop('checked', this.checked);
+					     $('.list_group_user').addClass('hidden'); 
+					     $('.update_question_change').addClass('hidden');
+					     $('.group_security_setting').removeClass('hidden');
+					     $('#change_security_btn').addClass('hidden');
+					     $('.edit_security').removeClass('hidden');
+				
+
+					}
+
+				});
+
+
+    });
+
+
+
+
+ $(document).on('click','.edit_ques_ans',function(){
+
+
+     $('.radio_pannel_setting_change').removeClass('hidden');
+     //$('.apply_ques_ans').removeClass('hidden');
+     $('.group_qa_setting').addClass('hidden');
+	//$('.cancle_ques_ans').removeClass('hidden');
+     $('#edit_ques_ans_setting').removeClass('hidden');
+     $(this).addClass('hidden');
+
+ });
+
+
+$(document).on('click','.apply_ques_ans',function(){
+
+  	 var updatedQuestionValue  = $("input[name='access_Ques_ans1']:checked").val();
+  	 var project_id = $('#project_id').val();
+  	 var group_id = $('#checkGroupIdEditRole').val();
+     var token = $('#csrf-token').val();
+
+     $.ajax({
+
+					type:"POST",
+					url:"{{ Url('/') }}/update/quesAns_setting",
+		            data:{
+		                _token : token,
+		                 project_id :project_id, 
+		                 group_id : group_id,
+		                 updatedQuestionValue  : updatedQuestionValue,
+		               
+		              },  
+
+					success: function (response) { 
+
+						getgroups();
+						
+						$('.display_groups input:checkbox').prop('checked', this.checked);
+
+					    $('.list_group_user').addClass('hidden'); 
+					    $('#edit_ques_ans_setting').addClass('hidden');
+					   // $('.apply_ques_ans').addClass('hidden');
+                        $('.group_qa_setting').removeClass('hidden');
+                        $('.radio_pannel_setting_change').addClass('hidden');
+                        $('.edit_ques_ans').removeClass('hidden');
+
+					}
+
+				});
+
+
+    });
+
+
+  $(document).on('click','.cancle_edit_collab_setting',function(){
+			$('.updated_group_collab').addClass('hidden');
+			$('.group_collaboration_setting').removeClass('hidden');
+			$('.edit_collab_setting').removeClass('hidden');
+			$('#collab_btn').addClass('hidden');
+  });
+
+  $(document).on('click','.cancle_edit_security',function(){
+
+			$('.update_question_change').addClass('hidden');
+			$('.group_security_setting').removeClass('hidden');
+			$('.edit_security').removeClass('hidden');			
+			$('#change_security_btn').addClass('hidden');
+
+  });
+  $(document).on('click','.cancle_ques_ans',function(){
+			$('.radio_pannel_setting_change').addClass('hidden');
+			$('.edit_ques_ans').removeClass('hidden');			
+			$('#edit_ques_ans_setting').addClass('hidden');
+  });
 
 
 </script>

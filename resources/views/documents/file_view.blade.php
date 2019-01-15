@@ -92,11 +92,11 @@
               </a>
          </span>
 		<i class="fa fa-print"></i>
-		<i class="fa fa-comments"></i>
+		<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments"></i></a>
 		<i class="fa fa-search"></i>
 		</div>
 
-		<div class="arrows_right">
+		<div class="arrows_right hidden">
 		<i class="fa fa-angle-left"></i>
 		<i class="fa fa-angle-right"></i>
 		</div>

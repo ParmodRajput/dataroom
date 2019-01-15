@@ -6,17 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Pro Data Room</title>
   <!-- plugins:css -->
-  <style>
-  .right_click.drop-holder.arrow:before {
-    position: absolute;
-    left: -16px;
-    border-right: 15px solid #18cad7;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    content: "";
-    top: 307px!important;
-}
-</style>
+
   <link rel="stylesheet" href="{{ asset('css/materialdesignicons.min.css ')}}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('css/vendor.bundle.addons.css') }}">
@@ -242,6 +232,8 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
+
+        $('.ui-droppable').removeClass('hidden');
         var getPermission = $(this).data('permission');
         var checkPermission = $(this).attr('permission');
 
@@ -448,8 +440,23 @@ $(document).ready(function(){
               },  
               // multiple data sent using ajax//
               success: function (response) { 
-                     
-                     window.location.href = '{{url("/")}}/project/'+response+'/documents'; 
+                if(response.validation_failed == true){
+                   var arr = response.errors;
+                   $.each(arr, function(index, value){
+                       if (value.length != 0){
+                         $("#alert_"+index).show();
+                         $("#alert_"+index).html('<span class="help-block">'+ value +'</span>');
+                         $("#"+index).click(function(){
+                           $("#alert_"+index).hide();
+                         });
+                       }                        
+                   });
+                }else{
+
+                  window.location.href = '{{url("/")}}/project/'+response+'/documents';
+
+                }
+                         
               }
           });
 
@@ -465,13 +472,14 @@ $(document).ready(function(){
            var project_id = $('.projects_id').val();
            var project_name = $('.project_name').val();
            var get_genrate_folder = $('#folder_created').val();
-
+           
            if(get_genrate_folder !== ''){
-              if( /[^a-zA-Z0-9\-\/]/.test(get_genrate_folder) == false){
-                                      var document_index = $('.document_indexing_count').val();
 
+              if((new RegExp('[~#%\&{}+\|]|\\.\\.|^\\.|\\.$')).test(get_genrate_folder) == false){
+
+
+                       var document_index = $('.document_indexing_count').val();
                        var genrate_folder = get_genrate_folder.replace(' ', '_');
-
                        var getPath = path+"/"+genrate_folder; 
                        var box = $('.indexing');
                        var folder =$('#tree2');
@@ -970,7 +978,7 @@ $(document).ready(function(){
                                       
                                       if(response == 'moved')
                                       {
-                                         swal("file moved successfully", "", "success");
+                                         //swal("file moved successfully", "", "success");
                                          
                                       }
                                     } 
@@ -1082,8 +1090,7 @@ $(document).ready(function(){
     $('.fav_filter').removeClass('hidden');
     $('.new_filter').removeClass('hidden');
     var projects_id = $('.directory_location #project_id_doc').val();
-    var document_index = $('.document_indexing_count').val();
-    
+    var document_index = $('.document_indexing_count').val();    
     var html="";
     var html2 ="";
     var box = $('.indexing');
@@ -1100,7 +1107,20 @@ $(document).ready(function(){
               // multiple data sent using ajax//
               success: function (response) { 
        
-                //first inner array
+                   GetDocumentInfoByResponse(response,document_index);
+                   $('.ui-droppable').droppable("disable");
+
+                 }//success
+        });//ajax
+   }
+
+    function GetDocumentInfoByResponse(response,document_index){
+
+                var html="";
+                var html2 ="";
+                var box = $('.indexing');
+
+                  //first inner array
 
                 var getfolder = response.folder_index;
 
@@ -1390,7 +1410,6 @@ $(document).ready(function(){
                                          $(ui.draggable).css('display','none');
                                          var moveFile = $(ui.draggable).find('a').data('value');
                                          var directoryPath = $('#current_directory_project').val();
-
                                          var projects_id = $('.directory_location #project_id_doc').val();
                                          //alert(moveFile);
                                          $.ajax({
@@ -1419,7 +1438,7 @@ $(document).ready(function(){
                                                 
                                                 if(response == 'moved')
                                                 {
-                                                   swal("file moved successfully", "", "success");
+                                                   //swal("file moved successfully", "", "success");
                                                    
                                                 }
                                               } 
@@ -1427,11 +1446,9 @@ $(document).ready(function(){
                                       });
                                }
                        });
-                
-                 }//success
-        });//ajax
-   }
-
+            
+    }
+    
 
    // right click on document// 
     $(document).on('contextmenu','.document_index' ,function(e) {
@@ -2856,8 +2873,8 @@ $(document).on('click','.note1_doc_delete', function(){
 
 
 
-   $(document).on('click','.send_question',function(){
-     $('#genrate_question').modal('hide');
+  $(document).on('click','.send_question',function(){
+     
      var directory_url  =  $('.directory_location #current_directory').val(); 
 
      var doc_path =  $('#doc_path_directory').data('value');
@@ -2870,13 +2887,12 @@ $(document).on('click','.note1_doc_delete', function(){
      var subject = $('.question_subject').val();
      var ques_content  = $('.question_content').val();
      var project_name  = $('.project_name').val();
-
-
+     
      $.ajax({
 
         type : "POST",
         url : "{{url('/')}}/send_question",
-        message: swal("send successfully"," ","success"),
+        //message: swal("send successfully"," ","success"),
         data : {
           _token       : token,
           doc_path     : doc_path,
@@ -2888,17 +2904,32 @@ $(document).on('click','.note1_doc_delete', function(){
 
         },
 
-      success:function(response){
-        
-          if(response == 'send_question'){
+        success:function(response){
 
-             data_display(token,directory_url);
-          }
+            if(response.validation_failed == true){
+                var arr = response.errors;
+                 $.each(arr, function(index, value){
+                     if (value.length != 0){
+                       $("#alert_"+index).show();
+                       $("#alert_"+index).html('<span class="help-block">'+ value +'</span>');
+                       $("#"+index).click(function(){
+                       $("#alert_"+index).hide();                      
+                       });
+                     }                        
+                 });
+               
+            }else{
+
+              $('#genrate_question').modal('hide');
+              message: swal("send successfully"," ","success"),
+              data_display(token,directory_url);
+
+            }
         }
 
        }); 
 
-   });
+  });
 
  $(document).ajaxSend(function(event, request, settings) {
       $('.overlay_body').removeClass('hidden');
@@ -2982,6 +3013,102 @@ $(document).on('click','.note1_doc_delete', function(){
 
  });
  
+
+ $(document).on('click','.fstQueryInput.fstQueryInputExpanded',function(){
+
+    $('#alert_users').hide();
+ });
+
+
+ $(document).on('click','#go_search_doc',function(){
+
+   var token = $('#csrf-token').val();  
+   var serachContent = $('#search_doc_content').val();
+   var directory_url = $('#current_directory').val();
+
+   if(serachContent == '')
+   {
+        data_display(token,directory_url);
+
+   }else{
+         
+         $('.move_last_folder').addClass('hidden');
+         $('.ui-droppable').addClass('hidden');
+
+         var project_id = $('.projects_id').val();
+         var document_index = $('.document_indexing_count').val();
+
+             $.ajax({
+              type : "POST",
+              url : "{{url('/')}}/doc/search_doc_content",
+              data : {     
+                _token      : token,
+                serachContent : serachContent,
+                project_id   : project_id,
+
+              },
+              success:function(response){
+
+
+                $('.filteredTextContent .text_filter').html(serachContent);
+                $('.filteredTextContent').removeClass('hidden');
+                GetDocumentInfoByResponse(response,document_index);
+
+              }
+
+            });
+
+       }
+
+ });
+
+$(document).on('click','.fav_filter',function(){
+
+   var token = $('#csrf-token').val();  
+   var project_id = $('.projects_id').val();
+   var document_index = $('.document_indexing_count').val();
+   var directory_url = $('#current_directory').val();
+
+   $.ajax({
+              type : "POST",
+              url : "{{url('/')}}/fav/search_doc_content",
+              data : {     
+                _token      : token,
+                project_id   : project_id,
+
+              },
+              success:function(response){
+
+                    $('.filteredTextContent').removeClass('hidden');
+                    $('.move_last_folder').addClass('hidden');
+                    $('.ui-droppable').addClass('hidden');
+                    $('.text_filter').html('Favorite');
+                    
+                    GetDocumentInfoByResponse(response,document_index);
+
+
+              }
+
+          });
+   
+
+
+});
+
+
+$(document).on('click','.icon_close_filter',function(){
+
+  var token = $('#csrf-token').val();  
+  $('#search_doc_content').val('');
+  var directory_url = $('#current_directory').val();
+
+  $('.filteredTextContent').addClass('hidden');
+  $('.move_last_folder').removeClass('hidden');
+  $('.ui-droppable').removeClass('hidden');
+
+  data_display(token,directory_url);
+
+});
 
 </script>
 
