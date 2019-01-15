@@ -1945,16 +1945,7 @@ $('#myModal').on('hidden.bs.modal', function () {
               
       }else if(numberOfChecked == 0)
         {
-             // $('.delete_items').addClass('hideDeleteBtn'); 
-             // $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
-             // var GetDocumentName = $('.project_name').val();
-             // var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
-             // $('.checked_doc_details').html(showDocWithDoc);
-             // $('.create_notes_get').addClass('hidden');
-             // $('.notes_aside_text1').addClass('hidden');
-             // $('.note1_doc_delete').addClass('hidden');
-             // $('.file_view_aside').addClass('hidden');
-             // $('.submit_note1_doc').addClass('hidden');
+             
 
              $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
@@ -2068,6 +2059,17 @@ $(document).on('click','.check-box-input-main',function(){
                               
                                data_display(token,directory_url);
                                $('input:checkbox').prop('checked', false);
+                               $('.delete_items').addClass('hideDeleteBtn'); 
+                 $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
+                 var GetDocumentName = $('#getProject_name').val();
+                 var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
+                 $('.checked_doc_details').html(showDocWithDoc);
+                 $('.create_notes_get').addClass('hidden');
+                 $('.notes_aside_text1').addClass('hidden');
+                 $('.note1_doc_delete').addClass('hidden');
+                 $('.file_view_aside').html('');
+                 $('.notes_aside_1').html('');
+                 $('.submit_note1_doc').addClass('hidden');
                              }
                      });
                   } 
@@ -2408,7 +2410,7 @@ $(document).on ('click','.btn_delete_doc_recycle',function(){
 
 $(document).on('click','.fav_docs',function(e){
 
-
+            
           e.preventDefault();
           var that =  $(this);
 
@@ -2438,6 +2440,7 @@ $(document).on('click','.fav_docs',function(e){
                                 that.removeClass('hidden_icon');
                                 that.css("color","red");
                                 that.css("visibility","visible");
+
                           }else{
                                                                 
                                that.css("color","#212529");
@@ -3024,7 +3027,6 @@ $(document).on('click','.note1_doc_delete', function(){
 
     $('#alert_users').hide();
  });
-
 
  $(document).on('click','#go_search_doc',function(){
 

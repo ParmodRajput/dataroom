@@ -14,7 +14,7 @@
            </div>
 
             <div class="btn_upload">
-                <button class="btn btn-success btn-block create_new_group" data-toggle="modal" data-target="#create_group"><img src='{{url('/')}}/dist/img/newGroup.png'></img>  New Group
+                <button class="btn btn-success btn-block create_new_group" data-toggle="modal" data-target="#create_group"><img src='{{url('/')}}/dist/img/newGroup.png'></img>New Group
 					<i class=""></i>
 				</button>
             </div>
@@ -87,9 +87,7 @@
 
     	<input type='hidden' id='checkGroupIdEditRole'>
 
-
     	<div class="list_group_user hidden">
-
     		<div class="GroupTitle"></div>
     		<div class="users_groups">
     		 <button class="accordion">Users <i class="fa fa-caret-down "></i></button>
@@ -101,14 +99,19 @@
 			</div>	
 
     		<div class="role_groups">
-    		 <button class="accordion">Role<i class="fa fa-caret-down "></i> <span class="apply_new_role btn btn-primary">Apply</span> 
-    		 	<span class="edit_role"><i class="fa fa-pencil"></i> edit
-    		 </span></button>
+    		 <button class="accordion">Role<i class="fa fa-caret-down "></i>
+              </button>
 				<div class="panel">
 					<div class="group_user_role">	
 					</div>
 					<div class="edit_role_ofuser hidden">
-						<div class="users__settings-panel group-role-settings"><div class="form-horizontal ng-scope" style=""><div class="form-group"><div class="radio col-xs-12 ng-scope" ><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="760" value="2"> <span class="theme-radio"></span> <strong  class="ng-binding">Collaboration users</strong> <span class="help-block ng-binding">Access to: group members and their activity, personal and group notes, communication with group members and Q&amp;A coordinators</span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="760" value="1"> <span class="theme-radio"></span> <strong class="ng-binding">Individual users</strong> <span class="help-block ng-binding">Access to: personal notes, own activity and communication with Q&amp;A coordinators </span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="760" value="4"> <span class="theme-radio"></span> <strong class="ng-binding">Full administrators</strong> <span class="help-block ng-binding" >Full rights: invite and manage users, view activity reports, manage permissions and Q&amp;A section</span></label></div></div></div></div>
+						<div class="users__settings-panel group-role-settings"><div class="form-horizontal ng-scope" style=""><div class="form-group"><div class="radio col-xs-12 ng-scope" ><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="role_change" value="1"> <span class="theme-radio"></span> <strong  class="ng-binding">Collaboration users</strong> <span class="help-block ng-binding">Access to: group members and their activity, personal and group notes, communication with group members and Q&amp;A coordinators</span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="role_change" value="2"> <span class="theme-radio"></span> <strong class="ng-binding">Individual users</strong> <span class="help-block ng-binding">Access to: personal notes, own activity and communication with Q&amp;A coordinators </span></label></div><div class="radio col-xs-12 ng-scope"><label><input type="radio"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="role_change" value="3"> <span class="theme-radio"></span> <strong class="ng-binding">Full administrators</strong> <span class="help-block ng-binding" >Full rights: invite and manage users, view activity reports, manage permissions and Q&amp;A section</span></label></div></div></div></div>
+					</div>
+					<div class="edit_user_role_setting">
+                        <span class="btn btn-danger cancle_new_role hidden">Cancle</span>      
+  						<span class="btn btn-primary apply_new_role hidden">Apply</span> 
+    		 			<span class="edit_role"><i class="fa fa-pencil"></i> edit
+    		            </span>
 					</div>
 				 
 				</div>
@@ -720,6 +723,54 @@
 <!--end create folder-->
 
 
+
+<!-- chanhge group name modal-->
+
+<div id="ChangeGroupName" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+  <div class="modal-dialog create_folder">
+    <input type='hidden'  name='copy_document' id='copy_document_directory'>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Rename Group Name</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      </div>
+      <div class="modal-body">
+
+        <div class="form">
+          <div id="directory_current">
+            <form action="javascript:void(0)" id="folder_create" method="post" >
+             <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+             <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
+
+             <input type="hidden" value="" class="document_indexing_count">
+             
+             <input type="hidden" name="slug_folder" class="slug_folder" />
+             <input type="hidden" name="current_dir" class="current_dir" id="current_directory" 
+             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
+             <input type="hidden" name="project_dir" class="project_dir" id="project_directory" 
+             value="public/documents/{{Auth::user()->id}}/{{$project_name}}"/>
+
+             <input type="hidden" id="RenameGroupId">
+
+             <input type="text" name="group_rename" class="group_rename_for">
+
+           </form>
+         </div>
+       </div>
+     </div>
+     <div class="modal-footer">
+
+      <button type="button" name="submit" class="btn btn-primary GroupNameRenameFor">Rename</button>
+      
+    </div>
+  </div>
+        
+</div>
+</div>
+<!--end create folder-->
+
+
 @endsection
 @section('page_specific_script')
 
@@ -1127,9 +1178,13 @@
                                         var group_id = value.id;
 
 
-                                        var htmlGroupName ="<div class='GroupTitleFirst'>"+group_name+"</div><div class='edit_group_name'><i class='fa fa-pencil'></i>Rename</div>";
+                                        var htmlGroupName ="<div class='GroupTitleFirst'>"+group_name+"</div><div class='edit_group_name' data-value="+group_id+" data-toggle='modal' data-target='#ChangeGroupName'><i class='fa fa-pencil'></i>Rename</div>";
 
                                         $('#checkGroupIdEditRole').val(group_id);
+
+                                        $('#RenameGroupId').val(group_id);
+                                        $('.group_rename_for').val(group_name);
+                                        
 
                                         $('.GroupTitle').html(htmlGroupName);
 
@@ -1160,12 +1215,21 @@
                         if(GroupUserRole == 'Collaboration_users'){
 
                            group_html1 +="<h5>Collaboration users</h5><p class=''>Access to: group members and their activity, personal and group notes, communication with group members and Q&A coordinators</p>"; 
+                           
+
+                           $("input[name='role_change']").prop('checked', false);
+
+                           $("input[name='role_change'][value='1']").prop('checked', true);
 
                         }
 
 					    if(GroupUserRole == 'Individual_users'){
 
                             group_html1 +="<h5>Individual users</h5><p class=''>Access to: personal notes, own activity and communication with Q&A coordinators</p>"; 
+
+                             $("input[name='role_change']").prop('checked', false);
+
+                             $("input[name='role_change'][value='2']").prop('checked', true);
 
                         }
 
@@ -1179,7 +1243,12 @@
 
                         if(GroupUserRole == 'Administrator')	
 					    {
-                           group_html1 +="<h5>Full administrators</h5><p class=''>Full rights: invite and manage users, view activity reports, manage permissions and Q&A section</p>";  
+                           group_html1 +="<h5>Full administrators</h5><p class=''>Full rights: invite and manage users, view activity reports, manage permissions and Q&A section</p>";
+
+                            $("input[name='role_change']").prop('checked', false);
+
+                            $("input[name='role_change'][value='3']").prop('checked', true);
+
 
                            group_html2 = '';
 
@@ -1848,15 +1917,105 @@ $('#hjgh').click(function(){
 
        $(document).on('click','.edit_role',function(){
 
+       	 $(this).addClass('hidden');
        	 $('.edit_role_ofuser').removeClass('hidden');
+       	 $('.apply_new_role').removeClass('hidden');
+       	 $('.cancle_new_role').removeClass('hidden');
+
        	 $('.group_user_role').addClass('hidden');
 
        	 var groupId =  $('#checkGroupIdEditRole').val();
 
-       	 $('.apply_new_role').removeClass('hidden');
        	 $(this).addClass('hidden');
 
        });
+
+       $(document).on('click','.cancle_new_role',function(){
+           
+           $('.group_user_role').removeClass('hidden');
+           $('.edit_role').removeClass('hidden');
+           $('.apply_new_role').addClass('hidden');
+           $(this).addClass('hidden');
+           $('.edit_role_ofuser').addClass('hidden');
+
+       });
+
+       $(document).on('click','.apply_new_role',function(){
+
+           var token = $('#csrf-token').val();
+           var ChangedRole = $("input[name='role_change']:checked").val();
+           var project_id = $('#project_id').val();
+           var group_id = $('#RenameGroupId').val();
+
+           $.ajax({
+
+			type:"POST",
+			url:"{{ Url('/') }}/change_groupRole",
+            data:{
+                _token : token,
+                 project_id :project_id, 
+                 ChangedRole : ChangedRole,
+                 group_id : group_id,
+              },  
+
+			success: function (response){
+
+				if(response == 'success')
+				{
+					getgroups();
+					$('.list_group_user').addClass('hidden');
+					$('.edit_role_ofuser').removeClass('hidden');
+
+					$('.group_user_role').removeClass('hidden');
+		            $('.edit_role').addClass('hidden');
+		            $('.apply_new_role').removeClass('hidden');
+		            $('.cancle_new_role').removeClass('hidden');
+		           
+				}
+
+			}
+
+         });
+
+
+            
+       });
+
+
+   $(document).on('click','.GroupNameRenameFor',function(){
+
+
+     var token = $('#csrf-token').val();
+     var project_id = $('#project_id').val();
+     var group_id = $('#RenameGroupId').val();
+     var ChangedGroupName = $('.group_rename_for').val();
+
+		$.ajax({
+
+			type:"POST",
+			url:"{{ Url('/') }}/change_groupName",
+            data:{
+                _token : token,
+                 project_id :project_id, 
+                 group_id   : group_id,
+                 ChangedGroupName : ChangedGroupName,
+              },  
+
+			success: function (response){
+
+
+				if(response == 'success')
+				{
+					$('#ChangeGroupName').modal('hide');
+				    getgroups();
+				    $('.GroupTitleFirst').html(ChangedGroupName);
+				}
+
+			 }
+
+			});
+
+    });
 
        
      
