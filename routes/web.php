@@ -26,6 +26,12 @@ Route::post('/updateUserInfo','UserInfoUpdateController@updateUserInfo');
 //update user password
 
 Route::post('/updateUserpassword','UpdateUserpasswordController@updateUserPass');
+
+Route::get('/forgotpassword', function () {
+    return view('users.passwordForgot');
+});
+
+Route::post('/forgotpassword', 'UpdateUserpasswordController@forgotpassword');
 //check user to permision document
 
 Route::get('project/checkUser/{group_id}/{userEmail}','GroupsController@checkUser')->middleware('CheckUserForPermissionDoc');

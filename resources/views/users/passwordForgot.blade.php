@@ -32,14 +32,14 @@
           <div class="col-lg-4 mx-auto">
 
             <div class="auto-form-wrapper">
-                  <h3 class="wel">Welcome to</h3>
-         <h4 class="wel-text"> ProData Room</h4>
-              <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                  <h3 class="wel">Forgot passwprd</h3>
+         <h4 class="wel-text"> Please enter your email</h4>
+              <form class="form-horizontal" role="form" method="POST" action="{{url('/')}}/forgotpassword">
                 {{ csrf_field() }}
                 <div class="form-group  {{ $errors->has('project_name') ? ' has-error' : '' }}" >
                   <label class="label">email </label>
                   <div class="input-group">
-                    <input type="text"  name="email" class="form-control" placeholder="Email" required>
+                    <input type="text"  name="email" class="form-control" placeholder="Email">
                    
                     <div class="input-group-append">
                       <span class="input-group-text">
@@ -48,37 +48,13 @@
                     </div>
                   </div>
                 </div>
-                  @if ($errors->has('email'))
+                  @if (isset($message))
                         <span class="help-block">
-                          <strong>{{ $errors->first('email') }}</strong>
+                          <strong>{{ $message }}</strong>
                         </span>
                     @endif
                 <div class="form-group">
-                  <label class="label">Password</label>
-                  <div class="input-group">
-                    <input type="password" name="password" class="form-control" placeholder="*********" required>
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                        <i class="fa fa-key" aria-hidden="true"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
-                <div class="form-group">
-                  <input type="submit" value="login" class="btn btn-primary submit-btn btn-block">
-                </div>
-                <div class="form-group d-flex justify-content-between">
-                 
-                  <a href="{{url('/')}}/forgotpassword" class="text-small forgot-password text-black">Forgot Password</a>
-                </div> 
-                <div class="text-block text-center my-3">
-                  <span class="text-small font-weight-semibold">Not a member ?</span>
-                  <a href="{{url('/')}}/pricing" class="text-black text-small">Create new account</a>
+                  <input type="submit" value="submit" class="btn btn-primary submit-btn btn-block">
                 </div>
               </form>
             </div>
