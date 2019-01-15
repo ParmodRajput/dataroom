@@ -581,49 +581,22 @@ div#edit_ques_ans_setting { float:left; width:100%; margin-bottom:10px;}
 
 #directory_current input.group_rename_for {  float:left;  width:100%;}
 
-.filteredTextContent {
-    float: left;
-    width: auto;
-    padding: 3px 8px;
-    background: #ECECEC;
-    border: 1px solid #dfdfdf;
-    border-radius: 3px;
-    margin-bottom: 8px;
-}
+.filteredTextContent { float: left; width: auto; padding: 3px 8px; background: #ECECEC;
+    border: 1px solid #dfdfdf; border-radius: 3px; margin-bottom: 8px;}
 
-.filteredTextContent .text_filter {
-    float: left;
-    margin-right: 5px;
-        font-size: 12px;
-    line-height: 25px;
-}
+.filteredTextContent .text_filter { float:left; margin-right:5px; font-size:12px; line-height:25px;}
+.filteredTextContent span.icon_close_filter { font-size: 12px; font-weight: 200;  cursor: pointer;}
 
-.filteredTextContent span.icon_close_filter {
-    font-size: 12px;
-    font-weight: 200;
-    cursor: pointer;
-}
+div#collab_btn { float: left; width: 100%;}
 
-div#collab_btn {
-    float: left;
-    width: 100%;
-}
-
-div#collab_btn .btn {
-    background:#e0e0e0;
-    border: 1px solid #dfdfdf;
-    color: #333;
-}
-
-
-div#collab_btn .btn:hover {
-    background:#ececec;
-    border: 1px solid #dfdfdf;
-    color: #333;
-}
+div#collab_btn .btn { background:#e0e0e0; border: 1px solid #dfdfdf; color: #333;}
+div#collab_btn .btn:hover { background:#ececec; border: 1px solid #dfdfdf; color: #333;}
 
 .InviteUsers img { margin-right:5px;}
 .create_new_group img { margin-right: 5px;}
+
+button.close_permission_modal { background:#333; border:0px; width: 30px; height: 30px;
+ border-radius: 30px; color: #fff; font-size: 20px; line-height: 30px;}
 
 
 @media only screen and (max-width:1230px) {
