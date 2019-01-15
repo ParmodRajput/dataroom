@@ -1109,7 +1109,7 @@ $(document).ready(function(){
               success: function (response) { 
        
                    GetDocumentInfoByResponse(response,document_index);
-                   $('.ui-droppable').droppable("disable");
+                   $('.notMoveInDiv').droppable("disable");
 
                  }//success
         });//ajax
@@ -1398,6 +1398,7 @@ $(document).ready(function(){
                           $('#genrate_folder').modal('hide'); 
                           $('.choose_upload_document').removeClass("beat");
                           $(".table_section").find(".index-drag").addClass("draggable");
+
                           $(".draggable").draggable({ helper : "clone"});
 
                           $(".table_section").find(".index-drop").addClass("droppable");
@@ -1405,19 +1406,17 @@ $(document).ready(function(){
                               // drag and move document 
                               $(".droppable").droppable({
 
-
-                                    
                                   drop: function( event, ui ) {
 
                                          var movedInFolder= $( this ).find('a').data('value');
+                                       
+                                         var token =$('#csrf-token').val();
+
                                          $(ui.draggable).css('display','none');
                                          var moveFile = $(ui.draggable).find('a').data('value');
                                          var directoryPath = $('#current_directory_project').val();
                                          var projects_id = $('.directory_location #project_id_doc').val();
-                                         
-                                     alert(moveFile);
-
-
+   
                                          $.ajax({
                                              type:"POST",
                                              url:"{{ Url('/') }}/move_documents",
@@ -1436,7 +1435,8 @@ $(document).ready(function(){
                                                 var error_massage = err.message;
 
                                                 alert(error_massage);
-                                                data_display(token,directoryPath);
+
+                                                $('.doc_index_list [data-value = "'+movedInFolder+'"]').click();
 
                                               },
 
@@ -3041,7 +3041,7 @@ $(document).on('click','.note1_doc_delete', function(){
    }else{
          
          $('.move_last_folder').addClass('hidden');
-         $('.ui-droppable').addClass('hidden');
+         $('.notMoveInDiv').addClass('hidden');
 
          var project_id = $('.projects_id').val();
          var document_index = $('.document_indexing_count').val();
@@ -3071,11 +3071,13 @@ $(document).on('click','.note1_doc_delete', function(){
  });
 
 $(document).on('click','.fav_filter',function(){
-
+  
    var token = $('#csrf-token').val();  
    var project_id = $('.projects_id').val();
    var document_index = $('.document_indexing_count').val();
    var directory_url = $('#current_directory').val();
+
+   $(this).addClass('search_fav_col');
 
    $.ajax({
               type : "POST",
@@ -3089,7 +3091,7 @@ $(document).on('click','.fav_filter',function(){
 
                     $('.filteredTextContent').removeClass('hidden');
                     $('.move_last_folder').addClass('hidden');
-                    $('.ui-droppable').addClass('hidden');
+                    $('.notMoveInDiv').addClass('hidden');
                     $('.text_filter').html('Favorite');
                     
                     GetDocumentInfoByResponse(response,document_index);
@@ -3110,9 +3112,10 @@ $(document).on('click','.icon_close_filter',function(){
   $('#search_doc_content').val('');
   var directory_url = $('#current_directory').val();
 
+  $(this).removeClass('search_fav_col');
   $('.filteredTextContent').addClass('hidden');
   $('.move_last_folder').removeClass('hidden');
-  $('.ui-droppable').removeClass('hidden');
+  $('.notMoveInDiv').removeClass('hidden');
 
   data_display(token,directory_url);
 

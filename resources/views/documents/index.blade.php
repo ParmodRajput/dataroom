@@ -232,7 +232,7 @@
                     </div>           
                     <div id="document_index_content" >
                              <div class="drop_box_document">
-                              <div class="document_index index-drop droppable ui-droppable">
+                              <div class="document_index index-drop droppable ui-droppable notMoveInDiv">
                                 <div class="doc_index_list">
                                   <h4> 
                                     <div class="upone" onclick="upone_folder();">
