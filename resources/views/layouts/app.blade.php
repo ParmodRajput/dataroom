@@ -956,6 +956,7 @@ $(document).ready(function(){
                                var moveFile = $(ui.draggable).find('a').data('value');
                                var directoryPath = $('#current_directory_project').val();
                                var projects_id = $('.directory_location #project_id_doc').val();
+
                                //alert(moveFile);
                                $.ajax({
                                    type:"POST",
@@ -1403,15 +1404,20 @@ $(document).ready(function(){
 
                               // drag and move document 
                               $(".droppable").droppable({
+
+
                                     
                                   drop: function( event, ui ) {
-                                        
+
                                          var movedInFolder= $( this ).find('a').data('value');
                                          $(ui.draggable).css('display','none');
                                          var moveFile = $(ui.draggable).find('a').data('value');
                                          var directoryPath = $('#current_directory_project').val();
                                          var projects_id = $('.directory_location #project_id_doc').val();
-                                         //alert(moveFile);
+                                         
+                                     alert(moveFile);
+
+
                                          $.ajax({
                                              type:"POST",
                                              url:"{{ Url('/') }}/move_documents",
