@@ -622,6 +622,9 @@ div#collab_btn .btn:hover {
     color: #333;
 }
 
+.InviteUsers img { margin-right:5px;}
+.create_new_group img { margin-right: 5px;}
+
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -1270,18 +1273,18 @@ span.document_name { cursor: pointer;}
 .input_pannel select { float: left; width: 50%; padding: 12px;border: 1px solid #dfdfdf;}
 .modal-dialog.create_user_new_group { max-width: 1000px!important; margin: 0px auto; top: 25px;}
 .padding_top_users{ padding-top: 80px;}
-.input_pannel_sec input { float: left; width: 50%; padding: 20px; border: 1px solid #dfdfdf;}
-.input_pannel_sec label { float: left; width: 45%; padding-left: 15px; font-size: 13px;}
-<<<<<<< HEAD
+.input_pannel_sec input { float: left; width: 50%; padding: 20px; margin:10px 0;  border: 1px solid #dfdfdf;}
+.input_pannel_sec label { float: left; width: 45%; padding: 10px; font-size: 13px;}
+
 .input_pannel_sec { float: left; width: 100%; margin: 0 0 15px 0; margin-top: 10px;}
 .add-new{ background-color: #edfeff;}
-=======
+
 .input_pannel_sec { float: left; width: 100%; margin: 0 0 15px 0;}
 .add-new{ background-color:transparent; border:1px dashed #18cad7;}
 
 .content-wrapper.all-projects .content-block:nth-child(1) { border: none;}
 
->>>>>>> a572e10f1cc0230580ab2fb152ee7ad4f9ac46a5
+
 .modal-dialog.create_user_new_group .modal-header h3 { text-align: center; float: left; width: 100%;}
 .modal-dialog.invite_new_user_block { max-width: 1000px!important;}
 .invite_input .bootstrap-tagsinput { float: left; width: 100%; border-radius: 0px; padding: 10px;}
