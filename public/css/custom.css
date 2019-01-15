@@ -391,11 +391,13 @@ input.send_question {
 }
 button.in_progress_ques {
     float: right;
-    border: 1px solid #000;
-    background: #000;
-    color: #fff;
+    border: 1px solid #c7ba9c;
+    background: #e1d8c3;
+    color: #6e5f3c;
     margin-top: 10px;
 }
+
+.question_containor_fir p.ques_subject { color:#308ee0;}
 
 .modal-dialog.create_question {
     max-width: 1200px;
