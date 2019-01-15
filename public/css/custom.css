@@ -54,15 +54,18 @@ li.nav-item.dropdown.d-none.d-xl-inline-block { position: relative;}
 .dropdown-menu.list-iteam.show { position: absolute;}
 
 .navbar-nav .dropdown-menu .list-iteam{ position:absolute!important; padding:10px;}
-.dropdown-menu.list-iteam { position: absolute!important;}
+.dropdown-menu.list-iteam { position: absolute!important; top:39px;}
 
 .upone { float: left; width: 200px; padding: 5px 0;}
 .upone i { float:left; width:25px; margin-right:10px; font-size:25px; cursor:pointer;}
 .dropdown-menu.list-iteam ul { list-style: none;  display: inline-block;padding: 0px;}
 .dropdown-menu.list-iteam ul li{ padding:3px 0;}
 
-form#logout-form input[type="submit"] { background: #333; width: 100%; float: left; color: #fff;  border: none;}
-form#logout-form input[type="submit"]:hover{ background:#18cad7;}
+.dropdown-menu.list-iteam ul li:hover { background: #eaeaea;}
+
+form#logout-form input[type="submit"] { background:transparent; width: 100%; float: left; color: #000;  border:none;
+     border-top: 2px solid #dfdfdf;}
+form#logout-form input[type="submit"]:hover{/* background:#18cad7;*/}
 .document_index { width: 420px; border: 0.5 px solid gray; border-color: red; border: 0.5px solid gray;
   margin-top: 0px;}
 .document_index { border: none; float: left; width:100%; border-bottom: 1px solid #dfdfdf;  background: #fff;
@@ -600,6 +603,10 @@ div#collab_btn .btn:hover { background:#ececec; border: 1px solid #dfdfdf; color
 button.close_permission_modal { background:#333; border:0px; width: 30px; height: 30px;
  border-radius: 30px; color: #fff; font-size: 20px; line-height: 30px;}
 
+.create_folder h4.modal-title { text-align: center; float: left;  width: 100%!important;
+  padding: 0px!important;}
+
+.create_folder span.select2.select2-container.select2-container--default { width: 100%!important;}
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -2189,14 +2196,9 @@ p.subject_ques {
         .section a.invite{ padding:10px 15px; color:#fff; text-decoration: none; font-size:13px; background:#333;
 }
 
-#genrate_question .modal-title {
-    width: 30%;
-}
+#genrate_question .modal-title { width: 30%;}
 
-#genrate_question .related_question_by {
-   
-    margin-left: 40%;
-}
+#genrate_question .related_question_by { margin-left: 40%;  position: absolute;}
 
 /*Report page*/
 
