@@ -162,9 +162,11 @@ a.nav-link b{/* float:left; width:100%;*/}
  border-bottom: 1px solid #eaeaea;}
 
 .drop-menu ul li a { font-size: 15px;  color:#504c4d; padding: 5px 10px; float: left; width: 100%;
-    text-decoration:none;}
+    text-decoration:none; background:#f2f2f2;}
 
-.drop-menu ul li a:hover { color:#504c4d; background:#f2f2f2;} 
+.drop-menu ul li a i { margin-right: 10px;}    
+
+.drop-menu ul li a:hover { color:#504c4d; background:#fff;} 
 
 .drop-menu ul li:last-child { border-bottom:none; } 
 .right_click.drop-holder:before {    position: absolute; left: -12px; border-right: 8px solid #504c4d;
@@ -240,17 +242,17 @@ li.ng-scope.paste { display: none;}
 
 .rightClickPopUpWithOutValue{display:none;}
 
-.rightClickPopUpWithOutValue { position: absolute; background: #fff!important; width: 300px;
-    z-index:1100; border: 1px solid #18cad7; padding: 10px; box-shadow: 0 0 3px #dfdfdf;}
+.rightClickPopUpWithOutValue { position: absolute; background: #f2f2f2!important; width: 300px;
+    z-index:1100; border: 1px solid #d0d0d0; padding:0px; box-shadow: 0 0 3px #dfdfdf;}
 
 ul.context-menu_list_document { margin: 0px; padding: 0px;}
-ul.context-menu_list_document li { float: left; width: 100%; border-bottom: 1px solid #18cad7;
-    padding:8px; list-style: none; display: inline-block; color:#18cad7;}
-ul.context-menu_list_document li a {color:#18cad7; text-decoration:none;}
-ul.context-menu_list_document li:hover{background:#18cad7;}
-ul.context-menu_list_document li:hover a{ color:#fff;}
+ul.context-menu_list_document li { float: left; width: 100%; border-bottom: 1px solid #eaeaea;
+    padding:8px; list-style: none; display: inline-block; color:#504c4d;}
+ul.context-menu_list_document li a {color:#504c4d; text-decoration:none;}
+ul.context-menu_list_document li:hover{background:#fff;}
+ul.context-menu_list_document li:hover a{ color:#504c4d;}
 
-.choose_upload_document { position: relative; border: 1px solid #18cad7;  text-align: center;
+.choose_upload_document { position: relative; border: 1px solid #ul.context-menu_list_document li;  text-align: center;
     font-size: 19px;  padding: 0px;  border-radius: 5px; cursor: pointer;  color: #18cad7;
     width: 300px;  float: left; height: 300px; border-radius: 300px; 
     top: 30px;  left: 220px;transition-duration: 1.2s;
@@ -620,8 +622,7 @@ span.edit_role:hover {
 }
 
 .create_user_new_group .modal-header h3 {
-    float: left;
-    width: 100%;
+    float: left;    width: 100%;
     text-align: center;
     font-size: 20px;
     margin: 0px;
@@ -678,6 +679,46 @@ div#edit_ques_ans_setting {
 #directory_current input.group_rename_for {
     float: left;
     width: 100%;
+}
+
+.filteredTextContent {
+    float: left;
+    width: auto;
+    padding: 3px 8px;
+    background: #ECECEC;
+    border: 1px solid #dfdfdf;
+    border-radius: 3px;
+    margin-bottom: 8px;
+}
+
+.filteredTextContent .text_filter {
+    float: left;
+    margin-right: 5px;
+    font-size: 15px;
+}
+
+.filteredTextContent span.icon_close_filter {
+    font-size: 12px;
+    font-weight: 200;
+    cursor: pointer;
+}
+
+div#collab_btn {
+    float: left;
+    width: 100%;
+}
+
+div#collab_btn .btn {
+    background:#e0e0e0;
+    border: 1px solid #dfdfdf;
+    color: #333;
+}
+
+
+div#collab_btn .btn:hover {
+    background:#e0e0e0;
+    border: 1px solid #dfdfdf;
+    color: #333;
 }
 
 
