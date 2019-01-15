@@ -151,23 +151,24 @@ a.nav-link b{/* float:left; width:100%;*/}
 
 .drop_box_document { float:left; width:100%; position: relative;}
 .right_click.drop-holder { position: absolute; background: #fff!important;
-    width: 300px; z-index:1100; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
+    width: 300px; z-index:1100;     border: 1px solid #d0d0d0;
+    padding: 0px;     box-shadow: 0 0 3px #dfdfdf;}
 
 .drop-menu { float: left; width: 100%;}
 
 .drop-menu ul { margin: 0px;  padding: 0px;}
 
 .drop-menu ul li { float:left; width: 100%; display: block; list-style: none; 
- border-bottom: 1px solid #18cad7;}
+ border-bottom: 1px solid #eaeaea;}
 
-.drop-menu ul li a { font-size: 15px;  color:#18bac6; padding: 5px 10px; float: left; width: 100%;
+.drop-menu ul li a { font-size: 15px;  color:#504c4d; padding: 5px 10px; float: left; width: 100%;
     text-decoration:none;}
 
-.drop-menu ul li a:hover { color:#fff; background:#18bac6;} 
+.drop-menu ul li a:hover { color:#504c4d; background:#f2f2f2;} 
 
 .drop-menu ul li:last-child { border-bottom:none; } 
-.right_click.drop-holder:before { position: absolute; left: -16px; border-right: 15px solid #18cad7;
-    border-top: 15px solid transparent; border-bottom: 15px solid transparent; content: ""; top: 56px;}
+.right_click.drop-holder:before {    position: absolute; left: -12px; border-right: 8px solid #504c4d;
+    border-top: 8px solid transparent; border-bottom: 8px solid transparent;  content: ""; top: 56px;}
 ul.folders li {
     list-style: none;
 }
@@ -529,6 +530,155 @@ form#AllUploadFiles {
 
 span.index-and-name { font-size: 14px; text-transform: capitalize;  margin-left:5px;
     font-weight: 500;}
+.list_group_user .GroupTitle {
+    float: left;
+    width: 100%;
+}
+
+.edit_group_name {
+    float: left;
+    font-size: 13px;
+}
+
+.edit_group_name i {
+    margin-right: 5px;
+}
+
+.group_user_role {
+    float: left;
+    width: 100%;
+    margin: 15px 0 0 0;
+}
+
+span.edit_role {
+    background: #eaeaea!;
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+    margin-bottom: 10px;
+    float: right;
+    font-size: 13px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+span.edit_role:hover {
+    background: #e0e0e0!important;
+    border: 1px solid #dfdfdf!important;
+
+}
+
+.group_collaboration_setting{
+ float: left;
+    width: 100%;
+    margin: 15px 0 0 0;
+
+}
+
+
+
+.group_security_setting{
+    float: left;
+    width: 100%;
+    margin: 15px 0 0 0;
+}
+
+.group_qa_setting{
+   float: left;
+    width: 100%;
+    margin: 15px 0 0 0;
+
+}
+
+
+.edit_collab_setting{ background: #eaeaea!;
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+    margin-bottom: 10px;
+    float: right;
+    font-size: 13px;
+    border-radius: 3px;}
+
+.edit_collab_setting:hover {
+    background: #e0e0e0!important;
+    border: 1px solid #dfdfdf!important;
+
+}
+
+.edit_ques_ans{ background: #eaeaea!;
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+    margin-bottom: 10px;
+    float: right;
+    font-size: 13px;
+    border-radius: 3px;}
+
+.edit_ques_ans:hover {
+    background: #e0e0e0!important;
+    border: 1px solid #dfdfdf!important;
+
+}
+
+.create_user_new_group .modal-header h3 {
+    float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.updated_group_collab {
+    float: left;
+    width: 100%;
+    margin:20px 0;
+}
+
+.updated_group_collab select {
+    float: left;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #dfdfdf;
+    font-size: 13px;
+}
+
+.update_question_change .radio_text {
+    float: left;
+    width: 100%;
+}
+
+.update_question_change .radio_btns input.validOnDateChangeSec {
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+}
+
+.radio_pannel_setting_change {
+    float: left;
+    width: 100%;
+}
+
+div#change_security_btn {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+div#edit_ques_ans_setting {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.edit_user_role_setting {
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#directory_current input.group_rename_for {
+    float: left;
+    width: 100%;
+}
 
 
 @media only screen and (max-width:1230px) {
@@ -2344,11 +2494,7 @@ button.waiting_reply {
     padding: 20px 25px 10px;
 }
 
-.GroupTitleFirst {
-   
-    width: 84%;
-    float: left;
-    
+.GroupTitleFirst { width: 84%; float: left;  color: #18cad7;    
 }
 
 .GroupTitle{
@@ -2357,11 +2503,13 @@ button.waiting_reply {
 
 .right_click.drop-holder.arrow:before {
     position: absolute;
-    left: -16px;
-    border-right: 15px solid #18cad7;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
+    left: -12px;
+    border-right: 8px solid #504c4d;;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
     content: "";
     top: 307px!important;
 }
+
+
 
