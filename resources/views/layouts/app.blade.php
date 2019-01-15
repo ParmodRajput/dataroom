@@ -1492,6 +1492,8 @@ $(document).ready(function(){
 
           var value = $(this).find('a').data('value'); 
 
+          $('.checkToActionPopValue').val(value);
+
           var file_id = $(this).find('input:checkbox').data('doc_id');
 
           var project_id  = $('.directory_location #project_id_doc').val();
@@ -3120,6 +3122,19 @@ $(document).on('click','.icon_close_filter',function(){
   data_display(token,directory_url);
 
 });
+
+
+$(document).on('click','.note_create_doc',function(){
+
+
+ var getNoteTo =  $('.checkToActionPopValue').val(); 
+
+ $('[data-value = "'+getNoteTo+'"]').click();
+
+});
+
+
+
 
 </script>
 

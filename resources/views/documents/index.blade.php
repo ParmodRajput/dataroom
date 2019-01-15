@@ -27,6 +27,7 @@
  <!--  rigth click open the option popup for more action of document. -->
 
         <div class='right_click drop-holder'>
+          <input type="hidden" class="checkToActionPopValue">
           <div class='drop-menu'>
             <ul  class='context-menu_list'>
               <li class='ng-scope' ><a href='#'> <i>Open in new browser tab</a>
@@ -34,7 +35,7 @@
               <li class='ng-scope view_doc_file'>
                 <a href='javascript:void(0)' target="_blank"></i><i class='fas fa-eye'></i> view</a>
               </li> 
-               <li   class='ng-scope'>
+               <li   class='ng-scope note_create_doc'>
                 <a href='javascript:void(0)'></i><i class="fa fa-thumb-tack"></i> Add Note</a>
               </li>
 

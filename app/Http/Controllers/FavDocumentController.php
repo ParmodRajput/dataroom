@@ -25,6 +25,7 @@ class FavDocumentController extends Controller
          
 
          $DocumentID =  $getDocumentID->id;
+         $document_path = $getDocumentID->path;
 
          $timestamp = time();
 
@@ -35,8 +36,10 @@ class FavDocumentController extends Controller
 
          	 if(empty($get))
          	 {
-         	 	 $fav = new FavDocument();
+
+         	  $fav = new FavDocument();
 	           $fav->document_id = $DocumentID;
+               $fav->document_path = $document_path;
 	           $fav->user_id = $user_id ;
 	           $fav->project_id = $projects_id;
                $fav->directory_url = $directory_url;
