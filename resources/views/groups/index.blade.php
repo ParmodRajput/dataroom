@@ -129,9 +129,9 @@
 					   <span class="edit_collab_setting"><i class="fa fa-pencil"></i> edit
 	    		       </span>
 	    		       <div class="hidden" style="margin: 10px 10px 10px 0px;" id="collab_btn">
-	    		       <span class="btn btn-danger apply_collab_setting"> apply
+	    		       <span class="bapply_collab_setting"> apply
 	    		       </span>
-    		            <span class="btn btn-primary cancle_edit_collab_setting"> Cancle
+    		            <span class="cancle_edit_collab_setting"> Cancle
     		            </span>	 
     		            </div>   		       
     		        </div>
