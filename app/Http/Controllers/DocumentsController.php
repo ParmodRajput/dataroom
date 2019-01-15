@@ -577,7 +577,7 @@ public function showDocument(Request $request){
 
                  //get the all fav document in this directory
          
-                $getFavFolder = FavDocument::where('document_id',$getDocumentId)->where('user_id', $user_id)->pluck('document_id');
+                $getFavFolder = FavDocument::where('document_path',$path)->where('user_id', $user_id)->pluck('id');
 
                 // $getFavFolder = $getFavFolder[0];
 
@@ -641,7 +641,7 @@ public function showDocument(Request $request){
 
                 //get the all fav document in this directory
          
-                $getFavFile = FavDocument::where('document_id',$getFileId)->where('user_id', $user_id)->pluck('document_id'); 
+                $getFavFile = FavDocument::where('document_path',$path)->where('user_id', $user_id)->pluck('document_id'); 
 
                 $FileNote = Note::where('document_id',$getFileId)->where('user_id',$user_id)->pluck('id');
 
@@ -715,10 +715,8 @@ public function deleteDocument(Request $request)
 
  foreach($DeletePath as $DeletePathOne)
  {
-    
 
     $path =  storage_path()."/app/".$DeletePathOne;
-
     $getProjectPath = str_replace("public/documents/","",$DeletePathOne);
     $getFileName = explode('/',$getProjectPath);
     $firstPara = $getFileName[0];
@@ -731,6 +729,12 @@ public function deleteDocument(Request $request)
           $timestamp = time();
 
           $getDocInFolder = document::where('path','LIKE',"%{$DeletePathOne}%")->update(['deleted_at' => $timestamp,'restored_at'=>'0' ,'deleted_by'=>'1']);
+
+          // $getDocumentIdByFav = document::where('path',$DeletePathOne)->first();
+
+          // $DeletedDocId = $getDocumentIdByFav->id;
+
+          // FavDocument::where('document_id',$DeletedDocId)->delete(); 
 
           //$status = Storage::deleteDirectory($DeletePathOne);
           $recycleBinPath = "public/documents/".$firstPara.'/'.$secondPara."/RecycleBin/";
@@ -788,6 +792,12 @@ public function deleteDocument(Request $request)
 
           //$delete_document = document::where('path',$DeletePathOne)->delete();
            document::where('path',$DeletePathOne)->delete();
+
+          // $getDocumentIdByFav = document::where('path',$DeletePathOne)->first();
+
+          // $DeletedDocId = $getDocumentIdByFav->id;
+
+          // FavDocument::where('document_id',$DeletedDocId)->delete(); 
 
           // delete file name with time combination 
           $storeDeleteDocName = $timestamp.'.'.$docName;
@@ -1759,6 +1769,21 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
        $getPath = Document::where('project_id',$project_id)->where('id',$file_id)->first();
 
+       $userInGroup = getAuthgroupId($project_id); 
+       $userRole = checkCurrentGroupUser($project_id);
+
+       if($userRole == 'Administrator')
+       {
+          $DocPermission = '';
+
+       }else{
+
+         $getDocPermission = Permission::where('project_id',$project_id)->where('group_id',$userInGroup)->orWhere('document_id',$file_id)->first();
+ 
+         $DocPermission = $getDocPermission->permission_id;
+
+       }
+
        $doc_path = Storage::get($getPath->path);
 
        $filePath =  $getPath->path;
@@ -1776,7 +1801,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
        $getExtension = explode('.', $getdocumementExtension);
        
        $Ext      = end($getExtension);
-
 
        // docx file
 
@@ -1799,7 +1823,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
           $report->save();
 
 
-       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id'));
+       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id','DocPermission'));
 
     }
 
@@ -1874,7 +1898,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                 $Doc_path = $FindedDoc->path;
 
                       // get the all document indexing// 
-                      
 
                       $getIndexOfFolder = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '1')->where('deleted_by', '0')->get();
 
@@ -2005,7 +2028,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
       }
 
-      public function SearchFavDocument(Request $request){
+     public function SearchFavDocument(Request $request){
 
               $projects_id    = $request->project_id;
               $auth_email = Auth::user()->email;
@@ -2020,13 +2043,9 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
             
                 foreach ($getFavDocOfProject as $getFavDocOfProject) {
                       
-                        $doc_id = $getFavDocOfProject->document_id;
-                        $getDocPath = Document::where('id',$doc_id)->first();
-
-                        $Doc_path = $getDocPath->path;
+                        $Doc_path = $getFavDocOfProject->document_path;
 
                         // get the all document indexing//
-
 
                         $getIndexOfFolder = Document::where('project_id', $projects_id)->where('path', $Doc_path)->where('document_status', '1')->where('deleted_by', '0')->get();
 
@@ -2040,7 +2059,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                                  //get the all fav document in this directory
                          
-                                $getFavFolder = FavDocument::where('document_id',$getDocumentId)->where('user_id', $user_id)->pluck('document_id');
+                                $getFavFolder = FavDocument::where('document_path',$path)->where('user_id', $user_id)->pluck('document_id');
 
                                 // $getFavFolder = $getFavFolder[0];
 
@@ -2106,7 +2125,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                                 //get the all fav document in this directory
                          
-                                $getFavFile = FavDocument::where('document_id',$getFileId)->where('user_id', $user_id)->pluck('document_id'); 
+                                $getFavFile = FavDocument::where('document_path',$path)->where('user_id', $user_id)->pluck('document_id'); 
 
                                 $FileNote = Note::where('document_id',$getFileId)->where('user_id',$user_id)->pluck('id');
 

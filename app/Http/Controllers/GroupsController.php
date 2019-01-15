@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Group;
 use App\User;
@@ -771,6 +770,44 @@ public function getPermissionDocument($project_id)
 
     }
 
+    public function ChangeGroupName(Request $request){
+
+      $project_id = $request->project_id;
+      $GroupId = $request->group_id;
+      $changedName = $request->ChangedGroupName;
+      $authId = Auth::user()->id;
+
+      Group::where('id',$GroupId)->update(['group_name'=>$changedName,'updated_by'=>$authId]);
+
+      return "success";
+      
+    }
+
+    public function ChangeGroupRole(Request $request){
+
+      $project_id = $request->project_id;
+      $ChangedRole = $request->ChangedRole;
+      $GroupId = $request->group_id;
+
+      if($ChangedRole == '1')
+      {
+
+
+          Group::where('id',$GroupId)->update(['group_for'=>'user','group_user_type'=>'Collaboration_users']);
+
+      }elseif ($ChangedRole == '2'){
+
+        Group::where('id',$GroupId)->update(['group_for'=>'user','group_user_type'=>'Individual_users']);
+        
+      }else{
+
+         Group::where('id',$GroupId)->update(['group_for'=>'Administrator','group_user_type'=>'Administrator','access_limit'=>'1','active_date'=>null,'QA_access_limit'=>'0','collaboration_with'=>'all_group']);
+      }
+     
+     return "success";
+
+    }
+    
       public function ChangeCollaborationSetting(Request $request){
 
           $project_id = $request->project_id;
@@ -881,5 +918,6 @@ public function getPermissionDocument($project_id)
          return "success";
 
     }
+
 
 }

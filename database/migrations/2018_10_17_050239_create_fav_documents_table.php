@@ -17,6 +17,7 @@ class CreateFavDocumentsTable extends Migration
 
             $table->increments('id');
             $table->string('document_id');
+            $table->string('document_path');
             $table->string('user_id');
             $table->string('project_id');
             $table->string('directory_url');

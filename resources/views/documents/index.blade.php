@@ -27,18 +27,20 @@
  <!--  rigth click open the option popup for more action of document. -->
 
         <div class='right_click drop-holder'>
+          <input type="hidden" class="checkToActionPopValue">
           <div class='drop-menu'>
             <ul  class='context-menu_list'>
-              <li class='ng-scope' ><a href='#'> <i>Open in new browser tab</a>
+              <li class='ng-scope new_tab'><a href='{{Url("/")}}/project/{{$project_id}}/documents' target="_blank"> <i>Open in new browser tab</a>
               </li>
+
               <li class='ng-scope view_doc_file'>
                 <a href='javascript:void(0)' target="_blank"></i><i class='fas fa-eye'></i> view</a>
               </li> 
-               <li   class='ng-scope'>
-                <a href='javascript:void(0)'></i><i class="fa fa-thumb-tack"></i> Add Note</a>
+               <li   class='ng-scope history_of_action'>
+                <a href='{{ Url("/")}}/project/{{$project_id}}/reports'></i><i class="fas fa-history"></i>History of Action</a>
               </li>
 
-               <li   class='ng-scope'>
+               <li   class='ng-scope ques_ans_docs'>
                 <a href='javascript:void(0)'></i><i class="fa fa-comment-o"></i> New Question</a>
               </li>
 
@@ -66,7 +68,7 @@
                   <a href='javascript:void(0)' class='extractDocument'></i> <i class="far fa-file-archive"></i> Extract here
                   </a>
                 </li> 
-              <li   class='ng-scope' >
+              <li class='ng-scope' >
                 <a href='javascript:void(0)' ></i><span class='delete_item'> <i class='fas fa-trash-alt'></i> Delete</span>
                 </a>
               </li>
@@ -78,9 +80,8 @@
 <div class="content-wrapper">
  <!-- Content Header (Page header) -->
   <div class="row document_content_index">
-
   <input type="hidden" class="single_select_doc" id="single_select_doc">
-  <div class="document_index_contentable col-md-9 ">
+  <div class="document_index_contentable col-md-9">
      <div class="menu_option_block">
    
     <section class="content-header">
@@ -232,7 +233,7 @@
                     </div>           
                     <div id="document_index_content" >
                              <div class="drop_box_document">
-                              <div class="document_index index-drop droppable ui-droppable">
+                              <div class="document_index index-drop droppable ui-droppable notMoveInDiv">
                                 <div class="doc_index_list">
                                   <h4> 
                                     <div class="upone" onclick="upone_folder();">

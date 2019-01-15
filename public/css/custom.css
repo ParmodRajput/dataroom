@@ -54,15 +54,18 @@ li.nav-item.dropdown.d-none.d-xl-inline-block { position: relative;}
 .dropdown-menu.list-iteam.show { position: absolute;}
 
 .navbar-nav .dropdown-menu .list-iteam{ position:absolute!important; padding:10px;}
-.dropdown-menu.list-iteam { position: absolute!important;}
+.dropdown-menu.list-iteam { position: absolute!important; top:39px;}
 
 .upone { float: left; width: 200px; padding: 5px 0;}
 .upone i { float:left; width:25px; margin-right:10px; font-size:25px; cursor:pointer;}
 .dropdown-menu.list-iteam ul { list-style: none;  display: inline-block;padding: 0px;}
 .dropdown-menu.list-iteam ul li{ padding:3px 0;}
 
-form#logout-form input[type="submit"] { background: #333; width: 100%; float: left; color: #fff;  border: none;}
-form#logout-form input[type="submit"]:hover{ background:#18cad7;}
+.dropdown-menu.list-iteam ul li:hover { background: #eaeaea;}
+
+form#logout-form input[type="submit"] { background:transparent; width: 100%; float: left; color: #000;  border:none;
+     border-top: 2px solid #dfdfdf;}
+form#logout-form input[type="submit"]:hover{/* background:#18cad7;*/}
 .document_index { width: 420px; border: 0.5 px solid gray; border-color: red; border: 0.5px solid gray;
   margin-top: 0px;}
 .document_index { border: none; float: left; width:100%; border-bottom: 1px solid #dfdfdf;  background: #fff;
@@ -151,23 +154,26 @@ a.nav-link b{/* float:left; width:100%;*/}
 
 .drop_box_document { float:left; width:100%; position: relative;}
 .right_click.drop-holder { position: absolute; background: #fff!important;
-    width: 300px; z-index:1100; border: 1px solid #18cad7; padding: 15px;  box-shadow: 0 0 3px #dfdfdf;}
+    width: 300px; z-index:1100;     border: 1px solid #d0d0d0;
+    padding: 0px;     box-shadow: 0 0 3px #dfdfdf;}
 
 .drop-menu { float: left; width: 100%;}
 
 .drop-menu ul { margin: 0px;  padding: 0px;}
 
 .drop-menu ul li { float:left; width: 100%; display: block; list-style: none; 
- border-bottom: 1px solid #18cad7;}
+ border-bottom: 1px solid #eaeaea;}
 
-.drop-menu ul li a { font-size: 15px;  color:#18bac6; padding: 5px 10px; float: left; width: 100%;
-    text-decoration:none;}
+.drop-menu ul li a { font-size: 15px;  color:#504c4d; padding: 5px 10px; float: left; width: 100%;
+    text-decoration:none; background:#f2f2f2;}
 
-.drop-menu ul li a:hover { color:#fff; background:#18bac6;} 
+.drop-menu ul li a i { margin-right: 10px;}    
+
+.drop-menu ul li a:hover { color:#504c4d; background:#fff;} 
 
 .drop-menu ul li:last-child { border-bottom:none; } 
-.right_click.drop-holder:before { position: absolute; left: -16px; border-right: 15px solid #18cad7;
-    border-top: 15px solid transparent; border-bottom: 15px solid transparent; content: ""; top: 56px;}
+.right_click.drop-holder:before {    position: absolute; left: -12px; border-right: 8px solid #504c4d;
+    border-top: 8px solid transparent; border-bottom: 8px solid transparent;  content: ""; top: 56px;}
 ul.folders li {
     list-style: none;
 }
@@ -239,17 +245,17 @@ li.ng-scope.paste { display: none;}
 
 .rightClickPopUpWithOutValue{display:none;}
 
-.rightClickPopUpWithOutValue { position: absolute; background: #fff!important; width: 300px;
-    z-index:1100; border: 1px solid #18cad7; padding: 10px; box-shadow: 0 0 3px #dfdfdf;}
+.rightClickPopUpWithOutValue { position: absolute; background: #f2f2f2!important; width: 300px;
+    z-index:1100; border: 1px solid #d0d0d0; padding:0px; box-shadow: 0 0 3px #dfdfdf;}
 
 ul.context-menu_list_document { margin: 0px; padding: 0px;}
-ul.context-menu_list_document li { float: left; width: 100%; border-bottom: 1px solid #18cad7;
-    padding:8px; list-style: none; display: inline-block; color:#18cad7;}
-ul.context-menu_list_document li a {color:#18cad7; text-decoration:none;}
-ul.context-menu_list_document li:hover{background:#18cad7;}
-ul.context-menu_list_document li:hover a{ color:#fff;}
+ul.context-menu_list_document li { float: left; width: 100%; border-bottom: 1px solid #eaeaea;
+    padding:8px; list-style: none; display: inline-block; color:#504c4d;}
+ul.context-menu_list_document li a {color:#504c4d; text-decoration:none;}
+ul.context-menu_list_document li:hover{background:#fff;}
+ul.context-menu_list_document li:hover a{ color:#504c4d;}
 
-.choose_upload_document { position: relative; border: 1px solid #18cad7;  text-align: center;
+.choose_upload_document { position: relative; border: 1px solid #1BCBD7;  text-align: center;
     font-size: 19px;  padding: 0px;  border-radius: 5px; cursor: pointer;  color: #18cad7;
     width: 300px;  float: left; height: 300px; border-radius: 300px; 
     top: 30px;  left: 220px;transition-duration: 1.2s;
@@ -388,11 +394,13 @@ input.send_question {
 }
 button.in_progress_ques {
     float: right;
-    border: 1px solid #000;
-    background: #000;
-    color: #fff;
+    border: 1px solid #c7ba9c;
+    background: #e1d8c3;
+    color: #6e5f3c;
     margin-top: 10px;
 }
+
+.question_containor_fir p.ques_subject { color:#308ee0;}
 
 .modal-dialog.create_question {
     max-width: 1200px;
@@ -527,9 +535,80 @@ form#AllUploadFiles {
 .question_containor_fir h5 {  font-size:14px; line-height:18px;}
 .question_block_first h4 { font-size: 14px;}
 
-span.index-and-name { font-size: 14px; text-transform: capitalize;  margin-left:5px;
-    font-weight: 500;}
+span.index-and-name { font-size:14px; text-transform:capitalize; margin-left:5px; font-weight:500;}
+.list_group_user .GroupTitle { float:left; width:100%;}
+.edit_group_name { float: left; font-size: 13px;}
+.edit_group_name i { margin-right: 5px;}
 
+.group_user_role { float: left; width: 100%; margin: 15px 0 0 0;}
+
+span.edit_role { background: #eaeaea; border: 1px solid #dfdfdf; padding: 5px; margin-bottom: 10px;
+    float: right; font-size: 13px; border-radius: 3px; cursor: pointer;}
+
+
+span.edit_role:hover { background: #e0e0e0!important; border: 1px solid #dfdfdf!important;}
+
+.group_collaboration_setting{ float:left; width:100%; margin:15px 0 0 0;}
+.group_security_setting{ float:left; width:100%;  margin:15px 0 0 0;}
+.group_qa_setting{ float: left; width: 100%; margin: 15px 0 0 0;}
+
+
+.edit_collab_setting{ background:#eaeaea; border: 1px solid #dfdfdf; padding: 5px; margin-bottom: 10px;
+    float:right; font-size:13px; border-radius: 3px;}
+
+.edit_collab_setting:hover { background: #e0e0e0!important; border: 1px solid #dfdfdf!important;}
+
+.edit_ques_ans{ background:#eaeaea; border: 1px solid #dfdfdf; padding: 5px; margin-bottom: 10px;
+    float: right; font-size:13px; border-radius:3px;}
+
+.edit_ques_ans:hover { background:#e0e0e0!important; border:1px solid #dfdfdf!important;}
+
+.create_user_new_group .modal-header h3 { float:left; width:100%; text-align:center;
+    font-size:20px; margin:0px; padding:0px;}
+
+.updated_group_collab { float: left; width: 100%; margin:20px 0;}
+
+.updated_group_collab select { float: left; width: 100%; padding: 8px; border: 1px solid #dfdfdf;
+    font-size: 13px;}
+
+.update_question_change .radio_text { float: left; width: 100%;}
+
+.update_question_change .radio_btns input.validOnDateChangeSec { border: 1px solid #dfdfdf;
+ padding: 5px;}
+
+.radio_pannel_setting_change { float:left; width:100%;}
+
+div#change_security_btn { float:left; width:100%; margin-bottom:15px;}
+
+div#edit_ques_ans_setting { float:left; width:100%; margin-bottom:10px;}
+
+.edit_user_role_setting { float:left; width:100%; margin-bottom:10px;}
+
+#directory_current input.group_rename_for {  float:left;  width:100%;}
+
+.filteredTextContent { float: left; width: auto; padding: 3px 8px; background: #ECECEC;
+    border: 1px solid #dfdfdf; border-radius: 3px; margin-bottom: 8px;}
+
+.filteredTextContent .text_filter { float:left; margin-right:5px; font-size:12px; line-height:25px;}
+.filteredTextContent span.icon_close_filter { font-size: 12px; font-weight: 200;  cursor: pointer;}
+
+div#collab_btn { float: left; width: 100%;}
+
+/*div#collab_btn .btn { background:#e0e0e0; border: 1px solid #dfdfdf; color: #333;}
+*/
+
+div#collab_btn .btn:hover { background:#ececec; border: 1px solid #dfdfdf; color: #333;}
+
+.InviteUsers img { margin-right:5px;}
+.create_new_group img { margin-right: 5px;}
+
+button.close_permission_modal { background:#333; border:0px; width: 30px; height: 30px;
+ border-radius: 30px; color: #fff; font-size: 20px; line-height: 30px;}
+
+.create_folder h4.modal-title { text-align: center; float: left;  width: 100%!important;
+  padding: 0px!important;}
+
+.create_folder span.select2.select2-container.select2-container--default { width: 100%!important;}
 
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
@@ -1178,18 +1257,18 @@ span.document_name { cursor: pointer;}
 .input_pannel select { float: left; width: 50%; padding: 12px;border: 1px solid #dfdfdf;}
 .modal-dialog.create_user_new_group { max-width: 1000px!important; margin: 0px auto; top: 25px;}
 .padding_top_users{ padding-top: 80px;}
-.input_pannel_sec input { float: left; width: 50%; padding: 20px; border: 1px solid #dfdfdf;}
-.input_pannel_sec label { float: left; width: 45%; padding-left: 15px; font-size: 13px;}
-<<<<<<< HEAD
+.input_pannel_sec input { float: left; width: 50%; padding: 20px; margin:10px 0;  border: 1px solid #dfdfdf;}
+.input_pannel_sec label { float: left; width: 45%; padding: 10px; font-size: 13px;}
+
 .input_pannel_sec { float: left; width: 100%; margin: 0 0 15px 0; margin-top: 10px;}
 .add-new{ background-color: #edfeff;}
-=======
+
 .input_pannel_sec { float: left; width: 100%; margin: 0 0 15px 0;}
 .add-new{ background-color:transparent; border:1px dashed #18cad7;}
 
 .content-wrapper.all-projects .content-block:nth-child(1) { border: none;}
 
->>>>>>> a572e10f1cc0230580ab2fb152ee7ad4f9ac46a5
+
 .modal-dialog.create_user_new_group .modal-header h3 { text-align: center; float: left; width: 100%;}
 .modal-dialog.invite_new_user_block { max-width: 1000px!important;}
 .invite_input .bootstrap-tagsinput { float: left; width: 100%; border-radius: 0px; padding: 10px;}
@@ -2120,14 +2199,9 @@ p.subject_ques {
         .section a.invite{ padding:10px 15px; color:#fff; text-decoration: none; font-size:13px; background:#333;
 }
 
-#genrate_question .modal-title {
-    width: 30%;
-}
+#genrate_question .modal-title { width: 30%;}
 
-#genrate_question .related_question_by {
-   
-    margin-left: 40%;
-}
+#genrate_question .related_question_by { margin-left: 40%;  position: absolute;}
 
 /*Report page*/
 
@@ -2345,11 +2419,7 @@ button.waiting_reply {
     padding: 20px 25px 10px;
 }
 
-.GroupTitleFirst {
-   
-    width: 84%;
-    float: left;
-    
+.GroupTitleFirst { width: 84%; float: left;  color: #18cad7;    
 }
 
 .GroupTitle{
@@ -2358,11 +2428,25 @@ button.waiting_reply {
 
 .right_click.drop-holder.arrow:before {
     position: absolute;
-    left: -16px;
-    border-right: 15px solid #18cad7;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
+    left: -12px;
+    border-right: 8px solid #504c4d;;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
     content: "";
     top: 307px!important;
 }
 
+.search_fav_col{
+    
+    color: orange;
+}
+
+.edit_security{
+        background: #eaeaea;
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+    margin-bottom: 10px;
+    float: right;
+    font-size: 13px;
+    border-radius: 3px;
+}

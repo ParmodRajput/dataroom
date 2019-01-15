@@ -956,6 +956,7 @@ $(document).ready(function(){
                                var moveFile = $(ui.draggable).find('a').data('value');
                                var directoryPath = $('#current_directory_project').val();
                                var projects_id = $('.directory_location #project_id_doc').val();
+
                                //alert(moveFile);
                                $.ajax({
                                    type:"POST",
@@ -1108,7 +1109,7 @@ $(document).ready(function(){
               success: function (response) { 
        
                    GetDocumentInfoByResponse(response,document_index);
-                   $('.ui-droppable').droppable("disable");
+                   $('.notMoveInDiv').droppable("disable");
 
                  }//success
         });//ajax
@@ -1239,7 +1240,7 @@ $(document).ready(function(){
                                          if(permission == '7')
                                          {
 
-                                          html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
+                                          html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
                                          }
                                          
                                           html+="</div></div></div>";
@@ -1380,7 +1381,7 @@ $(document).ready(function(){
                                        if(permission == '7')
                                        {
 
-                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
+                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
                                        }
                                        
                                         html+="</div></div></div>";
@@ -1397,21 +1398,25 @@ $(document).ready(function(){
                           $('#genrate_folder').modal('hide'); 
                           $('.choose_upload_document').removeClass("beat");
                           $(".table_section").find(".index-drag").addClass("draggable");
+
                           $(".draggable").draggable({ helper : "clone"});
 
                           $(".table_section").find(".index-drop").addClass("droppable");
 
                               // drag and move document 
                               $(".droppable").droppable({
-                                    
+
                                   drop: function( event, ui ) {
-                                        
+
                                          var movedInFolder= $( this ).find('a').data('value');
+                                       
+                                         var token =$('#csrf-token').val();
+
                                          $(ui.draggable).css('display','none');
                                          var moveFile = $(ui.draggable).find('a').data('value');
                                          var directoryPath = $('#current_directory_project').val();
                                          var projects_id = $('.directory_location #project_id_doc').val();
-                                         //alert(moveFile);
+   
                                          $.ajax({
                                              type:"POST",
                                              url:"{{ Url('/') }}/move_documents",
@@ -1430,7 +1435,8 @@ $(document).ready(function(){
                                                 var error_massage = err.message;
 
                                                 alert(error_massage);
-                                                data_display(token,directoryPath);
+
+                                                $('.doc_index_list [data-value = "'+movedInFolder+'"]').click();
 
                                               },
 
@@ -1458,11 +1464,19 @@ $(document).ready(function(){
 
           $('.rightClickPopUpWithOutValue').css("display","none");
 
+          var value = $(this).find('a').data('value'); 
+          var getfileAndFolder = value.split('/');
+          var fileAndFolder    = getfileAndFolder.pop();
+          var checkFileAndFolder = fileAndFolder.split('.');
+          var getZipFile         = checkFileAndFolder.pop();
+          var count = checkFileAndFolder.length;
+
+
           var rightClickPositionLeft = e.pageX;
 
           var rightClickPositionTop  = e.pageY-63;
 
-           var menuHeight=$('.right_click.drop-holder').height();
+          var menuHeight= $('.right_click.drop-holder').height();
           //alert(e.pageY);
 
           //var comformHeight = windowHeight-e.pageY;
@@ -1470,9 +1484,9 @@ $(document).ready(function(){
 
           if(e.pageY >= comformHeight+20) {
             
-           rightClickPositionTop  = e.pageY-320;
+          rightClickPositionTop  = e.pageY-320;
 
-           var arrow = e.pageY-25;
+          var arrow = e.pageY-25;
 
              $('.right_click.drop-holder').addClass("arrow");
 
@@ -1482,9 +1496,9 @@ $(document).ready(function(){
 
           }
 
-
-
-          var value = $(this).find('a').data('value'); 
+          $('.checkToActionPopValue').val(value);
+          $('.ques_ans_docs').data('value',value);
+          // $('.notes_docs').data('value',value);
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
 
@@ -1497,14 +1511,19 @@ $(document).ready(function(){
 
           $('.right_click.drop-holder').css({"display":"block","top":rightClickPositionTop,"left":rightClickPositionLeft});
 
-          $('.view_doc_file a').attr('href',"{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +file_id ,
+        
+          if(count == 0)
+          {
+             $('.view_doc_file').addClass('hidden');
+
+          }else{
+
+
+            $('.view_doc_file').removeClass('hidden');
+            $('.view_doc_file a').attr('href',"{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +file_id ,
           '_blank');
 
-          var getfileAndFolder = value.split('/');
-          var fileAndFolder    = getfileAndFolder.pop();
-          var checkFileAndFolder = fileAndFolder.split('.');
-          var getZipFile         = checkFileAndFolder.pop();
-          var count = checkFileAndFolder.length;
+          }
 
          $('#down-document').val(value);
          $('.copied_document').data('value',value);
@@ -1939,16 +1958,7 @@ $('#myModal').on('hidden.bs.modal', function () {
               
       }else if(numberOfChecked == 0)
         {
-             // $('.delete_items').addClass('hideDeleteBtn'); 
-             // $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
-             // var GetDocumentName = $('.project_name').val();
-             // var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
-             // $('.checked_doc_details').html(showDocWithDoc);
-             // $('.create_notes_get').addClass('hidden');
-             // $('.notes_aside_text1').addClass('hidden');
-             // $('.note1_doc_delete').addClass('hidden');
-             // $('.file_view_aside').addClass('hidden');
-             // $('.submit_note1_doc').addClass('hidden');
+             
 
              $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
@@ -2062,6 +2072,17 @@ $(document).on('click','.check-box-input-main',function(){
                               
                                data_display(token,directory_url);
                                $('input:checkbox').prop('checked', false);
+                               $('.delete_items').addClass('hideDeleteBtn'); 
+                 $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
+                 var GetDocumentName = $('#getProject_name').val();
+                 var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
+                 $('.checked_doc_details').html(showDocWithDoc);
+                 $('.create_notes_get').addClass('hidden');
+                 $('.notes_aside_text1').addClass('hidden');
+                 $('.note1_doc_delete').addClass('hidden');
+                 $('.file_view_aside').html('');
+                 $('.notes_aside_1').html('');
+                 $('.submit_note1_doc').addClass('hidden');
                              }
                      });
                   } 
@@ -2402,7 +2423,7 @@ $(document).on ('click','.btn_delete_doc_recycle',function(){
 
 $(document).on('click','.fav_docs',function(e){
 
-
+            
           e.preventDefault();
           var that =  $(this);
 
@@ -2432,6 +2453,7 @@ $(document).on('click','.fav_docs',function(e){
                                 that.removeClass('hidden_icon');
                                 that.css("color","red");
                                 that.css("visibility","visible");
+
                           }else{
                                                                 
                                that.css("color","#212529");
@@ -3019,7 +3041,6 @@ $(document).on('click','.note1_doc_delete', function(){
     $('#alert_users').hide();
  });
 
-
  $(document).on('click','#go_search_doc',function(){
 
    var token = $('#csrf-token').val();  
@@ -3033,7 +3054,7 @@ $(document).on('click','.note1_doc_delete', function(){
    }else{
          
          $('.move_last_folder').addClass('hidden');
-         $('.ui-droppable').addClass('hidden');
+         $('.notMoveInDiv').addClass('hidden');
 
          var project_id = $('.projects_id').val();
          var document_index = $('.document_indexing_count').val();
@@ -3063,11 +3084,13 @@ $(document).on('click','.note1_doc_delete', function(){
  });
 
 $(document).on('click','.fav_filter',function(){
-
+  
    var token = $('#csrf-token').val();  
    var project_id = $('.projects_id').val();
    var document_index = $('.document_indexing_count').val();
    var directory_url = $('#current_directory').val();
+
+   $(this).addClass('search_fav_col');
 
    $.ajax({
               type : "POST",
@@ -3081,7 +3104,7 @@ $(document).on('click','.fav_filter',function(){
 
                     $('.filteredTextContent').removeClass('hidden');
                     $('.move_last_folder').addClass('hidden');
-                    $('.ui-droppable').addClass('hidden');
+                    $('.notMoveInDiv').addClass('hidden');
                     $('.text_filter').html('Favorite');
                     
                     GetDocumentInfoByResponse(response,document_index);
@@ -3102,13 +3125,42 @@ $(document).on('click','.icon_close_filter',function(){
   $('#search_doc_content').val('');
   var directory_url = $('#current_directory').val();
 
+  $('.fav_filter').removeClass('search_fav_col');
+
+  $(this).removeClass('search_fav_col');
   $('.filteredTextContent').addClass('hidden');
   $('.move_last_folder').removeClass('hidden');
-  $('.ui-droppable').removeClass('hidden');
+  $('.notMoveInDiv').removeClass('hidden');
 
   data_display(token,directory_url);
 
 });
+
+
+$(document).on('click','.note_create_doc',function(){
+
+
+ var getNoteTo =  $('.checkToActionPopValue').val(); 
+
+ $('[data-value = "'+getNoteTo+'"]').click();
+
+});
+
+$(document).on('click','.question_create_doc',function(){
+
+ var getNoteTo =  $('.checkToActionPopValue').val(); 
+
+ $('[data-value = "'+getNoteTo+'"]').click();
+
+
+});
+
+$(document).on('click','.fence_view_doc_permis',function(){
+  
+  alert('dsd');
+
+});
+
 
 </script>
 
