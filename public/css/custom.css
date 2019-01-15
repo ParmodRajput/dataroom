@@ -54,15 +54,18 @@ li.nav-item.dropdown.d-none.d-xl-inline-block { position: relative;}
 .dropdown-menu.list-iteam.show { position: absolute;}
 
 .navbar-nav .dropdown-menu .list-iteam{ position:absolute!important; padding:10px;}
-.dropdown-menu.list-iteam { position: absolute!important;}
+.dropdown-menu.list-iteam { position: absolute!important; top:39px;}
 
 .upone { float: left; width: 200px; padding: 5px 0;}
 .upone i { float:left; width:25px; margin-right:10px; font-size:25px; cursor:pointer;}
 .dropdown-menu.list-iteam ul { list-style: none;  display: inline-block;padding: 0px;}
 .dropdown-menu.list-iteam ul li{ padding:3px 0;}
 
-form#logout-form input[type="submit"] { background: #333; width: 100%; float: left; color: #fff;  border: none;}
-form#logout-form input[type="submit"]:hover{ background:#18cad7;}
+.dropdown-menu.list-iteam ul li:hover { background: #eaeaea;}
+
+form#logout-form input[type="submit"] { background:transparent; width: 100%; float: left; color: #000;  border:none;
+     border-top: 2px solid #dfdfdf;}
+form#logout-form input[type="submit"]:hover{/* background:#18cad7;*/}
 .document_index { width: 420px; border: 0.5 px solid gray; border-color: red; border: 0.5px solid gray;
   margin-top: 0px;}
 .document_index { border: none; float: left; width:100%; border-bottom: 1px solid #dfdfdf;  background: #fff;
