@@ -1240,7 +1240,7 @@ $(document).ready(function(){
                                          if(permission == '7')
                                          {
 
-                                          html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
+                                          html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
                                          }
                                          
                                           html+="</div></div></div>";
@@ -1381,7 +1381,7 @@ $(document).ready(function(){
                                        if(permission == '7')
                                        {
 
-                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
+                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
                                        }
                                        
                                         html+="</div></div></div>";
@@ -1464,11 +1464,19 @@ $(document).ready(function(){
 
           $('.rightClickPopUpWithOutValue').css("display","none");
 
+          var value = $(this).find('a').data('value'); 
+          var getfileAndFolder = value.split('/');
+          var fileAndFolder    = getfileAndFolder.pop();
+          var checkFileAndFolder = fileAndFolder.split('.');
+          var getZipFile         = checkFileAndFolder.pop();
+          var count = checkFileAndFolder.length;
+
+
           var rightClickPositionLeft = e.pageX;
 
           var rightClickPositionTop  = e.pageY-63;
 
-           var menuHeight=$('.right_click.drop-holder').height();
+          var menuHeight= $('.right_click.drop-holder').height();
           //alert(e.pageY);
 
           //var comformHeight = windowHeight-e.pageY;
@@ -1476,9 +1484,9 @@ $(document).ready(function(){
 
           if(e.pageY >= comformHeight+20) {
             
-           rightClickPositionTop  = e.pageY-320;
+          rightClickPositionTop  = e.pageY-320;
 
-           var arrow = e.pageY-25;
+          var arrow = e.pageY-25;
 
              $('.right_click.drop-holder').addClass("arrow");
 
@@ -1488,11 +1496,9 @@ $(document).ready(function(){
 
           }
 
-
-
-          var value = $(this).find('a').data('value'); 
-
           $('.checkToActionPopValue').val(value);
+          $('.ques_ans_docs').data('value',value);
+          // $('.notes_docs').data('value',value);
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
 
@@ -1505,14 +1511,19 @@ $(document).ready(function(){
 
           $('.right_click.drop-holder').css({"display":"block","top":rightClickPositionTop,"left":rightClickPositionLeft});
 
-          $('.view_doc_file a').attr('href',"{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +file_id ,
+        
+          if(count == 0)
+          {
+             $('.view_doc_file').addClass('hidden');
+
+          }else{
+
+
+            $('.view_doc_file').removeClass('hidden');
+            $('.view_doc_file a').attr('href',"{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +file_id ,
           '_blank');
 
-          var getfileAndFolder = value.split('/');
-          var fileAndFolder    = getfileAndFolder.pop();
-          var checkFileAndFolder = fileAndFolder.split('.');
-          var getZipFile         = checkFileAndFolder.pop();
-          var count = checkFileAndFolder.length;
+          }
 
          $('#down-document').val(value);
          $('.copied_document').data('value',value);
@@ -3133,6 +3144,20 @@ $(document).on('click','.note_create_doc',function(){
 
 });
 
+$(document).on('click','.question_create_doc',function(){
+
+ var getNoteTo =  $('.checkToActionPopValue').val(); 
+
+ $('[data-value = "'+getNoteTo+'"]').click();
+
+
+});
+
+$(document).on('click','.fence_view_doc_permis',function(){
+  
+  alert('dsd');
+
+});
 
 
 

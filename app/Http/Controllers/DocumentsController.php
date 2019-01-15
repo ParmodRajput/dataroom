@@ -1769,6 +1769,21 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
        $getPath = Document::where('project_id',$project_id)->where('id',$file_id)->first();
 
+       $userInGroup = getAuthgroupId($project_id); 
+       $userRole = checkCurrentGroupUser($project_id);
+
+       if($userRole == 'Administrator')
+       {
+          $DocPermission = '';
+
+       }else{
+
+         $getDocPermission = Permission::where('project_id',$project_id)->where('group_id',$userInGroup)->orWhere('document_id',$file_id)->first();
+ 
+         $DocPermission = $getDocPermission->permission_id;
+
+       }
+
        $doc_path = Storage::get($getPath->path);
 
        $filePath =  $getPath->path;
@@ -1786,7 +1801,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
        $getExtension = explode('.', $getdocumementExtension);
        
        $Ext      = end($getExtension);
-
 
        // docx file
 
@@ -1809,7 +1823,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
           $report->save();
 
 
-       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id'));
+       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id','DocPermission'));
 
     }
 

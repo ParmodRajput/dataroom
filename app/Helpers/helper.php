@@ -64,102 +64,103 @@ if (!function_exists('folder_tree')) {
  
 }
 
+}
 
-  function folder_file_tree($folder_file_tree,$count=0)
-    {
+   function folder_file_tree($folder_file_tree,$count=0)
+   {
 
-      $output = '<ul>';
-        foreach($folder_file_tree as $key => $value){ 
+     $output = '<ul>';
+       foreach($folder_file_tree as $key => $value){ 
 
-            $key1 = explode('@?#',$key);
-            $key = $key1[0];
+           $key1 = explode('@?#',$key);
+           $key = $key1[0];
 
-            $document_permission = end($key1);
+           $document_permission = end($key1);
 
-            $new =  explode("/",  $key);
-            $name1 =  end($new);
+           $new =  explode("/",  $key);
+           $name1 =  end($new);
 
-            //$getExtenstion = explode('.',$name1);
+           //$getExtenstion = explode('.',$name1);
 
-            $name2 = substr($name1,0,20);
-            $length = strlen($name1); 
+           $name2 = substr($name1,0,20);
+           $length = strlen($name1); 
 
-            if($length >=20)
-            {
-               $name =$name2.' . . .'; 
-
-            }else{
-               
-               $name =$name2;
-            }
-
-
-            $getFile = explode('.', $name);
-            $isFile = count($getFile);
-
-            $get = in_array('RecycleBin',$new);
-            $checkThumbnailFolder = in_array('thumbnail_img',$new);
-           if($get == "1" ||  $checkThumbnailFolder == "1")
+           if($length >=20)
            {
-                 $output .= '';  
+              $name =$name2.' . . .'; 
+
            }else{
-                
-                 if($isFile == '1')
-                 {
-                    $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_folder_name">'. $name.'</span>';  
+              
+              $name =$name2;
+           }
+
+
+           $getFile = explode('.', $name);
+           $isFile = count($getFile);
+
+           $get = in_array('RecycleBin',$new);
+           $checkThumbnailFolder = in_array('thumbnail_img',$new);
+          if($get == "1" ||  $checkThumbnailFolder == "1")
+          {
+                $output .= '';  
+          }else{
+               
+                if($isFile == '1')
+                {
+                   $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_folder_name">'. $name.'</span>';  
+
+                }else{
+
+                 //$Extenstion = explode('.',$key);
+                 //$getExtenstion =  end($Extenstion);
+                 $getExtenstion = pathinfo($key, PATHINFO_EXTENSION);
+                 if($getExtenstion == 'jpg' || $getExtenstion == 'jepg' || $getExtenstion == 'png' || $getExtenstion == 'pdf' || $getExtenstion == 'xlsx' || $getExtenstion == 'xls' || $getExtenstion == 'xlsb' || $getExtenstion == 'zip'){
+
+                   $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_file_name inactive customspan">';
+
+                   //print_r($getExtenstion);die();
+
+                   if($getExtenstion == 'jpg' || $getExtenstion == 'png' || $getExtenstion == 'jepg'){
+                       $output .= '<i class="fa fa-photo"></i>';
+                   }
+
+                   if($getExtenstion == 'pdf')
+                   {
+                      $output .= '<i class="fas fa-file-pdf"></i>';
+                   }
+                   if($getExtenstion == 'xlsx' || $getExtenstion == 'xls' || $getExtenstion == 'xlsb')
+                   {
+                      $output .= '<i class="fas fa-file-excel"></i>';
+                   }   
+                   if($getExtenstion == 'zip')
+                   {
+                      $output .= '<i class="far fa-file-archive"></i>';
+                   }                                      
 
                  }else{
 
-                  //$Extenstion = explode('.',$key);
-                  //$getExtenstion =  end($Extenstion);
-                  $getExtenstion = pathinfo($key, PATHINFO_EXTENSION);
-                  if($getExtenstion == 'jpg' || $getExtenstion == 'jepg' || $getExtenstion == 'png' || $getExtenstion == 'pdf' || $getExtenstion == 'xlsx' || $getExtenstion == 'xls' || $getExtenstion == 'xlsb' || $getExtenstion == 'zip'){
-
-                    $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_file_name inactive customspan">';
-
-                    //print_r($getExtenstion);die();
-
-                    if($getExtenstion == 'jpg' || $getExtenstion == 'png' || $getExtenstion == 'jepg'){
-                        $output .= '<i class="fa fa-photo"></i>';
-                    }
-
-                    if($getExtenstion == 'pdf')
-                    {
-                       $output .= '<i class="fas fa-file-pdf"></i>';
-                    }
-                    if($getExtenstion == 'xlsx' || $getExtenstion == 'xls' || $getExtenstion == 'xlsb')
-                    {
-                       $output .= '<i class="fas fa-file-excel"></i>';
-                    }   
-                    if($getExtenstion == 'zip')
-                    {
-                       $output .= '<i class="far fa-file-archive"></i>';
-                    }                                      
-
-                  }else{
-
-                      $output .= '<i class="far fa-file"></i>';
-                  }
-
-                   $output .=' '.$name.'</span>';
-
+                     $output .= '<i class="far fa-file"></i>';
                  }
-                
+
+                  $output .=' '.$name.'</span>';
+
+                }
+               
+          }
+
+           if(!empty($value)){
+               
+               $output .=  folder_file_tree($value);
            }
-
-            if(!empty($value)){
-                
-                $output .=  folder_file_tree($value);
-            }
-            $output .= '</li>';
-    }  
-
+           $output .= '</li>';
+   }  
      $output .= '</ul>';
 
-    return $output;
- 
-    }
-}
+   return $output;
+
+   }
+
+
 
     function checkUserType($project_name){
 
