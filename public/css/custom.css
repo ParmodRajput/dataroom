@@ -2189,14 +2189,9 @@ p.subject_ques {
         .section a.invite{ padding:10px 15px; color:#fff; text-decoration: none; font-size:13px; background:#333;
 }
 
-#genrate_question .modal-title {
-    width: 30%;
-}
+#genrate_question .modal-title { width: 30%;}
 
-#genrate_question .related_question_by {
-   
-    margin-left: 40%;
-}
+#genrate_question .related_question_by { margin-left: 40%;  position: absolute;}
 
 /*Report page*/
 
