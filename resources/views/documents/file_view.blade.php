@@ -154,8 +154,6 @@
 
 		var DocPermission = $('#CurrentDocPermission').data('value');
 
-		alert(DocPermission);
-
 		if(DocPermission == '7')
 		{
 			$('.fence_view').click();

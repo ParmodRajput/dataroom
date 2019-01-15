@@ -129,10 +129,10 @@
 					   <span class="edit_collab_setting"><i class="fa fa-pencil"></i> edit
 	    		       </span>
 	    		       <div class="hidden" style="margin: 10px 10px 10px 0px;" id="collab_btn">
-	    		       <span class="bapply_collab_setting"> apply
-	    		       </span>
-    		            <span class="cancle_edit_collab_setting"> Cancle
-    		            </span>	 
+    		            <span class="btn btn-danger cancle_edit_collab_setting"> Cancle
+    		            </span>	
+    		             <span class="btn btn-primary apply_collab_setting"> Apply
+	    		       </span> 
     		            </div>   		       
     		        </div>
 				</div>
@@ -162,13 +162,12 @@
 				  <div class="security_setting_edit">
 					  <span class="edit_security"><i class="fa fa-pencil"></i> edit
 	    		      </span> 
-	    		      <div class="hidden" id="change_security_btn">
-	    		      <span class="btn btn-danger apply_change_security">apply
-	    		      </span> 
-    		            <span class="btn btn-primary cancle_edit_security"> Cancle
+	    		    <div class="hidden" id="change_security_btn">
+    		            <span class="btn btn-danger cancle_edit_security"> Cancle
     		            </span>	
-    		            </div>    		      
-
+    		            <span class=" btn btn-primary apply_change_security">Apply
+	    		        </span> 
+    		        </div>    		      
     		      </div>
 				</div>
 			</div>	

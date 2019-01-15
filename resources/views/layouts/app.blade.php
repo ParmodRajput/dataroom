@@ -3125,6 +3125,8 @@ $(document).on('click','.icon_close_filter',function(){
   $('#search_doc_content').val('');
   var directory_url = $('#current_directory').val();
 
+  $('.fav_filter').removeClass('search_fav_col');
+
   $(this).removeClass('search_fav_col');
   $('.filteredTextContent').addClass('hidden');
   $('.move_last_folder').removeClass('hidden');
@@ -3158,7 +3160,6 @@ $(document).on('click','.fence_view_doc_permis',function(){
   alert('dsd');
 
 });
-
 
 
 </script>
