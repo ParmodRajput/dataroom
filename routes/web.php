@@ -137,6 +137,8 @@ Route::post('create_group', 'GroupsController@store');
 Route::post('invite_users', 'GroupsController@GroupInvites');
 Route::get('get_groups/{id}', 'GroupsController@getGroups');
 Route::post('/groups/get_group_info', 'GroupsController@getGroupInfo');
+Route::post('/users/get_user_info', 'GroupsController@getUserInfo');
+
 Route::post('/delete_group', 'GroupsController@deleteGroup');
 Route::post('/get_allgroups', 'GroupsController@getAllGroups');
 Route::post('/get_group_users', 'GroupsController@GroupsUsersGet');

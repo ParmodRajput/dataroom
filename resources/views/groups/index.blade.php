@@ -87,8 +87,11 @@
 
     	<input type='hidden' id='checkGroupIdEditRole'>
 
-    	<div class="list_group_user hidden">
+    	<div class="listUsersGroups hidden">
     		<div class="GroupTitle"></div>
+    		<div id="userDetail">
+
+    		</div>
     		<div class="users_groups">
     		 <button class="accordion">Users <i class="fa fa-caret-down "></i></button>
 				<div class="panel">
@@ -546,6 +549,7 @@
               <div class="section2"><i class='fas fa-eye'></i>Fence View</div>
               <div class="section2"><i class="fa fa-close"></i>None</div>
               </div>
+          <div id="GoupPrForUsr">
               <div class="all_groups">
                 <div class="new_user1">
                   <h3>All groups</h3>
@@ -598,6 +602,7 @@
                    </div>
                 </div>
               </div>
+          </div>
                
 
            @foreach($groups as $groups)
@@ -1003,8 +1008,7 @@
                         if(Checker == undefined)
                         {
 
-
-                        	 $('.all_groups').append(html);
+                        	 $('#GoupPrForUsr').append(html);
 
                         	 $('#document_permission_modal #group'+currentGroupId).css('background','#fff');
 
@@ -1083,7 +1087,7 @@
 					swal("Invite Sent successfully","","success");
 					getgroups();
 
-					$('.list_group_user').addClass('hidden');
+					$('.listUsersGroups').addClass('hidden');
 
 				}
 
@@ -1125,12 +1129,14 @@
 
  // select check box 
  $(document).on('click','input[type="checkbox"]', function() {
-
     var showDocWithDoc = '';
 
     var numberOfChecked = $('.groups_list input:checkbox:checked').length;
 
-      if(numberOfChecked == 1)
+    var numberOfUserChecked = $('.users_list input:checkbox:checked').length;
+
+
+      if(numberOfChecked == 1 || numberOfUserChecked == 1)
       {
 
       	 var getGroupId = $(this).data('value');
@@ -1141,7 +1147,7 @@
       	 $('.delete_group').removeClass('hidden'); 
       	 $('.checkboxCount').val(numberOfChecked);
 
-      	 $('.list_group_user').removeClass('hidden');
+      	 $('.listUsersGroups').removeClass('hidden');
 
       	 $('.security_setting').removeClass('hidden');
          $('.access_Ques_ans').removeClass('hidden');
@@ -1310,12 +1316,65 @@
 
                  });
 
+		$.each($("input[name='users_select']:checked"),function(){
+
+      	  	     //  var group_id = $(this).data('value');
+				  // $('#group_id').val(group_id);
+                   var token = $('#csrf-token').val();
+                   var userId = $(this).data('value');
+
+                        	$.ajax({
+                      
+		                      type:"POST",
+		                      url:"{{ Url('/') }}/users/get_user_info",
+		                      data:{
+		                       _token : token,
+		                      userId : userId,
+		                      
+
+		                        },  
+		                        // multiple data sent using ajax//
+		                        success: function (response) {
+  
+                                    var groupUsers  = response.userInfo;
+                                    var groupInfo   = response.groupInfo;
+                                    var user_html1 = '';
+                                    var user_html2 = '';
+
+                                    $.each(groupUsers, function(key ,value) {
+
+                                     	var userEmail = value.email; 
+                                     	user_html1 += "<div><p>"+value.name+"</p></div>"+"<div><p>"+value.email+"</p></div>"+"<div><p>"+value.phone_no+"</p></div>"+"<div><p>"+value.company+"</p></div>"+"<div><p>"+value.company+"</p></div>";
+                                     
+                                    });    
+
+									$('.users_groups').addClass('hidden');
+                                    $('#userDetail').html(user_html1);
+                                    
+                                    
+
+                                    $.each(groupInfo, function(key ,value) {
+
+                                     	//var userEmail = value.email; 
+                                     	user_html2 += "<div><p>("+value.role+")</p></div>";
+                                     
+                                    });  
+
+                                    //$('.users_groups').addClass('hidden');
+                                    //$('#userDetail').html(user_html2);                               
+
+                                }                              
+
+		                    }); 
+
+		});
+
       }
       else if(numberOfChecked == 0)
       {
         
       	$('.delete_group').addClass('hidden');
-      	$('.list_group_user').addClass('hidden');
+      	$('.listUsersGroups').addClass('hidden');
       	// 21 nov
 
       	$('.EnterGroupByinvite').removeClass('hidden');
@@ -1330,7 +1389,7 @@
 
       }else{
 
-      	 $('.list_group_user').addClass('hidden');
+      	 $('.listUsersGroups').addClass('hidden');
       	 $('.delete_group').addClass('hidden'); 
       	 $('.delete_group').removeClass('hidden');
       	 $('.GroupByinvite').removeClass('hidden');
@@ -1981,7 +2040,7 @@ $('#hjgh').click(function(){
 				if(response == 'success')
 				{
 					getgroups();
-					$('.list_group_user').addClass('hidden');
+					$('.listUsersGroups').addClass('hidden');
 					$('.edit_role_ofuser').addClass('hidden');
 
 					$('.group_user_role').removeClass('hidden');
@@ -2082,7 +2141,7 @@ $('#hjgh').click(function(){
 						getgroups();
 						
 						$('.display_groups input:checkbox').prop('checked', this.checked);
-						$('.list_group_user').addClass('hidden'); 
+						$('.listUsersGroups').addClass('hidden'); 
 						$('.updated_group_collab').addClass('hidden');
  			            $('.group_collaboration_setting').removeClass('hidden');
  			            $('.edit_collab_setting').removeClass('hidden');
@@ -2161,7 +2220,7 @@ $(document).on('change','.security_setting_groups input:radio',function(){
 						getgroups();
 						
 						 $('.display_groups input:checkbox').prop('checked', this.checked);
-					     $('.list_group_user').addClass('hidden'); 
+					     $('.listUsersGroups').addClass('hidden'); 
 					     $('.update_question_change').addClass('hidden');
 					     $('.group_security_setting').removeClass('hidden');
 					     $('#change_security_btn').addClass('hidden');
@@ -2216,7 +2275,7 @@ $(document).on('click','.apply_ques_ans',function(){
 						
 						$('.display_groups input:checkbox').prop('checked', this.checked);
 
-					    $('.list_group_user').addClass('hidden'); 
+					    $('.listUsersGroups').addClass('hidden'); 
 					    $('#edit_ques_ans_setting').addClass('hidden');
 					   // $('.apply_ques_ans').addClass('hidden');
                         $('.group_qa_setting').removeClass('hidden');

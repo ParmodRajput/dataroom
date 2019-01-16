@@ -286,6 +286,17 @@ class GroupsController extends Controller
          
     } 
 
+        public function getUserInfo(Request $request)
+    {
+         $email = $request->userId; 
+         $userInfo = User::where('email', $email)->get();
+         $groupInfo =  Group_Member::where('member_email', $email)->get();
+         $GroupInfoAndUsers = ['userInfo'=>$userInfo , 'groupInfo'=>$groupInfo];
+        
+         return $GroupInfoAndUsers;
+         
+    } 
+
     public function deleteGroup(Request $request){
 
           $deleteGroups = $request->deletePath;

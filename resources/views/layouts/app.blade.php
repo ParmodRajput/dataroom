@@ -1470,7 +1470,7 @@ $(document).ready(function(){
 
           if(e.pageY >= comformHeight+20) {
             
-           rightClickPositionTop  = e.pageY-320;
+           rightClickPositionTop  = e.pageY-285;
 
            var arrow = e.pageY-25;
 
