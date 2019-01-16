@@ -1772,15 +1772,15 @@ canvas {
 .arrows_right{ float:right; width:50px;}
 .arrows_right i{margin:0 5px; font-size:18px;}
 
-.overlay_new{
-  position: absolute;
-  top: 0; 
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: url(../images/watermark/small.png);
-  display: block;
-  
+.overlay_new {
+position: fixed;
+top: 50px;
+bottom: 0;
+left: 0;
+right: 0;
+background: url(../images/watermark/small.png);
+display: block;
+background-size: cover;
 }
 
 .container:hover .overlay {
@@ -1854,9 +1854,7 @@ span.dld {
 }
 .viewer_display {
 
-    padding-top: 70px;
     padding-left: 25px;
-    padding-right: 25px;
     padding-bottom: 25px;
 
 }
@@ -2432,7 +2430,7 @@ button.waiting_reply {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     content: "";
-    top: 307px!important;
+    top: 270px!important;
 }
 
 .search_fav_col{

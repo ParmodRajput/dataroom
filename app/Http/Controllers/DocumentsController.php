@@ -1083,6 +1083,8 @@ public function rename_documents(Request $request){
 
        document::where('path',$documentPath)->update(['path' => $updateDocumentPath,'directory_url'=>$updateDocumentDirUrl]);
 
+       FavDocument::where('document_path',$documentPath)->update(['document_path' => $updateDocumentPath]);
+
     }  
 
     Storage::move($renameDocumentFullPath,$new_path);
@@ -1090,6 +1092,8 @@ public function rename_documents(Request $request){
     // get the all document in folder.
 
     document::where('path',$renameDocumentFullPath)->update(['document_name' =>$document_name, 'path' => $new_path]);
+  
+  FavDocument::where('document_path',$renameDocumentFullPath)->update(['document_path' => $new_path]);
 
     return 'rename';
 

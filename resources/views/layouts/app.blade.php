@@ -1091,7 +1091,7 @@ $(document).ready(function(){
     $('.fav_filter').removeClass('hidden');
     $('.new_filter').removeClass('hidden');
     var projects_id = $('.directory_location #project_id_doc').val();
-    var document_index = $('.document_indexing_count').val();    
+    var document_index = $('.document_indexing_count').val();  
     var html="";
     var html2 ="";
     var box = $('.indexing');
@@ -1107,18 +1107,19 @@ $(document).ready(function(){
               },  
               // multiple data sent using ajax//
               success: function (response) { 
-       
-                   GetDocumentInfoByResponse(response,document_index);
+                   
+                   GetDocumentInfoByResponse(response,document_index,directory_url);
                    $('.notMoveInDiv').droppable("disable");
 
                  }//success
         });//ajax
    }
 
-    function GetDocumentInfoByResponse(response,document_index){
+    function GetDocumentInfoByResponse(response,document_index,directory_url){
 
                 var html="";
                 var html2 ="";
+                var html3 ="";
                 var box = $('.indexing');
 
                   //first inner array
@@ -1127,14 +1128,24 @@ $(document).ready(function(){
 
                 var getfiles = response.file_index;
 
+
                 if(getfolder == '' && getfiles == '')
                 {
 
                  html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Drag and Drop files here to upload</span></div>";
+
+                 html3 +='<div class="doc_index_list"><h4> <div class="upone" onclick="upone_folder();"><i class="fas fa-arrow-up custom upone-folder" ></i><div class="back-arrow"></div></div></h4></div>'; 
+
+                 $('#upFolerTogo').html(html3);
+
+                 getLastUrl(directory_url);
+                 
+
                 
                 }else{
 
                           $.each(getfolder,function(key ,value){
+
 
                           var document_name1 = value.document_name;
                           var path           = value.path;
@@ -1237,10 +1248,11 @@ $(document).ready(function(){
 
                                           html+="<div class='view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
                                          }
+
                                          if(permission == '7')
                                          {
 
-                                          html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
+                                          html+="<div class='view_doc_permis_open' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
                                          }
                                          
                                           html+="</div></div></div>";
@@ -1484,7 +1496,7 @@ $(document).ready(function(){
 
           if(e.pageY >= comformHeight+20) {
             
-          rightClickPositionTop  = e.pageY-320;
+          rightClickPositionTop  = e.pageY-285;
 
           var arrow = e.pageY-25;
 
@@ -3073,7 +3085,7 @@ $(document).on('click','.note1_doc_delete', function(){
 
                 $('.filteredTextContent .text_filter').html(serachContent);
                 $('.filteredTextContent').removeClass('hidden');
-                GetDocumentInfoByResponse(response,document_index);
+                GetDocumentInfoByResponse(response,document_index,directory_url);
 
               }
 
@@ -3107,7 +3119,7 @@ $(document).on('click','.fav_filter',function(){
                     $('.notMoveInDiv').addClass('hidden');
                     $('.text_filter').html('Favorite');
                     
-                    GetDocumentInfoByResponse(response,document_index);
+                    GetDocumentInfoByResponse(response,document_index,directory_url);
 
 
               }
@@ -3156,8 +3168,16 @@ $(document).on('click','.question_create_doc',function(){
 });
 
 $(document).on('click','.fence_view_doc_permis',function(){
-  
-  alert('dsd');
+
+    var project_id = $('.projects_id').val();
+
+    $('#document_permission_modal input:checkbox').prop('checked', false);
+
+    $(this).parent().prev().find('.check-box-input').trigger( "click" );
+
+    var getFileId = $(this).parent().prev().find('.check-box-input').data('doc_id');
+
+     window.open("{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +getFileId, '_blank');
 
 });
 

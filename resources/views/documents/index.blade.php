@@ -37,7 +37,7 @@
                 <a href='javascript:void(0)' target="_blank"></i><i class='fas fa-eye'></i> view</a>
               </li> 
                <li   class='ng-scope history_of_action'>
-                <a href='{{ Url("/")}}/project/{{$project_id}}/reports'></i><i class="fas fa-history"></i>History of Action</a>
+                <a href='{{ Url("/")}}/project/{{$project_id}}/reports' target="_blank"></i><i class="fas fa-history"></i>History of Action</a>
               </li>
 
                <li   class='ng-scope ques_ans_docs'>
@@ -233,15 +233,15 @@
                     </div>           
                     <div id="document_index_content" >
                              <div class="drop_box_document">
-                              <div class="document_index index-drop droppable ui-droppable notMoveInDiv">
-                                <div class="doc_index_list">
+                              <div class="document_index index-drop droppable ui-droppable notMoveInDiv" id='upFolerTogo'>
+                                <!-- <div class="doc_index_list">
                                   <h4> 
                                     <div class="upone" onclick="upone_folder();">
                                       <i class="fas fa-arrow-up custom upone-folder" ></i>
                                       <div class="back-arrow">{{$project_name}}</div>
                                     </div>
                                   </h4>
-                                </div>
+                                </div> -->
                               </div>
                              </div>
                             <div class="documents_index_section">

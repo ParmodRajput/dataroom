@@ -93,7 +93,9 @@
                   </span>
               </a>
          </span>
-		<i class="fa fa-print"></i>
+         <span class="print_document">
+		   <i class="fa fa-print"></i>
+	     </span>
 		<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments"></i></a>
 		<i class="fa fa-search"></i>
 		</div>
@@ -147,6 +149,25 @@
 
       $(document).ready(function(){
 
+
+		$(window).bind('mousewheel DOMMouseScroll', function(e)
+		{
+		    //ctrl key is pressed
+		    if(e.ctrlKey == true)
+		    {
+		        e.preventDefault();       
+		    }
+		});
+
+		$(window).keydown(function(event)
+			{
+			    if((event.keyCode == 107 && event.ctrlKey == true) || (event.keyCode == 109 && event.ctrlKey == true))
+			    {
+			        event.preventDefault();
+
+			}
+		});
+
       	var window_width = $(window).width();
 		var window_height = $(window).height();
 
@@ -185,15 +206,40 @@
 		    {
 		    				var canvas = document.getElementById("canvas");
 					        var ctx = canvas.getContext("2d");
+					        var cw = canvas.width;
+                            var ch = canvas.height;
 
 					        var img = new Image();
 					        $('.overlay_body').addClass('hidden');
+					        img.crossOrigin='anonymous';
 					        img.onload = function () {
 					            // canvas.width=img.width;
 					            // canvas.height=img.height;
 					            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,1500, 1000);
+
+					            // var dataURL=watermarkedDataURL(canvas,"It's Mine! nyfbfgf gfhdfksdf  fus fusd f f sdfo fd f hkd fh ud ");
 					        }
+
 					        img.src ='data:image/jpeg;base64,'+docPath;
+
+					    //     function watermarkedDataURL(canvas,text){
+									//   var tempCanvas=document.createElement('canvas');
+									//   var tempCtx=tempCanvas.getContext('2d');
+									//   var cw,ch;
+									//   cw=tempCanvas.width=canvas.width;
+									//   ch=tempCanvas.height=canvas.height;
+									//   tempCtx.drawImage(canvas,0,0);
+									//   tempCtx.font="240px verdana";
+									//   var textWidth=tempCtx.measureText(text).width;
+									//   tempCtx.globalAlpha=.50;
+									//   tempCtx.fillStyle='white'
+									//   tempCtx.fillText(text,cw-textWidth-10,ch-20);
+									//   tempCtx.fillStyle='black'
+									//   tempCtx.fillText(text,cw-textWidth-10+2,ch-20+2);
+									//   // just testing by adding tempCanvas to document
+									//   document.body.appendChild(tempCanvas);
+									//   return(tempCanvas.toDataURL());
+									// }
 		    }
               
              // pdf view
@@ -372,6 +418,12 @@
 
        });
 
+//print  functionality 
+
+ $(document).on('click','.print_document',function(){
+    window.print();
+ });
+ 
 	</script>
 
 </html>
