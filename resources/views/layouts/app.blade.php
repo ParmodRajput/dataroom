@@ -475,7 +475,7 @@ $(document).ready(function(){
            
            if(get_genrate_folder !== ''){
 
-              if((new RegExp('[~#%\&{}+\|]|\\.\\.|^\\.|\\.$')).test(get_genrate_folder) == false){
+              if(/^[a-zA-Z0-9-_ ]*$/.test(get_genrate_folder) == true){
 
 
                        var document_index = $('.document_indexing_count').val();

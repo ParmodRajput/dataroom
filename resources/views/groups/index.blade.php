@@ -129,14 +129,10 @@
 					   <span class="edit_collab_setting"><i class="fa fa-pencil"></i> edit
 	    		       </span>
 	    		       <div class="hidden" style="margin: 10px 10px 10px 0px;" id="collab_btn">
-	    		       <span class="bapply_collab_setting"> apply
-	    		       </span>
-<<<<<<< HEAD
-    		            <span class="btn btn-primary cancel_edit_collab_setting"> cancel
-=======
-    		            <span class="cancle_edit_collab_setting"> Cancle
->>>>>>> 5507ab3fa1ad62609e2896c072a64f297a15842b
-    		            </span>	 
+    		            <span class="btn btn-danger cancel_edit_collab_setting"> cancel
+    		            </span>	
+    		             <span class="btn btn-primary apply_collab_setting"> Apply
+	    		       </span> 
     		            </div>   		       
     		        </div>
 				</div>
@@ -166,13 +162,12 @@
 				  <div class="security_setting_edit">
 					  <span class="edit_security"><i class="fa fa-pencil"></i> edit
 	    		      </span> 
-	    		      <div class="hidden" id="change_security_btn">
-	    		      <span class="btn btn-danger apply_change_security">apply
-	    		      </span> 
-    		            <span class="btn btn-primary cancel_edit_security"> cancel
+	    		    <div class="hidden" id="change_security_btn">
+    		            <span class="btn btn-danger cancel_edit_security"> cancel
     		            </span>	
-    		            </div>    		      
-
+    		            <span class=" btn btn-primary apply_change_security">Apply
+	    		        </span> 
+    		        </div>    		      
     		      </div>
 				</div>
 			</div>	
@@ -197,10 +192,9 @@
 					  <span class="edit_ques_ans"><i class="fa fa-pencil"></i> edit
     		            </span>
     		            <div class="hidden" id="edit_ques_ans_setting">
-
-    		            <span class="btn btn-danger apply_ques_ans"> Apply
+    		            <span class="btn btn-danger cancel_ques_ans"> cancel
     		            </span>
-    		            <span class="btn btn-primary cancel_ques_ans"> cancel
+    		            <span class="btn btn-primary apply_ques_ans"> Apply
     		            </span>
     		        </div>
     		      </div>
@@ -242,7 +236,7 @@
 						<div style="display: none;" id="alert_invite_users"></div>
 
 						<div class="clearfix"></div>
-						<input type="hidden"  name ="group_id" class="form-control" id="group_id" value = "" placeholder="Enter Group Id">
+						<input type="hidden"  name ="group_id" class="form-control" id="group_id"  placeholder="Enter Group Id">
 
 						<input type="hidden" class="checkboxCount" id="checkboxCount" >
 				</div>
@@ -1002,10 +996,31 @@
                         
 
                     html='<div class="new_user_pannel" id="group'+currentGroupId+'"><div class="new_user1"><b>'+group_name+'</b>/'+group_user_type+'</div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/1" class="doc_permission1 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/2" class="doc_permission2 permission'+currentGroupId+'"><span class="checkmark"></span></label></div> <div class="new_user2"> <label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/3" class="doc_permission3 permission'+currentGroupId+'"><span class="checkmark"></span> </label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/4" class="doc_permission4 permission'+currentGroupId+'"> <span class="checkmark"></span> </label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/5" class="doc_permission5 permission'+currentGroupId+'"><span class="checkmark"></span></label> </div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/6" class="doc_permission6 permission'+currentGroupId+'"> <span class="checkmark"></span></label></div><div class="new_user2"><label class="permission_input_check"><input type="checkbox" name ="set_permission" data-id="'+currentGroupId+'"  data-value="'+currentGroupId+'/7" class="doc_permission7 permission'+currentGroupId+'"><span class="checkmark"></span></label></div><div class="permission_cancel new_user2 section2" group="'+currentGroupId+'"><i class="fa fa-close"></i> </div></div>';
+ 
 
-                         $('#document_permission_modal #group'+lastGroup).append(html);
+                        var Checker = $("#group"+lastGroup).height();
 
-                         $('#document_permission_modal #group'+currentGroupId).css('background','#fff');
+                        if(Checker == undefined)
+                        {
+
+
+                        	 $('.all_groups').append(html);
+
+                        	 $('#document_permission_modal #group'+currentGroupId).css('background','#fff');
+
+                        }else{
+                           
+                        	  $('#document_permission_modal #group'+lastGroup).append(html);
+
+                              $('#document_permission_modal #group'+currentGroupId).css('background','#fff');
+                        }
+
+
+                         
+
+                         
+
+                        
 
                       }
 				}           
@@ -1030,8 +1045,6 @@
 			processData: false, 
 			contentType: false,
 			success: function (response) { 
-
-
 
 				if(response.choose_group){
 					//alert(response.errors.choose_group);
@@ -1398,6 +1411,7 @@
  $(document).on('click','.InviteUsers_icon',function(){
 
  	    var group_id = $(this).data('id');
+ 	    // $('.Select_groupOfUser option[value='+group_id+']').attr('selected','selected');
 
 	 	$('input:checkbox').prop('checked', false);
 	 	

@@ -61,6 +61,8 @@
 </head>
 	<body>
        <div class="row">
+       	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
+
 		<div class="top_head col-md-12">
 		<div class="left_whole col-md-6">
 			<div class="left_text">
@@ -75,7 +77,7 @@
 		<div class="repeat_icons">
 		<i class="fa fa-repeat"></i>
 		<i class="fa fa-repeat"></i>
-		<span class="fence_view"><i class="fa fa-low-vision"></i></span>
+		<span class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></span>
 		</div>
 
 
@@ -150,16 +152,25 @@
 
 		var excel_path  = $('#excel_file').val();
 
+		var DocPermission = $('#CurrentDocPermission').data('value');
+
+		if(DocPermission == '7')
+		{
+			$('.fence_view').click();
+			var clickEvent = $('.fence_view');
+            setTimeout(function(){ clickEvent.trigger('click') }, 0);
+            
+            $('.fence_view').addClass('hidden');
+
+		}else{
+
+			$('.fence_view').removeClass('hidden');
+
+		}
  
          $('.viewer_display').css('height',window_height);
 
-       
-		   // $(document).ready(function () {  
-			  //   $.support.cors = true;  
-			  //   workbook = new GC.Spread.Sheets.Workbook(document.getElementById("ss"));  
-			  //   //...  
-     //        }); 
-            
+		   
 		    var __PDF_DOC,
 		      __TOTAL_PAGES,
 		    __CURRENT_PAGE = 1,

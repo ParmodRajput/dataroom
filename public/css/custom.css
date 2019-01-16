@@ -594,7 +594,9 @@ div#edit_ques_ans_setting { float:left; width:100%; margin-bottom:10px;}
 
 div#collab_btn { float: left; width: 100%;}
 
-div#collab_btn .btn { background:#e0e0e0; border: 1px solid #dfdfdf; color: #333;}
+/*div#collab_btn .btn { background:#e0e0e0; border: 1px solid #dfdfdf; color: #333;}
+*/
+
 div#collab_btn .btn:hover { background:#ececec; border: 1px solid #dfdfdf; color: #333;}
 
 .InviteUsers img { margin-right:5px;}
@@ -2433,5 +2435,17 @@ button.waiting_reply {
     top: 307px!important;
 }
 
+.search_fav_col{
+    
+    color: orange;
+}
 
-
+.edit_security{
+        background: #eaeaea;
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+    margin-bottom: 10px;
+    float: right;
+    font-size: 13px;
+    border-radius: 3px;
+}
