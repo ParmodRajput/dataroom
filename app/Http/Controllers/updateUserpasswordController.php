@@ -63,7 +63,7 @@ class UpdateUserpasswordController extends Controller
          
     }
 
-/*
+
 
     public function forgotpassword(Request $request){
         
@@ -97,35 +97,35 @@ class UpdateUserpasswordController extends Controller
              }
         }
     }
-*/
+
     
 
-    public function forgotpassword(Request $request){
-        $validator = Validator::make($request->all(), [
-                    'email' => 'required',
-        ]);
+    // public function forgotpassword(Request $request){
+    //     $validator = Validator::make($request->all(), [
+    //                 'email' => 'required',
+    //     ]);
         
-        if ($validator->fails()) {
+    //     if ($validator->fails()) {
 
-            $errors = $validator->getMessageBag()->toArray();
-            $message = "The email field is required.";
-            return View::make('users.passwordForgot',compact('message'));
+    //         $errors = $validator->getMessageBag()->toArray();
+    //         $message = "The email field is required.";
+    //         return View::make('users.passwordForgot',compact('message'));
 
-        }else{
+    //     }else{
 
-            $data['email'] = $request->email;
-            $data['email_token']="test";
-            $users =DB::table('password_resets')->insert(['email' => $data['email'], 'token' => $data['email_token'], "created_at"=>now()]);
+    //         $data['email'] = $request->email;
+    //         $data['email_token']="test";
+    //         $users =DB::table('password_resets')->insert(['email' => $data['email'], 'token' => $data['email_token'], "created_at"=>now()]);
 
-        $response = mail::send('auth.passwords.email',$data, function($message) use($data){
-             $message->to($data['email']);              
-             $message->Subject( 'Forgot Password');                
-            }
-             );
+    //     $response = mail::send('auth.passwords.email',$data, function($message) use($data){
+    //          $message->to($data['email']);              
+    //          $message->Subject( 'Forgot Password');                
+    //         }
+    //          );
 
-        }
+    //     }
 
-    }
+    // }
 
 
 }

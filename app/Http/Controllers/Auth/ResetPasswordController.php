@@ -39,22 +39,22 @@ class ResetPasswordController extends Controller
     }
 
 
-    public function reset(Request $request)
-    {
-       $token = $request->token;
-       $email = $request->email;
+    // public function reset(Request $request){
+    //    $token = $request->token;
+    //    $email = $request->email;
 
-       $check = Db::table('password_resets')->where([
-    ['token', '=',$token],
-    ['email', '=',$email],])->get();
-       if($check){
+    //    $check = Db::table('password_resets')->where([
+    // ['token', '=',$token],
+    // ['email', '=',$email],])->get();
+    //    if($check){
 
-            $new_password     =  bcrypt($request->password);           
-            $user = User::where('email',$email)->first();
-            $user->update(['password'=>$new_password]);
-            return "changePassword";
+    //         $new_password     =  bcrypt($request->password);           
+    //         $user = User::where('email',$email)->first();
+    //         $user->update(['password'=>$new_password]);
+    //         return "changePassword";
 
-       }
+    //    }
 
-    }
+    // }
+    
 }
