@@ -286,6 +286,32 @@ class GroupsController extends Controller
          
     } 
 
+    public function getUserInfo(Request $request) {
+         $email = $request->userEmail; 
+         $project_id = $request->project_id;
+         $checkUser = User::where('email', $email)->first();
+
+         $checker  = $checkUser['email'];
+
+         if($checker !== ""){
+
+               $userInfo = User::where('email', $email)->get();       
+
+         }else{
+
+             $userInfo = '';
+
+         }
+
+         $groupInfo =  Group_Member::where('member_email', $email)->where('project_id', $project_id)->get();
+         $GroupInfoAndUsers = ['userInfo'=>$userInfo , 'groupInfo'=>$groupInfo];
+        
+         return $GroupInfoAndUsers;
+         
+
+
+    } 
+
     public function deleteGroup(Request $request){
 
           $deleteGroups = $request->deletePath;
@@ -882,26 +908,24 @@ public function getPermissionDocument($project_id)
             if($access_limit == '1')
             {
 
-              print_r('sddsd');
-              // $access_limit = '1';
-              // $active_date = 'null';
+             
+              $access_limit = '1';
+              $active_date = null;
 
             }else{
 
-
-                 print_r('dfdf');
-               // $access_limit = '2';
-               // $active_date = $access_limit;
+               $active_date = $access_limit;  
+               $access_limit = '2';
+               
 
             }
 
-            die();
 
-         Group::where('id',$group_id)->update(['access_limit'=>$access_limit,'access_limit'=>$active_date]);
+         Group::where('id',$group_id)->update(['access_limit'=>$access_limit,'active_date'=>$active_date]);
  
          return "success";
 
-
+          //return $access_limit;
       }
 
 
@@ -913,11 +937,25 @@ public function getPermissionDocument($project_id)
           $userId = Auth::user()->id;
 
 
-        Group::where('id',$group_id)->update(['QA_access_limit'=>$access_ques_limit]);
+         Group::where('id',$group_id)->update(['QA_access_limit'=>$access_ques_limit]);
  
          return "success";
 
     }
+
+     public function MembersChangeQuesAnsSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $access_ques_limit = $request->updatedQuestionValue;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+
+          Group_Member::where('id',$group_id)->where('project_id',$project_id)->update(['access_qa'=>$access_ques_limit]);
+ 
+         return "success";
+
+    }
+
 
 
 }
