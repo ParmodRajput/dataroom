@@ -81,6 +81,7 @@
  <!-- Content Header (Page header) -->
   <div class="row document_content_index">
   <input type="hidden" class="single_select_doc" id="single_select_doc">
+  <input type="hidden" id ='CheckUserChangePermission'>
   <div class="document_index_contentable col-md-9">
      <div class="menu_option_block">
    
@@ -472,7 +473,7 @@
     <div class="modal-content">
         <div class="modal-header">
            <h3>DOCUMENTS' PERMISSIONS</h3>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close_permission_modal">&times;</button>
         </div>
         <div class="modal-body scroll_permissionDoc_section">         
           <div class="outer_box">
@@ -657,8 +658,7 @@
         </div>
 
     <div class="modal-footer">
-       <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
-       <button type="button" class="btn btn-success" id="permission_store" data-dismiss="modal">Apply</button>
+       <button type="button" class="btn btn-success" id="permission_store">Apply</button>
     </div>
   </div>
      

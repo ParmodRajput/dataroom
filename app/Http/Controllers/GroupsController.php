@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Group;
 use App\User;
+use App\Report;
 use Illuminate\Support\Facades\Auth;
 use App\Project;
 use App\Collaboration;
@@ -68,6 +69,14 @@ class GroupsController extends Controller
     	  $group->save();
 
         $current_group_id = $group->id;
+
+         // Save record
+
+       $report = new Report();
+       $report->action = '28';
+       $report->document_path = $current_group_id;
+       $report->Auth = Auth::user()->id;
+       $report->save();
 
       // add collaboration
 

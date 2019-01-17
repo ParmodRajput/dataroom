@@ -18,7 +18,6 @@ if (!function_exists('folder_tree')) {
     {
           $output = '<ul>';
 
-
         foreach($folder_tree as $key => $value){ 
 
             $key1 = explode('@?#',$key);

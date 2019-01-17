@@ -363,6 +363,20 @@ $(document).ready(function(){
           // });
 
      });
+
+      $(document).on('click','.close_permission_modal',function(){
+
+          var checker =  $('#CheckUserChangePermission').val();
+          if(checker == 1){
+                 
+                 alert('Do you want to apply set permission ?');
+
+          }else{
+
+            $('#document_permission_modal').modal('hide');
+          }
+
+       });
     
    // trigger main project folder on reload. 
 
@@ -2772,7 +2786,6 @@ $(document).on('click','.note1_doc_delete', function(){
          var project_id  = $('.directory_location #project_id_doc').val(); 
 
          var token = $('#csrf-token').val();  
-         
 
           $.ajax({
                                 
@@ -2793,6 +2806,7 @@ $(document).on('click','.note1_doc_delete', function(){
                             swal("permission set successfully", "", "success");
 
                             DocumentTree(token,project_id);
+                            $('#CheckUserChangePermission').val('');
                         }
  
                       }
@@ -2800,6 +2814,12 @@ $(document).on('click','.note1_doc_delete', function(){
                 });
                        
    });
+
+    $(document).on('click','.checkmark',function(){
+           
+           $('#CheckUserChangePermission').val('1');
+
+    });
 
 
    $(document).on('click','.permission_cancle',function(){

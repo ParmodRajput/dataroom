@@ -254,7 +254,7 @@
 
                 </div>
 	      </div>
-	<div class="col-md-6">
+	<div class="report_display_main col-md-6">
     <div class='report_display row'>
       <div class='indexingOfReports col-md-12'>
         <div class='auther_main col-md-4'>Author</div>

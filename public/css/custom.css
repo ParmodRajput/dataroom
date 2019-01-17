@@ -1920,9 +1920,10 @@ span.subject_title {
     width: 100%;
 }
 
-.reply_section{
+.main_question_container{
 
-     overflow: scroll;
+    width: 100%;
+    overflow: scroll;
     overflow-x: hidden;
 }
 
@@ -2221,7 +2222,9 @@ p.subject_ques {
  overflow-x: hidden;
 
 }
-.report_display{
+
+.report_display_main{
+
     overflow:scroll;
     overflow-x: hidden;
 }
@@ -2238,7 +2241,7 @@ p.subject_ques {
 
 .docActive{
 
-    color:blue;
+    color:green;
 }
 
 button.waiting_reply {
@@ -2443,4 +2446,11 @@ button.waiting_reply {
     float: right;
     font-size: 13px;
     border-radius: 3px;
+}
+
+
+/*17 jan 2019* by priyanshu*/
+
+span.document_file_name.inactive.customspan {
+    margin-left: 5px;
 }
