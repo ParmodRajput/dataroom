@@ -475,7 +475,7 @@ $(document).ready(function(){
            
            if(get_genrate_folder !== ''){
 
-              if((new RegExp('[~#%\&{}+\|]|\\.\\.|^\\.|\\.$')).test(get_genrate_folder) == false){
+              if(/^[a-zA-Z0-9-_ ]*$/.test(get_genrate_folder) == true){
 
 
                        var document_index = $('.document_indexing_count').val();
@@ -956,7 +956,6 @@ $(document).ready(function(){
                                var moveFile = $(ui.draggable).find('a').data('value');
                                var directoryPath = $('#current_directory_project').val();
                                var projects_id = $('.directory_location #project_id_doc').val();
-
                                //alert(moveFile);
                                $.ajax({
                                    type:"POST",
@@ -1107,9 +1106,10 @@ $(document).ready(function(){
               },  
               // multiple data sent using ajax//
               success: function (response) { 
-                   
+     
                    GetDocumentInfoByResponse(response,document_index,directory_url);
                    $('.notMoveInDiv').droppable("disable");
+       
 
                  }//success
         });//ajax
@@ -1134,14 +1134,12 @@ $(document).ready(function(){
 
                  html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Drag and Drop files here to upload</span></div>";
 
-                 html3 +='<div class="doc_index_list"><h4> <div class="upone" onclick="upone_folder();"><i class="fas fa-arrow-up custom upone-folder" ></i><div class="back-arrow"></div></div></h4></div>'; 
+                 // html3 +='<div class="doc_index_list"><h4> <div class="upone" onclick="upone_folder();"><i class="fas fa-arrow-up custom upone-folder" ></i><div class="back-arrow"></div></div></h4></div>'; 
 
-                 $('#upFolerTogo').html(html3);
+                 // $('#upFolerTogo').html(html3);
 
-                 getLastUrl(directory_url);
+                 // getLastUrl(directory_url);
                  
-
-                
                 }else{
 
                           $.each(getfolder,function(key ,value){
@@ -1251,8 +1249,8 @@ $(document).ready(function(){
 
                                          if(permission == '7')
                                          {
-
                                           html+="<div class='view_doc_permis_open' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
+
                                          }
                                          
                                           html+="</div></div></div>";
@@ -1393,7 +1391,7 @@ $(document).ready(function(){
                                        if(permission == '7')
                                        {
 
-                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
+                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
                                        }
                                        
                                         html+="</div></div></div>";
@@ -1410,25 +1408,23 @@ $(document).ready(function(){
                           $('#genrate_folder').modal('hide'); 
                           $('.choose_upload_document').removeClass("beat");
                           $(".table_section").find(".index-drag").addClass("draggable");
-
                           $(".draggable").draggable({ helper : "clone"});
 
                           $(".table_section").find(".index-drop").addClass("droppable");
 
                               // drag and move document 
                               $(".droppable").droppable({
-
+                                    
                                   drop: function( event, ui ) {
-
+                                        
                                          var movedInFolder= $( this ).find('a').data('value');
-                                       
-                                         var token =$('#csrf-token').val();
-
                                          $(ui.draggable).css('display','none');
                                          var moveFile = $(ui.draggable).find('a').data('value');
                                          var directoryPath = $('#current_directory_project').val();
                                          var projects_id = $('.directory_location #project_id_doc').val();
-   
+
+                                         var token = $('#csrf-token').val();
+                                         //alert(moveFile);
                                          $.ajax({
                                              type:"POST",
                                              url:"{{ Url('/') }}/move_documents",
@@ -1447,8 +1443,7 @@ $(document).ready(function(){
                                                 var error_massage = err.message;
 
                                                 alert(error_massage);
-
-                                                $('.doc_index_list [data-value = "'+movedInFolder+'"]').click();
+                                                data_display(token,directoryPath);
 
                                               },
 
@@ -1476,19 +1471,11 @@ $(document).ready(function(){
 
           $('.rightClickPopUpWithOutValue').css("display","none");
 
-          var value = $(this).find('a').data('value'); 
-          var getfileAndFolder = value.split('/');
-          var fileAndFolder    = getfileAndFolder.pop();
-          var checkFileAndFolder = fileAndFolder.split('.');
-          var getZipFile         = checkFileAndFolder.pop();
-          var count = checkFileAndFolder.length;
-
-
           var rightClickPositionLeft = e.pageX;
 
           var rightClickPositionTop  = e.pageY-63;
 
-          var menuHeight= $('.right_click.drop-holder').height();
+           var menuHeight=$('.right_click.drop-holder').height();
           //alert(e.pageY);
 
           //var comformHeight = windowHeight-e.pageY;
@@ -1498,7 +1485,7 @@ $(document).ready(function(){
             
           rightClickPositionTop  = e.pageY-285;
 
-          var arrow = e.pageY-25;
+           var arrow = e.pageY-25;
 
              $('.right_click.drop-holder').addClass("arrow");
 
@@ -1508,9 +1495,9 @@ $(document).ready(function(){
 
           }
 
-          $('.checkToActionPopValue').val(value);
-          $('.ques_ans_docs').data('value',value);
-          // $('.notes_docs').data('value',value);
+
+
+          var value = $(this).find('a').data('value'); 
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
 
@@ -1523,19 +1510,14 @@ $(document).ready(function(){
 
           $('.right_click.drop-holder').css({"display":"block","top":rightClickPositionTop,"left":rightClickPositionLeft});
 
-        
-          if(count == 0)
-          {
-             $('.view_doc_file').addClass('hidden');
-
-          }else{
-
-
-            $('.view_doc_file').removeClass('hidden');
-            $('.view_doc_file a').attr('href',"{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +file_id ,
+          $('.view_doc_file a').attr('href',"{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +file_id ,
           '_blank');
 
-          }
+          var getfileAndFolder = value.split('/');
+          var fileAndFolder    = getfileAndFolder.pop();
+          var checkFileAndFolder = fileAndFolder.split('.');
+          var getZipFile         = checkFileAndFolder.pop();
+          var count = checkFileAndFolder.length;
 
          $('#down-document').val(value);
          $('.copied_document').data('value',value);
@@ -3066,7 +3048,7 @@ $(document).on('click','.note1_doc_delete', function(){
    }else{
          
          $('.move_last_folder').addClass('hidden');
-         $('.notMoveInDiv').addClass('hidden');
+         $('.ui-droppable').addClass('hidden');
 
          var project_id = $('.projects_id').val();
          var document_index = $('.document_indexing_count').val();
@@ -3096,13 +3078,11 @@ $(document).on('click','.note1_doc_delete', function(){
  });
 
 $(document).on('click','.fav_filter',function(){
-  
+
    var token = $('#csrf-token').val();  
    var project_id = $('.projects_id').val();
    var document_index = $('.document_indexing_count').val();
    var directory_url = $('#current_directory').val();
-
-   $(this).addClass('search_fav_col');
 
    $.ajax({
               type : "POST",
@@ -3116,7 +3096,7 @@ $(document).on('click','.fav_filter',function(){
 
                     $('.filteredTextContent').removeClass('hidden');
                     $('.move_last_folder').addClass('hidden');
-                    $('.notMoveInDiv').addClass('hidden');
+                    $('.ui-droppable').addClass('hidden');
                     $('.text_filter').html('Favorite');
                     
                     GetDocumentInfoByResponse(response,document_index,directory_url);
@@ -3137,12 +3117,9 @@ $(document).on('click','.icon_close_filter',function(){
   $('#search_doc_content').val('');
   var directory_url = $('#current_directory').val();
 
-  $('.fav_filter').removeClass('search_fav_col');
-
-  $(this).removeClass('search_fav_col');
   $('.filteredTextContent').addClass('hidden');
   $('.move_last_folder').removeClass('hidden');
-  $('.notMoveInDiv').removeClass('hidden');
+  $('.ui-droppable').removeClass('hidden');
 
   data_display(token,directory_url);
 
@@ -3180,7 +3157,6 @@ $(document).on('click','.fence_view_doc_permis',function(){
      window.open("{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +getFileId, '_blank');
 
 });
-
 
 </script>
 

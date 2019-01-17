@@ -11,6 +11,7 @@
 |
 */
 Route::get('/', 'PagesController@home');
+Route::get('/home', 'PagesController@home');
 Route::get('/contact','PagesController@contact');
 Route::get('/platform','PagesController@platform');
 Route::get('/solutions','PagesController@solutions');
@@ -26,6 +27,12 @@ Route::post('/updateUserInfo','UserInfoUpdateController@updateUserInfo');
 //update user password
 
 Route::post('/updateUserpassword','UpdateUserpasswordController@updateUserPass');
+
+Route::get('/forgotpassword', function () {
+    return view('users.passwordForgot');
+});
+
+Route::post('/forgotpassword', 'UpdateUserpasswordController@forgotpassword');
 //check user to permision document
 
 Route::get('project/checkUser/{group_id}/{userEmail}','GroupsController@checkUser')->middleware('CheckUserForPermissionDoc');
@@ -130,6 +137,8 @@ Route::post('create_group', 'GroupsController@store');
 Route::post('invite_users', 'GroupsController@GroupInvites');
 Route::get('get_groups/{id}', 'GroupsController@getGroups');
 Route::post('/groups/get_group_info', 'GroupsController@getGroupInfo');
+Route::post('/users/get_user_info', 'GroupsController@getUserInfo');
+
 Route::post('/delete_group', 'GroupsController@deleteGroup');
 Route::post('/get_allgroups', 'GroupsController@getAllGroups');
 Route::post('/get_group_users', 'GroupsController@GroupsUsersGet');

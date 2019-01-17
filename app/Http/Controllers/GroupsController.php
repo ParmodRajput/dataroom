@@ -286,6 +286,17 @@ class GroupsController extends Controller
          
     } 
 
+        public function getUserInfo(Request $request)
+    {
+         $email = $request->userId; 
+         $userInfo = User::where('email', $email)->get();
+         $groupInfo =  Group_Member::where('member_email', $email)->get();
+         $GroupInfoAndUsers = ['userInfo'=>$userInfo , 'groupInfo'=>$groupInfo];
+        
+         return $GroupInfoAndUsers;
+         
+    } 
+
     public function deleteGroup(Request $request){
 
           $deleteGroups = $request->deletePath;
@@ -882,26 +893,24 @@ public function getPermissionDocument($project_id)
             if($access_limit == '1')
             {
 
-              print_r('sddsd');
-              // $access_limit = '1';
-              // $active_date = 'null';
+             
+              $access_limit = '1';
+              $active_date = null;
 
             }else{
 
-
-                 print_r('dfdf');
-               // $access_limit = '2';
-               // $active_date = $access_limit;
+               $active_date = $access_limit;  
+               $access_limit = '2';
+               
 
             }
 
-            die();
 
-         Group::where('id',$group_id)->update(['access_limit'=>$access_limit,'access_limit'=>$active_date]);
+         Group::where('id',$group_id)->update(['access_limit'=>$access_limit,'active_date'=>$active_date]);
  
          return "success";
 
-
+          //return $access_limit;
       }
 
 
