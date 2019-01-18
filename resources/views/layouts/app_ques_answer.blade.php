@@ -167,7 +167,7 @@
                    var window_width = $(window).width();
                    var window_height = $(window).height();
 
-                   $('.reply_section').css('height',window_height-90);
+                   $('.main_question_container').css('height',window_height-190);
 
                     $('#tree4').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
 
@@ -447,9 +447,10 @@
 
                  
               }
-              
+
+              $(".question_check:checked").parent().parent().find('.question_containor_sec .note_ques_status').html(html1);
+
               $('.right_header').html(html1);
-              $('.note_ques_status').html(html1);
               $('.reply_subject').val('');
               $('.reply_question_content').val('');
 

@@ -1078,7 +1078,7 @@
                                  html+="<img src='{{url('/')}}/dist/img/group.png'></img>";
 					  	    }
 
-					  	    html+= '  '+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' type='button' data-id='"+group_id+"'><img src='{{url('/')}}/dist/img/invite.png'></img></a></div></div></div><div class='users_list'>";
+					  	    html+= '  '+value.groups.group_name+"</a></div><div class='group-role-active'> <span>"+GroupUserRole+"</span> </div><div class='Invite-user-active'><a class='InviteUsers_icon' data-value='"+GroupUserRole+"' type='button' data-id='"+group_id+"'><img src='{{url('/')}}/dist/img/invite.png'></img></a></div></div></div><div class='users_list'>";
 
                         $.each( value.users, function( key, value){
 
@@ -1677,6 +1677,7 @@
  $(document).on('click','.InviteUsers_icon',function(){
 
  	    var group_id = $(this).data('id');
+ 	    var gropuRole = $(this).data('value');
  	    // $('.Select_groupOfUser option[value='+group_id+']').attr('selected','selected');
 
 	 	$('input:checkbox').prop('checked', false);
@@ -1686,14 +1687,19 @@
 
         var data_permission = $(this).parent().parent().find('.check-box-input').data('per');
 
-        if(data_permission == 0)
-        {
-        	$('#document_permission_modal').modal('show');
-        	$('#CheckUserChangePermission').val('1');
-        	$('#document_permission_modal #group'+group_id).css('background','lightgray');
-        	$('#document_permission_modal #group'+group_id).addClass('founder_permission');
-     	 
-        }
+	      if(gropuRole !== 'Administrator')
+	       {
+
+	        if(data_permission == 0)
+	        {
+	        	$('#document_permission_modal').modal('show');
+	        	$('#CheckUserChangePermission').val('1');
+	        	$('#document_permission_modal #group'+group_id).css('background','lightgray');
+	        	$('#document_permission_modal #group'+group_id).addClass('founder_permission');
+	     	 
+	        }
+
+	     }
 
        	$('.GroupByinvite').addClass('hidden');
 	 	$('.security_setting').removeClass('hidden');

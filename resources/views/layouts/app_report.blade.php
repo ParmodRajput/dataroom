@@ -170,7 +170,7 @@
                    var window_height = $(window).height();
 
                     $('.all_action').css('height',window_height-90);
-                    $('.report_display').css('height',window_height-90);
+                    $('.report_display_main').css('height',window_height-90);
                     $('.content-wrapper').css('height',window_height-90);
 
                     $('#tree4').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
@@ -305,10 +305,10 @@ $(document).on('click','#Report5',function(){
 
 $(document).on('click','#Report6',function(){
 
+    $('.report_display').addClass('hidden'); 
     $('.all_action').removeClass('hidden');
     $('.group_list_reports').addClass('hidden');
     $('.folder_and_file_tree_qa').addClass('hidden');
-    $('.report_display').addClass('hidden'); 
     $('.all_action input[type="checkbox"]').prop('checked',false);
     $('.groups_check_record input[type="checkbox"]').prop('checked',false);
     $('.groupAndUsers').addClass('hidden');

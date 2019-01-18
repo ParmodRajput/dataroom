@@ -143,9 +143,9 @@ class ReportsController extends Controller
                         //third
                         $Auth = $actions['Auth'];
 
-                        $getAuther = User::where('id',$Auth)->get()->toArray();
+                        $getAuther = User::where('id',$Auth)->first();
 
-                        $auther = $getAuther['0']['name'];
+                        $auther = $getAuther['name'];
 
                         //forth
                         
@@ -165,6 +165,9 @@ class ReportsController extends Controller
 
                           foreach ($actions as $actions) {
 
+                            if(!empty($actions))
+                            {
+
                                 $actionTypeId = $actions['action'];
 
                                 $getAction = Action::where('id',$actionTypeId)->first();          
@@ -181,9 +184,9 @@ class ReportsController extends Controller
                                 //third
                                 $Auth = $actions['Auth'];
 
-                                $getAuther = User::where('id',$Auth)->get()->toArray();
+                                $getAuther = User::where('id',$Auth)->first();
 
-                                $auther = $getAuther['0']['name'];
+                                $auther = $getAuther['name'];
 
                                 //forth
                                 
@@ -196,6 +199,8 @@ class ReportsController extends Controller
                       }
 
                  }
+
+               }
 
             }
 

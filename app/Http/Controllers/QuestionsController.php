@@ -73,12 +73,13 @@ class QuestionsController extends Controller
  
             $QuestionRedirecturl = url('/')."/project/".$project_id."/question";
 
-        foreach ($users_email  as $users_email) {
+        foreach ($users_email as $users_email) {
 
    
 		        // send mail 
 
 		        $data = array(
+
 	            'name' => "Invite To Prodata room By prodata.com",
 	            'email' => $users_email,
 	            'sender_email' => Auth::user()->email,
@@ -86,6 +87,7 @@ class QuestionsController extends Controller
 	            'subject'=>$subject,
 	            'document_name'=>$doc_name,
               'QuestionRedirecturl' => $QuestionRedirecturl,
+              
 
 	            );
 
@@ -243,13 +245,14 @@ class QuestionsController extends Controller
            // sender email
              $sender_email = $getSenderName->email;
 
-             $getSenderGroup = Group_Member::where('member_email',$sender_email)->first(); 
-             $sendergroup_id = $getSenderGroup->group_id;
+             $getSenderGroup = Group_Member::where('member_email',$sender_email)->where('project_id',$project_id)->first(); 
 
-             $GetGroupName = group::where('id',$sendergroup_id)->first();
+             $sendergroup_id = $getSenderGroup['group_id'];
+
+             $GetGroupName = group::where('id',$sendergroup_id)->where('project_id',$project_id)->first();
 
              // group_name 
-             $groupName = $GetGroupName->group_name;
+             $groupName = $GetGroupName['group_name'];
 
              $Question_array1 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
 
@@ -292,13 +295,14 @@ class QuestionsController extends Controller
 	       // sender email
            $sender_email = $getSenderName->email;
 
-           $getSenderGroup = Group_Member::where('member_email',$sender_email)->first(); 
+           $getSenderGroup = Group_Member::where('member_email',$sender_email)->where('project_id',$project_id)->first();
+
            $sendergroup_id = $getSenderGroup->group_id;
 
-           $GetGroupName = group::where('id',$sendergroup_id)->first();
+           $GetGroupName = group::where('id',$sendergroup_id)->where('project_id',$project_id)->first();
 
            // group_name 
-           $groupName = $GetGroupName->group_name;
+           $groupName = $GetGroupName['group_name'];
 
 
            $Question_array2 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
