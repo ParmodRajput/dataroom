@@ -173,8 +173,11 @@
       	var window_width = $(window).width();
 		var window_height = $(window).height();
 
-		alert(window_width);
-		alert(window_height);
+		$('#IMGcanvas').css('width',window_width);
+        $('#IMGcanvas').css('height',window_height);
+        $('#IMGcanvas').css('padding-top','1%');
+        $('#IMGcanvas').css('padding-bottom','1%');
+        $('#IMGcanvas').css('padding-right','3%');
 
 		var excel_path  = $('#excel_file').val();
 
@@ -462,8 +465,8 @@
 		    var canvas = document.getElementById("IMGcanvas");
 		 
 		    var translatePos = {
-		        x: canvas.width/10,
-		        y: canvas.height/10 
+		        x: canvas.width/100,
+		        y: canvas.height/100 
 		    };
 		 
 		    var scale = 1.0;

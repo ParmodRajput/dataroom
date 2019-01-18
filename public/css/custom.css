@@ -1818,7 +1818,6 @@ background-size: cover;
     top:50px;
 }
 
-.button_next_pre{ position: absolute; top:70%; left:40%; transform: translate(50%, 50%); }
 
 /*end
 */
@@ -2460,8 +2459,12 @@ canvas#canvas{
     margin: 0 auto;
 }
 
-canvas#IMGcanvas {
-    width: 1242px;
-    padding: 3%;
-    height: 602px;
+.button_next_pre {
+   
+   position: absolute;
+   text-align: center;
+   z-index: 999;
+   width: 100%;
+   margin-top: -110px;
 }
+
