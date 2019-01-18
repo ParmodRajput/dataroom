@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Project;
 use Session;
 use App\Document;
+use App\Report;
 use App\Group;
 use App\Group_Member;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ class ProjectsController extends Controller
     public function store(Request $request){
 
       $userEmail = Auth::user()->email;
+      $authId  = Auth::user()->id;
 
       $validator = Validator::make($request->all(), [
         'company_name' => 'required',
@@ -47,9 +49,21 @@ class ProjectsController extends Controller
        $post->industry      =  $request->industry;
        $post->server_location = $request->server_location;
        $post->save(); 
-	   
+
+
 	     $project_id=$post->id;
        $projects=Storage::disk('public')->makeDirectory('documents/'.Auth::user()->id."/".$project_slug);	
+
+       $store_path = 'public/documents/'.$authId.'/'.$project_slug;
+
+               // Save record
+
+       $report = new Report();
+       $report->action = '14';
+       $report->document_path = $store_path;
+       $report->Auth = $authId;
+       $report->save();
+     
        // create recycleBin folder
        Storage::disk('public')->makeDirectory('documents/'.Auth::user()->id."/".$request->project_name."/RecycleBin"); 
    
@@ -84,6 +98,15 @@ class ProjectsController extends Controller
             $group->active_date  = null;
             $group->QA_access_limit = '0';    
             $group->save();
+            $current_id = $group->id;
+
+
+            $report = new Report();
+            $report->action = '28';
+            $report->document_path = $current_id;
+            $report->Auth = $authId;
+            $report->save();
+
 
             $group_id=$group->id;
 
@@ -175,12 +198,23 @@ class ProjectsController extends Controller
 
   public function deleteProject($id)
   {
+
    
     $project = Project::find($id);
-      $project_name = Project::where('id', $id)->value('project_slug');
+    $project_name = Project::where('id', $id)->value('project_slug');
+
     $status = Storage::deleteDirectory('public/documents/'.Auth::user()->id."/".$project_name);
-  
+
     $project->delete();
+
+
+// save record
+    $report = new Report();
+    $report->action = '29';
+    $report->document_path = 'public/documents/'.Auth::user()->id."/".$project_name;
+    $report->Auth = Auth::user()->id;
+    $report->save();
+
     return "success";
 
   }

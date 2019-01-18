@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Group;
 use App\User;
+use App\Report;
 use Illuminate\Support\Facades\Auth;
 use App\Project;
 use App\Collaboration;
@@ -68,6 +69,14 @@ class GroupsController extends Controller
     	  $group->save();
 
         $current_group_id = $group->id;
+
+         // Save record
+
+       $report = new Report();
+       $report->action = '28';
+       $report->document_path = $current_group_id;
+       $report->Auth = Auth::user()->id;
+       $report->save();
 
       // add collaboration
 
@@ -368,12 +377,40 @@ class GroupsController extends Controller
 
       
         $project_id = $request->project_id;
-
+        $seachContant = $request->seachContant;
         $authId = Auth::user()->id;  
         
-        $Auth_group_id = getAuthgroupId($project_id);
+        if(!empty ( $seachContant )){
 
-        $getCurrentGroupUser = Group::where('id',$Auth_group_id)->first();
+
+          $getCurrentGroupUsers = Group::where('group_name','LIKE',"{$seachContant}%")->get();
+
+          foreach ($getCurrentGroupUsers as $getCurrentGroupUser) {
+
+           $Auth_group_id = $getCurrentGroupUser->id;
+
+           $responseResult = $this->FetchGroupAndUser($project_id,$seachContant,$authId,$Auth_group_id,$getCurrentGroupUser);
+
+          }
+
+          return  $responseResult;
+
+        }else{
+
+          $Auth_group_id = getAuthgroupId($project_id);
+
+          $getCurrentGroupUser = Group::where('id',$Auth_group_id)->first();
+
+          $responseResult = $this->FetchGroupAndUser($project_id,$seachContant,$authId,$Auth_group_id,$getCurrentGroupUser);
+
+         return  $responseResult;
+          
+        }
+
+    }
+
+    function FetchGroupAndUser($project_id,$seachContant,$authId,$Auth_group_id,$getCurrentGroupUser){
+
 
         $CurrentGroupUser = $getCurrentGroupUser->group_user_type;
 
@@ -424,7 +461,6 @@ class GroupsController extends Controller
 
           $getGroupsId = Collaboration::where('project_id',$project_id)->where('collaboration_group_id',$Auth_group_id)->pluck('group_id');
 
-
            foreach ($getGroupsId as $getGroupsId) {
 
               // get groups  
@@ -454,6 +490,7 @@ class GroupsController extends Controller
 
               array_push($getGroups,$getGroupUsers);
 
+
             } 
 
 
@@ -464,17 +501,29 @@ class GroupsController extends Controller
         }
 
         return $getGroups;
+
     }
+
 
     public function GroupsUsersGet(Request $request){
 
         $project_id = $request->project_id;
-
+        //$userRole = $request->role;
         $get = Group::where('project_id',$project_id)->get();
 
         return $get;
         
     }
+
+    public function SelectGroupsUsers(Request $request){
+
+        $project_id = $request->project_id;
+        $userRole = $request->role;
+        $get = Group::where('project_id',$project_id)->where('group_user_type',$userRole)->get();
+
+        return $get;
+        
+    }    
 
 
     public function getAllUserInProject(Request $request)
@@ -833,7 +882,8 @@ public function getPermissionDocument($project_id)
      return "success";
 
     }
-    
+
+ 
       public function ChangeCollaborationSetting(Request $request){
 
           $project_id = $request->project_id;
@@ -897,7 +947,7 @@ public function getPermissionDocument($project_id)
 
       } 
 
-      public function ChangeAccessRoomSetting(Request $request){
+    public function ChangeAccessRoomSetting(Request $request){
 
           $project_id = $request->project_id;
           $access_limit = $request->updatedsecurityValue1;
@@ -926,8 +976,39 @@ public function getPermissionDocument($project_id)
          return "success";
 
           //return $access_limit;
-      }
+    }
 
+    public function ChangeMemberAccessSetting(Request $request){
+
+        $project_id = $request->project_id;
+        $access_limit = $request->updatedsecurityValue1;
+        $group_id = $request->group_id;
+        $CurrentEmail = $request->CurrentEmail;
+        $userId = Auth::user()->id;
+        $active_date = '';
+
+          if($access_limit == '1')
+          {
+
+           
+            $access_limit = '1';
+            $active_date = null;
+
+          }else{
+
+             $active_date = $access_limit;  
+             $access_limit = '2';
+             
+
+          }
+
+
+       Group_Member::where('group_id',$group_id)->where('member_email',$CurrentEmail)->where('project_id',$project_id)->update(['access_limit'=>$access_limit,'active_date'=>$active_date]);
+
+       return "success";
+
+        //return $access_limit;
+    }
 
      public function ChangeQuesAnsSetting(Request $request){
 
@@ -946,11 +1027,12 @@ public function getPermissionDocument($project_id)
      public function MembersChangeQuesAnsSetting(Request $request){
 
           $project_id = $request->project_id;
+          $userEmail = $request->userEmail;
           $access_ques_limit = $request->updatedQuestionValue;
           $group_id = $request->group_id;
           $userId = Auth::user()->id;
 
-          Group_Member::where('id',$group_id)->where('project_id',$project_id)->update(['access_qa'=>$access_ques_limit]);
+          Group_Member::where('member_email',$userEmail)->where('group_id',$group_id)->where('project_id',$project_id)->update(['access_qa'=>$access_ques_limit]);
  
          return "success";
 

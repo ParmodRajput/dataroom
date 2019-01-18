@@ -62,6 +62,7 @@
 	<body>
        <div class="row">
        	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
+       	<input type='hidden' id='currentPdfScale'>
 
 		<div class="top_head col-md-12">
 		<div class="left_whole col-md-6">
@@ -93,9 +94,11 @@
                   </span>
               </a>
          </span>
-		<i class="fa fa-print"></i>
+         <span class="print_document">
+		   <i class="fa fa-print"></i>
+	     </span>
 		<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments"></i></a>
-		<i class="fa fa-search"></i>
+		<!-- <i class="fa fa-search"></i> -->
 		</div>
 
 		<div class="arrows_right hidden">
@@ -116,12 +119,13 @@
 
 				 <div class="kato">
 				 	<div class="overlay_new"></div>
-	                <canvas id="canvas" width="1500" height="700"></canvas> 
-	                <div class="blurPic" style='display: none'></div>
+	                <canvas id="canvas"></canvas> 
 	                <div class="button_next_pre hidden">
-			           <button id="pdf-prev">Previous</button>
-                       <button id="pdf-next">Next</button>
-                    </div> 
+				           <button id="pdf-prev">Previous</button>
+	                       <button id="pdf-next">Next</button>
+	                    </div> 
+	                <canvas id="IMGcanvas" width="1500" height="700"></canvas>  
+	                <div class="blurPic" style='display: none'></div>
                  </div>
                  <div id="excel_viewer"></div>
                  <div id='docx_viewer'></div>
@@ -147,8 +151,33 @@
 
       $(document).ready(function(){
 
+
+		$(window).bind('mousewheel DOMMouseScroll', function(e)
+		{
+		    //ctrl key is pressed
+		    if(e.ctrlKey == true)
+		    {
+		        e.preventDefault();       
+		    }
+		});
+
+		$(window).keydown(function(event)
+			{
+			    if((event.keyCode == 107 && event.ctrlKey == true) || (event.keyCode == 109 && event.ctrlKey == true))
+			    {
+			        event.preventDefault();
+
+			}
+		});
+
       	var window_width = $(window).width();
 		var window_height = $(window).height();
+
+		$('#IMGcanvas').css('width',window_width);
+        $('#IMGcanvas').css('height',window_height);
+        $('#IMGcanvas').css('padding-top','1%');
+        $('#IMGcanvas').css('padding-bottom','1%');
+        $('#IMGcanvas').css('padding-right','3%');
 
 		var excel_path  = $('#excel_file').val();
 
@@ -183,28 +212,60 @@
 		    
 		    if(docType == 'jpeg' || docType == 'jpg'|| docType == 'png')
 		    {
-		    				var canvas = document.getElementById("canvas");
+
+		    	            $('#canvas').css('display','none');
+
+		    				var canvas = document.getElementById("IMGcanvas");
 					        var ctx = canvas.getContext("2d");
+					        var cw = canvas.width;
+                            var ch = canvas.height;
 
 					        var img = new Image();
 					        $('.overlay_body').addClass('hidden');
+					        img.crossOrigin='anonymous';
 					        img.onload = function () {
 					            // canvas.width=img.width;
 					            // canvas.height=img.height;
 					            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,1500, 1000);
+
+					            // var dataURL=watermarkedDataURL(canvas,"It's Mine! nyfbfgf gfhdfksdf  fus fusd f f sdfo fd f hkd fh ud ");
 					        }
+
 					        img.src ='data:image/jpeg;base64,'+docPath;
+
+					    //     function watermarkedDataURL(canvas,text){
+									//   var tempCanvas=document.createElement('canvas');
+									//   var tempCtx=tempCanvas.getContext('2d');
+									//   var cw,ch;
+									//   cw=tempCanvas.width=canvas.width;
+									//   ch=tempCanvas.height=canvas.height;
+									//   tempCtx.drawImage(canvas,0,0);
+									//   tempCtx.font="240px verdana";
+									//   var textWidth=tempCtx.measureText(text).width;
+									//   tempCtx.globalAlpha=.50;
+									//   tempCtx.fillStyle='white'
+									//   tempCtx.fillText(text,cw-textWidth-10,ch-20);
+									//   tempCtx.fillStyle='black'
+									//   tempCtx.fillText(text,cw-textWidth-10+2,ch-20+2);
+									//   // just testing by adding tempCanvas to document
+									//   document.body.appendChild(tempCanvas);
+									//   return(tempCanvas.toDataURL());
+									// }
 		    }
-              
+
              // pdf view
 
 		    if(docType == 'pdf')
 		    {
-                $('.button_next_pre').removeClass('hidden');   
-                pdfViewer(docPath,__CURRENT_PAGE);
+		    	$('#canvas').css('display','block');
+
+                $('.button_next_pre').removeClass('hidden'); 
+                var scale = (1.2);   
+               
+                pdfViewer(docPath,__CURRENT_PAGE,scale);
 		    }
 
-		    function pdfViewer (docPath,__CURRENT_PAGE){
+		    function pdfViewer (docPath,__CURRENT_PAGE,scale){
 
 		    	var pdfData = atob(docPath);
 
@@ -224,7 +285,7 @@
 					  var pageNumber = __CURRENT_PAGE;
 					  pdf.getPage(pageNumber).then(function(page) {
 
-					    var scale = 1.5;
+					    // var scale = 0.4;
 					    var viewport = page.getViewport(scale);
 
 					    $('.overlay_body').addClass('hidden');
@@ -233,7 +294,9 @@
 					    var canvas = document.getElementById('canvas');
 					    var context = canvas.getContext('2d');
 					    canvas.height = 700;
-					    canvas.width = 1500;
+					    canvas.width = 700;
+
+					    $('#canvas').css('text-align','center');
 
 					    // Render PDF page into canvas context
 					    var renderContext = {
@@ -257,14 +320,14 @@
 			$("#pdf-prev").on('click', function() {
 			    if(__CURRENT_PAGE != 1)
 
-			        pdfViewer(docPath,--__CURRENT_PAGE);
+			        pdfViewer(docPath,--__CURRENT_PAGE,scale);
 			});
 
 			// Next page of the PDF
 			$("#pdf-next").on('click', function() {
 			    if(__CURRENT_PAGE != __TOTAL_PAGES)
 
-			        pdfViewer(docPath,++__CURRENT_PAGE);
+			        pdfViewer(docPath,++__CURRENT_PAGE,scale);
 			});
 
 
@@ -367,11 +430,128 @@
                  if( docType == 'ppt')
                  {
                  	 var data = $('#docx_file_data').val();
-                 	 pdfViewer(docPath,__CURRENT_PAGE);
+                 	 pdfViewer(docPath,__CURRENT_PAGE,scale);
                  }
 
        });
 
+//print  functionality 
+
+ $(document).on('click','.print_document',function(){
+    window.print();
+ });
+
+ // zoom-in and zoom-out fucntionality:-
+
+		function draw(scale, translatePos){
+		    var canvas = document.getElementById("IMGcanvas");
+		    var context = canvas.getContext("2d");
+		 
+		    // clear canvas
+		    context.clearRect(0, 0, canvas.width, canvas.height);
+		 
+			context.save();
+			context.translate(translatePos.x, translatePos.y);
+			context.scale(scale, scale);
+			
+			context.drawImage(img, 0, 0, img.width, img.height,     // source rectangle
+		                   0, 0, canvas.width, canvas.height); // destination rectangle;
+		  
+		    
+			context.restore();
+		} 
+
+		var initialize = (function(){
+		    var canvas = document.getElementById("IMGcanvas");
+		 
+		    var translatePos = {
+		        x: canvas.width/100,
+		        y: canvas.height/100 
+		    };
+		 
+		    var scale = 1.0;
+		    var scaleMultiplier = 0.92;
+		    var startDragOffset = {};
+		    var mouseDown = false;
+		    var docPath = $('#doc_source').val();
+		    var docType = $('#doc_type').val();
+
+		    if(docType == 'jpg' || docType == 'png' || docType == 'jpeg' )
+		    	{
+
+			       img = new Image();
+			       img.src ='data:image/jpeg;base64,'+docPath;
+
+			   }
+		 
+		    // add button event listeners
+		    document.getElementById("plus").addEventListener("click", function(){
+		        scale /= scaleMultiplier;
+		        draw(scale, translatePos);
+		    }, false);
+		 
+		    document.getElementById("minus").addEventListener("click", function(){
+
+		    	if(docType == 'jpg' || docType == 'png' || docType == 'jpeg' )
+		    	{
+                   
+			        scale *= scaleMultiplier;
+			        draw(scale, translatePos);
+		    	}
+
+		    	if(docType == 'pdf')
+		    	{
+                  
+		    	}
+
+		    }, false);
+		 
+		    // add event listeners to handle screen drag
+		    canvas.addEventListener("mousedown", function(evt){
+
+		        mouseDown = true;
+		        startDragOffset.x = evt.clientX - translatePos.x;
+		        startDragOffset.y = evt.clientY - translatePos.y;
+		    });
+		 
+		    canvas.addEventListener("mouseup", function(evt){
+		        mouseDown = false;
+		    });
+		 
+		    canvas.addEventListener("mouseover", function(evt){
+		        mouseDown = false;
+		    });
+		 
+		    canvas.addEventListener("mouseout", function(evt){
+		        mouseDown = false;
+		    });
+		 
+		    canvas.addEventListener("mousemove", function(evt){
+		        if (mouseDown) {
+		            translatePos.x = evt.clientX - startDragOffset.x;
+		            translatePos.y = evt.clientY - startDragOffset.y;
+		            draw(scale, translatePos);
+		        }
+		    });
+           
+
+		    draw(scale, translatePos);
+		}());
+
+		//document.addEventListener('contextmenu', event => event.preventDefault());
+
+		document.onkeydown = function(e) {
+
+	    if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 85 ||     e.keyCode === 117 || e.keycode === 17 || e.keycode === 85)) {//ctrl+u Alt+c, Alt+v will also be disabled sadly.
+	          
+	         }
+	       return false;
+	    };
+
+	    $('body').bind('copy paste',function(e) {
+            e.preventDefault(); return false; 
+        });
+ 
 	</script>
 
 </html>

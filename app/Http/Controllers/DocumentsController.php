@@ -50,14 +50,7 @@ class DocumentsController extends Controller
 
            $CurrentGroupUser = checkCurrentGroupUser($project_id);
 
-           if($CurrentGroupUser == 'Individual_users')
-           {
-              $folder_path_permission = '';
-
-           }else{
-
-             $folder_path_permission = $folder->path.'@?#'.$folder_permission;
-           }
+           $folder_path_permission = $folder->path.'@?#'.$folder_permission;
            
            $return[$folder_path_permission]  =  $this->get_Folders($folder->path);
 
@@ -151,19 +144,9 @@ public function getDocument($project_id)
 
                   $folder_tree = $this->get_Folders($projectFolderPath);
 
-                  if($CurrentGroupUser == 'Individual_users')
-                  {
-                    
-                    $projectFolderPermission ='';
-                    $folder_file_tree ='';
-
-                  }else{
-
-                    $projectFolderPermission = $this->getSingleGroupsPermission($projectFolderPath);
+                  $projectFolderPermission = $this->getSingleGroupsPermission($projectFolderPath);
                   
-                    $folder_file_tree = $this->get_FoldersAndFiles($projectFolderPath);
-
-                  }
+                  $folder_file_tree = $this->get_FoldersAndFiles($projectFolderPath);
 
 
               return view('documents.index',compact('project_name','groups','projectFolderPermission','folder_tree','folder_file_tree','project_id','projectCreaterId','CurrentGroupUser'));
@@ -420,6 +403,7 @@ public function createFolder(Request $request) {
  $storeFolder->save();
  
  $getCurrentDocumentId = $storeFolder->id;
+ 
  // Save record
 
  $report = new Report();
@@ -577,7 +561,7 @@ public function showDocument(Request $request){
 
                  //get the all fav document in this directory
          
-                $getFavFolder = FavDocument::where('document_path',$path)->where('user_id', $user_id)->pluck('id');
+                $getFavFolder = FavDocument::where('document_path',$path)->pluck('id');
 
                 // $getFavFolder = $getFavFolder[0];
 
@@ -603,14 +587,9 @@ public function showDocument(Request $request){
 
                       if($Foldercount !== 0){
 
-                        if($getProjectCreaterId == "Individual_users"){
-                            
-                           $Folder_array = [];
-
-                        }else{
                            
                             $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
-                        }
+                        
 
                            array_push($IndexOfFolder,$Folder_array);
                       
@@ -663,14 +642,9 @@ public function showDocument(Request $request){
 
                   if($Filecount !== 0){
 
-                      if($getProjectCreaterId == "Individual_users"){ 
-
-                        $File_array = [];
-
-                      }else{
 
                         $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
-                      }      
+                           
 
                      array_push($IndexOfFile,$File_array);
                       
@@ -683,7 +657,6 @@ public function showDocument(Request $request){
         
            $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
  
-
   return $data;
 
 }
@@ -1083,6 +1056,8 @@ public function rename_documents(Request $request){
 
        document::where('path',$documentPath)->update(['path' => $updateDocumentPath,'directory_url'=>$updateDocumentDirUrl]);
 
+       FavDocument::where('document_path',$documentPath)->update(['document_path' => $updateDocumentPath]);
+
     }  
 
     Storage::move($renameDocumentFullPath,$new_path);
@@ -1090,6 +1065,8 @@ public function rename_documents(Request $request){
     // get the all document in folder.
 
     document::where('path',$renameDocumentFullPath)->update(['document_name' =>$document_name, 'path' => $new_path]);
+  
+  FavDocument::where('document_path',$renameDocumentFullPath)->update(['document_path' => $new_path]);
 
     return 'rename';
 
@@ -1937,16 +1914,8 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                                     if($Foldercount !== 0){
 
-                                      if($getProjectCreaterId == "Individual_users"){
-                                          
-                                         $Folder_array = [];
 
-                                      }else{
-                                         
                                           $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
-
-                                         
-                                      }
 
                                          array_push($IndexOfFolder,$Folder_array);
                                     
@@ -1999,14 +1968,8 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                                 if($Filecount !== 0){
 
-                                    if($getProjectCreaterId == "Individual_users"){ 
-
-                                      $File_array = [];
-
-                                    }else{
-
                                       $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
-                                    }      
+                                          
 
                                    array_push($IndexOfFile,$File_array);
                                     
@@ -2015,11 +1978,17 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                               }
 
                         }
-
-
             }  
 
              $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
+
+                       // Save record
+
+           $report = new Report();
+           $report->action = '15';
+           $report->document_path = $projects_id;
+           $report->Auth = $user_id;
+           $report->save();
                
 
                 return $data;
@@ -2039,7 +2008,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
               $IndexOfFile   = [];
               $IndexOfFolder = [];
 
-              $getFavDocOfProject = FavDocument::where('project_id',$projects_id)->get();
+              $getFavDocOfProject = FavDocument::where('project_id',$projects_id)->where('user_id',$user_id)->get();
             
                 foreach ($getFavDocOfProject as $getFavDocOfProject) {
                       
@@ -2085,16 +2054,11 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                                       if($Foldercount !== 0){
 
-                                        if($getProjectCreaterId == "Individual_users"){
-                                            
-                                           $Folder_array = [];
-
-                                        }else{
                                            
                                             $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
 
                                            
-                                        }
+                                        
 
                                            array_push($IndexOfFolder,$Folder_array);
                                       
@@ -2149,14 +2113,10 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                                   if($Filecount !== 0){
 
-                                      if($getProjectCreaterId == "Individual_users"){ 
 
-                                        $File_array = [];
-
-                                      }else{
 
                                         $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
-                                      }      
+                                           
 
                                      array_push($IndexOfFile,$File_array);
                                      //print_r($IndexOfFile);
@@ -2166,13 +2126,18 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                                 }
 
                           }
-
-                        
-                         
-                                        
+                   
                 }
 
-                           $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
+          // Save record
+
+           $report = new Report();
+           $report->action = '30';
+           $report->document_path = $projects_id;
+           $report->Auth = $user_id;
+           $report->save();
+
+           $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
               return $data; 
 
 

@@ -1772,15 +1772,15 @@ canvas {
 .arrows_right{ float:right; width:50px;}
 .arrows_right i{margin:0 5px; font-size:18px;}
 
-.overlay_new{
-  position: absolute;
-  top: 0; 
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: url(../images/watermark/small.png);
-  display: block;
-  
+.overlay_new {
+position: fixed;
+top: 50px;
+bottom: 0;
+left: 0;
+right: 0;
+background: url(../images/watermark/small.png);
+display: block;
+background-size: cover;
 }
 
 .container:hover .overlay {
@@ -1818,7 +1818,6 @@ canvas {
     top:50px;
 }
 
-.button_next_pre{ position: absolute; top:70%; left:40%; transform: translate(50%, 50%); }
 
 /*end
 */
@@ -1854,9 +1853,7 @@ span.dld {
 }
 .viewer_display {
 
-    padding-top: 70px;
     padding-left: 25px;
-    padding-right: 25px;
     padding-bottom: 25px;
 
 }
@@ -1922,9 +1919,10 @@ span.subject_title {
     width: 100%;
 }
 
-.reply_section{
+.main_question_container{
 
-     overflow: scroll;
+    width: 100%;
+    overflow: scroll;
     overflow-x: hidden;
 }
 
@@ -2225,8 +2223,7 @@ p.subject_ques {
 
 }
 
-
-.report_display{
+.report_display_main{
 
     overflow:scroll;
     overflow-x: hidden;
@@ -2244,7 +2241,7 @@ p.subject_ques {
 
 .docActive{
 
-    color:blue;
+    color:green;
 }
 
 button.waiting_reply {
@@ -2433,7 +2430,7 @@ button.waiting_reply {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     content: "";
-    top: 307px!important;
+    top: 270px!important;
 }
 
 .search_fav_col{
@@ -2449,5 +2446,26 @@ button.waiting_reply {
     float: right;
     font-size: 13px;
     border-radius: 3px;
+}
+
+/*17 jan 2019* by priyanshu*/
+
+span.document_file_name.inactive.customspan {
+    margin-left: 5px;
+}
+
+canvas#canvas{
+
+    width: 595px;
+    margin: 0 auto;
+}
+
+.button_next_pre {
+   
+   position: absolute;
+   text-align: center;
+   z-index: 999;
+   width: 100%;
+   margin-top: -110px;
 }
 

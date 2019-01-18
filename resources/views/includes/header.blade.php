@@ -42,12 +42,15 @@
 							<a href="{{url('/')}}/project/{{$project_id}}/users" class="nav-link">
 								<i class="material-icons">&#xe7ef;</i> Users</a>
 						</li>
-					@endif
+
 					<li> 
-				 <li class="nav-item ">
+
+				    <li class="nav-item ">
 							<a href="{{url('/')}}/project/{{$project_id}}/questions" class="nav-link">
 								<i class="fa fa-comments" aria-hidden="true"></i>Q&A</a>
-					</li>
+				    </li>
+
+				    @endif
 
 					<li class="nav-item ">
 							<a href="{{url('/')}}/project/{{$project_id}}/reports" class="nav-link">
