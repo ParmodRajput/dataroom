@@ -883,33 +883,7 @@ public function getPermissionDocument($project_id)
 
     }
 
-    public function ChangeMemberGroup(Request $request){
-
-      $project_id = $request->project_id;
-      $ChangedRole = $request->movedGroupId;
-      $userEmail = $request->userEmail;
-
-      // if($ChangedRole == '1')
-      // {
-
-
-      //     Group_Member::where('id',$GroupId)->update(['group_for'=>'user','group_user_type'=>'Collaboration_users']);
-
-      // }elseif ($ChangedRole == '2'){
-
-      //   Group_Member::where('id',$GroupId)->update(['group_for'=>'user','group_user_type'=>'Individual_users']);
-        
-      // }else{
-
-      //    Group_Member::where('id',$GroupId)->update(['group_for'=>'Administrator','group_user_type'=>'Administrator','access_limit'=>'1','active_date'=>null,'QA_access_limit'=>'0','collaboration_with'=>'all_group']);
-      // }
-     
-     return "success";
-
-    }
-
-
-    
+ 
       public function ChangeCollaborationSetting(Request $request){
 
           $project_id = $request->project_id;
@@ -973,7 +947,7 @@ public function getPermissionDocument($project_id)
 
       } 
 
-      public function ChangeAccessRoomSetting(Request $request){
+    public function ChangeAccessRoomSetting(Request $request){
 
           $project_id = $request->project_id;
           $access_limit = $request->updatedsecurityValue1;
@@ -1002,8 +976,39 @@ public function getPermissionDocument($project_id)
          return "success";
 
           //return $access_limit;
-      }
+    }
 
+    public function ChangeMemberAccessSetting(Request $request){
+
+        $project_id = $request->project_id;
+        $access_limit = $request->updatedsecurityValue1;
+        $group_id = $request->group_id;
+        $CurrentEmail = $request->CurrentEmail;
+        $userId = Auth::user()->id;
+        $active_date = '';
+
+          if($access_limit == '1')
+          {
+
+           
+            $access_limit = '1';
+            $active_date = null;
+
+          }else{
+
+             $active_date = $access_limit;  
+             $access_limit = '2';
+             
+
+          }
+
+
+       Group_Member::where('group_id',$group_id)->where('member_email',$CurrentEmail)->where('project_id',$project_id)->update(['access_limit'=>$access_limit,'active_date'=>$active_date]);
+
+       return "success";
+
+        //return $access_limit;
+    }
 
      public function ChangeQuesAnsSetting(Request $request){
 

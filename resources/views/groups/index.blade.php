@@ -182,7 +182,7 @@
 		    			</div>
 		    			<div>
 	    		            <span class="btn btn-danger member_cancel_edit_security"> cancel</span>
-	    		            <span class=" btn btn-primary apply_change_security">Apply</span> 		    				
+	    		            <span class=" btn btn-primary apply_member_change_security">Apply</span> 		    				
 		    			</div>
 				  	</div>
 				 	<span class="edit_member_security"><i class="fa fa-pencil"></i> edit </span> 
@@ -2626,7 +2626,55 @@ $(document).on('change','.collaboration_setting_members input:radio',function(){
 
     });
 
+  $(document).on('click','.apply_member_change_security',function(){
 
+  	 var updatedsecurityValue  = $("input[name='updateMamberSecuritySetting']:checked").val();
+
+  	 if(updatedsecurityValue == '1')
+  	 {
+  	 	var updatedsecurityValue1 = 1;
+
+  	 }else{
+
+          var updatedsecurityValue1 = $('.validDateMembers').val();
+
+  	 }
+
+  	 var project_id = $('#project_id').val();
+  	 var group_id = $('#CurrentRoleGroupId').val();
+  	 var CurrentEmail = $('#CurrentRoleEmail').val();
+     var token = $('#csrf-token').val();
+ 		$.ajax({
+
+				type:"POST",
+				url:"{{ Url('/') }}/update/member/access_setting",
+	            data:{
+	                _token : token,
+	                 project_id :project_id, 
+	                 group_id : group_id,
+	                 updatedsecurityValue1  : updatedsecurityValue1,
+	                 CurrentEmail :CurrentEmail,
+	               
+	              },  
+
+				success: function (response) { 
+
+					getgroups();
+					
+					 $('.display_groups input:checkbox').prop('checked', this.checked);
+				     $('.listUsersGroups').addClass('hidden'); 
+				     $('.update_question_change').addClass('hidden');
+				     $('.group_security_setting').removeClass('hidden');
+				     $('#change_security_btn').addClass('hidden');
+				     $('.edit_security').removeClass('hidden');
+			
+
+				}
+
+			});
+
+
+    });
 
 
  $(document).on('click','.edit_ques_ans',function(){
@@ -2695,7 +2743,7 @@ $(document).on('click','.member_apply_ques_ans',function(){
   	 var updatedQuestionValue  = $("input[name='access_member_Ques_ans1']:checked").val();
   	 var project_id = $('#project_id').val();
   	 var userEmail = $('#userEmail').val();
-  	 var group_id = $('#checkGroupIdEditRole').val();
+  	 var group_id =$('#CurrentRoleGroupId').val();
      var token = $('#csrf-token').val();
      $.ajax({
 

@@ -153,6 +153,8 @@ Route::post('update/collaboration_setting', 'GroupsController@ChangeCollaboratio
 Route::post('/update/access_setting', 'GroupsController@ChangeAccessRoomSetting');
 Route::post('/update/quesAns_setting', 'GroupsController@ChangeQuesAnsSetting');
 
+Route::post('/update/member/access_setting', 'GroupsController@ChangeMemberAccessSetting');
+
 Route::post('/member/quesAns_setting', 'GroupsController@MembersChangeQuesAnsSetting');
 // all project all users
 Route::post('/project_users', 'GroupsController@getAllUserInProject');
