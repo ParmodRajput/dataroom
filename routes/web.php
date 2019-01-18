@@ -141,7 +141,10 @@ Route::post('/users/get_user_info', 'GroupsController@getUserInfo');
 
 Route::post('/delete_group', 'GroupsController@deleteGroup');
 Route::post('/get_allgroups', 'GroupsController@getAllGroups');
+
 Route::post('/get_group_users', 'GroupsController@GroupsUsersGet');
+Route::post('/select_group_users', 'GroupsController@SelectGroupsUsers');
+
 Route::post('/user/move_to_group', 'GroupsController@MoveUser');
 Route::post('/change_groupName', 'GroupsController@ChangeGroupName');
 Route::post('/change_groupRole', 'GroupsController@ChangeGroupRole');

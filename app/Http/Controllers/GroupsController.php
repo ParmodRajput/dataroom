@@ -368,12 +368,40 @@ class GroupsController extends Controller
 
       
         $project_id = $request->project_id;
-
+        $seachContant = $request->seachContant;
         $authId = Auth::user()->id;  
         
-        $Auth_group_id = getAuthgroupId($project_id);
+        if(!empty ( $seachContant )){
 
-        $getCurrentGroupUser = Group::where('id',$Auth_group_id)->first();
+
+          $getCurrentGroupUsers = Group::where('group_name','LIKE',"{$seachContant}%")->get();
+
+          foreach ($getCurrentGroupUsers as $getCurrentGroupUser) {
+
+           $Auth_group_id = $getCurrentGroupUser->id;
+
+           $responseResult = $this->FetchGroupAndUser($project_id,$seachContant,$authId,$Auth_group_id,$getCurrentGroupUser);
+
+          }
+
+          return  $responseResult;
+
+        }else{
+
+          $Auth_group_id = getAuthgroupId($project_id);
+
+          $getCurrentGroupUser = Group::where('id',$Auth_group_id)->first();
+
+          $responseResult = $this->FetchGroupAndUser($project_id,$seachContant,$authId,$Auth_group_id,$getCurrentGroupUser);
+
+         return  $responseResult;
+          
+        }
+
+    }
+
+    function FetchGroupAndUser($project_id,$seachContant,$authId,$Auth_group_id,$getCurrentGroupUser){
+
 
         $CurrentGroupUser = $getCurrentGroupUser->group_user_type;
 
@@ -424,7 +452,6 @@ class GroupsController extends Controller
 
           $getGroupsId = Collaboration::where('project_id',$project_id)->where('collaboration_group_id',$Auth_group_id)->pluck('group_id');
 
-
            foreach ($getGroupsId as $getGroupsId) {
 
               // get groups  
@@ -454,6 +481,7 @@ class GroupsController extends Controller
 
               array_push($getGroups,$getGroupUsers);
 
+
             } 
 
 
@@ -464,17 +492,29 @@ class GroupsController extends Controller
         }
 
         return $getGroups;
+
     }
+
 
     public function GroupsUsersGet(Request $request){
 
         $project_id = $request->project_id;
-
+        //$userRole = $request->role;
         $get = Group::where('project_id',$project_id)->get();
 
         return $get;
         
     }
+
+    public function SelectGroupsUsers(Request $request){
+
+        $project_id = $request->project_id;
+        $userRole = $request->role;
+        $get = Group::where('project_id',$project_id)->where('group_user_type',$userRole)->get();
+
+        return $get;
+        
+    }    
 
 
     public function getAllUserInProject(Request $request)
@@ -833,6 +873,33 @@ public function getPermissionDocument($project_id)
      return "success";
 
     }
+
+    public function ChangeMemberGroup(Request $request){
+
+      $project_id = $request->project_id;
+      $ChangedRole = $request->movedGroupId;
+      $userEmail = $request->userEmail;
+
+      // if($ChangedRole == '1')
+      // {
+
+
+      //     Group_Member::where('id',$GroupId)->update(['group_for'=>'user','group_user_type'=>'Collaboration_users']);
+
+      // }elseif ($ChangedRole == '2'){
+
+      //   Group_Member::where('id',$GroupId)->update(['group_for'=>'user','group_user_type'=>'Individual_users']);
+        
+      // }else{
+
+      //    Group_Member::where('id',$GroupId)->update(['group_for'=>'Administrator','group_user_type'=>'Administrator','access_limit'=>'1','active_date'=>null,'QA_access_limit'=>'0','collaboration_with'=>'all_group']);
+      // }
+     
+     return "success";
+
+    }
+
+
     
       public function ChangeCollaborationSetting(Request $request){
 
@@ -946,11 +1013,12 @@ public function getPermissionDocument($project_id)
      public function MembersChangeQuesAnsSetting(Request $request){
 
           $project_id = $request->project_id;
+          $userEmail = $request->userEmail;
           $access_ques_limit = $request->updatedQuestionValue;
           $group_id = $request->group_id;
           $userId = Auth::user()->id;
 
-          Group_Member::where('id',$group_id)->where('project_id',$project_id)->update(['access_qa'=>$access_ques_limit]);
+          Group_Member::where('member_email',$userEmail)->where('group_id',$group_id)->where('project_id',$project_id)->update(['access_qa'=>$access_ques_limit]);
  
          return "success";
 
