@@ -295,15 +295,30 @@ class GroupsController extends Controller
          
     } 
 
-        public function getUserInfo(Request $request)
-    {
-         $email = $request->userId; 
-         $userInfo = User::where('email', $email)->get();
-         $groupInfo =  Group_Member::where('member_email', $email)->get();
+    public function getUserInfo(Request $request) {
+         $email = $request->userEmail; 
+         $project_id = $request->project_id;
+         $checkUser = User::where('email', $email)->first();
+
+         $checker  = $checkUser['email'];
+
+         if($checker !== ""){
+
+               $userInfo = User::where('email', $email)->get();       
+
+         }else{
+
+             $userInfo = '';
+
+         }
+
+         $groupInfo =  Group_Member::where('member_email', $email)->where('project_id', $project_id)->get();
          $GroupInfoAndUsers = ['userInfo'=>$userInfo , 'groupInfo'=>$groupInfo];
         
          return $GroupInfoAndUsers;
          
+
+
     } 
 
     public function deleteGroup(Request $request){
@@ -931,11 +946,25 @@ public function getPermissionDocument($project_id)
           $userId = Auth::user()->id;
 
 
-        Group::where('id',$group_id)->update(['QA_access_limit'=>$access_ques_limit]);
+         Group::where('id',$group_id)->update(['QA_access_limit'=>$access_ques_limit]);
  
          return "success";
 
     }
+
+     public function MembersChangeQuesAnsSetting(Request $request){
+
+          $project_id = $request->project_id;
+          $access_ques_limit = $request->updatedQuestionValue;
+          $group_id = $request->group_id;
+          $userId = Auth::user()->id;
+
+          Group_Member::where('id',$group_id)->where('project_id',$project_id)->update(['access_qa'=>$access_ques_limit]);
+ 
+         return "success";
+
+    }
+
 
 
 }

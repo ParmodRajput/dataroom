@@ -2448,9 +2448,20 @@ button.waiting_reply {
     border-radius: 3px;
 }
 
-
 /*17 jan 2019* by priyanshu*/
 
 span.document_file_name.inactive.customspan {
     margin-left: 5px;
+}
+
+canvas#canvas{
+
+    width: 595px;
+    margin: 0 auto;
+}
+
+canvas#IMGcanvas {
+    width: 1242px;
+    padding: 3%;
+    height: 602px;
 }
