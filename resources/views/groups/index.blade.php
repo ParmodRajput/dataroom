@@ -10,7 +10,7 @@
 		    <div class="search_filter_document">
 		        <div class="search_document_Byname">
 		          <input type="text" name="group_search_filter" class="group_search_filter" id="search_doc_group">
-		          <span id="go_search_group"><i class="fas fa-search"></i></span>
+		          <span id="go_search_group" onclick="getgroups()"><i class="fas fa-search"></i></span>
 		        </div>
 		    </div> 
             @if(checkUserType($project_name) == 'Administrator')
@@ -107,9 +107,48 @@
 					<div class="edit_role_ofgroup_member hidden">
 						<div class="member__settings-panel group_member-role-settings">
 							<div class="form-horizontal ng-scope" style="">
-								<div class="form-group">
+								<div class="form-group member">
+									<div class="center_inner ChangeGroupByinvite">
+										<h2>Choose role and enter group name</h2>
+										<div class="radio_btn_pannel">
+										<label>
+										<input type="radio" value="user" name="UserType" checked>
+										User
+										</label>
+
+										<label>
+										<input type="radio" value="Administrator" name="UserType">
+										Administrator
+										</label>
+
+										</div>
+
+										<div class="basic_setting_input">
+
+												<div class="input_pannel_m_p UserRole_block">
+												<label><strong>Role</strong></label>
+												<label class="input_radio_new">
+												<input type="radio" name="UserRole" value="1" checked>
+												<i class="fa fa-user-plus"></i> Collaboration users
+												</label>
+
+												<label class="input_radio_new">
+												<input type="radio" name="UserRole" value="2">
+												<i class="fa fa-user-circle-o"></i> Individual users
+												</label>
+												</div>
+												   
+												<div class="input_pannel ">
+												<label><strong>Group</strong></label>
+							                       <select class="select_dynamic Select_groupOfUser" name="choose_group" id="ChooseGroupForChange">
+											       </select>
+												</div>
+
+										</div>
+
+									</div>
 									<span class="btn btn-danger cancel_member_new_role">cancel</span>      
-  									<span class="btn btn-primary apply_new_role">Apply</span> 
+  									<span class="btn btn-primary apply_member_new_role">Apply</span> 
 								</div>
 							</div>
 						</div>
@@ -143,7 +182,7 @@
 		    			</div>
 		    			<div>
 	    		            <span class="btn btn-danger member_cancel_edit_security"> cancel</span>
-	    		            <span class=" btn btn-primary apply_change_security">Apply</span> 		    				
+	    		            <span class=" btn btn-primary apply_member_change_security">Apply</span> 		    				
 		    			</div>
 				  	</div>
 				 	<span class="edit_member_security"><i class="fa fa-pencil"></i> edit </span> 
@@ -156,6 +195,7 @@
 				  </div>
 					<div class="member_radio_pannel_setting hidden">
 						<div class="radio_btns">
+							<input type="hidden"  name ="userEmail" class="form-control" id="userEmail"  placeholder="Enter Group user email">	
 							<label> 
 								<input type="radio" value="0" name="access_member_Ques_ans1"><strong>None</strong>
 							</label><br>
@@ -994,14 +1034,14 @@
 
 	var token = $('#csrf-token').val();
     var project_id = $('#project_id').val();
-
+    var seachContant = $('#search_doc_group').val();
 		$.ajax({
 			type:"POST",
 			url:"{{ Url('/') }}/get_allgroups",
             data:{
                 _token : token,
                  project_id :project_id, 
-                
+                 seachContant :seachContant,
               },  
 
 			success: function (response) { 
@@ -1042,7 +1082,7 @@
 
                         $.each( value.users, function( key, value){
 
-                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><a href='javascript:void(0)' id='' class='groups'>"+value+"</a></div><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'><img src='{{url('/')}}/dist/img/moveUser.png'></img></span></div></div>";
+                            html+="<div class='drop_box_document'><div class='document_index index-drop'><div class='check-box select_check user_listing'><form  action='#' method='post'><input type='checkbox' class='check-box-input' data-groupName ='"+group_name+"' data-value='"+value+"' data_group='"+group_id+"' name='users_select'></form><a href='javascript:void(0)' id='' class='groups'>"+value+"</a></div><span class='move_icon_user' data-value='"+value+"' data-toggle='modal' data-target='#MoveUser'><img src='{{url('/')}}/dist/img/moveUser.png'></img></span></div></div>";
                         });
 
                         html+="</div>";
@@ -1088,6 +1128,7 @@
 
 					$('#create_group').modal('hide'); 
                     getgroups();
+                    getAllGroups();
 
                     $('#document_permission_modal').modal('show'); 
 
@@ -1113,12 +1154,6 @@
 
                               $('#document_permission_modal #group'+currentGroupId).css('background','#fff');
                         }
-
-
-                         
-
-                         
-
                         
 
                       }
@@ -1446,10 +1481,12 @@
 
 		$.each($("input[name='users_select']:checked"),function(){
 
-	  	   //  var group_id = $(this).data('value');
-		  // $('#group_id').val(group_id);
+	  	   //  var group_id = $(this).data('value');	   
            var token = $('#csrf-token').val();
            var userEmail = $(this).data('value');
+           var gropuName = $(this).data('groupname');
+
+           $('#userEmail').val(userEmail);
             var project_id = $('#project_id').val();
 
                 	$.ajax({
@@ -1495,15 +1532,17 @@
                             
                             $.each(groupInfo, function(key ,value) {
 
-                             	//var userEmail = value.email; 
                              	if(value.role == 1){
-                             		user_html2 +="<div><strong>Group: </strong>&nbsp;<p>(Collaboration users)</p></div>";
+                             		user_html2 +="<div>Group: "+gropuName+"&nbsp;<p>(Collaboration users)</p></div>";
                              	}else if(value.role == 2){
-                             		user_html2 +="<div><strong>Group: </strong>&nbsp;<p>(Individual users)</p></div>";
+                             		user_html2 +="<div>Group: "+gropuName+"&nbsp;<p>(Individual users)</p></div>";
                              	}else{
-                             		user_html2 +="<div><strong>Group: </strong>&nbsp;<p>(Administrators)</p></div>";
+                             		user_html2 +="<div>Group: "+gropuName+"&nbsp;<p>(Administrators)</p></div>";
                              	}
-                             	
+
+                             	user_html2 +='<input type="hidden" name="CurrentRoleEmail" id="CurrentRoleEmail" value="'+value.member_email+'"/>';
+
+								user_html2 +='<input type="hidden" name="CurrentRoleGroupId" id="CurrentRoleGroupId" value="'+value.group_id+'"/>';
 
                              	if(value.access_limit == 1){
                              		user_html3 += "<div><strong>Access to data room</strong>&nbsp;<p>Unlimted</p></div>";
@@ -1585,7 +1624,7 @@
 
 
  $(document).on('change','input:radio',function(){
-        
+
     if ($(this).val() == "Administrator") {
        
        $('.UserRole_block').addClass('hidden');
@@ -1770,8 +1809,9 @@
 // $(document).on('click','.create_new_group',function(){
 
 function getAllGroups(){
+
 	var token = $('#csrf-token').val();
-    var project_id = $('#project_id').val();
+    var project_id = $('#project_id').val();    
 
 
 		$.ajax({
@@ -1779,7 +1819,7 @@ function getAllGroups(){
 			url:"{{ Url('/') }}/get_group_users",
             data:{
                 _token : token,
-                 project_id :project_id, 
+                 project_id :project_id,
               },  
 
 			success: function (response) { 
@@ -1811,6 +1851,119 @@ function getAllGroups(){
 }
 	
 // });
+
+
+	$(document).on('change','.GroupByinvite',function(){
+		var token = $('#csrf-token').val();
+	    var project_id = $('#project_id').val(); 
+		var userOrAdmin = $("input[name='forUser']:checked").val();
+	    var userType = $("input[name='user_role']:checked").val();
+	    var role = '';
+	    var html1 ='';
+	    if(userOrAdmin == 'user'){
+
+	    	if(userType == '1'){
+
+	    		role ='Collaboration_users';
+
+	    	}else{
+
+				role ='Individual_users';
+
+	    	}
+
+	    }else{
+
+			role ='Administrator';
+	    }
+
+		$.ajax({
+			type:"POST",
+			url:"{{ Url('/') }}/select_group_users",
+            data:{
+                _token : token,
+                 project_id :project_id,
+                 role :role,
+              },  
+
+			success: function (response) { 
+		
+					$.each( response, function( key, value) {
+
+                       var group_id = value.id;
+                       var GroupUserRole = value.group_user_type;
+
+					   html1 += "<option value='"+value.id+"'>"+value.group_name+"</option>";
+
+					  // html2+="<option value='"+value.id+"'>"+value.group_name+"</option>";
+
+					});
+                     
+                    $('#choose_group_dym').html(html1);
+                       
+			}  
+		});
+
+
+
+	});
+
+	$(document).on('change','.ChangeGroupByinvite',function(){
+		var token = $('#csrf-token').val();
+	    var project_id = $('#project_id').val(); 
+		var userOrAdmin = $("input[name='UserType']:checked").val();
+	    var userType = $("input[name='UserRole']:checked").val();
+	    var role = '';
+	    var html1 ='';
+	    if(userOrAdmin == 'user'){
+
+	    	if(userType == '1'){
+
+	    		role ='Collaboration_users';
+
+	    	}else{
+
+				role ='Individual_users';
+
+	    	}
+
+	    }else{
+
+			role ='Administrator';
+	    }
+
+		$.ajax({
+			type:"POST",
+			url:"{{ Url('/') }}/select_group_users",
+            data:{
+                _token : token,
+                 project_id :project_id,
+                 role :role,
+              },  
+
+			success: function (response) { 
+		
+					$.each( response, function( key, value) {
+
+                       var group_id = value.id;
+                       var GroupUserRole = value.group_user_type;
+
+					   html1 += "<option value='"+value.id+"'>"+value.group_name+"</option>";
+
+					  // html2+="<option value='"+value.id+"'>"+value.group_name+"</option>";
+
+					});
+                     
+                    $('#ChooseGroupForChange').html(html1);
+                       
+			}  
+		});
+
+
+
+	});
+
+
 
 $(document).on('click','.toggle_user',function(){
       
@@ -2141,10 +2294,7 @@ $('#hjgh').click(function(){
 
      });
 
-     // $('#document_permission_modal').on('show.bs.modal', function (e) {
 
-          
-     // });
        $(document).on('click','.checkmark',function(){
            
            $('#CheckUserChangePermission').val('1');
@@ -2249,6 +2399,41 @@ $('#hjgh').click(function(){
             
        });
 
+       $(document).on('click','.apply_member_new_role',function(){
+
+         var movedGroupId =  $('#ChooseGroupForChange').val();  
+         var current_group_id =  $('#CurrentRoleGroupId').val();    
+         var userEmail  =$('#CurrentRoleEmail').val();
+         var project_id = $('#project_id').val();
+         var token = $('#csrf-token').val();
+
+				$.ajax({
+
+					type:"POST",
+					url:"{{ Url('/') }}/user/move_to_group",
+		            data:{
+		                _token : token,
+		                 project_id :project_id, 
+		                 movedGroupId  : movedGroupId,
+		                 userEmail  : userEmail,
+		                 current_group_id : current_group_id,
+		                
+		              },  
+
+					success: function (response) { 
+					
+						getgroups();
+
+						$('#MoveUser').modal('hide');
+						$('.display_groups input:checkbox').prop('checked', this.checked); 
+
+					}
+
+				});
+
+
+            
+       });
 
    $(document).on('click','.GroupNameRenameFor',function(){
 
@@ -2441,7 +2626,55 @@ $(document).on('change','.collaboration_setting_members input:radio',function(){
 
     });
 
+  $(document).on('click','.apply_member_change_security',function(){
 
+  	 var updatedsecurityValue  = $("input[name='updateMamberSecuritySetting']:checked").val();
+
+  	 if(updatedsecurityValue == '1')
+  	 {
+  	 	var updatedsecurityValue1 = 1;
+
+  	 }else{
+
+          var updatedsecurityValue1 = $('.validDateMembers').val();
+
+  	 }
+
+  	 var project_id = $('#project_id').val();
+  	 var group_id = $('#CurrentRoleGroupId').val();
+  	 var CurrentEmail = $('#CurrentRoleEmail').val();
+     var token = $('#csrf-token').val();
+ 		$.ajax({
+
+				type:"POST",
+				url:"{{ Url('/') }}/update/member/access_setting",
+	            data:{
+	                _token : token,
+	                 project_id :project_id, 
+	                 group_id : group_id,
+	                 updatedsecurityValue1  : updatedsecurityValue1,
+	                 CurrentEmail :CurrentEmail,
+	               
+	              },  
+
+				success: function (response) { 
+
+					getgroups();
+					
+					 $('.display_groups input:checkbox').prop('checked', this.checked);
+				     $('.listUsersGroups').addClass('hidden'); 
+				     $('.update_question_change').addClass('hidden');
+				     $('.group_security_setting').removeClass('hidden');
+				     $('#change_security_btn').addClass('hidden');
+				     $('.edit_security').removeClass('hidden');
+			
+
+				}
+
+			});
+
+
+    });
 
 
  $(document).on('click','.edit_ques_ans',function(){
@@ -2509,9 +2742,9 @@ $(document).on('click','.member_apply_ques_ans',function(){
 
   	 var updatedQuestionValue  = $("input[name='access_member_Ques_ans1']:checked").val();
   	 var project_id = $('#project_id').val();
-  	 var group_id = $('#checkGroupIdEditRole').val();
+  	 var userEmail = $('#userEmail').val();
+  	 var group_id =$('#CurrentRoleGroupId').val();
      var token = $('#csrf-token').val();
-
      $.ajax({
 
 					type:"POST",
@@ -2520,6 +2753,7 @@ $(document).on('click','.member_apply_ques_ans',function(){
 		                _token : token,
 		                 project_id :project_id, 
 		                 group_id : group_id,
+		                 userEmail: userEmail,
 		                 updatedQuestionValue  : updatedQuestionValue,
 		               
 		              },  
