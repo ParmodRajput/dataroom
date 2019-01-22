@@ -193,6 +193,15 @@ Route::post('/get_group/report','ReportsController@getGroupsReports');
 
 // Reports route end
 
+//admin dashboard 
+
+Route::group(['namespace' => 'Admin', 'prefix' => ''], function()
+{
+   Route::get('/admin','AdminController@admin');
+   Route::post('/admin/login','AdminController@adminLogin');
+   Route::post('/dashboard','AdminController@dashboard');
+
+});
 
 
 Route::get('sendemail', function () {

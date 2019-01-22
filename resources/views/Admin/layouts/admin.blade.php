@@ -24,10 +24,10 @@
   </head>
   <body class="app sidebar-mini rtl">
     
- @include('includes.admin_header')
+ @include('Admin.includes.admin_header')
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-@include('includes.admin_sidebar')
+@include('Admin.includes.admin_sidebar')
 <main class="app-content">
 @yield('content')
  </main>
