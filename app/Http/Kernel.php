@@ -61,5 +61,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'CheckUserForPermissionDoc' => \App\Http\Middleware\CheckUserForPermissionDoc::class,
         'checkRegisterUser' => \App\Http\Middleware\checkRegisterUser::class,
+        'admin' => \App\Http\Middleware\RedirectifNotAdmin::class,
+
     ];
 }
