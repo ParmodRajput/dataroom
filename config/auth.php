@@ -74,12 +74,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-
+         
         'admin' => [
             'driver' => 'eloquent',
             'model' => App\Admin::class,
         ],
-
 
         // 'users' => [
         //     'driver' => 'database',
@@ -110,11 +109,6 @@ return [
             'expire' => 60,
         ],
 
-        'admin' => [
-            'provider' => 'admin',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
     ],
 
 ];

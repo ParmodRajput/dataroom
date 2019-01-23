@@ -13,12 +13,12 @@
     <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
     <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
     <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-    <title>Blank Page - Vali Admin</title>
+    <title>Dashborad Admin</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
-    <link rel="stylesheet" type="text/css" href="css/admin/main.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/admin/main.css')}}">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
@@ -33,12 +33,12 @@
  </main>
  
     <!-- Essential javascripts for application to work-->
-    <script src="js/admin/jquery-3.2.1.min.js"></script>
-    <script src="js/admin/popper.min.js"></script>
-    <script src="js/admin/bootstrap.min.js"></script>
-    <script src="js/admin/main.js"></script>
+    <script src="{{ asset('js/admin/jquery-3.2.1.min.js')}}"></script>
+    <script src="{{ asset('js/admin/popper.min.js')}}"></script>
+    <script src="{{ asset('js/admin/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('js/admin/main.js')}}"></script>
     <!-- The javascript plugin to display page loading on top-->
-    <script src="js/admin/plugins/pace.min.js"></script>
+    <script src="{{ asset('js/admin/plugins/pace.min.js')}}"></script>
     <!-- Page specific javascripts-->
     <!-- Google analytics script-->
     <script type="text/javascript">
@@ -50,6 +50,14 @@
         ga('create', 'UA-72504830-1', 'auto');
         ga('send', 'pageview');
       }
+
+      $(document).ready(function(){
+          $(document).on('click','#Users_overall',function(){
+
+            
+
+          })
+      });
     </script>
   </body>
 </html>
