@@ -353,29 +353,34 @@ Performance Trust Capital Partners<br>
 
 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
 
-<div class="input_right_p">
-
-<input type="text" name ="full_name" class="full_name" placeholder="Full Name *" />
-</div>
 <div class="check_int1">
 </div> 
 
 <div class="input_right_p">
-<input type="text"  name ="email" class="email" placeholder="Email *"/>
+
+<input type="text" name ="full_name" class="full_name" placeholder="Full Name *" />
 </div>
+
 <div class="check_int2">
 </div> 
-
 <div class="input_right_p">
-<input type="text"  name ="phone" class="phone" placeholder="Phone no * "  />
+<input type="text"  name ="email" class="email" placeholder="Email *"/>
 </div>
+
+
 <div class="check_int3">
 </div> 
+<div class="input_right_p">
+<input type="text" pattern="[789][0-9]{9}" name ="phone" class="phone" placeholder="Phone no * "  />
+</div>
 
+<div class="check_int4">
+</div> 
 <div class="input_right_p">
 <input type="text" name ="company" class="company"  placeholder="Company * " />
 </div>
-<div class="check_int4">
+
+<div class="check_int5">
 </div> 
 
 <div class="input_right_p">
@@ -389,14 +394,13 @@ Performance Trust Capital Partners<br>
        	   	<option value="Other">Other</option> 
   </select>
 </div>
-<div class="check_int5">
+
+<div class="check_int6">
 </div> 
 
 <div class="input_right_p">
 <input type="text"  name ="project" class="project"  placeholder="Project *" />
 </div>
-<div class="check_int6">
-</div> 
 
 <div class="setup_btn" id="setup_dataroom_button">
 <a id="Set_Up_My_Dataroom" href="#">Set Up My Dataroom</a>
@@ -404,8 +408,12 @@ Performance Trust Capital Partners<br>
 
 </div>
 
+
 <!-- Get Quote -->
 <div class="get_qoute hidden_get_qoute">
+  
+<div class="check_int7">
+</div> 
 <div class="input_right_p">
 <select name="selectbasic" placeholder="" class="form-control project_type" title="Project type">
        	   	<option style="display:none;" value="-1" disabled="" selected="">Project type</option>
@@ -417,9 +425,9 @@ Performance Trust Capital Partners<br>
        	   	<option value="Other">Other</option> 
   </select>
 </div>
-<div class="check_int7">
-</div> 
 
+<div class="check_int8">
+</div> 
 <div class="input_right_p">
 <select name="selectbasic" placeholder="" class="form-control Project_strat_date" title="Project strat date">
        	   	<option style="display:none;" value="-1" disabled="" selected="">Project strat date</option>
@@ -429,9 +437,9 @@ Performance Trust Capital Partners<br>
        	   	<option value="Later">Later</option> 
   </select>
 </div>
-<div class="check_int8">
-</div> 
 
+<div class="check_int9">
+</div> 
 <div class="input_right_p">
 <select name="selectbasic" placeholder="" class="form-control project_duration" title="Project Duration">
        	   	<option style="display:none;" value="-1" disabled="" selected="">Project Duration</option>
@@ -448,9 +456,9 @@ Performance Trust Capital Partners<br>
        	   	<option value="Other">More than a year</option> 
   </select>
 </div>
-<div class="check_int9">
-</div> 
 
+<div class="check_int10">
+</div> 
 <div class="input_right_p">
    <select name="selectbasic" placeholder="" class="form-control preferred_payment" title="Preferred payment">
        	   	<option style="display:none;" value="-1" disabled="" selected="">Preferred payment method </option>
@@ -459,9 +467,9 @@ Performance Trust Capital Partners<br>
        	   	<option value="other">Other</option>
   </select>
 </div>
-<div class="check_int10">
-</div> 
 
+<div class="check_int11">
+</div> 
 <div class="input_right_p">
    <select name="selectbasic" placeholder="" class="form-control quote_for" title="Quote for">
        	   	<option style="display:none;" value="-1" disabled="" selected="">Quote for</option>
@@ -470,8 +478,7 @@ Performance Trust Capital Partners<br>
        	   	<option value="Users">Users</option>
   </select>
 </div>
-<div class="check_int11">
-</div> 
+
 
 <div class="setup_btn" id="Get_a_Quote">
 <a href="#">Get a Quote</a>

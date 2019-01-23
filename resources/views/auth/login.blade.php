@@ -36,8 +36,14 @@
          <h4 class="wel-text"> ProData Room</h4>
               <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
+
+                  @if ($errors->has('email'))
+                        <span class="help-block">
+                          <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
                 <div class="form-group  {{ $errors->has('project_name') ? ' has-error' : '' }}" >
-                  <label class="label">email </label>
+                  <label class="label">Email </label>
                   <div class="input-group">
                     <input type="text"  name="email" class="form-control" placeholder="Email" required>
                    
@@ -48,11 +54,13 @@
                     </div>
                   </div>
                 </div>
-                  @if ($errors->has('email'))
-                        <span class="help-block">
-                          <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
+                
+
+                 @if ($errors->has('password'))
+                    <span class="invalid-feedback">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </span>
+                @endif
                 <div class="form-group">
                   <label class="label">Password</label>
                   <div class="input-group">
@@ -64,11 +72,7 @@
                     </div>
                   </div>
                 </div>
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
+                
                 <div class="form-group">
                   <input type="submit" value="login" class="btn btn-primary submit-btn btn-block">
                 </div>

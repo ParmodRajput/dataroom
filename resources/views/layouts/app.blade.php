@@ -2487,6 +2487,10 @@ $(document).on('click','.submit_note1_doc', function(){
         
         var token = $('#csrf-token').val();  
         var NotesContent  = $('.notes_aside_text1').val();
+
+        if(NotesContent !== '')
+        {
+
         var notesPriority = $('.notes_aside_text1').data('value');
         var projects_id   = $('.directory_location #project_id_doc').val();
         var documentPath  = $('#single_select_doc').val();
@@ -2555,6 +2559,8 @@ $(document).on('click','.submit_note1_doc', function(){
 
                     });
           }
+
+      }
         
 });
 
