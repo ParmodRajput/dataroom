@@ -19,24 +19,24 @@
         <h1>Pro-dataroom</h1>
       </div>
       <div class="login-box">
-        <form class="login-form" method='POST' action='{{url("/")}}/admin/login'>
+        <form class="login-form" method="POST" action="{{ route('adminLogin') }}">
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
           <div class="form-group">
             <label class="control-label">USERNAME</label>
-            <input class="form-control admin_email" type="text" placeholder="Email" autofocus>
+            <input class="form-control admin_email" type="text" name='email' placeholder="Email" autofocus>
           </div>
           <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}"/>
           <div class="form-group">
             <label class="control-label">PASSWORD</label>
-            <input class="form-control admin_password" type="password" placeholder="Password">
+            <input class="form-control admin_password" name='password' type="password" placeholder="Password">
           </div>
           <div class="form-group">
             <div class="utility">
               <p class="semibold-text mb-2"><a href="#" data-toggle="flip">Forgot Password ?</a></p>
             </div>
           </div>
-          <div class="form-group btn-container">
-            <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw login_administrator"></i>SIGN IN</button>
+          <div class="form-group btn-container"> 
+            <button type="submit" class="btn btn-primary btn-block login_administrator"><i class="fa fa-sign-in fa-lg fa-fw "></i>SIGN IN</button>
           </div>
         </form>
         <form class="forget-form" action="index.html">
@@ -68,7 +68,7 @@
       	return false;
       });
 
-      // $(document).click('click','.login_administrator',function(){
+      // $(document).on('click','.login_administrator',function(){
 
       //   var email = $('.admin_email').val();
       //   var password = $('.admin_password').val();

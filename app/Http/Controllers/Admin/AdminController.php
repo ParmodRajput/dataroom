@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use App\Admin;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 
 class AdminController extends Controller
 {
@@ -20,18 +21,24 @@ class AdminController extends Controller
    public function adminLogin(Request $request)
     {
 
-        // $this->validate($request, [
-        //     'email'   => 'required|email',
-        //     'password' => 'required|min:6'
-        // ]);
 
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+          $email = $request->email;
+          $password = $request->password;
 
-        	print_r('fdsfsdf');
+          $user = Admin::where('email', $email)->first();
+          $name = $user['name'];
 
-            // return redirect()->intended('/admin/trtrrt');
-        }
-        // return back()->withInput($request->only('email', 'remember'));
+		  $validCredentials = Hash::check($password, $user['password']);
+
+			if ($validCredentials) {
+
+			    return redirect()->route('dashboard');
+			    //return View::make('Admin.dashboard', compact(['name','']));
+
+			}
+
+		 return redirect()->route('login_Page');
+
     }
 
     public function dashboard(){

@@ -1341,25 +1341,45 @@
 
                                         if(group_security_setting == 2)
                                         {
-                                           var security_setting = value.active_date;  
+                                           var security_setting = value.active_date; 
+                             			$("input[name='updateGroupSecuritySetting']").prop('checked', false);
+
+                             			$("input[name='updateGroupSecuritySetting'][value='2']").prop('checked', true); 
+                             			$(".validOnDateChangeSec").val(value.active_date);
+                             			$(".validOnDateChangeSec").removeClass("hidden");                                           
+
                                         }else{
 
                                            var security_setting = 'Unlimited';
+                             			$("input[name='updateGroupSecuritySetting']").prop('checked', false);
+
+                             			$("input[name='updateGroupSecuritySetting'][value='1']").prop('checked', true);
+
                                         }
 
                                         var QA_setting = value.QA_access_limit;
                                         if(QA_setting == 0)
 											{
 												 var QA_limit = "No limit"; 
+                             			$("input[name='access_Ques_ans1']").prop('checked', false);
+
+                             			$("input[name='access_Ques_ans1'][value='0']").prop('checked', true);												 
 											}
 
 										if(QA_setting == 7)
 											{
 												 var QA_limit = "Weekly"; 
+                             			$("input[name='access_Ques_ans1']").prop('checked', false);
+
+                             			$("input[name='access_Ques_ans1'][value='7']").prop('checked', true);
+
 											}
 										if(QA_setting == 30)
 											{
 												 var QA_limit = "Monthly"; 
+                             			$("input[name='access_Ques_ans1']").prop('checked', false);
+
+                             			$("input[name='access_Ques_ans1'][value='30']").prop('checked', true);												 
 											}
 			
                                         
@@ -1478,6 +1498,7 @@
 
 
    if(numberOfUserChecked == 1){
+   	 $('.delete_group').removeClass('hidden'); 
 
 		$.each($("input[name='users_select']:checked"),function(){
 
@@ -1534,10 +1555,25 @@
 
                              	if(value.role == 1){
                              		user_html2 +="<div>Group: "+gropuName+"&nbsp;<p>(Collaboration users)</p></div>";
+ 									$("input[name='UserType']").prop('checked', false);
+                            		$("input[name='UserType'][value='user']").prop('checked', true);
+
+ 									$("input[name='UserRole']").prop('checked', false);
+                            		$("input[name='UserRole'][value='1']").prop('checked', true);                            		
+
                              	}else if(value.role == 2){
-                             		user_html2 +="<div>Group: "+gropuName+"&nbsp;<p>(Individual users)</p></div>";
+                             	   user_html2 +="<div>Group: "+gropuName+"&nbsp;<p>(Individual users)</p></div>";
+ 									$("input[name='UserType']").prop('checked', false);
+                            		$("input[name='UserType'][value='user']").prop('checked', true);
+
+ 									$("input[name='UserRole']").prop('checked', false);
+                            		$("input[name='UserRole'][value='2']").prop('checked', true);                            		
+
                              	}else{
                              		user_html2 +="<div>Group: "+gropuName+"&nbsp;<p>(Administrators)</p></div>";
+ 									$("input[name='UserType']").prop('checked', false);
+                            		$("input[name='UserType'][value='Administrator']").prop('checked', true);
+
                              	}
 
                              	user_html2 +='<input type="hidden" name="CurrentRoleEmail" id="CurrentRoleEmail" value="'+value.member_email+'"/>';
@@ -1546,17 +1582,33 @@
 
                              	if(value.access_limit == 1){
                              		user_html3 += "<div><strong>Access to data room</strong>&nbsp;<p>Unlimted</p></div>";
+ 									$("input[name='updateMamberSecuritySetting']").prop('checked', false);
+                            		$("input[name='updateMamberSecuritySetting'][value='1']").prop('checked', true);
+
                              	}else{
                              		user_html3 += "<div><strong>Access to data room</strong>&nbsp;<p>"+value.active_date+"</p></div>";
+ 									$("input[name='updateMamberSecuritySetting']").prop('checked', false);
+                            		$("input[name='updateMamberSecuritySetting'][value='2']").prop('checked', true);
+                            		$(".validDateMembers").val(value.active_date);
+                            		$(".validDateMembers").removeClass("hidden");
+
                              	}
                              	if(value.access_qa == 0){
                              	user_html4 +="<div><strong>None</strong>&nbsp;<p></p></div>";
+ 								$("input[name='access_member_Ques_ans1']").prop('checked', false);
+                            	$("input[name='access_member_Ques_ans1'][value='0']").prop('checked', true);                             	
                              	}else if(value.access_qa == 1){
                              	user_html4 +="<div><strong>View</strong>&nbsp;<p></p></div>";
+ 								$("input[name='access_member_Ques_ans1']").prop('checked', false);
+                            	$("input[name='access_member_Ques_ans1'][value='1']").prop('checked', true);                             	
                              	}else if(value.access_qa == 2){
                              	user_html4 +="<div><strong>Post to own group</strong>&nbsp;<p></p></div>";
+ 								$("input[name='access_member_Ques_ans1']").prop('checked', false);
+                            	$("input[name='access_member_Ques_ans1'][value='2']").prop('checked', true);                             	
                              	}else{
                              	user_html4 +="<div><strong>Q&A coordinator</strong>&nbsp;<p></p></div>";
+ 								$("input[name='access_member_Ques_ans1']").prop('checked', false);
+                            	$("input[name='access_member_Ques_ans1'][value='3']").prop('checked', true);                             	
                              	}                             	                           	
                              
                             }); 
@@ -2422,10 +2474,15 @@ $('#hjgh').click(function(){
 
 					success: function (response) { 
 					
-						getgroups();
-
-						$('#MoveUser').modal('hide');
-						$('.display_groups input:checkbox').prop('checked', this.checked); 
+					getgroups();
+					
+					$('.display_groups input:checkbox').prop('checked', this.checked);
+				    $('.listUsersGroups').addClass('hidden'); 
+				    $('.update_member_security').addClass('hidden');
+				    $('.members_collaboration_setting').removeClass('hidden');
+				    $('#change_security_btn').addClass('hidden');
+				    $('.edit_member_security').removeClass('hidden');
+			
 
 					}
 
@@ -2615,7 +2672,7 @@ $(document).on('change','.collaboration_setting_members input:radio',function(){
 					     $('.listUsersGroups').addClass('hidden'); 
 					     $('.update_question_change').addClass('hidden');
 					     $('.group_security_setting').removeClass('hidden');
-					     $('#change_security_btn').addClass('hidden');
+					     //$('#change_security_btn').addClass('hidden');
 					     $('.edit_security').removeClass('hidden');
 				
 
@@ -2663,10 +2720,10 @@ $(document).on('change','.collaboration_setting_members input:radio',function(){
 					
 					 $('.display_groups input:checkbox').prop('checked', this.checked);
 				     $('.listUsersGroups').addClass('hidden'); 
-				     $('.update_question_change').addClass('hidden');
-				     $('.group_security_setting').removeClass('hidden');
+				     $('.update_member_security').addClass('hidden');
+				     $('.members_collaboration_setting').removeClass('hidden');
 				     $('#change_security_btn').addClass('hidden');
-				     $('.edit_security').removeClass('hidden');
+				     $('.edit_member_security').removeClass('hidden');
 			
 
 				}
@@ -2798,7 +2855,8 @@ $(document).on('click','.member_apply_ques_ans',function(){
 
     $(document).on('click','.cancel_ques_ans',function(){
 			$('.radio_pannel_setting_change').addClass('hidden');
-			$('.edit_ques_ans').removeClass('hidden');			
+			$('.edit_ques_ans').removeClass('hidden');	
+			$('.group_qa_setting').removeClass('hidden');		
 			$('#edit_ques_ans_setting').addClass('hidden');
     });
 

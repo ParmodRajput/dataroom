@@ -379,7 +379,8 @@ class GroupsController extends Controller
         $project_id = $request->project_id;
         $seachContant = $request->seachContant;
         $authId = Auth::user()->id;  
-        
+         $responseResult = [];
+
         if(!empty ( $seachContant )){
 
 
@@ -461,9 +462,8 @@ class GroupsController extends Controller
 
           $getGroupsId = Collaboration::where('project_id',$project_id)->where('collaboration_group_id',$Auth_group_id)->pluck('group_id');
 
-           foreach ($getGroupsId as $getGroupsId) {
+          foreach ($getGroupsId as $getGroupsId) {
 
-              // get groups  
               $getGroupsInfo = Group::where('id',$getGroupsId)->first();
 
               $group_permission = Permission::where('group_id',$getGroupsId)->where('project_id',$project_id)->pluck('permission_id');
@@ -482,7 +482,6 @@ class GroupsController extends Controller
 
               $getGroupsInfo1 = ['id'=>$getGroupsInfo->id,'permission'=>$group_permission,'group_user_type'=>$getGroupsInfo->group_user_type,'group_name'=>$getGroupsInfo->group_name];
 
-
                              // get groups users
               $getGroupUser = Group_Member::where('group_id',$getGroupsId)->pluck('member_email'); 
 
@@ -490,8 +489,7 @@ class GroupsController extends Controller
 
               array_push($getGroups,$getGroupUsers);
 
-
-            } 
+          } 
 
 
         }else{
@@ -537,38 +535,38 @@ class GroupsController extends Controller
     }
 
 
-    public function get_Folders($project_path)
+    public function get_Folders($project_path){
 
-             {
-             
-              $return = array();
+        $return = array();
 
-              $project_folders = DB::table('documents')->select('path')->where('directory_url', '=', $project_path)->where('document_status','1')->get()->toArray();
+        $project_folders = DB::table('documents')->select('path')->where('directory_url', '=', $project_path)->where('document_status','1')->get()->toArray();
 
-                  if ($project_folders) {
-                    foreach ($project_folders as $folder) {
+            if ($project_folders) {
+              
+              foreach ($project_folders as $folder) {
 
-                       $folder_permission = $this->getSingleGroupsPermission($folder->path);
+                 $folder_permission = $this->getSingleGroupsPermission($folder->path);
 
-                       $project_id =  Document::where('path',$folder->path)->pluck('project_id');
+                 $project_id =  Document::where('path',$folder->path)->pluck('project_id');
 
-                       $CurrentGroupUser = checkCurrentGroupUser($project_id);
+                 $CurrentGroupUser = checkCurrentGroupUser($project_id);
 
-                       if($CurrentGroupUser == 'Individual_users')
-                       {
-                          $folder_path_permission = '';
+                 if($CurrentGroupUser == 'Individual_users')
+                 {
+                    $folder_path_permission = '';
 
-                       }else{
+                 }else{
 
-                         $folder_path_permission = $folder->path.'@?#'.$folder_permission;
-                       }
-                       
-                       $return[$folder_path_permission]  =  $this->get_Folders($folder->path);
+                   $folder_path_permission = $folder->path.'@?#'.$folder_permission;
+                 }
+                 
+                 $return[$folder_path_permission]  =  $this->get_Folders($folder->path);
 
-                    }
-                  }
-              return $return;
-          }
+              }
+
+            }
+        return $return;
+    }
 
 
      public function get_FoldersAndFiles($project_path)

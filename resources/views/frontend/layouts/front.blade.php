@@ -55,46 +55,91 @@ header.removeClass("addedSticky");
             var fullName = $('.full_name').val();
             var company = $('.company').val();
             var about_prodata = $('select.about_prodata').val();
-         	var enterEmail = $('.email').val();
-         	var enterPhone = $('.phone').val();
-         	var enterProject = $('.project').val();
+         	  var enterEmail = $('.email').val();
+            var checkerEmail = isValidEmailAddress(enterEmail);
+
+           	var enterPhone = $('.phone').val();
+          	var enterProject = $('.project').val();
+            var errors = "<p class='error_check_red' style='color:red;'>Please fill in the required field.</p>";
 
          	if(fullName == '')
          	{
-               var error1 = "Please fill in the required field.";
-	           $('.check_int1').html(error1);
+               
+	           $('.check_int1').html(errors);
 	           error=1;
-         	}
+
+         	}else{
+
+                $('.check_int1').html('');
+                error=0;
+               
+           }
+
+          if(checkerEmail == false)
+            {
+
+                $('.check_int2').html(errors);
+                error=1;
+
+           }else{
+
+                $('.check_int2').html('');
+                error=0;
+           }
+
          	if(enterEmail == '')
          	{
-         	  var error2 = "Please fill in the required field.";
-	           $('.check_int2').html(error2);
+         	  
+	           $('.check_int2').html(errors);
 	             error=1;
+
          	}
+
          	if(enterPhone == '')
          	{
-               var error3 = "Please fill in the required field.";
-	           $('.check_int3').html(error3);
+              
+	           $('.check_int3').html(errors);
 	             error=1;
-         	}
+
+         	}else{
+
+            $('.check_int3').html('');
+            error=0;
+            
+
+          }
+
          	if(company == '')
          	{
-         	  var error4 = "Please fill in the required field.";
-	           $('.check_int4').html(error4);
+         	
+	           $('.check_int4').html(errors);
 	             error=1;
-         	}
+         	}else{
+            $('.check_int4').html('');
+             error=0;
+          }
+
          	if(about_prodata == null)
          	{
-               var error5 = "Please fill in the required field.";
-	           $('.check_int5').html(error5);
+              
+	           $('.check_int5').html(errors);
 	             error=1;
-         	}
+         	}else{
+            $('.check_int5').html('');
+             error=0;
+          }
+
          	if(enterProject == '')
          	{
-         	   var error6 = "Please fill in the required field.";
-	           $('.check_int6').html(error6);
+         	  
+	           $('.check_int6').html(errors);
 	             error=1;
-         	}
+         	}else{
+
+             $('.check_int6').html('');
+              error=0;
+              
+          }
 
          	if(error == 0 )
          	{
@@ -122,14 +167,14 @@ header.removeClass("addedSticky");
 	                   var check3 = response[2];
 	                   $('.check_int3').empty();
 	                   $('.check_int2').empty();
-                       $('.check_int6').empty();
+                     $('.check_int6').empty();
 
 	                  
 	                   if(check1 == 1)
 	                   {
 	                   	 if(enterEmail !== '')
 	                   	 {
-	                   	 	 var error1 = "This email already exits. Please enter unique email";
+	                   	 	 var error1 = "<p style='color:red;' >This email already exits. Please enter unique email</p>";
 	                   	     $('.check_int2').html(error1);
 	                   	       error=1;
 	                   	 }
@@ -139,7 +184,7 @@ header.removeClass("addedSticky");
 	                   { 
                            if(enterPhone !== '')
          	                {	                   	 
-		                   	var error2 = "Phone no is already in use. Please enter a unique phone no.";
+		                   	var error2 = "<p style='color:red;' >Phone no is already in use. Please enter a unique phone no.<p>";
 		                   	$('.check_int3').html(error2);
 		                   	  error=1;
 		                   }
@@ -149,7 +194,7 @@ header.removeClass("addedSticky");
 	                   {
 	                   	 if(enterProject !== '')
          	                 {
-			                   	var error3 = "The chosen project name is already in use. Please enter a unique name.";
+			                   	var error3 = "<p style='color:red;' >The chosen project name is already in use. Please enter a unique name.</p>";
 			                   	$('.check_int6').html(error3);
 			                   	  error=1;
 
@@ -177,7 +222,7 @@ header.removeClass("addedSticky");
 
          $('#Get_a_Quote').click(function(){
 
-            var token = $('#csrf-token').val();
+          var token = $('#csrf-token').val();
             // informations
          	var fullName = $('.full_name').val();
          	var email = $('.email').val();
@@ -190,7 +235,7 @@ header.removeClass("addedSticky");
          	var project_duration  = $("select.project_duration").val();
           var preferred_payment  = $("select.preferred_payment").val();
           var quote_for  = $("select.quote_for").val();
-          var errors = "Please fill in the required field.";
+          var errors = "<p class='error_check_red' style='color:red;' >Please fill in the required field.</p>";
           var error = 0 ;
 
             if(project_type == null)
@@ -276,10 +321,13 @@ header.removeClass("addedSticky");
       	 	$('.left_popup_content').removeClass('hidden_get_qoute');
       	 });
 
-
-
-         
    });
+
+function isValidEmailAddress(emailAddress) {
+    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    return pattern.test(emailAddress);
+}
+
 </script>
 </body>
 </html>

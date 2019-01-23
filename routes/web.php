@@ -195,19 +195,17 @@ Route::post('/get_action','ReportsController@getAction');
 
 Route::post('/get_group/report','ReportsController@getGroupsReports');
 
-
 // Reports route end
 
 //admin dashboard 
 
-Route::group(['namespace' => 'Admin', 'prefix' => ''], function()
+Route::group(['namespace' => 'Admin', 'prefix' =>'' ], function()
 {
-   Route::get('/admin','AdminController@admin');
-   Route::post('/admin/login','AdminController@adminLogin');
-   Route::post('/dashboard','AdminController@dashboard');
+   Route::get('/admin','AdminController@admin')->name('login_Page');
+   Route::post('/admin/login','AdminController@adminLogin')->name('adminLogin');
+   Route::get('/admin/dashboard','AdminController@dashboard')->name('dashboard');
 
 });
-
 
 Route::get('sendemail', function () {
 
