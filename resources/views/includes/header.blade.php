@@ -35,7 +35,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="{{url('/')}}/project/{{$project_id}}/documents" class="nav-link">Documents</a>
+						<a href="{{url('/')}}/project/{{$project_id}}/documents" class="nav-link"><i class="far fa-file"></i>Documents</a>
 					</li>
 					@if(checkUserType($project_name) !== 'Individual_users')
 						<li class="nav-item ">

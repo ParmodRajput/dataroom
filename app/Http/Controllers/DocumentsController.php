@@ -571,6 +571,10 @@ public function showDocument(Request $request){
 
                 $folder_ques = Question::where('document_id',$getDocumentId)->where('project_id',$projects_id)->pluck('id');
 
+                $GetUsers = Group_Member::where('project_id',$projects_id)->where('user_type','user')->get()->toArray();
+
+                $CurrentUserCount = count($GetUsers);
+
                 // $Folderpermission = $Folderpermission[0];
 
                 $Foldercount = count($Folderpermission);
@@ -579,7 +583,7 @@ public function showDocument(Request $request){
 
                      $Folderpermission  =  [];
 
-                     $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
+                     $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques,'CurrentUserCount'=>$CurrentUserCount];
 
                      array_push($IndexOfFolder,$Folder_array);
 
@@ -588,7 +592,7 @@ public function showDocument(Request $request){
                       if($Foldercount !== 0){
 
                            
-                            $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
+                            $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques,'CurrentUserCount'=>$CurrentUserCount];
                         
 
                            array_push($IndexOfFolder,$Folder_array);
@@ -626,6 +630,10 @@ public function showDocument(Request $request){
 
                 $file_ques = Question::where('document_id',$getFileId)->where('project_id',$projects_id)->pluck('id');
 
+                $GetUsers = Group_Member::where('project_id',$projects_id)->where('user_type','user')->get()->toArray();
+
+                $CurrentUserCount = count($GetUsers);
+
 
                 $Filecount = count($Filepermission);
 
@@ -633,7 +641,7 @@ public function showDocument(Request $request){
 
                   $Filepermission  = [];
 
-                  $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
+                  $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques,'CurrentUserCount'=>$CurrentUserCount];
 
                    array_push($IndexOfFile,$File_array);
 
@@ -643,7 +651,7 @@ public function showDocument(Request $request){
                   if($Filecount !== 0){
 
 
-                        $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
+                        $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques,'CurrentUserCount'=>$CurrentUserCount];
                            
 
                      array_push($IndexOfFile,$File_array);

@@ -209,4 +209,12 @@ if (!function_exists('folder_tree')) {
 
     }
 
+    function getTotalUserOftheProject($project_id){
+
+
+     $getCurrentGroupId = Group_Member::where('project_id',$project_id)->get();
+
+
+    }
+
 ?>
