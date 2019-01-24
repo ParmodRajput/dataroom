@@ -232,6 +232,8 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
+       
+      $(this).parent().parent().find('input:checkbox').click();
 
         $('.ui-droppable').removeClass('hidden');
         var getPermission = $(this).data('permission');

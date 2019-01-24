@@ -7,6 +7,7 @@
      <input type="hidden" name="projects_id" class="projects_id"  value="{{$project_id}}" />
 
      <input type="hidden" name="projects" class="project_name_in"  value="{{$project_name}}"/>
+      <input type="hidden" value='{{Auth::user()->email}}' id ='AuthEmailOfProject'>
 
      <input type="hidden" name="slug_folder" class="slug_folder" />
 
@@ -168,6 +169,7 @@
                 		<div class='reply_ques_docs_group' id="reply_user"> 
                 			 <span class='reply_to'>To:</span>
 			                 <select class="multipleSelectUsers" multiple name="language">
+			                 	<option selected value="{{Auth::user()->email}}">Q&A coordinators</option>
 			                 </select>
 			             </div>
 			             <div style="display: none;" id="alert_reply_user"></div>
@@ -222,7 +224,7 @@
 
              <div class='ques_ans_docs_group' id="user_select">
               <span class="to_user">To:</span>       
-              <select class="multipleSelectUsers" multiple name="language"></select>
+              <select class="multipleSelectUsers" multiple name="language"><option selected value="{{Auth::user()->email}}">Q&A coordinators</option></select>
              </div>
              <div style="display: none;" id="alert_user_select"></div>
 
