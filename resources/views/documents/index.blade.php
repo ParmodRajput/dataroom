@@ -7,9 +7,10 @@
             <div class='drop-menu_option'>
               <ul  class='context-menu_list_document'>
                 <li class='ng-scope' >
-                  <a href='#' ></i>Open in new browser tab</a>
+                  <a href='{{Url("/")}}/project/{{$project_id}}/documents' target="_blank"> <i>Open in new browser tab</a>
                 </li>
-                <li  class='ng-scope' >
+                <input type="hidden"  id="CurrentUrltildf">
+                <li  class='ng-scope copy_url_document'>
                   <a href='javascript:void(0)'></i>
                     <i class="fas fa-link"></i>
                   Copy Link</a>
@@ -82,6 +83,7 @@
   <div class="row document_content_index">
   <input type="hidden" class="single_select_doc" id="single_select_doc">
   <input type="hidden" id ='CheckUserChangePermission'>
+  <input type="hidden" value='{{Auth::user()->email}}' id ='AuthEmailOfProject'>
   <div class="document_index_contentable col-md-9">
      <div class="menu_option_block">
    
@@ -456,7 +458,7 @@
      </div>
      <div class="modal-footer">
        <input type="button" value="Ok" name="submit" id="submit_rename_document"class="btn btn-success">
-       <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
     </div>
   </div>
 
@@ -696,7 +698,7 @@
 
              <div class='ques_ans_docs_group'>   
               <span class="to_user">To:</span>     
-              <select class="multipleSelect" id="users" multiple name="language"></select>
+              <select class="multipleSelect" id="users" multiple name="language"><option selected value="{{Auth::user()->email}}">Q&A coordinators</option></select>
              </div>
 
              <div style="display:none;" id="alert_users"></div>
