@@ -183,7 +183,13 @@ if (!function_exists('folder_tree')) {
 
     function checkCurrentGroupUser($project_id){
 
-        $authEmail = Auth::user()->email;
+      if (Auth::user()) {
+       $authEmail = Auth::user()->email;
+      }
+
+        
+
+
 
         $getCurrentGroupId = Group_Member::where('project_id',$project_id)->where('member_email',$authEmail)->first();
 
@@ -198,8 +204,10 @@ if (!function_exists('folder_tree')) {
     }
 
     function getAuthgroupId($project_id){
-
-        $authEmail = Auth::user()->email;
+          if (Auth::user()) {
+       $authEmail = Auth::user()->email;
+      }
+        
 
         $getCurrentGroupId = Group_Member::where('project_id',$project_id)->where('member_email',$authEmail)->first();
 
@@ -213,6 +221,8 @@ if (!function_exists('folder_tree')) {
 
 
      $getCurrentGroupId = Group_Member::where('project_id',$project_id)->get();
+
+     return $getCurrentGroupId;
 
 
     }
