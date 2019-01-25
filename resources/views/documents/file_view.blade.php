@@ -80,10 +80,6 @@
 		<i class="fa fa-repeat"></i>
 		<i class="fa fa-repeat"></i>
 
-		<button type="button" id="plus">Reset Zoom</button>
-		<button type="button" id="minus">Reset Position</button>
-
-
 		<span class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></span>
 		</div>
 
@@ -188,7 +184,7 @@
 		$('#IMGcanvas').css('width',window_width);
         $('#IMGcanvas').css('height',window_height);
         $('#IMGcanvas').css('padding-top','1%');
-        $('#IMGcanvas').css('padding-bottom','0%');
+        $('#IMGcanvas').css('padding-bottom','3%');
         $('#IMGcanvas').css('padding-right','5%');
         $('#IMGcanvas').css('padding-left','3%');
 
@@ -731,12 +727,8 @@
 			// rotate the context (so it's rotated around its center)
 			wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
 			// as the origin is now at the center, just need to center the text
-			wmContext.fillText("prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 ....",-width,height);
+			wmContext.fillText("prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....",-width,height);
 
-			wmContext.fillText("prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 ....",-width/2,height/2);
-			
-			wmContext.fillText("prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 .... prodata.com date-21/01/19 ....",-width/4,height/4);
- 
 	</script>
 
 </html>
