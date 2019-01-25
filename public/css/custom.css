@@ -2461,7 +2461,16 @@ canvas#canvas{
 }
 
 canvas#IMGcanvas {
-    width: 1242px;
+    width: 1600px;
     padding: 3%;
-    height: 602px;
+    height: 700px;
+}
+
+.button_next_pre {
+    
+    position: absolute;
+    text-align: center;
+    z-index: 999;
+    width: 100%;
+    margin-top: -110px;
 }
