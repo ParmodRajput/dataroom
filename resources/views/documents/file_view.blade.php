@@ -225,147 +225,147 @@
 		    	            $('#canvas').css('display','none');
 		    	            $('.overlay_body').addClass('hidden');
 
-		    				// var canvas = document.getElementById("IMGcanvas");
-					     //    var ctx = canvas.getContext("2d");
-					     //    var cw = canvas.width;
-          //                   var ch = canvas.height;
+		    				var canvas = document.getElementById("IMGcanvas");
+					        var ctx = canvas.getContext("2d");
+					        var cw = canvas.width;
+                            var ch = canvas.height;
 
-					     //    var img = new Image();
+					        var img = new Image();
 					        
-					     //    img.crossOrigin='anonymous';
-					     //    img.onload = function () {
-					     //        // canvas.width=img.width;
-					     //        // canvas.height=img.height;
-					     //        ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,1500, 1000);
+					        img.crossOrigin='anonymous';
+					        img.onload = function () {
+					            // canvas.width=img.width;
+					            // canvas.height=img.height;
+					            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,cw,ch);
 
-					     //        // var dataURL=watermarkedDataURL(canvas,"It's Mine! nyfbfgf gfhdfksdf  fus fusd f f sdfo fd f hkd fh ud ");
-					     //    }
+					            // var dataURL=watermarkedDataURL(canvas,"It's Mine! nyfbfgf gfhdfksdf  fus fusd f f sdfo fd f hkd fh ud ");
+					        }
 
-					     //    img.src ='data:image/jpeg;base64,'+docPath;
+					        img.src ='data:image/jpeg;base64,'+docPath;
 
 
 					        ////////////////////////////////////////////
 
+							// document.addEventListener("DOMContentLoaded", function(e) {
 
-							document.addEventListener("DOMContentLoaded", function(e) {
-									// Canvas
-									var mouseDown = false;
-									var mousePos = [0, 0];
-									var canvas = document.querySelector("#myCanvas");
-									var context = canvas.getContext("2d");
-									canvas.addEventListener("mousewheel", zoom, false);
-									canvas.addEventListener("mousedown", setMouseDown, false);
-									canvas.addEventListener("mouseup", setMouseUp, false);
-									canvas.addEventListener("mousemove", move, false);
+							// 		// Canvas
+							// 		var mouseDown = false;
+							// 		var mousePos = [0, 0];
+							// 		var canvas = document.querySelector("#myCanvas");
+							// 		var context = canvas.getContext("2d");
+							// 		canvas.addEventListener("mousewheel", zoom, false);
+							// 		canvas.addEventListener("mousedown", setMouseDown, false);
+							// 		canvas.addEventListener("mouseup", setMouseUp, false);
+							// 		canvas.addEventListener("mousemove", move, false);
 
-									// Defaults
-									var DEFAULT_ZOOM = .5;
-									var MAX_ZOOM = 3;
-									var MIN_ZOOM = .2;
-									var ZOOM_STEP = .1;
-									// var DRAW_POS = [0, 0];
-									var DRAW_POS = [canvas.width/2, canvas.height/2];
+							// 		// Defaults
+							// 		var DEFAULT_ZOOM = .5;
+							// 		var MAX_ZOOM = 3;
+							// 		var MIN_ZOOM = .2;
+							// 		var ZOOM_STEP = .1;
+							// 		// var DRAW_POS = [0, 0];
+							// 		var DRAW_POS = [canvas.width/2, canvas.height/2];
 
-									// Buttons
-									var zoomInBtn = document.querySelector("#plus");
-									zoomInBtn.addEventListener("click", zoomIn, false);
-									var zoomOutBtn = document.querySelector("#minus");
-									zoomOutBtn.addEventListener("click", zoomOut, false);
-									var resetZoomBtn = document.querySelector("#resetZoom");
-									resetZoomBtn.addEventListener("click", resetZoom, false);
-									var resetPosBtn = document.querySelector("#resetPos");
-									resetPosBtn.addEventListener("click", resetPos, false);
+							// 		// Buttons
+							// 		var zoomInBtn = document.querySelector("#plus");
+							// 		zoomInBtn.addEventListener("click", zoomIn, false);
+							// 		var zoomOutBtn = document.querySelector("#minus");
+							// 		zoomOutBtn.addEventListener("click", zoomOut, false);
+							// 		var resetZoomBtn = document.querySelector("#resetZoom");
+							// 		resetZoomBtn.addEventListener("click", resetZoom, false);
+							// 		var resetPosBtn = document.querySelector("#resetPos");
+							// 		resetPosBtn.addEventListener("click", resetPos, false);
 
-									// Image
-									var loaded = false;
-									var drawPos = DRAW_POS;
-									var scale = DEFAULT_ZOOM;
-									var image = new Image();
-									image.src = 'data:image/jpeg;base64,'+docPath;
-									image.addEventListener("load", function(e) {
-										loaded = true;
-										drawCanvas();
-									}, false);
+							// 		// Image
+							// 		var loaded = false;
+							// 		var drawPos = DRAW_POS;
+							// 		var scale = DEFAULT_ZOOM;
+							// 		var image = new Image();
+							// 		image.src = 'data:image/jpeg;base64,'+docPath;
+							// 		image.addEventListener("load", function(e) {
+							// 			loaded = true;
+							// 			drawCanvas();
+							// 		}, false);
 
-									// Draw the canvas
-									function drawCanvas() {
-										context.fillStyle = "#FFFFFF";
-										context.fillRect(0,0,canvas.width,canvas.height);
-										if (loaded) {
-											drawImage();
-										}
-									}
+							// 		// Draw the canvas
+							// 		function drawCanvas() {
+							// 			context.fillStyle = "#FFFFFF";
+							// 			context.fillRect(0,0,canvas.width,canvas.height);
+							// 			if (loaded) {
+							// 				drawImage();
+							// 			}
+							// 		}
 
-									// Draw the image
-									function drawImage() {
-										var w = image.width * scale;
-										var h = image.height * scale;
-										// var x = drawPos[0];
-										// var y = drawPos[1]; 
-										var x = drawPos[0] - (w / 2);
-										var y = drawPos[1] - (h / 2);
-										context.drawImage(image, x, y, w, h);
-									}
+							// 		// Draw the image
+							// 		function drawImage() {
+							// 			var w = image.width * scale;
+							// 			var h = image.height * scale;
+							// 			// var x = drawPos[0];
+							// 			// var y = drawPos[1]; 
+							// 			var x = drawPos[0] - (w / 2);
+							// 			var y = drawPos[1] - (h / 2);
+							// 			context.drawImage(image, x, y, w, h);
+							// 		}
 									
-									// Set the zoom with the mouse wheel
-									function zoom(e) {
-										if (e.wheelDelta > 0) {
-											zoomIn();
-										}
-										else {
-											zoomOut();
-										}
-									}
+							// 		// Set the zoom with the mouse wheel
+							// 		function zoom(e) {
+							// 			if (e.wheelDelta > 0) {
+							// 				zoomIn();
+							// 			}
+							// 			else {
+							// 				zoomOut();
+							// 			}
+							// 		}
 
-									// Zoom in
-									function zoomIn(e) {
-										if (scale < MAX_ZOOM) {
-											scale += ZOOM_STEP;
-											drawCanvas();
-										}
-									}
+							// 		// Zoom in
+							// 		function zoomIn(e) {
+							// 			if (scale < MAX_ZOOM) {
+							// 				scale += ZOOM_STEP;
+							// 				drawCanvas();
+							// 			}
+							// 		}
 
-									// Zoom out
-									function zoomOut(e) {
-										if (scale > MIN_ZOOM) {
-											scale -= ZOOM_STEP;
-											drawCanvas();
-										}
-									}
+							// 		// Zoom out
+							// 		function zoomOut(e) {
+							// 			if (scale > MIN_ZOOM) {
+							// 				scale -= ZOOM_STEP;
+							// 				drawCanvas();
+							// 			}
+							// 		}
 
-									// Reset the zoom
-									function resetZoom(e) {
-										scale = DEFAULT_ZOOM;
-										drawCanvas();
-									}
+							// 		// Reset the zoom
+							// 		function resetZoom(e) {
+							// 			scale = DEFAULT_ZOOM;
+							// 			drawCanvas();
+							// 		}
 
-									// Reset the position
-									function resetPos(e) {
-										drawPos = DRAW_POS;
-										drawCanvas();
-									}
+							// 		// Reset the position
+							// 		function resetPos(e) {
+							// 			drawPos = DRAW_POS;
+							// 			drawCanvas();
+							// 		}
 
-									// Toggle mouse status
-									function setMouseDown(e) {
-										mouseDown = true;
-										mousePos = [e.x, e.y];
-									}
-									function setMouseUp(e) {
-										mouseDown = false;
-									}
+							// 		// Toggle mouse status
+							// 		function setMouseDown(e) {
+							// 			mouseDown = true;
+							// 			mousePos = [e.x, e.y];
+							// 		}
+							// 		function setMouseUp(e) {
+							// 			mouseDown = false;
+							// 		}
 
-									// Move
-									function move(e) {
-										if (mouseDown) {
-											var dX = 0, dY = 0;
-											var delta = [e.x - mousePos[0], e.y - mousePos[1]];
-											drawPos = [drawPos[0] + delta[0], drawPos[1] + delta[1]];
-											mousePos = [e.x, e.y];
-											drawCanvas();
-										}
-									}
+							// 		// Move
+							// 		function move(e) {
+							// 			if (mouseDown) {
+							// 				var dX = 0, dY = 0;
+							// 				var delta = [e.x - mousePos[0], e.y - mousePos[1]];
+							// 				drawPos = [drawPos[0] + delta[0], drawPos[1] + delta[1]];
+							// 				mousePos = [e.x, e.y];
+							// 				drawCanvas();
+							// 			}
+							// 		}
 
-								}, true);
+							// 	}, true);
 
 
 
@@ -590,7 +590,7 @@
 		    context.clearRect(0, 0, canvas.width, canvas.height);
 		 
 			context.save();
-			context.translate(translatePos.x, translatePos.y);
+			// context.translate(translatePos.x/20, translatePos.y/20);
 			context.scale(scale, scale);
 			
 			context.drawImage(img, 0, 0, img.width, img.height,     // source rectangle
