@@ -113,9 +113,10 @@ if (!function_exists('folder_tree')) {
                  //$Extenstion = explode('.',$key);
                  //$getExtenstion =  end($Extenstion);
                  $getExtenstion = pathinfo($key, PATHINFO_EXTENSION);
-                 if($getExtenstion == 'jpg' || $getExtenstion == 'jepg' || $getExtenstion == 'png' || $getExtenstion == 'pdf' || $getExtenstion == 'xlsx' || $getExtenstion == 'xls' || $getExtenstion == 'xlsb' || $getExtenstion == 'zip'){
 
-                   $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_file_name inactive customspan">';
+                  $output .= '<li data-permission="'.$document_permission.'" data-verify="0" data-value="'. $key.'" class="document_permission" ><span class="document_file_name inactive customspan">';
+
+                 if($getExtenstion == 'jpg' || $getExtenstion == 'jepg' || $getExtenstion == 'png' || $getExtenstion == 'pdf' || $getExtenstion == 'xlsx' || $getExtenstion == 'xls' || $getExtenstion == 'xlsb' || $getExtenstion == 'zip' || $getExtenstion == 'docx'){
 
                    //print_r($getExtenstion);die();
 
@@ -182,7 +183,13 @@ if (!function_exists('folder_tree')) {
 
     function checkCurrentGroupUser($project_id){
 
-        $authEmail = Auth::user()->email;
+      if (Auth::user()) {
+       $authEmail = Auth::user()->email;
+      }
+
+        
+
+
 
         $getCurrentGroupId = Group_Member::where('project_id',$project_id)->where('member_email',$authEmail)->first();
 
@@ -197,14 +204,26 @@ if (!function_exists('folder_tree')) {
     }
 
     function getAuthgroupId($project_id){
-
-        $authEmail = Auth::user()->email;
+          if (Auth::user()) {
+       $authEmail = Auth::user()->email;
+      }
+        
 
         $getCurrentGroupId = Group_Member::where('project_id',$project_id)->where('member_email',$authEmail)->first();
 
         $CurrentGroupId = $getCurrentGroupId->group_id;
 
         return $CurrentGroupId;
+
+    }
+
+    function getTotalUserOftheProject($project_id){
+
+
+     $getCurrentGroupId = Group_Member::where('project_id',$project_id)->get();
+
+     return $getCurrentGroupId;
+
 
     }
 

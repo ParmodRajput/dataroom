@@ -232,10 +232,15 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
+       
+      $(this).parent().parent().find('input:checkbox').click();
 
         $('.ui-droppable').removeClass('hidden');
         var getPermission = $(this).data('permission');
         var checkPermission = $(this).attr('permission');
+
+        $('.filteredTextContent').addClass('hidden');
+        $('.back-arrow.move_last_folder').removeClass('hidden');
 
           
          if( checkPermission == '')
@@ -1165,6 +1170,7 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
+                          var user =          value.CurrentUserCount;
 
                           
                           var index         = value.doc_index;
@@ -1213,11 +1219,11 @@ $(document).ready(function(){
                                
                             if(ques == ''){
 
-                               html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+                               html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-user='"+user+"' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
 
                              }else{
 
-                                html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+                                html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-user='"+user+"' data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
 
                              }
 
@@ -1284,7 +1290,7 @@ $(document).ready(function(){
                       var note           = value.note;
                       var file_id        = value.doc_id;
                       var ques           = value.ques;
-
+                      var user =          value.CurrentUserCount;
 
                         if(document_index == '')
                         {
@@ -1355,11 +1361,11 @@ $(document).ready(function(){
                                         
                                         if(ques == ''){
 
-                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-user='"+user+"' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
 
                                            }else{
 
-                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-ques='1' data-user='"+user+"' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
 
                                            }
 
@@ -1478,7 +1484,7 @@ $(document).ready(function(){
     
 
    // right click on document// 
-    $(document).on('contextmenu','.document_index' ,function(e) {
+    $(document).on('contextmenu','.documents_index_section .document_index' ,function(e) {
           
           $('.drop_box_document input:checkbox').prop('checked', false);
           e.preventDefault();
@@ -2480,13 +2486,19 @@ $(document).on('click','.fav_docs',function(e){
 
 $(document).on('click','.submit_note1_doc', function(){
 
-        var getCheckValue = $("input[name='documents_select']:checked").data('value');
-
-         $('[data-value = "'+getCheckValue+'"]').parent().parent().find('.icons-doc').find('.notes_docs').css('visibility','visible');
-
         
         var token = $('#csrf-token').val();  
         var NotesContent  = $('.notes_aside_text1').val();
+
+        if(NotesContent !== '')
+        {
+           
+
+         var getCheckValue = $("input[name='documents_select']:checked").data('value');
+  
+
+         $('[data-value = "'+getCheckValue+'"]').parent().parent().find('.icons-doc').find('.notes_docs').css('visibility','visible');
+
         var notesPriority = $('.notes_aside_text1').data('value');
         var projects_id   = $('.directory_location #project_id_doc').val();
         var documentPath  = $('#single_select_doc').val();
@@ -2555,6 +2567,8 @@ $(document).on('click','.submit_note1_doc', function(){
 
                     });
           }
+
+      }
         
 });
 
@@ -2869,6 +2883,7 @@ $(document).on('click','.note1_doc_delete', function(){
        $('input:checkbox').prop('checked', false);
        $(this).parent().prev().find('.check-box-input').trigger( "click" );
        var data_value = $(this).data('value');
+       var data_user = $(this).data('user');
        var getName  = data_value.split('/');
        var Name = getName[getName.length-1];
 
@@ -2979,7 +2994,8 @@ $(document).on('click','.note1_doc_delete', function(){
  function getUserForSelectQues(){
 
      var project_id  = $('.directory_location #project_id_doc').val();
-     var token = $('#csrf-token').val();  
+     var token = $('#csrf-token').val(); 
+     var AuthEmail = $('#AuthEmailOfProject').val();
 
        $.ajax({
         type : "POST",
@@ -2990,7 +3006,7 @@ $(document).on('click','.note1_doc_delete', function(){
         },
         success:function(response){
 
-          var html ='';
+          var html ='<option selected value="'+AuthEmail+'">Q&A coordinators</option>';
 
            $.each(response,function(key, value){
 
@@ -3177,6 +3193,19 @@ $(document).on('click','.fence_view_doc_permis',function(){
      window.open("{{ Url('/') }}/file_view/"+project_id+"/Open_viewer/" +getFileId, '_blank');
 
 });
+
+
+$(document).on('click','.copy_url_document',function(){
+
+var pageURL = $(location).attr("href");
+$('#CurrentUrltildf').val(pageURL);
+var dhsd = $('#CurrentUrltildf').val();
+alert('Copied to clipboard');
+
+
+});
+
+
 
 </script>
 

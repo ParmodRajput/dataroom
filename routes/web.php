@@ -141,7 +141,10 @@ Route::post('/users/get_user_info', 'GroupsController@getUserInfo');
 
 Route::post('/delete_group', 'GroupsController@deleteGroup');
 Route::post('/get_allgroups', 'GroupsController@getAllGroups');
+
 Route::post('/get_group_users', 'GroupsController@GroupsUsersGet');
+Route::post('/select_group_users', 'GroupsController@SelectGroupsUsers');
+
 Route::post('/user/move_to_group', 'GroupsController@MoveUser');
 Route::post('/change_groupName', 'GroupsController@ChangeGroupName');
 Route::post('/change_groupRole', 'GroupsController@ChangeGroupRole');
@@ -149,6 +152,8 @@ Route::post('/change_groupRole', 'GroupsController@ChangeGroupRole');
 Route::post('update/collaboration_setting', 'GroupsController@ChangeCollaborationSetting');
 Route::post('/update/access_setting', 'GroupsController@ChangeAccessRoomSetting');
 Route::post('/update/quesAns_setting', 'GroupsController@ChangeQuesAnsSetting');
+
+Route::post('/update/member/access_setting', 'GroupsController@ChangeMemberAccessSetting');
 
 Route::post('/member/quesAns_setting', 'GroupsController@MembersChangeQuesAnsSetting');
 // all project all users
@@ -190,10 +195,17 @@ Route::post('/get_action','ReportsController@getAction');
 
 Route::post('/get_group/report','ReportsController@getGroupsReports');
 
-
 // Reports route end
 
+//admin dashboard 
 
+Route::group(['namespace' => 'Admin', 'prefix' =>'' ], function()
+{
+   Route::get('/admin','AdminController@admin')->name('login_Page');
+   Route::post('/admin/login','AdminController@adminLogin')->name('adminLogin');
+   Route::get('/admin/dashboard','AdminController@dashboard')->name('dashboard');
+
+});
 
 Route::get('sendemail', function () {
 

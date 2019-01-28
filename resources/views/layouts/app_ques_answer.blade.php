@@ -678,6 +678,7 @@
 
     var project_id  = $('.project_id_qu').val();
     var token = $('#csrf-token').val(); 
+    var AuthEmail = $('#AuthEmailOfProject').val();
 
               $.ajax({
             type : "POST",
@@ -688,7 +689,7 @@
             },
             success:function(response){
 
-              var html ='';
+              var html ='<option selected value="'+AuthEmail+'">Q&A coordinators</option>';
 
                $.each(response,function(key, value){
 

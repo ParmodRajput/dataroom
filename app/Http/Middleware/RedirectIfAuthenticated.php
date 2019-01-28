@@ -21,6 +21,7 @@ class RedirectIfAuthenticated
             return redirect('/projects');
         }
 
+
         return $next($request);
     }
 }
