@@ -610,6 +610,8 @@ button.close_permission_modal { background:#333; border:0px; width: 30px; height
 
 .create_folder span.select2.select2-container.select2-container--default { width: 100%!important;}
 
+
+
 @media only screen and (max-width:1230px) {
 .document_index{ float:left; width:100%;}   
 }
@@ -1103,6 +1105,9 @@ border-bottom:1px solid #dfdfdf;}
 .input_pannel{ float:left; width:100%; margin-top:15px; margin-bottom:0px;}
 .input_pannel label { float:left; width:45%; padding-left:15px; font-size:14px;}
 .input_pannel input { float:left; width:calc(100% - 55%); padding:15px; border:1px solid #dfdfdf;}
+
+.new_data_room_setup .basic_setting_input .input_pannel input { width: calc(100% - 50%);}
+
 .personal_detail_pannel{ float:left; margin:10px 0; padding:15px; width:100%; }
 .personal_detail_pannel input{ float:left; width:100%; padding:10px; border:1px solid #dfdfdf;}
 .personal_detail_pannel p{ float:left; margin:5px 0; padding:0px; width:100%;  }
@@ -2459,6 +2464,22 @@ canvas#canvas{
     margin: 0 auto;
 }
 
+
+canvas#IMGcanvas {
+    width: 1600px;
+    padding: 3%;
+    height: 700px;
+}
+
+.button_next_pre {
+    
+    position: absolute;
+    text-align: center;
+    z-index: 999;
+    width: 100%;
+    margin-top: -110px;
+}
+
 .button_next_pre {
    
    position: absolute;
@@ -2467,4 +2488,5 @@ canvas#canvas{
    width: 100%;
    margin-top: -110px;
 }
+
 
