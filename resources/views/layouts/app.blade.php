@@ -1913,6 +1913,8 @@ $('#myModal').on('hidden.bs.modal', function () {
 
     var numberOfChecked = $('.document_index_contentable input:checkbox:checked').length;
 
+    alert(numberOfChecked);
+
       if(numberOfChecked == 1)
       {         
           // var ffd  = $('.notes_aside_text1').val();
@@ -1987,7 +1989,7 @@ $('#myModal').on('hidden.bs.modal', function () {
               
       }else if(numberOfChecked == 0)
         {
-             
+             alert('sdsad');
 
              $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
