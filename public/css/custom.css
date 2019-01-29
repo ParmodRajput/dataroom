@@ -1815,13 +1815,7 @@ background-size: cover;
     filter:alpha(opacity= 0.9); /* For IE8 and earlier */
 }
 
-.kato {
-    float: left;
-    width: 100%;
-    overflow: hidden;
-    position: absolute;
-    top:50px;
-}
+.kato { float: left; width: 100%;  overflow: hidden;  position: absolute;  top:50px; left:0px;}
 
 
 /*end
