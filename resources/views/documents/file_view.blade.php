@@ -120,6 +120,11 @@
 		    <div class="viewer_display">
 
 				 <div class="kato" id='pageContainer'>
+				 	<div class="watermarkBlock">
+				 		<div class="WaterMarkTextContent">
+				 			<p class="content_text_wm">fdg fg gfd gfdgfd fdgfdg fgfdg fg gsfgfdg gfgf gf gdfg fg fdgfdg</p>
+				 		</div>
+				 	</div>
 				 <!-- 	<div class="overlay_new"></div> -->
 	                <canvas id="canvas"></canvas> 
 	                <div class="button_next_pre hidden">
@@ -129,7 +134,7 @@
 
 	                <canvas id="IMGcanvas" width="1500" height="700"></canvas> 
 
-	                 	<canvas id="myCanvas" width="960" height="600">
+	                 	<canvas id="myCanvas" width="100" height="1000">
 		                  Your browser doesn't support canvas, fool.
 	                    </canvas>
 
@@ -236,7 +241,7 @@
 					        img.onload = function () {
 					            // canvas.width=img.width;
 					            // canvas.height=img.height;
-					            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,cw,ch);
+					            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,cw, ch);
 
 					            // var dataURL=watermarkedDataURL(canvas,"It's Mine! nyfbfgf gfhdfksdf  fus fusd f f sdfo fd f hkd fh ud ");
 					        }
@@ -399,7 +404,10 @@
 		    	$('#canvas').css('display','block');
 
                 $('.button_next_pre').removeClass('hidden'); 
-                var scale = (1.2);   
+                var scale = (1.2); 
+
+                var Canvas = "IMGcanvas";
+                var Content = ''; 
                
                 pdfViewer(docPath,__CURRENT_PAGE,scale);
 		    }
@@ -590,7 +598,7 @@
 		    context.clearRect(0, 0, canvas.width, canvas.height);
 		 
 			context.save();
-			// context.translate(translatePos.x/20, translatePos.y/20);
+			context.translate(translatePos.x, translatePos.y);
 			context.scale(scale, scale);
 			
 			context.drawImage(img, 0, 0, img.width, img.height,     // source rectangle
@@ -691,15 +699,11 @@
             e.preventDefault(); return false; 
         });
 
-
-
-
          // using canvas on canvas div
 
-
             var container=document.getElementById("pageContainer")
-			var origCanvas=document.getElementById("myCanvas");
-			var wmCanvas=document.getElementById("myCanvas");
+			var origCanvas=document.getElementById('myCanvas');
+			var wmCanvas=document.getElementById('myCanvas');
 
 			wmCanvas.setAttribute("style","position:absolute;")
 
@@ -708,26 +712,26 @@
 			else
 			    container.appendChild(wmCanvas);
 
-			var canvas = document.getElementById("myCanvas");
-		    var context = canvas.getContext("2d");
-
 			var wmContext=wmCanvas.getContext('2d');
 			wmContext.globalAlpha=0.5;
 			// setup text for filling
 			wmContext.font = "30px Comic Sans MS" ;
 			wmContext.fillStyle = "gray";
 			// get the metrics with font settings
-			var metrics = wmContext.measureText("WaterMark Demo fgdfg ggfdg g fgfd gfdg ");
+			var metrics = wmContext.measureText("WaterMark Demo fgdfg ggfdg g fgfd gfdg");
 			var width = metrics.width;
 			// height is font size
-			var height = 72;
+			var height = 100;
 
 			// change the origin coordinate to the middle of the context
-			wmContext.translate(origCanvas.width/2, origCanvas.height/2);
+			//wmContext.translate(origCanvas.width/2, origCanvas.height/2);
 			// rotate the context (so it's rotated around its center)
-			wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
+			//wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
 			// as the origin is now at the center, just need to center the text
-			wmContext.fillText("prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....",-width,height);
+			wmContext.fillText("prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....",origCanvas.width,origCanvas.height);
+
+
+
 
 	</script>
 

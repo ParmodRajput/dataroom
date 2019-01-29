@@ -2489,4 +2489,7 @@ canvas#IMGcanvas {
    margin-top: -110px;
 }
 
-
+canvas#myCanvas{
+    
+     transform: rotate(45deg);
+}
