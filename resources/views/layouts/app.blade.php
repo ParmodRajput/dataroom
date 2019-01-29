@@ -232,7 +232,12 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
-       
+
+      $('.table.table-hover.table-bordered.table_color').removeClass('hidden');
+      $('.table.table-hover.table-bordered.table_color.recycle_bin').addClass('hidden');
+      $('.upload_table .document_index_buttons ').removeClass('hidden');
+      $('.upload_table .document_index_recycle_bin').addClass('hidden');
+
       $(this).parent().parent().find('input:checkbox').click();
 
         $('.ui-droppable').removeClass('hidden');
@@ -498,10 +503,10 @@ $(document).ready(function(){
 
 
                        var document_index = $('.document_indexing_count').val();
-                       var genrate_folder = get_genrate_folder.replace(' ', '_');
+                       var genrate_folder = get_genrate_folder.replace(/[^a-zA-Z0-9]/g, '_');
                        var getPath = path+"/"+genrate_folder; 
                        var box = $('.indexing');
-                       var folder =$('#tree2');
+                       var folder = $('#tree2');
                        
                        var html="";
                        var html1="";
@@ -530,7 +535,7 @@ $(document).ready(function(){
 
                                 html1 +="<li id='projects' data-value='"+getPath+"'class='projects'><span class='doucment_name'>"+response+"</span></li>";
                              
-                                  $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
+                                  // $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
                                    $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
                                   var directory_url= path;
 
@@ -1913,8 +1918,6 @@ $('#myModal').on('hidden.bs.modal', function () {
 
     var numberOfChecked = $('.document_index_contentable input:checkbox:checked').length;
 
-    alert(numberOfChecked);
-
       if(numberOfChecked == 1)
       {         
           // var ffd  = $('.notes_aside_text1').val();
@@ -2145,6 +2148,8 @@ $(document).on('mouseleave','.drop_box_document', function(){
 
         
         //filter hide
+        $('.filteredTextContent').addClass('hidden');
+        $('.back-arrow.move_last_folder').removeClass('hidden');
         $('.document_view_block').addClass('hidden');
         $('.fav_filter').addClass('hidden');
         $('.new_filter').addClass('hidden');
