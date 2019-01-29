@@ -1262,7 +1262,6 @@
 
  	var group_type = $(this).data('group_type');
 
- 	alert(group_type);
  
     var showDocWithDoc = '';
 
@@ -1281,12 +1280,6 @@
       	 $('.security_setting').removeClass('hidden');
          $('.access_Ques_ans').removeClass('hidden');
          $('.EnterGroupByinvite').addClass('hidden');
-
-        if(group_type !== 'Administrator')
-		 	{
-	
-		 		 $('.delete_group').removeClass('hidden'); 
-		 	}
 
       	  $.each($("input[name='groups_select']:checked"),function(){
 
@@ -1494,6 +1487,7 @@
       	 $('.listUsersGroups').addClass('hidden');
       	 $('.groupMemberDetail').addClass('hidden');
       	 $('.delete_group').addClass('hidden'); 
+      	 $('.delete_group').removeClass('hidden');
       	 $('.GroupByinvite').removeClass('hidden');
 
       	 $('.GroupTitle').html('');
@@ -1504,12 +1498,7 @@
 
 
    if(numberOfUserChecked == 1){
-
-   	    if(group_type !== 'Administrator')
-		 	{
-	
-		 		 $('.delete_group').removeClass('hidden'); 
-		 	}
+   	 $('.delete_group').removeClass('hidden'); 
 
 		$.each($("input[name='users_select']:checked"),function(){
 
@@ -1659,9 +1648,8 @@
 
       }else{
 
-      	alert('dsfsdf');
-
       	 $('.groupMemberDetail').addClass('hidden');
+      	 $('.delete_group').addClass('hidden'); 
       	 $('.delete_group').removeClass('hidden');
       	 $('.GroupByinvite').removeClass('hidden');
 
