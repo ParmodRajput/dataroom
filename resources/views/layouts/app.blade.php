@@ -587,15 +587,27 @@ $(document).ready(function(){
             for (var i = 0; i <= fi.files.length - 1; i++) {
 
                 var fname = fi.files.item(i).name;      // THE NAME OF THE FILE.
-                var fsize = fi.files.item(i).size;      // THE SIZE OF THE FILE.
+                var sizeF = fi.files.item(i).size; 
+
+                var bytes = sizeF;
+
+                var fsize = formatBytes(bytes);
 
                 // SHOW THE EXTRACTED DETAILS OF THE FILE.
                 document.getElementById('fileDetails').innerHTML =
-                    document.getElementById('fileDetails').innerHTML + '<div class="row"><div class="col-md-12 "><div class="upload_details_index"><div class="col-md-6"><p>' +fname + '</p></div><div class="col-md-4"><p>' + fsize + 'bytes</p></div><div class="col-md-2"><p>X</p></div></div></div></div>';
+                    document.getElementById('fileDetails').innerHTML + '<div class="row"><div class="col-md-12 "><div class="upload_details_index"><div class="col-md-6"><p>' +fname + '</p></div><div class="col-md-4"><p>' + fsize + '</p></div><div class="col-md-2"><p>X</p></div></div></div></div>';
             }
         }
 
     }
+
+
+       function formatBytes(bytes) {
+                    if(bytes < 1024) return bytes + " Bytes";
+                    else if(bytes < 1048576) return(bytes / 1024).toFixed(3) + " KB";
+                    else if(bytes < 1073741824) return(bytes / 1048576).toFixed(3) + " MB";
+                    else return(bytes / 1073741824).toFixed(3) + " GB";
+                };
 
     $(document).on('change','input:file',function(){
 
@@ -1729,7 +1741,10 @@ $(document).ready(function(){
 
       $(document).on ('click','#submit_rename_document',function(e) {
        
-       var editableDocumentName = $('#renameDocumentContent').val();
+        var editableDocumentName1 = $('#renameDocumentContent').val();
+
+        var editableDocumentName = editableDocumentName1.replace(/[^A-Z0-9]+/ig, "_");; 
+
 
        var editableDocumentUrl  = $('#renameDocumentUrl').val();
 
