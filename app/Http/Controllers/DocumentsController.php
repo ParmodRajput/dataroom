@@ -348,7 +348,7 @@ public function getDocumentAction($project_id)
 public function createFolder(Request $request) {
 
  //print_r($request->path);
- $authId    =Auth::user()->id;
+ $authId    = Auth::user()->id;
  $current_directory = $request->path;
  $document_name     = $request->genrate_folder;
  $store_path        = $request->getPath;

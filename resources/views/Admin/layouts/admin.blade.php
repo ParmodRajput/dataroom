@@ -54,9 +54,18 @@
       $(document).ready(function(){
           $(document).on('click','#Users_overall',function(){
 
-            
+
 
           })
+
+
+          function getTotalUsers(){
+
+            $.ajax(){
+                
+            }
+
+          }
       });
     </script>
   </body>

@@ -59,6 +59,7 @@
 
 
 </head>
+
 	<body>
        <div class="row">
        	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
@@ -78,6 +79,7 @@
 		<div class="repeat_icons">
 		<i class="fa fa-repeat"></i>
 		<i class="fa fa-repeat"></i>
+
 		<span class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></span>
 		</div>
 
@@ -117,14 +119,20 @@
 
 		    <div class="viewer_display">
 
-				 <div class="kato">
-				 	<div class="overlay_new"></div>
+				 <div class="kato" id='pageContainer'>
+				 <!-- 	<div class="overlay_new"></div> -->
 	                <canvas id="canvas"></canvas> 
 	                <div class="button_next_pre hidden">
 				           <button id="pdf-prev">Previous</button>
 	                       <button id="pdf-next">Next</button>
-	                    </div> 
-	                <canvas id="IMGcanvas" width="1500" height="700"></canvas>  
+	                </div> 
+
+	                <canvas id="IMGcanvas" width="1500" height="700"></canvas> 
+
+	                 	<canvas id="myCanvas" width="960" height="600">
+		                  Your browser doesn't support canvas, fool.
+	                    </canvas>
+
 	                <div class="blurPic" style='display: none'></div>
                  </div>
                  <div id="excel_viewer"></div>
@@ -176,8 +184,9 @@
 		$('#IMGcanvas').css('width',window_width);
         $('#IMGcanvas').css('height',window_height);
         $('#IMGcanvas').css('padding-top','1%');
-        $('#IMGcanvas').css('padding-bottom','1%');
-        $('#IMGcanvas').css('padding-right','3%');
+        $('#IMGcanvas').css('padding-bottom','3%');
+        $('#IMGcanvas').css('padding-right','5%');
+        $('#IMGcanvas').css('padding-left','3%');
 
 		var excel_path  = $('#excel_file').val();
 
@@ -214,6 +223,7 @@
 		    {
 
 		    	            $('#canvas').css('display','none');
+		    	            $('.overlay_body').addClass('hidden');
 
 		    				var canvas = document.getElementById("IMGcanvas");
 					        var ctx = canvas.getContext("2d");
@@ -221,17 +231,146 @@
                             var ch = canvas.height;
 
 					        var img = new Image();
-					        $('.overlay_body').addClass('hidden');
+					        
 					        img.crossOrigin='anonymous';
 					        img.onload = function () {
 					            // canvas.width=img.width;
 					            // canvas.height=img.height;
-					            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,1500, 1000);
+					            ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0,cw,ch);
 
 					            // var dataURL=watermarkedDataURL(canvas,"It's Mine! nyfbfgf gfhdfksdf  fus fusd f f sdfo fd f hkd fh ud ");
 					        }
 
 					        img.src ='data:image/jpeg;base64,'+docPath;
+
+
+					        ////////////////////////////////////////////
+
+							// document.addEventListener("DOMContentLoaded", function(e) {
+
+							// 		// Canvas
+							// 		var mouseDown = false;
+							// 		var mousePos = [0, 0];
+							// 		var canvas = document.querySelector("#myCanvas");
+							// 		var context = canvas.getContext("2d");
+							// 		canvas.addEventListener("mousewheel", zoom, false);
+							// 		canvas.addEventListener("mousedown", setMouseDown, false);
+							// 		canvas.addEventListener("mouseup", setMouseUp, false);
+							// 		canvas.addEventListener("mousemove", move, false);
+
+							// 		// Defaults
+							// 		var DEFAULT_ZOOM = .5;
+							// 		var MAX_ZOOM = 3;
+							// 		var MIN_ZOOM = .2;
+							// 		var ZOOM_STEP = .1;
+							// 		// var DRAW_POS = [0, 0];
+							// 		var DRAW_POS = [canvas.width/2, canvas.height/2];
+
+							// 		// Buttons
+							// 		var zoomInBtn = document.querySelector("#plus");
+							// 		zoomInBtn.addEventListener("click", zoomIn, false);
+							// 		var zoomOutBtn = document.querySelector("#minus");
+							// 		zoomOutBtn.addEventListener("click", zoomOut, false);
+							// 		var resetZoomBtn = document.querySelector("#resetZoom");
+							// 		resetZoomBtn.addEventListener("click", resetZoom, false);
+							// 		var resetPosBtn = document.querySelector("#resetPos");
+							// 		resetPosBtn.addEventListener("click", resetPos, false);
+
+							// 		// Image
+							// 		var loaded = false;
+							// 		var drawPos = DRAW_POS;
+							// 		var scale = DEFAULT_ZOOM;
+							// 		var image = new Image();
+							// 		image.src = 'data:image/jpeg;base64,'+docPath;
+							// 		image.addEventListener("load", function(e) {
+							// 			loaded = true;
+							// 			drawCanvas();
+							// 		}, false);
+
+							// 		// Draw the canvas
+							// 		function drawCanvas() {
+							// 			context.fillStyle = "#FFFFFF";
+							// 			context.fillRect(0,0,canvas.width,canvas.height);
+							// 			if (loaded) {
+							// 				drawImage();
+							// 			}
+							// 		}
+
+							// 		// Draw the image
+							// 		function drawImage() {
+							// 			var w = image.width * scale;
+							// 			var h = image.height * scale;
+							// 			// var x = drawPos[0];
+							// 			// var y = drawPos[1]; 
+							// 			var x = drawPos[0] - (w / 2);
+							// 			var y = drawPos[1] - (h / 2);
+							// 			context.drawImage(image, x, y, w, h);
+							// 		}
+									
+							// 		// Set the zoom with the mouse wheel
+							// 		function zoom(e) {
+							// 			if (e.wheelDelta > 0) {
+							// 				zoomIn();
+							// 			}
+							// 			else {
+							// 				zoomOut();
+							// 			}
+							// 		}
+
+							// 		// Zoom in
+							// 		function zoomIn(e) {
+							// 			if (scale < MAX_ZOOM) {
+							// 				scale += ZOOM_STEP;
+							// 				drawCanvas();
+							// 			}
+							// 		}
+
+							// 		// Zoom out
+							// 		function zoomOut(e) {
+							// 			if (scale > MIN_ZOOM) {
+							// 				scale -= ZOOM_STEP;
+							// 				drawCanvas();
+							// 			}
+							// 		}
+
+							// 		// Reset the zoom
+							// 		function resetZoom(e) {
+							// 			scale = DEFAULT_ZOOM;
+							// 			drawCanvas();
+							// 		}
+
+							// 		// Reset the position
+							// 		function resetPos(e) {
+							// 			drawPos = DRAW_POS;
+							// 			drawCanvas();
+							// 		}
+
+							// 		// Toggle mouse status
+							// 		function setMouseDown(e) {
+							// 			mouseDown = true;
+							// 			mousePos = [e.x, e.y];
+							// 		}
+							// 		function setMouseUp(e) {
+							// 			mouseDown = false;
+							// 		}
+
+							// 		// Move
+							// 		function move(e) {
+							// 			if (mouseDown) {
+							// 				var dX = 0, dY = 0;
+							// 				var delta = [e.x - mousePos[0], e.y - mousePos[1]];
+							// 				drawPos = [drawPos[0] + delta[0], drawPos[1] + delta[1]];
+							// 				mousePos = [e.x, e.y];
+							// 				drawCanvas();
+							// 			}
+							// 		}
+
+							// 	}, true);
+
+
+
+
+					        /////////////////////////////////////////////
 
 					    //     function watermarkedDataURL(canvas,text){
 									//   var tempCanvas=document.createElement('canvas');
@@ -451,7 +590,7 @@
 		    context.clearRect(0, 0, canvas.width, canvas.height);
 		 
 			context.save();
-			context.translate(translatePos.x, translatePos.y);
+			// context.translate(translatePos.x/20, translatePos.y/20);
 			context.scale(scale, scale);
 			
 			context.drawImage(img, 0, 0, img.width, img.height,     // source rectangle
@@ -533,9 +672,9 @@
 		            draw(scale, translatePos);
 		        }
 		    });
-           
 
 		    draw(scale, translatePos);
+
 		}());
 
 		//document.addEventListener('contextmenu', event => event.preventDefault());
@@ -551,7 +690,45 @@
 	    $('body').bind('copy paste',function(e) {
             e.preventDefault(); return false; 
         });
- 
+
+
+
+
+         // using canvas on canvas div
+
+
+            var container=document.getElementById("pageContainer")
+			var origCanvas=document.getElementById("myCanvas");
+			var wmCanvas=document.getElementById("myCanvas");
+
+			wmCanvas.setAttribute("style","position:absolute;")
+
+			if(container.firstChild)
+			    container.insertBefore(wmCanvas, container.firstChild);
+			else
+			    container.appendChild(wmCanvas);
+
+			var canvas = document.getElementById("myCanvas");
+		    var context = canvas.getContext("2d");
+
+			var wmContext=wmCanvas.getContext('2d');
+			wmContext.globalAlpha=0.5;
+			// setup text for filling
+			wmContext.font = "30px Comic Sans MS" ;
+			wmContext.fillStyle = "gray";
+			// get the metrics with font settings
+			var metrics = wmContext.measureText("WaterMark Demo fgdfg ggfdg g fgfd gfdg ");
+			var width = metrics.width;
+			// height is font size
+			var height = 72;
+
+			// change the origin coordinate to the middle of the context
+			wmContext.translate(origCanvas.width/2, origCanvas.height/2);
+			// rotate the context (so it's rotated around its center)
+			wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
+			// as the origin is now at the center, just need to center the text
+			wmContext.fillText("prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....",-width,height);
+
 	</script>
 
 </html>

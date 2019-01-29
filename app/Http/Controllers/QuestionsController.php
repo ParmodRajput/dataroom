@@ -254,7 +254,7 @@ class QuestionsController extends Controller
              // group_name 
              $groupName = $GetGroupName['group_name'];
 
-             $Question_array1 = ['question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
+             $Question_array1 = ['sender_email'=>$sender_email,'question_id'=>$question_id,'document_name'=>$documet_name,'group_name'=>$groupName , 'sender_name'=>$sender_name,'date'=>$date,'subject'=>$subject , 'content'=>$ques_content];
 
              array_push($Question_array,$Question_array1);
 

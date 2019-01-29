@@ -75,7 +75,7 @@ header.removeClass("addedSticky");
                
            }
 
-          if(checkerEmail == false)
+          if(checkerEmail == false || enterEmail == '')
             {
 
                 $('.check_int2').html(errors);
@@ -87,13 +87,6 @@ header.removeClass("addedSticky");
                 error=0;
            }
 
-         	if(enterEmail == '')
-         	{
-         	  
-	           $('.check_int2').html(errors);
-	             error=1;
-
-         	}
 
          	if(enterPhone == '')
          	{
@@ -204,9 +197,12 @@ header.removeClass("addedSticky");
 	              	}
 	              	if(!error == 1)
                           {
-                          	$('.get_qoute').removeClass('hidden_get_qoute');
-      	 	                $('.right_popup_content').addClass('hidden_get_qoute');
-      	 	                $('.left_popup_content').addClass('hidden_get_qoute');
+                              if(checkerEmail == true ){
+                                $('.get_qoute').removeClass('hidden_get_qoute');
+                              }
+                              
+          	 	                $('.right_popup_content').addClass('hidden_get_qoute');
+          	 	                $('.left_popup_content').addClass('hidden_get_qoute');
 	              	
                           }
 
