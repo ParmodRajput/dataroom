@@ -120,11 +120,23 @@
 		    <div class="viewer_display">
 
 				 <div class="kato" id='pageContainer'>
-				 	<div class="watermarkBlock">
+				 	
 				 		<div class="WaterMarkTextContent">
-				 			<p class="content_text_wm">fdg fg gfd gfdgfd fdgfdg fgfdg fg gsfgfdg gfgf gf gdfg fg fdgfdg</p>
+				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....</p>
 				 		</div>
-				 	</div>
+				 		<div class="WaterMarkTextContent">
+				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....</p>
+				 		</div>
+				 		<div class="WaterMarkTextContent">
+				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....</p>
+				 		</div>
+				 		<div class="WaterMarkTextContent">
+				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....</p>
+				 		</div>
+				 		<div class="WaterMarkTextContent">
+				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....</p>
+				 		</div>
+				 	
 				 <!-- 	<div class="overlay_new"></div> -->
 	                <canvas id="canvas"></canvas> 
 	                <div class="button_next_pre hidden">
