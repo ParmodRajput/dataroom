@@ -8,6 +8,7 @@ use App\Project;
 use App\Report;
 use App\User;
 use App\Group;
+use App\Setting;
 use App\Delete_Doc;
 use App\Question;
 use App\QuesReply;
@@ -1769,6 +1770,15 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
        }
 
+       $getSetting = Setting::where('project_id',$project_id)->first();
+
+       $watermark_view = $getSetting['watermark_view']; 
+       $watermark_text = $getSetting['watermark_text'];
+       $watermark_color = $getSetting['watermark_color'];
+       $downloadable = $getSetting['downloadable'];
+       $printable = $getSetting['printable'];
+       $discussable = $getSetting['discussable'];
+
        $doc_path = Storage::get($getPath->path);
 
        $filePath =  $getPath->path;
@@ -1808,7 +1818,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
           $report->save();
 
 
-       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id','DocPermission'));
+       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id','DocPermission','watermark_view','watermark_text','watermark_color','downloadable','printable','discussable'));
 
     }
 

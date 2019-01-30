@@ -721,6 +721,7 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
+                          var user           = value.CurrentUserCount;
 
                           
                           var index         = value.doc_index;
@@ -746,6 +747,8 @@ $(document).ready(function(){
                             DocumentIndex = document_index+'.'+index;
                           }
                          
+
+                         $('.doc_permission_modal').attr('data-user',user);
 
                               html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
@@ -1157,6 +1160,7 @@ $(document).ready(function(){
                 var html2 ="";
                 var html3 ="";
                 var box = $('.indexing');
+                var user = '';
 
                   //first inner array
 
@@ -1187,8 +1191,8 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
-                          var user =          value.CurrentUserCount;
-
+                          var user           = value.CurrentUserCount;
+                          
                           
                           var index         = value.doc_index;
                           var element1 = document_name1.substr(0, 45);
@@ -1212,7 +1216,6 @@ $(document).ready(function(){
                             DocumentIndex = document_index+'.'+index;
                           }
                          
-
                               html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
                               if(fav == '')
@@ -1350,8 +1353,15 @@ $(document).ready(function(){
                                                  html+="<i class='far fa-file-archive'></i>";
 
                                            }else{
-                                                
-                                                html+="<i class='far fa-file'></i>";
+
+                                                 if(Ext == 'pdf'){
+
+                                                   html+="<i class='fas fa-file-pdf'></i>";
+                                                 }else{
+
+                                                     html+="<i class='far fa-file'></i>";
+                                                 }
+ 
                                            }
 
 
@@ -1438,8 +1448,8 @@ $(document).ready(function(){
 
                        }//blank
 
-
                           box.html(html);
+                          $('.document_index_buttons .doc_permission_modal').attr('data_user',user);
 
                           $('#folder_create')[0].reset();
                           $('#genrate_folder').modal('hide'); 
@@ -1502,6 +1512,7 @@ $(document).ready(function(){
 
    // right click on document// 
     $(document).on('contextmenu','.documents_index_section .document_index' ,function(e) {
+
           
           $('.drop_box_document input:checkbox').prop('checked', false);
           e.preventDefault();
@@ -1532,11 +1543,18 @@ $(document).ready(function(){
 
           }
 
-
-
           var value = $(this).find('a').data('value'); 
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
+
+          if(file_id == undefined)
+          {
+            $('.view_doc_file').addClass('hidden');
+
+          }else{
+            
+            $('.view_doc_file').removeClass('hidden');
+          }
 
           var project_id  = $('.directory_location #project_id_doc').val();
 
@@ -1592,6 +1610,7 @@ $(document).ready(function(){
        $(document).on('contextmenu','.menu_option_block' ,function(e)
         {
         
+
          hideRightClickPopup();
          var value = $('#current_directory').val();
          
@@ -1992,7 +2011,6 @@ $('#myModal').on('hidden.bs.modal', function () {
               
       }else if(numberOfChecked == 0)
         {
-             alert('sdsad');
 
              $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
