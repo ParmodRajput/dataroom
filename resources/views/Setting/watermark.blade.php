@@ -153,8 +153,6 @@ $(document).ready(function(){
 
           }
 
-
-
          var token = $('#csrf-token').val();  
 
                     $.ajax({
@@ -172,7 +170,7 @@ $(document).ready(function(){
                         },
                         success:function(response){
 
-                           alert(response);
+                           
                         }
 
                     });

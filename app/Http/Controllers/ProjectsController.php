@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Project;
 use Session;
+use App\Setting;
 use App\Document;
 use App\Report;
 use App\Group;
@@ -49,6 +50,11 @@ class ProjectsController extends Controller
        $post->industry      =  $request->industry;
        $post->server_location = $request->server_location;
        $post->save(); 
+
+
+       $current_time = $post->created_at;
+       $current_projectid = $post->id;
+       $project_name = $request->project_name;
 
 
 	     $project_id=$post->id;
@@ -130,6 +136,18 @@ class ProjectsController extends Controller
             $group_members->save();
 
        //end     
+
+            $setting = new Setting();
+
+            $setting->watermark_view = '1';
+            $setting->watermark_text = 'Prodata '.$current_time.'...'.$project_name.' Prodata '.$current_time.'...'.$project_name;
+            $setting->watermark_color = '1';
+            $setting->downloadable = '1';
+            $setting->printable = '1';
+            $setting->discussable = '1';
+            $setting->project_id = $current_projectid;
+            $setting->save();
+
 
         return  $project_id; 
         //return redirect( url('/').'/project/'.$project_id.'/documents');   

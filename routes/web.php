@@ -205,8 +205,6 @@ Route::post('save_WaterMark/setting','SettingController@SaveWatermarkSetting');
 
 
 
-
-
 //admin dashboard 
 
 Route::group(['namespace' => 'Admin', 'prefix' =>'' ], function()
