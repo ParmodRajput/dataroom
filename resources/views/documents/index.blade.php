@@ -157,7 +157,7 @@
                 @if($CurrentGroupUser == 'Administrator')
 
                   <div class="btn_upload">
-                     <a class="btn  document-btn1 doc_permission_modal"  data-toggle="modal" data-target="#document_permission_modal"><i class="fas fa-lock"></i> Permissions</a>
+                     <a class="btn  document-btn1 doc_permission_modal"  data-toggle="modal" data_user='' data-target="#document_permission_modal"><i class="fas fa-lock"></i> Permissions</a>
                   </div>
 
                 @endif  

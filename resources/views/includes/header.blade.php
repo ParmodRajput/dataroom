@@ -65,6 +65,19 @@
 				</ul>
 
 				<ul class="navbar-nav navbar-nav-right header-menu">
+ 
+				<li class="nav-item dropdown d-none d-xl-inline-block">
+					 <span class="profile-text"><i class="fas fa-cog"></i></span>
+					 <i class="fa fa-caret-down down-arrow"  data-toggle="dropdown" aria-hidden="true"></i>
+
+					<div class="dropdown-menu list-iteam">
+						<ul>
+							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark" ><span><i class="fa fa-cogs"></i></span>General Setting</a></li>
+							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark"><span><i class="fa fa-cog"></i></span>Watermark Setting</a></li>
+
+						</ul>    
+					</div>
+					</li>
 
 					<li class="nav-item dropdown d-none d-xl-inline-block">
 
