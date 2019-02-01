@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use ZipArchive;
 session_start();
+use Excel;
 
 class DocumentsController extends Controller
 {
@@ -132,7 +133,6 @@ public function getDocument($project_id)
                   }
                   
                   $folder_file_tree =  $this->get_FoldersAndFiles($projectFolderPath);
-
 
                   return view('documents.index',compact('project_name','groups','projectFolderPermission','folder_tree','folder_file_tree','project_id','projectCreaterId','CurrentGroupUser'));
 
@@ -540,6 +540,11 @@ public function showDocument(Request $request){
 
  $auth_email = Auth::user()->email;
 
+ $GetUsers = Group_Member::where('project_id',$projects_id)->where('user_type','user')->get();
+
+ $GetUsers1 = Group_Member::where('project_id',$projects_id)->where('user_type','user')->get()->toArray();
+
+ $CurrentUserCount = count($GetUsers1);
 
         // verify project creater
 
@@ -559,6 +564,7 @@ public function showDocument(Request $request){
                 $document_name = $getIndexOfFolder->document_name;
                 $getDocumentId = $getIndexOfFolder->id;
                 $doc_index    = $getIndexOfFolder->doc_index;
+                $getFolderId = $getIndexOfFolder->id;
 
                  //get the all fav document in this directory
          
@@ -572,10 +578,6 @@ public function showDocument(Request $request){
 
                 $folder_ques = Question::where('document_id',$getDocumentId)->where('project_id',$projects_id)->pluck('id');
 
-                $GetUsers = Group_Member::where('project_id',$projects_id)->where('user_type','user')->get()->toArray();
-
-                $CurrentUserCount = count($GetUsers);
-
                 // $Folderpermission = $Folderpermission[0];
 
                 $Foldercount = count($Folderpermission);
@@ -584,7 +586,7 @@ public function showDocument(Request $request){
 
                      $Folderpermission  =  [];
 
-                     $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques,'CurrentUserCount'=>$CurrentUserCount];
+                     $Folder_array =  ['doc_id'=>$getFolderId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
 
                      array_push($IndexOfFolder,$Folder_array);
 
@@ -593,7 +595,7 @@ public function showDocument(Request $request){
                       if($Foldercount !== 0){
 
                            
-                            $Folder_array =  ['document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques,'CurrentUserCount'=>$CurrentUserCount];
+                            $Folder_array =  ['doc_id'=>$getFolderId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Folderpermission,'fav'=>$getFavFolder,'note'=>$FolderNote,'ques'=>$folder_ques];
                         
 
                            array_push($IndexOfFolder,$Folder_array);
@@ -631,18 +633,13 @@ public function showDocument(Request $request){
 
                 $file_ques = Question::where('document_id',$getFileId)->where('project_id',$projects_id)->pluck('id');
 
-                $GetUsers = Group_Member::where('project_id',$projects_id)->where('user_type','user')->get()->toArray();
-
-                $CurrentUserCount = count($GetUsers);
-
-
                 $Filecount = count($Filepermission);
 
                 if($getProjectCreaterId == "Administrator"){
 
                   $Filepermission  = [];
 
-                  $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques,'CurrentUserCount'=>$CurrentUserCount];
+                  $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
 
                    array_push($IndexOfFile,$File_array);
 
@@ -652,7 +649,7 @@ public function showDocument(Request $request){
                   if($Filecount !== 0){
 
 
-                        $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques,'CurrentUserCount'=>$CurrentUserCount];
+                        $File_array =  ['doc_id'=>$getFileId,'document_name'=>$document_name,'path'=>$path,'document_name'=>$document_name,'doc_index'=>$doc_index,'permission'=>$Filepermission,'fav'=>$getFavFile,'note'=>$FileNote,'ques'=>$file_ques];
                            
 
                      array_push($IndexOfFile,$File_array);
@@ -664,7 +661,7 @@ public function showDocument(Request $request){
           }
 
         
-           $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
+           $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile,'CurrentUserCount'=>$CurrentUserCount,'ProjectUsers'=>$GetUsers];
  
   return $data;
 
@@ -1122,7 +1119,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
   public function checkFileIsExits($copied_directory_name,$pasted_directory,$copied_directory,$projects_id)
   {
 
-
     $user_id    = Auth::user()->id;   
     $exists = Storage::exists($pasted_directory."/".$copied_directory_name);
     $projects_id = $projects_id;
@@ -1139,8 +1135,9 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
     if($exists)
     {
-      
-      $copied_directory_withOut_ext = array_shift($extension_copied_directory);
+      array_pop($extension_copied_directory);
+      $copied_directory_withOut_ext = implode('.',$extension_copied_directory);
+
       $this->copied_directory_name= $copied_directory_withOut_ext."-copy.".$extension; 
       //print_r($this->copied_directory_name);die();
       $this->copy_status =false;
@@ -2161,6 +2158,18 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
 
       }
+
+      public function downloadExcel($type)
+        {
+            $data = User::get()->toArray();
+                
+            return Excel::create('allUsers', function($excel) use ($data) {
+                $excel->sheet('mySheet', function($sheet) use ($data)
+                {
+                    $sheet->fromArray($data);
+                });
+            })->download($type);
+        }
 
 
 }

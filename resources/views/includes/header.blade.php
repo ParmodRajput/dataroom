@@ -16,10 +16,14 @@
 </nav>
 
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+
+	<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+	<input type="hidden" id="gett_shared_doc" value='{{$project_id}}'>
+
 			<div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
 											
 				<a class="navbar-brand brand-logo" href="{{url('/')}}">
-					<img src="{{url('/')}}/dist/img/prodats_logo.png" alt="logo" />
+					<img src="{{url('/')}}/dist/img/prodata_logo.png" alt="logo" />
 				</a>
 				<a class="navbar-brand brand-logo-mini" href="index.html">
 					<img src="{{url('/')}}/dist/img/avatar5.png" alt="logo" />
@@ -57,6 +61,11 @@
 								<i class="fa fa-pie-chart"></i>Reports</a>
 					</li>
 
+					<li class="nav-item" id='Pro_ShareableDocument'>
+							<a href="JavaScript:;" class="nav-link">
+							<i class="fa fa-paperclip" aria-hidden="true"></i>Share with me</a>
+					</li>
+
 
 					<div class="nav-link">
 							
@@ -73,7 +82,7 @@
 					<div class="dropdown-menu list-iteam">
 						<ul>
 							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark" ><span><i class="fa fa-cogs"></i></span>General Setting</a></li>
-							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark"><span><i class="fa fa-cog"></i></span>Watermark Setting</a></li>
+							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark"><span><i class="fa fa-hashtag"></i></span>Watermark Setting</a></li>
 
 						</ul>    
 					</div>
@@ -216,12 +225,41 @@ No
 
 </div>
 
+       </div>
+      </div>
 </div>
-</div>
-			 </div>
 		 
-		</div>
+</div>
 
 	 </div>
 	 <div class="overlay"></div>
 	
+<!-- 	<script type="text/javascript">
+		
+		  // get 
+
+
+  $(document).on('click','#Pro_ShareableDocument',function(){
+ 
+    var project_id = $('#gett_shared_doc').val();
+    var token = $('#csrf-token').val();  
+  
+        $.ajax({
+
+              type : "POST",
+              url : "{{url('/')}}/Auth/getShareable/Document",
+              data : {     
+                _token      : token,
+                project_id   : project_id,
+              },
+              success:function(response){
+
+               alert(response);
+
+              }
+
+          });   
+   
+  });
+
+</script> -->
