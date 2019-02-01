@@ -237,7 +237,8 @@ $(document).ready(function(){
       $('.table.table-hover.table-bordered.table_color.recycle_bin').addClass('hidden');
       $('.upload_table .document_index_buttons ').removeClass('hidden');
       $('.upload_table .document_index_recycle_bin').addClass('hidden');
-
+     
+      $('.drop_box_document input:checkbox').prop('checked', false);
       $(this).parent().parent().find('input:checkbox').click();
 
         $('.ui-droppable').removeClass('hidden');
@@ -721,7 +722,7 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
-                          var user           = value.CurrentUserCount;
+                          var folder_id        = value.doc_id;
 
                           
                           var index         = value.doc_index;
@@ -748,9 +749,7 @@ $(document).ready(function(){
                           }
                          
 
-                         $('.doc_permission_modal').attr('data-user',user);
-
-                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
+                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-doc_id ='"+folder_id+"' data-type ='1' data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
                               if(fav == '')
                               {
@@ -874,7 +873,7 @@ $(document).ready(function(){
                                       }
 
                                     
-                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"'  value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
+                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"' data-type ='0' value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
 
                                          if(Ext == 'jpg' || Ext == 'png' || Ext =='jpeg')
                                            {
@@ -1111,8 +1110,19 @@ $(document).ready(function(){
         var path =  $('.directory_location #current_directory ').val();  
         var root_path =  "<?php echo 'public/documents/'.Auth::user()->id ?>/"+project_name;
         var n = path.lastIndexOf("/");
-        var token =$('#csrf-token').val();
+        var token = $('#csrf-token').val();
         var directory_url = path.substring(0, n);
+
+        var GetDestination = directory_url.split('/');
+        var DestinationName = GetDestination[GetDestination.length-1];
+
+        $('.checked_doc_details').html('<i class="fa fa-folder-o"></i>'+DestinationName);
+        $('.create_notes_get').addClass('hidden');
+        $('.notes_aside_text1').addClass('hidden');
+        $('.submit_note1_doc').addClass('hidden');
+        $('.note1_doc_delete').addClass('hidden');
+        $('.file_view_aside').addClass('hidden'); 
+
         if (path != root_path) {
             data_display(token,directory_url);
             $(' #current_directory ').val(directory_url);  
@@ -1159,6 +1169,7 @@ $(document).ready(function(){
                 var html="";
                 var html2 ="";
                 var html3 ="";
+                var html4 = '';
                 var box = $('.indexing');
                 var user = '';
 
@@ -1168,6 +1179,21 @@ $(document).ready(function(){
 
                 var getfiles = response.file_index;
 
+                var currentUserCount = response.CurrentUserCount;
+
+                var ProjectUsers  = response.ProjectUsers;
+
+
+                $.each(ProjectUsers,function(key,value){
+                  
+
+                  html4+='<option value="'+value.member_email+'">'+value.member_email+'</option>';
+
+                });
+
+                $('#currentUserCount').val(currentUserCount);
+
+                $('.doc_permission_modal').attr('data_user',currentUserCount);
 
                 if(getfolder == '' && getfiles == '')
                 {
@@ -1191,8 +1217,7 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
-                          var user           = value.CurrentUserCount;
-                          
+                          var folder_id        = value.doc_id;
                           
                           var index         = value.doc_index;
                           var element1 = document_name1.substr(0, 45);
@@ -1216,7 +1241,7 @@ $(document).ready(function(){
                             DocumentIndex = document_index+'.'+index;
                           }
                          
-                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
+                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-type ='1' data-doc_id ='"+folder_id+"' data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
                               if(fav == '')
                               {
@@ -1310,7 +1335,7 @@ $(document).ready(function(){
                       var note           = value.note;
                       var file_id        = value.doc_id;
                       var ques           = value.ques;
-                      var user =          value.CurrentUserCount;
+                      
 
                         if(document_index == '')
                         {
@@ -1342,7 +1367,7 @@ $(document).ready(function(){
                                       }
 
                                     
-                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"' value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
+                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"' data-type ='0' value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
 
                                          if(Ext == 'jpg' || Ext == 'png' || Ext =='jpeg')
                                            {
@@ -1388,11 +1413,11 @@ $(document).ready(function(){
                                         
                                         if(ques == ''){
 
-                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-user='"+user+"' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
 
                                            }else{
 
-                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-ques='1' data-user='"+user+"' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
 
                                            }
 
@@ -1449,7 +1474,8 @@ $(document).ready(function(){
                        }//blank
 
                           box.html(html);
-                          $('.document_index_buttons .doc_permission_modal').attr('data_user',user);
+                          $('.shareDocUsers').html(html4);
+                       
 
                           $('#folder_create')[0].reset();
                           $('#genrate_folder').modal('hide'); 
@@ -1547,7 +1573,9 @@ $(document).ready(function(){
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
 
-          if(file_id == undefined)
+          var DocumentType = $(this).find('input:checkbox').data('type');
+
+          if(DocumentType == 1)
           {
             $('.view_doc_file').addClass('hidden');
 
@@ -1946,7 +1974,8 @@ $('#myModal').on('hidden.bs.modal', function () {
           $('.close_note_aside').addClass('hidden');
           $('.create_note_aside').removeClass('hidden');
           $('#single_select_doc').val(noteDocPath);
-          $('.delete_items').removeClass('hideDeleteBtn'); 
+          $('.delete_items').removeClass('hidden'); 
+          $('.share_items_documents').removeClass('hidden');
           $('.btn_delete_doc_recycle').removeClass('hideDeleteBtn');  
 
           $.each($("input[name='documents_select']:checked"),function(){
@@ -2012,7 +2041,6 @@ $('#myModal').on('hidden.bs.modal', function () {
       }else if(numberOfChecked == 0)
         {
 
-             $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
              var GetDocumentName = $('#getProject_name').val();
              var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
@@ -2023,6 +2051,8 @@ $('#myModal').on('hidden.bs.modal', function () {
              $('.file_view_aside').html('');
              $('.notes_aside_1').html('');
              $('.submit_note1_doc').addClass('hidden');
+             $('.share_items_documents').addClass('hidden');
+             $('.delete_items').addClass('hidden'); 
 
 
         }else
@@ -2033,7 +2063,7 @@ $('#myModal').on('hidden.bs.modal', function () {
               $('.notes_aside_text1').addClass('hidden');
               $('.submit_note1_doc').addClass('hidden');
               $('.note1_doc_delete').addClass('hidden');
-              $('.file_view_aside').addClass('hidden');
+              $('.file_view_aside').addClass('hidden'); 
               
           }
  });
@@ -2043,8 +2073,9 @@ $('#myModal').on('hidden.bs.modal', function () {
 // Select CheckBox Event 
 $(document).on('click','.check-box-input-main',function(){
 
-     $('.document_index_contentable input:checkbox').prop('checked', this.checked); 
+     $('.document_index_contentable input:checkbox').prop('checked', this.checked);
 
+    
 });
 
 //end
@@ -3245,6 +3276,77 @@ alert('Copied to clipboard');
 
 });
 
+$(document).on('click','.doc_permission_modal',function(){
+
+  var current_user = $(this).attr('data_user');
+
+  if(current_user == 0)
+  {
+        $('#AddUserToInvite').modal('show');
+  }else{
+       
+        $('#document_permission_modal').modal('show');
+  }
+
+ 
+
+});
+
+// share doc with users
+
+
+  $(".shareDocUsers").select2({
+      tags: true
+  });
+
+
+  $(document).on('click','#shareDocForUsers',function(){
+
+    var userEmails = $(".shareDocUsers").val();
+
+    var durationTime = $('#duration_time_val').val();
+
+    var registerValid = $("input[name='Registration']:checked"). val();
+
+    var printable = $("input[name='Printable']:checked"). val();
+ 
+    var downloadable = $("input[name='Downloadable']:checked"). val();
+
+    var DocumentId = [];
+
+    $.each($("input[name='documents_select']:checked"), function(e)
+    {        
+        
+          DocumentId.push($(this).data('doc_id')); 
+
+    });
+   
+   var token = $('#csrf-token').val();  
+   var project_id = $('.projects_id').val();
+
+        $.ajax({
+
+              type : "POST",
+              url : "{{url('/')}}/share/documents",
+              data : {     
+                _token      : token,
+                project_id   : project_id,
+                userEmails   : userEmails,
+                durationTime  : durationTime,
+                registerValid : registerValid,
+                printable   : printable,
+                downloadable   : downloadable,
+                DocumentId   : DocumentId,
+
+              },
+              success:function(response){
+              alert(response);
+              }
+
+          });
+
+
+  });
 
 
 </script>

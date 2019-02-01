@@ -1506,9 +1506,10 @@ a.btn.btn_export_doc {
     border: 1px solid black;
 }
 
-.btn.delete_items_documents
-{
+.btn.delete_items_documents {
     border: 1px solid black;
+    width: 75px;
+    padding: 9px;
 }
 
 a.btn.btn_dote_doc {
@@ -2401,10 +2402,6 @@ button.waiting_reply {
 
 }
 
-.upload_table a.btn.btn_export_doc {
-    margin: 0 5px 0 0;
-}
-
 .create_question .related_question_by {
     width: 100%;
     text-align: center;
@@ -2414,7 +2411,6 @@ button.waiting_reply {
 
 .upload_table .btn-export {
     float: left;
-    margin-left: 15px;
 }
 
 .users__settings-panel {
@@ -2527,4 +2523,17 @@ canvas#myCanvas{
     background: gray;
     width: 131px;
     height: 28px;
+}
+
+a.btn.share_items_documents {
+    border: 1px solid;
+    width: 67px;
+    padding-left: 9px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+a.btn.btn_export_doc {
+    width: 71px;
+    padding-left: 7px;
 }

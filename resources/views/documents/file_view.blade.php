@@ -129,17 +129,32 @@
 
 				 <div class="kato" id='pageContainer'>
 		
-				 		<div class="WaterMarkTextContent noselect" style='top:100px;'>
-				 			<p class="content_text_wm noselect"</p>
+				 		<div class="WaterMarkTextContent noselect" style='top:-20%; left:-20%'>
+				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:400px;'>
-				 			<p class="content_text_wm"></p>
+				 		<div class="WaterMarkTextContent noselect" style='top:-0%;left:-20%'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:700px;'>
-				 			<p class="content_text_wm" ></p>
+				 		<div class="WaterMarkTextContent noselect" style='top:20%;left:-20%'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1000px;'>
-				 			<p class="content_text_wm"></p>
+				 		<div class="WaterMarkTextContent noselect" style='top:40%;left:-20%'>
+				 			<p class="content_text_wm" style='white-space:nowrap; left:-20%'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:60%; left:-20%'>
+				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:80%; left:-20%'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:100%; left:-20%'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:120%;left:-20%'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:140%;left:-20%'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
@@ -204,19 +219,19 @@
       	}
 
  // discussable exit
-       if(discussable !== 1)
-      	{
-      		$('.discuss_question').addClass('hidden');
+       // if(discussable !== 1)
+      	// {
+      	// 	$('.discuss_question').addClass('hidden');
 
-      	}else{
+      	// }else{
       		
-             $('.discuss_question').removeClass('hidden');
-      	}
+       //       $('.discuss_question').removeClass('hidden');
+      	// }
 
 
       	if(watermark_view == 1)
       	{
-      		$('.content_text_wm').html(watermark_text);
+      		$('.content_text_wm').html(watermark_text+' '+watermark_text+' '+watermark_text);
       		$('.content_text_wm').css('color','#'+watermark_color);
       	}
 
@@ -740,7 +755,7 @@
 
 		}());
 
-		document.addEventListener('contextmenu', event => event.preventDefault());
+		// document.addEventListener('contextmenu', event => event.preventDefault());
 
 		document.onkeydown = function(e) {
 

@@ -189,6 +189,7 @@ Route::post('/delete_question','QuestionsController@deleteQuestions');
 //reports route.
 
 Route::get('project/{project_id}/reports','ReportsController@getDocsAndGroups')->middleware('auth');
+
 Route::get('project/{project_id}/reports?folder-access','ReportsController@ReportOverview');
 
 Route::post('/get_action','ReportsController@getAction');
@@ -197,11 +198,33 @@ Route::post('/get_group/report','ReportsController@getGroupsReports');
 
 // Reports route end
 
+//share document
+
+Route::post('/share/documents/','ShareDocumentcontroller@shareDocs');
+Route::get('/shareFile/{project_id}/{userEmail}/{registerChecker}/{time}','ShareDocumentcontroller@CheckShareDocs');
+
+Route::get('/Display/ShareDocument','ShareDocumentcontroller@ShowDocument')->middleware('CheckShareDocument');
+
+Route::post('/Auth/getShareable/Document','ShareDocumentcontroller@ShowDocumentForAuth');
+
+
+//end
+
 // Setting Route
 
 Route::get('project/{project_id}/documents/setting/watermark','SettingController@WatermarkSetting');
 
 Route::post('save_WaterMark/setting','SettingController@SaveWatermarkSetting');
+
+//end
+
+
+
+// export table
+
+Route::get('downloadExcel/{type}', 'DocumentsController@downloadExcel');
+
+//end
 
 
 

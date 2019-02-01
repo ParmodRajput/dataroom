@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 
-class Settingcontroller extends Controller
+class SettingController extends Controller
 {
    public function WatermarkSetting($project_id){
 
