@@ -868,12 +868,8 @@ public function move_documents(Request $request){
 
   $getFilePathWithOutThumb = array_pop($get);
   $withOutThumb = implode('/',$get);
-
-
   $getExt     = explode('.',$file_name);
-
   $file_ext   = end($getExt);
-
   $new_path   = $folderUrl.'/'. $file_name;
 
       if($file_ext == 'jpg' || $file_ext == 'png' || $file_ext == 'jpeg')
@@ -914,6 +910,11 @@ public function move_documents(Request $request){
                     $document->deleted_by = '0';
                     $document->restored_by  = '0';
                     $document->save();
+
+
+
+
+    
 
                 // save rename record 
                     $report = new Report();
@@ -1764,6 +1765,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
          $getDocPermission = Permission::where('project_id',$project_id)->where('group_id',$userInGroup)->orWhere('document_id',$file_id)->first();
  
          $DocPermission = $getDocPermission->permission_id;
+
 
        }
 

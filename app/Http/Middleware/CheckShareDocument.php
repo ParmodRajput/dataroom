@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Session;
 use Closure;
+use App\Document;
+use App\ShareDocument;
 
 class CheckShareDocument
 {
@@ -19,18 +21,14 @@ class CheckShareDocument
     public function handle($request, Closure $next)
     {
 
-        $authUserEmail='';
 
         $project_id =  $request->route()->parameter('project_id');
-        $decryptedProjectId = Crypt::decryptString($project_id);
+        $encryptedUserEmail =  $request->route()->parameter('email');
+        $userEmail = Crypt::decryptString($encryptedUserEmail);
+        $access_token =  $request->route()->parameter('access_token');
 
-        $userEmail =  $request->route()->parameter('userEmail');
-        $decryptedUserEmail = Crypt::decryptString($userEmail);
+        
 
-        $registerChecker =  $request->route()->parameter('registerChecker');
-        $decryptedRegisterChecker = Crypt::decryptString($registerChecker); 
-
-        $time =  $request->route()->parameter('time');
 
 
         if($decryptedRegisterChecker == '1')

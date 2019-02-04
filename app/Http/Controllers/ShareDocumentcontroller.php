@@ -29,7 +29,7 @@ class ShareDocumentcontroller extends Controller
      $SenderEmail = Auth::user()->email;
      $SenderName = Auth::user()->name;
 
-     $document  = implode("/",$DocumentId);
+    foreach ($DocumentId as $document) {
 
      foreach ($userEmails as $userEmail) {
 
@@ -69,6 +69,8 @@ class ShareDocumentcontroller extends Controller
                 });
 
      }
+
+ }
 
      return "success";
 
@@ -120,14 +122,9 @@ class ShareDocumentcontroller extends Controller
 
         foreach ($getShareableDocument as $getShareableDocument) {
        	
-        	$GetDocumentId = $getShareableDocument->document_id;
+        	$Document = $getShareableDocument->document_id;
         	$GetProjectId = $getShareableDocument->project_id;
         	$access_token = $getShareableDocument->access_token;
-
-
-        	$Document = explode('/',$GetDocumentId);
-
-        	foreach ($Document as $Document) {
 
                if($checker = 'true')
                {
@@ -139,7 +136,7 @@ class ShareDocumentcontroller extends Controller
 
                   }else{
 
-                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];	
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
                   }
 
 
@@ -153,13 +150,12 @@ class ShareDocumentcontroller extends Controller
                   }else{
 
 
-                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];
+                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
                   }
 
 
                }else{
 
-               dd('sadsads');
 
                	 $GetShareWithMeDocumentFolder = Document::where('project_id',$decryptedProjectId)->where('document_status','1')->where('id',$Document)->get();
 
@@ -170,7 +166,7 @@ class ShareDocumentcontroller extends Controller
 
                   }else{
 
-                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];	
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
                   }
 
 
@@ -183,7 +179,7 @@ class ShareDocumentcontroller extends Controller
 	                  }else{
 
 
-	                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];
+	                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
 	               }
 
                }
@@ -201,7 +197,7 @@ class ShareDocumentcontroller extends Controller
 
               	  }
 
-        	}
+        	
         }
 
         return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile'));
@@ -216,9 +212,9 @@ class ShareDocumentcontroller extends Controller
     }
 
 
-    public function ShowDocument(Request $request){
+    public function ViewDocument(Request $request){
 
-         return view('Share.shareWithMe');
+        dd('dfsdf');
 
     }
 

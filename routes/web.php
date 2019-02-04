@@ -203,11 +203,11 @@ Route::post('/get_group/report','ReportsController@getGroupsReports');
 Route::post('/share/documents/','ShareDocumentcontroller@shareDocs');
 Route::get('/shareFile/{project_id}/{userEmail}/{registerChecker}/{time}','ShareDocumentcontroller@CheckShareDocs');
 
-Route::get('/Display/ShareDocument','ShareDocumentcontroller@ShowDocument')->middleware('CheckShareDocument');
+// Route::get('/Display/ShareDocument','ShareDocumentcontroller@ShowDocument')->middleware('CheckShareDocument');
 
 Route::post('/Auth/getShareable/Document','ShareDocumentcontroller@ShowDocumentForAuth');
 
-
+Route::get('/Overview/{access_token}/{project_id}/{email}/','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
 //end
 
 // Setting Route

@@ -1460,11 +1460,12 @@ $(document).ready(function(){
 
                                         html+="<div class='view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
                                        }
+                                       
                                        if(permission == '7')
-                                       {
+                                         {
+                                          html+="<div class='view_doc_permis_open' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
 
-                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
-                                       }
+                                         }
                                        
                                         html+="</div></div></div>";
 

@@ -783,7 +783,7 @@
       </div>
       <div class="modal-body">
             <div class="section_usersEmail">
-               <p>Enter Email Addesses</p>
+               <p class="label-form">Enter Email Addesses</p>
                <select placeholder='Enter email addresses' class="form-control shareDocUsers" multiple="multiple">      
                </select>
             </div></br>
@@ -792,35 +792,38 @@
               <div class="setting_permission">
 
                     <div class="duration_doc_checkbox">
+                      <p class="label-form">View Duration</p>
                             <label>
-                              <span class="ng-binding">View Duration</span>
-                              <span class="theme-checkbox"></span>
                               <input type="date" id="duration_time_val">
                             </label>
                     </div>
                 
                     <div class="registration_doc_checkbox">
+                      <p class="label-form">Registration Required</p>
                             <label>
-                              <span class="ng-binding">Registration Required</span>
-                              <span class="theme-checkbox"></span><br>
-                              Yes<input type="radio" name="Registration" value='1' id="viewed_doc" checked>
-                              No <input type="radio" name="Registration" value='0' >
-                            </label>
+                              <input type="radio" name="Registration" value='1' id="viewed_doc" checked>Yes</label>
+                              
+                              <label>
+                              <input type="radio" name="Registration" value='0' >No</label>
                     </div>
                     <div class="print_doc_checkbox">
+                      <p class="label-form">Printable</p>
                       <label>
-                               <span class="ng-binding">Printable</span>
-                              <span class="theme-checkbox"></span><br>
-                              Yes<input type="radio" name="Printable" value='1' id="viewed_doc" checked>
-                              No <input type="radio" name="Printable" value='0' >
-                      </label>
+                              
+                              <input type="radio" name="Printable" value='1' id="viewed_doc" checked>Yes
+                            </label>
+                            <label>
+                              <input type="radio" name="Printable" value='0' >No
+                            </label>
                      </div>
                      <div class="download_doc_checkbox">
+                      <p class="label-form">Downloadable</p>
                       <label>
-                              <span class="ng-binding">Downloadable</span>
-                              <span class="theme-checkbox"></span><br>
-                              Yes<input type="radio" name="Downloadable" value='1' id="viewed_doc" checked>
-                              No <input type="radio" name="Downloadable" value='0' >
+                             
+                              <input type="radio" name="Downloadable" value='1' id="viewed_doc" checked>Yes
+                            </label>
+                            <label>
+                               <input type="radio" name="Downloadable" value='0' >No
                        </label>
                      </div>
               

@@ -42,7 +42,7 @@
 
 					@foreach($DocumentFile as $DocumentFile)
 						<li>
-							<a class='overview_shared_document' href="javascript:;" data-value='{{$DocumentFile['document_path']}}'>
+							<a class='overview_shared_document' href="{{url('/')}}/Overview/{{$DocumentFile['access_token']}}/{{$DocumentFile['project_id']}}/{{$DocumentFile['Email']}}" data-value='{{$DocumentFile["document_path"]}}'>
 								<span>
 									<i class="fas fa-file"></i><b>{{$DocumentFile['document_name']}}
 									</b>
