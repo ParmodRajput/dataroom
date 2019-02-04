@@ -31,6 +31,7 @@ class CheckShareDocument
         $SHRdoc = ShareDocument::where('project_id',$project_id)->where('project_id',$project_id)->where('Shared_with',$userEmail)->where('access_token',$access_token)->first();
 
         $RegisterChecker = $SHRdoc['register_required'];
+        
 
         if($RegisterChecker == '1')
         {
@@ -45,7 +46,7 @@ class CheckShareDocument
                         if($userEmail == $authUserEmail)
                         {
 
-                            return view('Share.OverViewSharedDoc');
+                            
 
                         }else{
                                

@@ -100,17 +100,17 @@ class ShareDocumentcontroller extends Controller
         if(Auth::user())
                     {
                         $authUserEmail = Auth::user()->email; 
-                        
+
                         if($decryptedUserEmail == $authUserEmail)
                         {
-
                             $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->get();
 
                             $checker = 'true';
+                           
 
                         }else{
 
-                        	return view('error.page1');
+                        	 $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
                         }
 
                     }else{
@@ -118,7 +118,6 @@ class ShareDocumentcontroller extends Controller
 
                     	$getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
                     }
-
 
         foreach ($getShareableDocument as $getShareableDocument) {
        	
@@ -197,12 +196,17 @@ class ShareDocumentcontroller extends Controller
 
               	  }
 
-        	
-        }
+
+    }
 
         return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile'));
 
     }
+
+
+
+
+//end
 
    
     public function ShowDocumentForAuth(Request $request){
