@@ -101,10 +101,10 @@ class ShareDocumentcontroller extends Controller
                         
                         if($decryptedUserEmail == $authUserEmail)
                         {
-                            $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('duration_time', '>=', $current_date)->get();
+
+                            $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->get();
 
                             $checker = 'true';
-
 
                         }else{
 
@@ -113,16 +113,17 @@ class ShareDocumentcontroller extends Controller
 
                     }else{
 
+
                     	$getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
-
-
                     }
 
 
         foreach ($getShareableDocument as $getShareableDocument) {
-
-        	
+       	
         	$GetDocumentId = $getShareableDocument->document_id;
+        	$GetProjectId = $getShareableDocument->project_id;
+        	$access_token = $getShareableDocument->access_token;
+
 
         	$Document = explode('/',$GetDocumentId);
 
@@ -130,32 +131,85 @@ class ShareDocumentcontroller extends Controller
 
                if($checker = 'true')
                {
-                  $ShareWithMeDocumentFolder = Document::where('id',$Document)->where('document_status','1')->get();
+                  $GetShareWithMeDocumentFolder = Document::where('id',$Document)->where('document_status','1')->first();
 
-                  $ShareWithMeDocumentFile = Document::where('id',$Document)->where('document_status','0')->get();
+                  if($GetShareWithMeDocumentFolder == null)
+                  {
+                  	  $ShareWithMeDocumentFolder = [];
+
+                  }else{
+
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];	
+                  }
+
+
+                  $getShareWithMeDocumentFile = Document::where('id',$Document)->where('document_status','0')->first();
+
+                  if($getShareWithMeDocumentFile == null)
+                  {
+
+                  	  $ShareWithMeDocumentFile = [];
+
+                  }else{
+
+
+                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];
+                  }
+
 
                }else{
 
-               	 $ShareWithMeDocumentFolder = Document::where('project_id',$decryptedProjectId)->where('document_status','1')->where('id',$Document)->get();
+               dd('sadsads');
+
+               	 $GetShareWithMeDocumentFolder = Document::where('project_id',$decryptedProjectId)->where('document_status','1')->where('id',$Document)->get();
 
 
-               	 $ShareWithMeDocumentFile = Document::where('project_id',$decryptedProjectId)->where('document_status','0')->where('id',$Document)->get();
+               	  if($GetShareWithMeDocumentFolder == null)
+                  {
+                  	  $ShareWithMeDocumentFolder = [];
+
+                  }else{
+
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];	
+                  }
+
+
+               	 $getShareWithMeDocumentFile = Document::where('project_id',$decryptedProjectId)->where('document_status','0')->where('id',$Document)->get();
+
+	             if($getShareWithMeDocumentFile == null)
+	                  {
+	                  	  $ShareWithMeDocumentFile = [];
+
+	                  }else{
+
+
+	                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$GetProjectId,'access_token'=>$access_token];
+	               }
 
                }
-        	
-        	   array_push($DocumentFolder,$ShareWithMeDocumentFolder);
-        	   array_push($DocumentFile,$ShareWithMeDocumentFile);
+
+        	  if($GetShareWithMeDocumentFolder !== null)
+                  {
+                  	  array_push($DocumentFolder,$ShareWithMeDocumentFolder);
+                  }
+
+
+               if($getShareWithMeDocumentFile !== null)
+                  {
+
+              	     array_push($DocumentFile,$ShareWithMeDocumentFile);
+
+              	  }
 
         	}
         }
-
 
         return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile'));
 
     }
 
    
-   public function ShowDocumentForAuth(Request $request){
+    public function ShowDocumentForAuth(Request $request){
 
         print_r('sdfsdf');die();
 

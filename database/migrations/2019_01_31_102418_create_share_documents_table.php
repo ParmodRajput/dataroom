@@ -16,13 +16,13 @@ class CreateShareDocumentsTable extends Migration
         Schema::create('share_documents', function (Blueprint $table) {
             $table->increments('id');
             $table->date('duration_time');
-            $table->int('project_id');
+            $table->string('project_id');
             $table->string('document_id');
             $table->string('Shared_with');
             $table->string('Shared_by');
-            $table->int('register_required');
-            $table->int('printable');
-            $table->int('downloadable');
+            $table->string('register_required');
+            $table->string('printable');
+            $table->string('downloadable');
             $table->string('access_token');
             $table->timestamps();
         });
