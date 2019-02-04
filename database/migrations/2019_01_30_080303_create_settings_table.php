@@ -18,9 +18,9 @@ class CreateSettingsTable extends Migration
             $table->string('watermark_view');
             $table->string('watermark_text');
             $table->string('watermark_color');
-            $table->int('downloadable');
-            $table->int('printable');
-            $table->int('discussable');
+            $table->string('downloadable');
+            $table->string('printable');
+            $table->string('discussable');
             $table->string('project_id');
             $table->timestamps();
         });
