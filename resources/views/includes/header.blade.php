@@ -16,7 +16,6 @@
 </nav>
 
 <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-
 	<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 	<input type="hidden" id="gett_shared_doc" value='{{$project_id}}'>
 
@@ -62,11 +61,9 @@
 					</li>
 
 					<li class="nav-item" id='Pro_ShareableDocument'>
-							<a href="JavaScript:;" class="nav-link">
+							<a href="{{url('/')}}/shareFile/" class="nav-link">
 							<i class="fa fa-paperclip" aria-hidden="true"></i>Share with me</a>
 					</li>
-
-
 					<div class="nav-link">
 							
 					</div>

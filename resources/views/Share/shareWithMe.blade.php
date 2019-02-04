@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
 	<link href="{{ asset('css/share_Module/style.css') }}" rel="stylesheet" media="screen"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="main-div">
@@ -26,34 +27,47 @@
 			  <ul>
 
 				@foreach($DocumentFolder as $DocumentFolder)
-				  @foreach($DocumentFolder as $DocumentFolder)
 					<li>
-						<a href=""><span><i class="fas fa-folder"></i><b>{{$DocumentFolder->document_name}}</b></span>
+						<a href=""><span><i class="fas fa-folder"></i><b>{{$DocumentFolder['document_name']}}</b></span>
+
 						</a>
 					</li>
-				   @endforeach
 				@endforeach
 				</ul>
 			</div>
 			
 			<div class="section-box">
 				<h6>Files</h6>
-			<ul>
+				<ul>
 
-				@foreach($DocumentFile as $DocumentFile)
-				  @foreach($DocumentFile as $DocumentFile)
-
-					<li>
-						<a href=""><span><i class="fas fa-file"></i><b>{{$DocumentFile->document_name}}</span>
-						</a>
-					</li>
+					@foreach($DocumentFile as $DocumentFile)
+						<li>
+							<a class='overview_shared_document' href="javascript:;" data-value='{{$DocumentFile['document_path']}}'>
+								<span>
+									<i class="fas fa-file"></i><b>{{$DocumentFile['document_name']}}
+									</b>
+								</span>
+							</a>
+						</li>
+						
+					@endforeach
 					
-				   @endforeach
-				@endforeach
-				
 				</ul>
 			</div>
 		</div><!--right bar close-->
 	</div><!--main div close-->
 </body>
+<script type="text/javascript">
+	$(document).ready(function(){
+
+        $(document).on('click','.overview_shared_document',function(){
+
+           var vlaue1 = $(this).data('value');
+           alert(value1);
+
+        });
+
+	});
+
+</script>
 </html>
