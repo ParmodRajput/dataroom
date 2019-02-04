@@ -2538,3 +2538,66 @@ a.btn.btn_export_doc {
     width: 71px;
     padding-left: 7px;
 }
+
+/*4 feb 2019 Module:- share_document popup design*/
+
+p.label-form {
+   float: left;
+   width: 100%;
+   margin-bottom: 5px;
+   font-size: 15px;
+}
+
+div#ShareDoc span.select2.select2-container.select2-container--default {
+   float: left;
+   width: 100% !important;
+   margin-bottom: 10px;
+}
+
+div#ShareDoc .duration_doc_checkbox label input#duration_time_val {
+   width: 100%;
+   float: left;
+   border: 1px solid silver;
+   border-radius: 4px;
+   padding: 0px 2px;
+}
+
+div#ShareDoc .duration_doc_checkbox label {
+   width: 100%;
+}
+
+div#ShareDoc .registration_doc_checkbox, .print_doc_checkbox, .download_doc_checkbox {
+   background: #e6f3f5;
+   padding: 5px 15px;
+   border-radius: 4px;
+   border: 1px solid #d2e4e6;
+}
+
+div#ShareDoc .registration_doc_checkbox, .print_doc_checkbox, .viewed_doc_checkbox {
+   background: #e6f3f5;
+   padding: 5px 15px;
+   border-radius: 4px;
+   border: 1px solid #d2e4e6;
+}
+
+
+div#ShareDoc .registration_doc_checkbox label {
+   margin-right: 15px;
+}
+
+div#ShareDoc .registration_doc_checkbox label input[type="radio"], div#ShareDoc .print_doc_checkbox input[type="radio"], .download_doc_checkbox label input[type="radio"] {
+   margin-right: 5px;
+}
+
+div#ShareDoc .print_doc_checkbox label, .download_doc_checkbox label {
+   margin-right: 10px;
+}
+
+.print_doc_checkbox {
+   margin: 5px 0;
+}
+
+span.select2.select2-container.select2-container--default {
+    min-height: 45px;
+    height: auto;
+}

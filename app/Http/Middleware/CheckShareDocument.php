@@ -28,23 +28,24 @@ class CheckShareDocument
         $access_token =  $request->route()->parameter('access_token');
 
         
+        $SHRdoc = ShareDocument::where('project_id',$project_id)->where('project_id',$project_id)->where('Shared_with',$userEmail)->where('access_token',$access_token)->first();
 
+        $RegisterChecker = $SHRdoc['register_required'];
 
-
-        if($decryptedRegisterChecker == '1')
+        if($RegisterChecker == '1')
         {
             
-            if (User::where('email', '=', $decryptedUserEmail)->exists()) {  
+            if (User::where('email', '=', $userEmail)->exists()) {  
 
 
                  if(Auth::user())
                     {
                         $authUserEmail = Auth::user()->email; 
                         
-                        if($decryptedUserEmail == $authUserEmail)
+                        if($userEmail == $authUserEmail)
                         {
 
-                            return view('Share.shareWithMe');
+                            return view('Share.OverViewSharedDoc');
 
                         }else{
                                
@@ -66,14 +67,11 @@ class CheckShareDocument
             
         }else{
 
-
+         
         }
 
 die();
         
-
-        
-
         return $next($request);
     }
 }

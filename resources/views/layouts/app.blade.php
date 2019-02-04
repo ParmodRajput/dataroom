@@ -3341,7 +3341,11 @@ $(document).on('click','.doc_permission_modal',function(){
 
               },
               success:function(response){
-              alert(response);
+
+                $('#ShareDoc').modal('hide');
+                swal("share successfully", "", "success");
+
+
               }
 
           });

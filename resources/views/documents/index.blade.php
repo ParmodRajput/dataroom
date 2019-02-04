@@ -42,7 +42,7 @@
               </li>
 
                <li   class='ng-scope history_of_action'>
-                <a href='javascript:;' data-toggle="modal" data-target="#ShareDoc"></i><i class="fas fa-history"></i>Share</a>
+                <a href='javascript:;' data-toggle="modal" data-target="#ShareDoc"></i><i class="fa fa-share-alt" aria-hidden="true"></i>Share</a>
               </li>
 
                <li   class='ng-scope ques_ans_docs'>
