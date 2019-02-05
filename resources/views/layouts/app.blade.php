@@ -61,6 +61,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
+  <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
 
   <!-- endinject -->
   <!-- Plugin js for this page-->
@@ -2953,14 +2955,10 @@ $(document).on('click','.note1_doc_delete', function(){
    $(document).on('click','.ques_ans_docs',function(){
 
 
-       alert('dfdsf');
-
        $('input:checkbox').prop('checked', false);
        $(this).parent().prev().find('.check-box-input').trigger( "click" );
        var data_value = $(this).data('value');
-
-       alert(data_value);
-
+       
        var data_user = $(this).data('user');
        var getName  = data_value.split('/');
        var Name = getName[getName.length-1];
@@ -3350,7 +3348,7 @@ $(document).on('click','.doc_permission_modal',function(){
 
                 $('#ShareDoc').modal('hide');
                 swal("share successfully", "", "success");
-                
+
               }
 
           });

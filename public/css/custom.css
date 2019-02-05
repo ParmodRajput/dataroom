@@ -2601,3 +2601,11 @@ span.select2.select2-container.select2-container--default {
     min-height: 45px;
     height: auto;
 }
+
+#ShareDoc .bootstrap-tagsinput {
+    float: left;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dfdfdf!important;
+}

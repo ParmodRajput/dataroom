@@ -784,8 +784,10 @@
       <div class="modal-body">
             <div class="section_usersEmail">
                <p class="label-form">Enter Email Addesses</p>
-               <select placeholder='Enter email addresses' class="form-control shareDocUsers" multiple="multiple">      
-               </select>
+               <!-- <select placeholder='Enter email addresses' class="form-control shareDocUsers" multiple="multiple">      
+               </select> -->
+
+               <input type="text"  name ="user_email" class="form-control" id="invite_users" data-role="tagsinput" >
             </div></br>
 
             <div class="section_access_permisson">
