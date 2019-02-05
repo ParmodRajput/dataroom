@@ -1821,8 +1821,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
     }
 
-
-
     // get the docx file content
 
     function kv_read_word($input_file){ 
@@ -1997,7 +1995,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                         }
             }  
 
-             $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
+           $data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];
 
                        // Save record
 
@@ -2008,7 +2006,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
            $report->save();
                
 
-                return $data;
+           return $data;
 
           
 

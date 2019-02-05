@@ -11,6 +11,7 @@ use App\User;
 use App\Document;
 use App\ShareDocument;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Http\Response;
 use Mail;
 
 class ShareDocumentcontroller extends Controller
@@ -209,10 +210,20 @@ class ShareDocumentcontroller extends Controller
 //end
 
    
-    public function ShowDocumentForAuth(Request $request){
+    public function ShowDocumentForAuth($project_id){
+     
+      $AuthEmail = Auth::user()->email;
+      $encryptedUserEmail = Crypt::encryptString($AuthEmail);
+      $encryptedProjectId  = Crypt::encryptString($project_id);
+      $registerValid = '0';
+      $registerRequired      = Crypt::encryptString($registerValid);
+      $time ='0';
 
-        print_r('sdfsdf');die();
+      return Redirect(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
 
+      // return Redirect::to(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
+
+      
     }
 
 

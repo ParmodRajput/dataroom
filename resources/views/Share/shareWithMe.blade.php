@@ -15,9 +15,9 @@
 		<div class="left-bar">
 			<ul>
 				<li>Menu</li>
-			<li><a href="">Home</a></li>
-				<li><a href="">About</a></li>
-				<li><a href="">Contact</a></li>
+			<li><a href="{{url('/')}}/projects/">Go to Dataroom</a></li>
+				<li><a href="">Shared with me</a></li>
+				<li><a href=""><span><i class="far fa-clock"></i></span> Recent</a></li>
 			</ul>
 		</div><!--left bar close-->
 		

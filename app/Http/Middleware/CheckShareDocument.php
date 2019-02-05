@@ -31,7 +31,18 @@ class CheckShareDocument
         $SHRdoc = ShareDocument::where('project_id',$project_id)->where('project_id',$project_id)->where('Shared_with',$userEmail)->where('access_token',$access_token)->first();
 
         $RegisterChecker = $SHRdoc['register_required'];
-        
+
+        $current_date = date('Y-m-d');
+
+        if($SHRdoc['duration_time'] >= $current_date){
+            
+            $verifyThis = 'true';
+
+        }else{
+
+            $verifyThis = 'false';
+
+        }
 
         if($RegisterChecker == '1')
         {
@@ -45,7 +56,13 @@ class CheckShareDocument
                         
                         if($userEmail == $authUserEmail)
                         {
+                              
+                              if($verifyThis == 'true')
+                              {
 
+                                
+
+                              }
                             
 
                         }else{

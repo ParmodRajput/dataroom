@@ -208,6 +208,9 @@ Route::get('/shareFile/{project_id}/{userEmail}/{registerChecker}/{time}','Share
 Route::post('/Auth/getShareable/Document','ShareDocumentcontroller@ShowDocumentForAuth');
 
 Route::get('/Overview/{access_token}/{project_id}/{email}/','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
+
+Route::get('/sharedFile/{project_id}/','ShareDocumentcontroller@ShowDocumentForAuth');
+
 //end
 
 // Setting Route
@@ -225,7 +228,6 @@ Route::post('save_WaterMark/setting','SettingController@SaveWatermarkSetting');
 Route::get('downloadExcel/{type}', 'DocumentsController@downloadExcel');
 
 //end
-
 
 
 //admin dashboard 

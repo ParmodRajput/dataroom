@@ -13,7 +13,7 @@
     <span style="float:left; width:100%;">
     <h2 style="float:left; margin:10px 0 10px 10px; padding:0px; width:100%; font-size:20px; 
     font-weight:normal; color:#b8a883;">Test</h2>
-    <p style="float:left; width:100%; margin:10px 0 10px 10px; color:#000; font-size:18px;">{{$SenderName}} Open document</p>
+    <p style="float:left; width:100%; margin:10px 0 10px 10px; color:#000; font-size:18px;">{{$SenderName}} shared with you. </p>
     <hr style="float:left; width:100%; height:5px;
      background:#b8a883; border:none; outline:none;">
     </span>
@@ -27,7 +27,7 @@
 
 <p style="font-size:15px; padding:0px; line-height:24px; color:#000;" >{{$SenderName}}(<a href="#">{{$SenderEmail}}</a>) share document.</p>
 
-<a style="float:left; padding:10px 15px; margin:20px 0 0 0; background:#b56b7a; border:0px; color:#fff; text-decoration:none;" href="{{ $verifyUrl}}">Go to Share Document</a>
+<a style="float:left; padding:10px 15px; margin:20px 0 0 0; background:#b56b7a; border:0px; color:#fff; text-decoration:none;" href="{{ $verifyUrl}}">Open document</a>
 
 </p>
 

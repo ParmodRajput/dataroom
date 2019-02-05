@@ -61,7 +61,7 @@
 					</li>
 
 					<li class="nav-item" id='Pro_ShareableDocument'>
-							<a href="{{url('/')}}/shareFile/" class="nav-link">
+							<a href="{{url('/')}}/sharedFile/{{$project_id}}/" class="nav-link">
 							<i class="fa fa-paperclip" aria-hidden="true"></i>Share with me</a>
 					</li>
 					<div class="nav-link">
@@ -89,7 +89,7 @@
 
 					 <i class="fas fa-user"></i>
 					 <span class="profile-text">{{ Auth::user()->name }}</span>
-					 <i class="fa fa-caret-down down-arrow"  data-toggle="dropdown" aria-hidden="true"></i>
+					 <i class="fa fa-caret-down down-arrow" data-toggle="dropdown" aria-hidden="true"></i>
 
 						<div class="dropdown-menu list-iteam">
 							<ul>
