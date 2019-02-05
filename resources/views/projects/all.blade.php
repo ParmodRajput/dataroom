@@ -34,7 +34,7 @@
                                      <div class="close">
                                         <i class="fa fa-window-close" aria-hidden="true"></i>
                                      </div>
-                                        <strong><a href="project/{{$userprojects->id}}/documents">{{$userprojects->project_name}}</a></strong>
+                                        <strong><a href="{{url('/')}}/project/{{$userprojects->id}}/documents">{{$userprojects->project_name}}</a></strong>
                                     </span>
                                 </a>
                             </li>
