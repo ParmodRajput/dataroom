@@ -207,7 +207,7 @@ Route::get('/shareFile/{project_id}/{userEmail}/{registerChecker}/{time}','Share
 
 Route::post('/Auth/getShareable/Document','ShareDocumentcontroller@ShowDocumentForAuth');
 
-Route::get('/Overview/{access_token}/{project_id}/{email}/','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
+Route::get('/Overview/{access_token}/{project_id}/{email}/{document_id}','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
 
 Route::get('/sharedFile/{project_id}/','ShareDocumentcontroller@ShowDocumentForAuth');
 

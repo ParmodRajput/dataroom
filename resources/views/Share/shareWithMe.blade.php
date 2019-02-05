@@ -15,7 +15,7 @@
 		<div class="left-bar">
 			<ul>
 				<li>Menu</li>
-			<li><a href="{{url('/')}}/projects/">Go to Dataroom</a></li>
+			<li><a href="{{url('/')}}/{{$GodataRoom}}">Go to Dataroom</a></li>
 				<li><a href="">Shared with me</a></li>
 				<li><a href=""><span><i class="far fa-clock"></i></span> Recent</a></li>
 			</ul>
@@ -42,7 +42,7 @@
 
 					@foreach($DocumentFile as $DocumentFile)
 						<li>
-							<a class='overview_shared_document' href="{{url('/')}}/Overview/{{$DocumentFile['access_token']}}/{{$DocumentFile['project_id']}}/{{$DocumentFile['Email']}}" data-value='{{$DocumentFile["document_path"]}}'>
+							<a class='overview_shared_document' href="{{url('/')}}/Overview/{{$DocumentFile['access_token']}}/{{$DocumentFile['project_id']}}/{{$DocumentFile['Email']}}/{{$DocumentFile['document_id']}}">
 								<span>
 									<i class="fas fa-file"></i><b>{{$DocumentFile['document_name']}}
 									</b>

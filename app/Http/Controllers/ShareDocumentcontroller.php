@@ -8,11 +8,15 @@ use Illuminate\Support\Facades\Storage;
 use App\Permission;
 use App\Project;
 use App\User;
+use App\Setting;
 use App\Document;
 use App\ShareDocument;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
+use ZipArchive;
 use Mail;
+use Excel;
 
 class ShareDocumentcontroller extends Controller
 {
@@ -114,10 +118,15 @@ class ShareDocumentcontroller extends Controller
                         	 $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
                         }
 
+                        $GodataRoom = "projects";
+
                     }else{
 
 
                     	$getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
+
+
+                    	$GodataRoom = "register";
                     }
 
         foreach ($getShareableDocument as $getShareableDocument) {
@@ -136,7 +145,7 @@ class ShareDocumentcontroller extends Controller
 
                   }else{
 
-                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
                   }
 
 
@@ -150,7 +159,7 @@ class ShareDocumentcontroller extends Controller
                   }else{
 
 
-                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
+                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
                   }
 
 
@@ -166,7 +175,7 @@ class ShareDocumentcontroller extends Controller
 
                   }else{
 
-                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_path'=>$GetShareWithMeDocumentFolder['path'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
                   }
 
 
@@ -179,7 +188,7 @@ class ShareDocumentcontroller extends Controller
 	                  }else{
 
 
-	                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_path'=>$getShareWithMeDocumentFile['path'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
+	                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
 	               }
 
                }
@@ -200,7 +209,8 @@ class ShareDocumentcontroller extends Controller
 
     }
 
-        return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile'));
+
+        return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile','GodataRoom'));
 
     }
 
@@ -220,19 +230,114 @@ class ShareDocumentcontroller extends Controller
       $time ='0';
 
       return Redirect(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
-
-      // return Redirect::to(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
-
       
     }
 
 
     public function ViewDocument(Request $request){
 
-        dd('dfsdf');
+        $project_id =  $request->route()->parameter('project_id');
+        $encryptedUserEmail =  $request->route()->parameter('email');
+        $userEmail = Crypt::decryptString($encryptedUserEmail);
+        $access_token =  $request->route()->parameter('access_token');
+        $document_id  = $request->route()->parameter('document_id');
+
+        
+        $SHRdoc = ShareDocument::where('project_id',$project_id)->where('project_id',$project_id)->where('Shared_with',$userEmail)->where('access_token',$access_token)->where('document_id',$document_id)->first();
+
+        $downloadable = $SHRdoc['downloadable'];
+        $printable = $SHRdoc['printable'];
+
+     
+        $getSetting = Setting::where('project_id',$project_id)->first();
+
+        $watermark_text = $getSetting['watermark_text'];
+        $watermark_color = $getSetting['watermark_color']; 
+
+
+        $GetdocPath = Document::where('project_id',$project_id)->where('id',$document_id)->first();
+  
+        $doc_path = Storage::get($GetdocPath->path);
+
+        $filePath =  $GetdocPath->path;
+
+        $fullPath = storage_path().'/app/'.$filePath;
+
+        $doc_name = $GetdocPath->document_name;
+
+        $document_Data = base64_encode($doc_path);
+
+        $getEditableExt = explode('/', $filePath);
+
+        $getdocumementExtension = end($getEditableExt);
+  
+        $getExtension = explode('.', $getdocumementExtension);
+       
+        $Ext      = end($getExtension);
+
+        // docx file
+
+        $kv_texts = $this->kv_read_word($fullPath);
+
+        if($kv_texts !== false) {   
+          
+           $docx_data = $kv_texts;
+
+         }else{
+
+           $docx_data = '';
+
+         }
+
+        return view('Share.viewSharedDoc',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id','watermark_text','watermark_color','downloadable','printable'));
 
     }
 
+    //end function
 
-    
+
+    // get the docx file content
+
+    function kv_read_word($input_file){ 
+
+                 $kv_strip_texts = ''; 
+                       $kv_texts = '';  
+                if(!file_exists($input_file))
+                {
+                 
+                  return false;
+
+                } 
+              
+                $zip = zip_open($input_file);
+                  
+                if (!$zip || is_numeric($zip))
+                {
+                   return false;
+                }
+                
+                while ($zip_entry = zip_read($zip)) {
+                    
+                  if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
+                    
+                  if (zip_entry_name($zip_entry) != "word/document.xml") continue;
+
+                  $kv_texts .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+                    
+                  zip_entry_close($zip_entry);
+                  
+                }
+                
+                zip_close($zip);
+                 
+                $kv_texts = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $kv_texts);
+                $kv_texts = str_replace('</w:r></w:p>', "\r\n", $kv_texts);
+                $kv_strip_texts = nl2br(strip_tags($kv_texts,''));
+
+                return $kv_strip_texts;
+         }
+
+        //end function
+
 }
+//end class

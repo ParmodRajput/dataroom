@@ -26,9 +26,10 @@ class CheckShareDocument
         $encryptedUserEmail =  $request->route()->parameter('email');
         $userEmail = Crypt::decryptString($encryptedUserEmail);
         $access_token =  $request->route()->parameter('access_token');
+        $document_id  = $request->route()->parameter('document_id');
 
         
-        $SHRdoc = ShareDocument::where('project_id',$project_id)->where('project_id',$project_id)->where('Shared_with',$userEmail)->where('access_token',$access_token)->first();
+        $SHRdoc = ShareDocument::where('project_id',$project_id)->where('project_id',$project_id)->where('Shared_with',$userEmail)->where('access_token',$access_token)->where('document_id',$document_id)->first();
 
         $RegisterChecker = $SHRdoc['register_required'];
 
@@ -60,36 +61,34 @@ class CheckShareDocument
                               if($verifyThis == 'true')
                               {
 
-                                
+                               return $next($request);
 
                               }
                             
 
                         }else{
                                
-                            Auth::logout();   
-                            return redirect(url('/login'));
+                            return $next($request);
                         }
 
                     }else{
 
-                       return redirect(url('/login')); 
+                       return $next($request);
                     }
 
                 
             }else{
 
-             return redirect(url('/register'));
+            return redirect(url('/register'));
                 
             }
             
         }else{
 
+             return $next($request);
          
         }
 
-die();
         
-        return $next($request);
     }
 }

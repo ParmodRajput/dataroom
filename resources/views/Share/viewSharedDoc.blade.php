@@ -62,14 +62,12 @@
 
 	<body>
        <div class="row">
-       	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
+      
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
        	<input type="hidden" id="watermark_color" data-value= '{{$watermark_color}}'>
         <input type="hidden" id="downloadable" data-value= '{{$downloadable}}'>
        	<input type="hidden" id="printable"  data-value= '{{$printable}}'>
-       	<input type="hidden" id="discussable"  data-value= '{{$discussable}}'>
-
-       	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
+     
        	<input type='hidden' id='currentPdfScale'>
 
 		<div class="top_head col-md-12">
@@ -106,8 +104,7 @@
          <span class="print_document">
 		   <i class="fa fa-print"></i>
 	     </span>
-		   <a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments discuss_question"></i></a>
-	   
+
 		<!-- <i class="fa fa-search"></i> -->
 		</div>
 
@@ -191,13 +188,12 @@
 
       $(document).ready(function(){
 
-      	var watermark_view = $('#watermark_view').data('value');
       	var watermark_text = $('#watermark_text').data('value');
       	var watermark_color = $('#watermark_color').data('value');
       	var downloadable = $('#downloadable').data('value');
-      	var printable = $('#printable').data('value');
-      	var discussable = $('#discussable').data('value');
 
+      	var printable = $('#printable').data('value');
+      	
  // downloadable exit
       	if(downloadable !== 1)
       	{
@@ -218,22 +214,10 @@
              $('.print_document').removeClass('hidden');
       	}
 
- // discussable exit
-       // if(discussable !== 1)
-      	// {
-      	// 	$('.discuss_question').addClass('hidden');
 
-      	// }else{
-      		
-       //       $('.discuss_question').removeClass('hidden');
-      	// }
-
-
-      	if(watermark_view == 1)
-      	{
-      		$('.content_text_wm').html(watermark_text+' '+watermark_text+' '+watermark_text);
-      		$('.content_text_wm').css('color','#'+watermark_color);
-      	}
+      	$('.content_text_wm').html(watermark_text+' '+watermark_text+' '+watermark_text);
+      	$('.content_text_wm').css('color','#'+watermark_color);
+  
 
 		$(window).bind('mousewheel DOMMouseScroll', function(e)
 		{
@@ -265,22 +249,7 @@
 
 		var excel_path  = $('#excel_file').val();
 
-		var DocPermission = $('#CurrentDocPermission').data('value');
 
-		if(DocPermission == '7')
-		{
-			$('.fence_view').click();
-			var clickEvent = $('.fence_view');
-            setTimeout(function(){ clickEvent.trigger('click') }, 0);
-            
-            $('.fence_view').addClass('hidden');
-
-		}else{
-
-			$('.fence_view').removeClass('hidden');
-
-		}
- 
          $('.viewer_display').css('height',window_height);
 
 		   
