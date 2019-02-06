@@ -45,7 +45,7 @@
                 <a href='javascript:;' data-toggle="modal" data-target="#ShareDoc"></i><i class="fa fa-share-alt" aria-hidden="true"></i>Share</a>
               </li>
 
-               <li   class='ng-scope ques_ans_docs'>
+               <li   class='ng-scope question_create_doc'>
                 <a href='javascript:void(0)'></i><i class="fa fa-comment-o"></i> New Question</a>
               </li>
 
@@ -168,7 +168,7 @@
 
                 @endif  
                 
-                  <div class="delete_items hidden" permission = "3">
+                  <div class="delete_items hideDeleteBtn" permission = "3">
                      <a class="btn delete_items_documents " ><i class='fas fa-trash-alt'></i> Delete</a>           
                   </div>
 
@@ -249,7 +249,7 @@
                               <div class="document_index index-drop droppable ui-droppable notMoveInDiv" id='upFolerTogo'>
                                 <div class="doc_index_list">
                                   <h4> 
-                                    <div class="upone" onclick="upone_folder();">
+                                    <div class="upone hidden" onclick="upone_folder();">
                                       <i class="fas fa-arrow-up custom upone-folder" ></i>
                                       <div class="back-arrow">{{$project_name}}</div>
                                     </div>
@@ -787,7 +787,7 @@
                <!-- <select placeholder='Enter email addresses' class="form-control shareDocUsers" multiple="multiple">      
                </select> -->
 
-               <input type="text"  name ="user_email" class="form-control" id="invite_users" data-role="tagsinput" >
+               <input type="text"  name ="user_email" class="form-control shareDocUsers"  data-role="tagsinput" >
             </div></br>
 
             <div class="section_access_permisson">

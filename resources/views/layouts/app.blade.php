@@ -1038,6 +1038,7 @@ $(document).ready(function(){
   // Delete folder and file 
    $(document).on('click','.delete_item',function(event){
 
+
           var paths = [];
           var token = $('#csrf-token').val();
           var projects_id = $('.directory_location #project_id_doc').val();
@@ -1199,8 +1200,10 @@ $(document).ready(function(){
 
                 if(getfolder == '' && getfiles == '')
                 {
+                  
+                  $('.upone').addClass('hidden');
 
-                 html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Drag and Drop files here to upload</span></div>";
+                  html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Drag and Drop files here to upload</span></div>";
 
                  // html3 +='<div class="doc_index_list"><h4> <div class="upone" onclick="upone_folder();"><i class="fas fa-arrow-up custom upone-folder" ></i><div class="back-arrow"></div></div></h4></div>'; 
 
@@ -1209,7 +1212,7 @@ $(document).ready(function(){
                  // getLastUrl(directory_url);
                  
                 }else{
-
+                          $('.upone').removeClass('hidden');
                           $.each(getfolder,function(key ,value){
 
 
@@ -1573,6 +1576,8 @@ $(document).ready(function(){
           }
 
           var value = $(this).find('a').data('value'); 
+
+          $('.checkToActionPopValue').val(value);
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
 
@@ -1977,7 +1982,7 @@ $('#myModal').on('hidden.bs.modal', function () {
           $('.close_note_aside').addClass('hidden');
           $('.create_note_aside').removeClass('hidden');
           $('#single_select_doc').val(noteDocPath);
-          $('.delete_items').removeClass('hidden'); 
+          $('.delete_items').removeClass('hideDeleteBtn'); 
           $('.share_items_documents').removeClass('hidden');
           $('.btn_delete_doc_recycle').removeClass('hideDeleteBtn');  
 
@@ -2055,7 +2060,7 @@ $('#myModal').on('hidden.bs.modal', function () {
              $('.notes_aside_1').html('');
              $('.submit_note1_doc').addClass('hidden');
              $('.share_items_documents').addClass('hidden');
-             $('.delete_items').addClass('hidden'); 
+             $('.delete_items').addClass('hideDeleteBtn'); 
 
 
         }else
@@ -2958,7 +2963,6 @@ $(document).on('click','.note1_doc_delete', function(){
        $('input:checkbox').prop('checked', false);
        $(this).parent().prev().find('.check-box-input').trigger( "click" );
        var data_value = $(this).data('value');
-       
        var data_user = $(this).data('user');
        var getName  = data_value.split('/');
        var Name = getName[getName.length-1];
@@ -3057,6 +3061,12 @@ $(document).on('click','.note1_doc_delete', function(){
        }); 
 
   });
+
+ $(document).on('click','.ques_ans_docs_left',function(){
+
+  $(this).parent().prev().find('.check-box-input').trigger( "click" );
+
+ });
 
  $(document).ajaxSend(function(event, request, settings) {
       $('.overlay_body').removeClass('hidden');
@@ -3238,23 +3248,26 @@ $(document).on('click','.icon_close_filter',function(){
 });
 
 
-$(document).on('click','.note_create_doc',function(){
-
-
- var getNoteTo =  $('.checkToActionPopValue').val(); 
-
- $('[data-value = "'+getNoteTo+'"]').click();
-
-});
 
 $(document).on('click','.question_create_doc',function(){
 
- var getNoteTo =  $('.checkToActionPopValue').val(); 
 
- $('[data-value = "'+getNoteTo+'"]').click();
+       var data_value = $('.checkToActionPopValue').val(); 
+       var getName  = data_value.split('/');
+       var Name = getName[getName.length-1];
+
+       var project_id  = $('.directory_location #project_id_doc').val();
+
+       $('#genrate_question').modal();
+       $('#genrate_question .related_question').html(Name);
+       $('.question_subject').val('');
+       $('.question_content').val('');
+
+       $('#doc_path_directory').data('value',data_value);
 
 
 });
+
 
 $(document).on('click','.fence_view_doc_permis',function(){
 
@@ -3300,14 +3313,16 @@ $(document).on('click','.doc_permission_modal',function(){
 // share doc with users
 
 
-  $(".shareDocUsers").select2({
-      tags: true
-  });
+  // $(".shareDocUsers").select2({
+  //     tags: true
+  // });
 
 
   $(document).on('click','#shareDocForUsers',function(){
 
     var userEmails = $(".shareDocUsers").val();
+
+    alert(userEmails);
 
     var durationTime = $('#duration_time_val').val();
 
