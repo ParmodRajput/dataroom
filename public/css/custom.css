@@ -2616,3 +2616,23 @@ span.select2.select2-container.select2-container--default {
 
 #datepicker{width:180px; margin: 0 20px 20px 20px;}
 #datepicker > span:hover{cursor: pointer;}
+
+div#datepicker {
+   width: 100%;
+   height: 43px;
+   margin-left: 0;
+}
+
+div#datepicker input#duration_time_val {
+   background: white;
+   height: 100%;
+   border: 1px solid #e2e2e2;
+}
+
+div#datepicker span.input-group-addon {
+   padding-right: 25px;
+}
+
+div#datepicker span.input-group-addon i.glyphicon.glyphicon-calendar {
+   top: 7px;
+}
