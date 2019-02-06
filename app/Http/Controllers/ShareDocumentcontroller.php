@@ -27,6 +27,8 @@ class ShareDocumentcontroller extends Controller
      $userEmails = explode(',',$GetuserEmails);
 
      $durationTime = $request->durationTime;
+
+
      $registerValid = $request->registerValid;
      $printable = $request->printable;
      $downloadable = $request->downloadable;
@@ -39,7 +41,7 @@ class ShareDocumentcontroller extends Controller
     foreach ($DocumentId as $document) {
 
      foreach ($userEmails as $userEmail) {
-     	
+
          $SrDocument = new ShareDocument();
          $SrDocument->duration_time = $durationTime;
          $SrDocument->project_id = $project_id;

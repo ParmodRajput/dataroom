@@ -64,7 +64,7 @@
                             <div class="form-group ng-scope" ng-if="!vm.isCustomWatermarksDisabled"><div class="col-xs-5">
                               <label class="control-label ng-binding">Watermark pattern:</label>
                             </div><div class="col-xs-7">
-                              <textarea rows="1" id='waterMark_text_ch_doc' class="form-control"  style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
+                              <textarea rows="1"  onkeyup="countChar(this)" id='waterMark_text_ch_doc' class="form-control"  style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
                             </div>
                           </div>
                           <div class="form-group ng-scope" ng-if="!vm.isCustomWatermarksDisabled"><div class="col-xs-5"><label class="control-label ng-binding">Watermark color:</label></div><div class="col-xs-7"><div class="form-control-static"><div class='colorWatermark'></div>
@@ -179,6 +179,20 @@ $(document).ready(function(){
     
     });
 
+    function countChar(val){
+
+       var len = val.value.length;
+       if (len >= 63) {
+
+              $('.WaterMarkTextContent.noselect').css('font-size','');
+
+       }else{
+          alert('no');
+              $('.WaterMarkTextContent.noselect').css('font-size','30px');
+    
+    }
+
+    };
    </script>
 
 @endsection

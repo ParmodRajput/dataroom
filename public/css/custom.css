@@ -2609,3 +2609,10 @@ span.select2.select2-container.select2-container--default {
     margin-bottom: 15px;
     border: 1px solid #dfdfdf!important;
 }
+
+.WaterMarkTextContent.noselect {
+    font-size: 22px;
+}
+
+#datepicker{width:180px; margin: 0 20px 20px 20px;}
+#datepicker > span:hover{cursor: pointer;}

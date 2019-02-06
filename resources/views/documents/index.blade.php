@@ -795,9 +795,10 @@
 
                     <div class="duration_doc_checkbox">
                       <p class="label-form">View Duration</p>
-                            <label>
-                              <input type="date" id="duration_time_val">
-                            </label>
+                         <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+                                  <input class="form-control" id="duration_time_val" type="text" readonly />
+                                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                          </div>
                     </div>
                 
                     <div class="registration_doc_checkbox">

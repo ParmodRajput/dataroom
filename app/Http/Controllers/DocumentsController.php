@@ -2159,6 +2159,8 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
       }
 
+      //export records
+
       public function downloadExcel($type)
         {
             $data = User::get()->toArray();

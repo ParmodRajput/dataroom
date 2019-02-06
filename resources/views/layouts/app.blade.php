@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
   <!-- end -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -62,7 +63,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
   <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
   <!-- endinject -->
   <!-- Plugin js for this page-->
@@ -3322,8 +3323,6 @@ $(document).on('click','.doc_permission_modal',function(){
 
     var userEmails = $(".shareDocUsers").val();
 
-    alert(userEmails);
-
     var durationTime = $('#duration_time_val').val();
 
     var registerValid = $("input[name='Registration']:checked"). val();
@@ -3370,6 +3369,19 @@ $(document).on('click','.doc_permission_modal',function(){
 
 
   });
+
+//date picker
+
+$(function () {
+
+  $("#datepicker").datepicker({ 
+        autoclose: true, 
+        todayHighlight: true
+  }).datepicker('update', new Date());
+
+});
+
+
 
 
 </script>
