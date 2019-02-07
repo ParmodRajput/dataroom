@@ -71,33 +71,35 @@
 				</ul>
 
 				<ul class="navbar-nav navbar-nav-right header-menu">
- 
-				<li class="nav-item dropdown d-none d-xl-inline-block">
-					 <span class="profile-text"><i class="fas fa-cog"></i></span>
-					 <i class="fa fa-caret-down down-arrow"  data-toggle="dropdown" aria-hidden="true"></i>
+				     <li class="nav-item dropdown d-none d-xl-inline-block" >
+					   <div data-toggle="dropdown" aria-hidden="true">  	
+						  <span class="profile-text"><i class="fas fa-cog"></i></span>
+						   <i class="fa fa-caret-down down-arrow"></i>
+						</div>
 
 					<div class="dropdown-menu list-iteam">
 						<ul>
 							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark" ><span><i class="fa fa-cogs"></i></span>General Setting</a></li>
 							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark"><span><i class="fa fa-hashtag"></i></span>Watermark Setting</a></li>
 
-							<li><a href="{{url('/')}}/shared/by_Me/{{$project_id}}/">Shared by me</a></li>
+							<li><a href="{{url('/')}}/shared/by_Me/{{$project_id}}/"><i class="fa fa-retweet" aria-hidden="true"></i>Shared by me</a></li>
 
 						</ul>    
 					</div>
 					</li>
 
-					<li class="nav-item dropdown d-none d-xl-inline-block">
-
+					<li class="nav-item dropdown d-none d-xl-inline-block" >
+                     <div data-toggle="dropdown" aria-hidden="true">
 					 <i class="fas fa-user"></i>
 					 <span class="profile-text">{{ Auth::user()->name }}</span>
-					 <i class="fa fa-caret-down down-arrow" data-toggle="dropdown" aria-hidden="true"></i>
+					 <i class="fa fa-caret-down down-arrow"></i>
+					</div>
 
 						<div class="dropdown-menu list-iteam">
 							<ul>
-								<li><a href="{{url('/')}}/account" >My Personal Info</a></li>
-								<li><a href="{{url('/')}}/account/security" >My Security Setting</a></li>
-								<li><a href="{{url('/')}}/projects" >All projects</a></li>
+								<li><a href="{{url('/')}}/account" ><i class="fa fa-info-circle" aria-hidden="true"></i>My Personal Info</a></li>
+								<li><a href="{{url('/')}}/account/security" ><i class="fa fa-cogs"></i>My Security Setting</a></li>
+								<li><a href="{{url('/')}}/projects" ><i class="fa fa-ellipsis-h" aria-hidden="true"></i>All projects</a></li>
 								<li><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: block;">
 										{{ csrf_field() }}
 										<input type="submit" name="submit" value ="logout">

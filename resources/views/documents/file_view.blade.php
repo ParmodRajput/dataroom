@@ -57,11 +57,117 @@
 
     <script src="js/pdf.worker.js"></script>
 
+    <style>
+		*{margin:0; padding: 0; box-sizing: border-box; font-family: arial; color: #666;}
+				.header-set {
+		    float: left;
+		    width: 100%;
+		    background: white;
+		    border-bottom: 1px solid #e2e2e2;
+		    position: relative;
+		    padding: 15px;
+		    border-top: 2px solid #4cfff8;
+		    height: 55px;
+		}
+
+		.header-set section {
+		    float: left;
+		    position: relative;
+		    z-index: 1;
+
+		}
+
+		.image-name p {
+		    float: right;
+		    max-width: 300px;
+		    padding-right: 15px;
+		    overflow: hidden!important;
+		    text-overflow: ellipsis!important;
+		    white-space: nowrap!important;
+		    padding-left: 3px;
+		}
+
+		.image-name {
+		    float: left;
+		    /*max-width: 300px;*/
+		    line-height: 30px;
+		}
+
+		.zoom-set {
+		    float: left;
+		    border-left: 1px solid silver;
+		    border-right: 1px solid silver;
+		    padding: 0 5px;
+		}
+
+		.zoom-set a {
+		    padding: 6px;
+		    float: left;
+		}
+
+		.round {
+		    float: left;
+		    border-right: 1px solid silver;
+		    padding: 0 5px;
+		}
+
+		.round a {
+		    padding: 6px;
+		    float: left;
+		}
+
+		.set-center {
+		    position: absolute;
+		    width: 100%;
+		    text-align: center;
+		    top: 20px;
+		    left: 0;
+		}
+
+		.view {
+		    float: left;
+		}
+
+		.view a {
+		    display: inline-block;
+		    padding: 5px 10px;
+		}
+
+		.set-center  a {
+		    padding: 5px;
+		}
+				.share {
+		    float: right;
+		}
+
+		.share a {
+		    padding: 5px;
+		    display: inline-block;
+		    position: relative;
+		    z-index: 1;
+		    text-decoration: none;
+		}
+
+		.header-set i {
+            font-size: 19px;
+         }
+	@media only screen and (max-width: 1100px) {
+				.set-center {
+		    text-align: right;
+		    padding-right: 85px;
+	 }
+    }
+   @media only screen and (max-width: 600px) {
+					
+   }
+
+	</style>
+
 
 </head>
 
 	<body>
-       <div class="row">
+       <div>
        	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
        	<input type="hidden" id="watermark_color" data-value= '{{$watermark_color}}'>
@@ -72,7 +178,9 @@
        	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
        	<input type='hidden' id='currentPdfScale'>
        	<input type="hidden" id='current_rotated_deg' value='0'>
-
+       	<input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}'/>
+       	<input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
+<!-- 
 		<div class="top_head col-md-12">
 		<div class="left_whole col-md-6">
 			<div class="left_text">
@@ -108,15 +216,53 @@
 		   <i class="fa fa-print"></i>
 	     </span>
 		   <a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments discuss_question"></i></a>
-	   
-		<!-- <i class="fa fa-search"></i> -->
+	  
 		</div>
 
 		<div class="arrows_right hidden">
 		<i class="fa fa-angle-left"></i>
 		<i class="fa fa-angle-right"></i>
 		</div>
-		</div>
+		</div> -->
+
+		<div class="header-set">
+			<section><div class="image-name">
+				<i class="fa fa-image"></i>
+				<p>{{$doc_name}}</p>
+				</div>
+		     <div class="zoom-set">
+				<a id="minus" href="javascript:;"><i class="fas fa-search-minus"></i></a>
+			<a id="plus" href="javascript:;"><i class="fas fa-search-plus"></i></a>
+				</div>
+				<div class="round">
+				<a href="javascript:;"><i class="fas fa-redo"></i></a>
+					<a id='rotate_doc' href="javascript:;"><i class="fas fa-undo"></i></a>
+				</div>
+				<div class="view">
+				<a href="javascript:;" class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></a>
+				</div></section>
+				<div class="set-center">
+				<a href="javascript:;"></a>
+					<a href="javascript:;">
+						<span class="dld">
+							<i class="fas fa-download"></i>
+						</span>
+						<span class="download_file">
+                          <form action="{{ Url('/') }}/project/documents/download" method="post">
+                          {{ csrf_field() }}
+
+                           <input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
+                           <input type="submit" name="submit">
+                          </form>
+                       </span>
+                    </a>
+					<a class='print_document' href=""><i class="fas fa-print"></i></a>
+					<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fas fa-comment"></i></a>
+				</div>
+				<div class="share">
+				<a href="javascript:;"><i class="fas fa-share-alt"></i> Share</a>
+				</div>
+			</div>
 
         
 		<div class="Doc_viewer">
@@ -284,9 +430,9 @@
 		$('#IMGcanvas').css('width',window_width);
         $('#IMGcanvas').css('height',window_height);
         $('#IMGcanvas').css('padding-top','1%');
-        $('#IMGcanvas').css('padding-bottom','3%');
-        $('#IMGcanvas').css('padding-right','5%');
-        $('#IMGcanvas').css('padding-left','3%');
+        $('#IMGcanvas').css('padding-bottom','3.2%');
+        $('#IMGcanvas').css('padding-right','4%');
+        $('#IMGcanvas').css('padding-left','4%');
 
 		var excel_path  = $('#excel_file').val();
 
@@ -812,7 +958,6 @@
 
 
      });
-
 
 	</script>
 

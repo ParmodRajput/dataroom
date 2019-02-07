@@ -1,5 +1,5 @@
 
-body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden; background:#F2F8F9!important;}
+body,html{ margin:0px; padding:0px; font-size:13px; overflow:hidden; background:#F2F8F9!important;}
 
 .table_color{ float:left; width:100%; background:#fff; padding:10px;}
 .table_section { float: left; width: 100%; background: #fff; border:1px solid #dfdfdf;padding: 5px; margin-top:0px;height: auto; position: relative;}
@@ -54,17 +54,46 @@ li.nav-item.dropdown.d-none.d-xl-inline-block { position: relative;}
 .dropdown-menu.list-iteam.show { position: absolute;}
 
 .navbar-nav .dropdown-menu .list-iteam{ position:absolute!important; padding:10px;}
-.dropdown-menu.list-iteam { position: absolute!important; top:39px;}
-
+.dropdown-menu.list-iteam {
+    position: absolute!important;
+    top: 25px;
+    min-width: 160px;
+    right: 0;
+    left: auto;
+}
+ul.navbar-nav.navbar-nav-right.header-menu li{cursor: pointer;}
+.navbar-nav>li>.dropdown-menu:after {
+    position: absolute;
+    content: '';
+    right: 5px;
+    top: -7px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid white;
+}
 .upone { float: left; width: 200px; padding: 5px 0;}
 .upone i { float:left; width:25px; margin-right:10px; font-size:25px; cursor:pointer;}
 .dropdown-menu.list-iteam ul { list-style: none;  display: inline-block;padding: 0px;}
-.dropdown-menu.list-iteam ul li{ padding:3px 0;}
+.dropdown-menu.list-iteam ul li {
+    padding: 3px 0;
+    float: left;
+    width: 100%;
+}
 
-.dropdown-menu.list-iteam ul li:hover { background: #eaeaea;}
 
-form#logout-form input[type="submit"] { background:transparent; width: 100%; float: left; color: #000;  border:none;
-     border-top: 2px solid #dfdfdf;}
+
+form#logout-form input[type="submit"] {
+    background: transparent;
+    width: 100%;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #18cad7;
+}
+
 form#logout-form input[type="submit"]:hover{/* background:#18cad7;*/}
 .document_index { width: 420px; border: 0.5 px solid gray; border-color: red; border: 0.5px solid gray;
   margin-top: 0px;}
@@ -85,7 +114,11 @@ form#logout-form input[type="submit"]:hover{/* background:#18cad7;*/}
 .document_index:hover h4 a i{ /*background:#18cad7;*/}
 /*.document_index:hover { border:1px solid #2387de; }*/
 .document_index:hover h4 a {/*color:#18cad7;*/}
-.list-iteam  li a{ text-decoration:none; }
+.list-iteam li a {
+    text-decoration: none;
+    color: #4599e3;
+    padding-left: 10px !important;
+}
 .list-iteam ul { float: left; width: 100%;}
 
 .progress { position:relative; width:100%; border: 1px solid #7F98B2; padding: 1px; border-radius: 3px; }
@@ -106,7 +139,7 @@ span.help-block {     float: left!important; padding: 5px; margin-bottom: 15px;
  width: 100%!important;  color: #a94442; background-color: #f2dede; border-color: #ebccd1;
   font-size: 13px; margin-top: 10px;}
 
-.navbar.default-layout .navbar-menu-wrapper .navbar-nav.header-links .nav-item .nav-link { float:left; width:100%; padding:16px 15px!important;}
+.navbar.default-layout .navbar-menu-wrapper .navbar-nav.header-links .nav-item .nav-link { float:left; padding:12px !important;}
 a.nav-link b{/* float:left; width:100%;*/}
 .upload_table { float: left; width: 100%; padding:10px 14px; background: #fff;
  border: 1px solid #dfdfdf;     border-bottom: 0px}
@@ -1822,7 +1855,7 @@ background-size: cover;
     width: 100%;
     overflow: hidden;
     position: absolute;
-    top:50px;
+    top:56px;
 }
 
 
@@ -1860,8 +1893,8 @@ span.dld {
 }
 .viewer_display {
 
-    padding-left: 25px;
-    padding-bottom: 25px;
+    /*padding-left: 25px;
+    padding-bottom: 25px;*/
 
 }
 
@@ -2200,7 +2233,7 @@ p.subject_ques {
 
 .section{ float:left; width: 100%; text-align: center;}
         .section img{ margin: 20px 0; text-align:center;}
-        .section h3{  margin: 20px 0; font-size:18px; color:#d7d7d7;}
+        .section h3{  margin: 20px 0; font-size:18px; color: gray;}
         .section a.invite{ padding:10px 15px; color:#fff; text-decoration: none; font-size:13px; background:#333;
 }
 
@@ -2635,4 +2668,8 @@ div#datepicker span.input-group-addon {
 
 div#datepicker span.input-group-addon i.glyphicon.glyphicon-calendar {
    top: 7px;
+}
+
+.modal-dialog.yet_PermissionFuser, .section img {
+max-width: 1060px;
 }

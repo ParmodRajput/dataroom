@@ -45,12 +45,7 @@
  	<input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}'/>
  	<div class="col-md-12">
 	<div class="left-one col-md-4 shared_Doc_listing">
-		<ul>
-		    <li>
-			<label><input type="checkbox"/> Folder Name Androi</label>
-			</li>
-			
-		</ul>
+		s
 	</div><!--left one close-->
 		
 		<div class="left-one col-md-4">
@@ -141,11 +136,15 @@
 			                }else{
 
 			                	 $.each(getfolders,function(key ,value){
-;
+
+			                	 	$.each(value,function(key ,value){
+
 			                	 	var doc_name = value.document_name;
 			                	 	var doc_path = value.path;
 
 			                	 	html+='<ul><li><label><input type="checkbox" data-value='+doc_path+'/>'+doc_name+'</label></li></ul>';
+
+			                	 	});
 
 			                	 });
 
@@ -153,23 +152,20 @@
 
                                   $.each(value,function(key ,value){
 
-
-
 			                	 	var doc_name = value.document_name;
 			                	 	var doc_path = value.path;
 
-			                	 	alert(doc_path);
-
 			                	 	html+='<ul><li><label><input type="checkbox" data-value='+doc_path+'/>'+doc_name+'</label></li></ul>';
 
-			                	 });
+			                	    });
 
                                   });
 			                }
 
 
-			             }//success
+                           $('.shared_Doc_listing').html(html);
 
+			             }//success
 
 
 			            });//ajax
