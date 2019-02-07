@@ -235,7 +235,6 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
-
       $('.table.table-hover.table-bordered.table_color').removeClass('hidden');
       $('.table.table-hover.table-bordered.table_color.recycle_bin').addClass('hidden');
       $('.upload_table .document_index_buttons ').removeClass('hidden');
@@ -1201,8 +1200,6 @@ $(document).ready(function(){
 
                 if(getfolder == '' && getfiles == '')
                 {
-                  
-                  $('.upone').addClass('hidden');
 
                   html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Drag and Drop files here to upload</span></div>";
 
@@ -1213,10 +1210,9 @@ $(document).ready(function(){
                  // getLastUrl(directory_url);
                  
                 }else{
-                          $('.upone').removeClass('hidden');
-                          $.each(getfolder,function(key ,value){
 
-
+                          
+                   $.each(getfolder,function(key ,value){
                           var document_name1 = value.document_name;
                           var path           = value.path;
                           var permission     = value.permission;

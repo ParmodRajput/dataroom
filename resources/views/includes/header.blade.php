@@ -81,6 +81,8 @@
 							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark" ><span><i class="fa fa-cogs"></i></span>General Setting</a></li>
 							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark"><span><i class="fa fa-hashtag"></i></span>Watermark Setting</a></li>
 
+							<li><a href="{{url('/')}}/shared/by_Me/{{$project_id}}/">Shared by me</a></li>
+
 						</ul>    
 					</div>
 					</li>

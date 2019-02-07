@@ -211,6 +211,12 @@ Route::get('/Overview/{access_token}/{project_id}/{email}/{document_id}','ShareD
 
 Route::get('/sharedFile/{project_id}/','ShareDocumentcontroller@ShowDocumentForAuth');
 
+Route::get('/shared/by_Me/{project_id}/','PagesController@Shared_By');
+
+
+Route::post('/sharedDoc/','ShareDocumentcontroller@GetSharedDoc');
+
+
 //end
 
 // Setting Route

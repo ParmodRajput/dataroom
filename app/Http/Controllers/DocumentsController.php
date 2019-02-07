@@ -2163,7 +2163,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
       public function downloadExcel($type)
         {
-            $data = User::get()->toArray();
+            $data = User::select('')->get()->toArray();
                 
             return Excel::create('allUsers', function($excel) use ($data) {
                 $excel->sheet('mySheet', function($sheet) use ($data)

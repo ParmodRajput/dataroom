@@ -71,6 +71,7 @@
 
        	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
        	<input type='hidden' id='currentPdfScale'>
+       	<input type="hidden" id='current_rotated_deg' value='0'>
 
 		<div class="top_head col-md-12">
 		<div class="left_whole col-md-6">
@@ -85,7 +86,7 @@
 
 		<div class="repeat_icons">
 		<i class="fa fa-repeat"></i>
-		<i class="fa fa-repeat"></i>
+		<i class="fa fa-repeat" id='rotate_doc'></i>
 
 		<span class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></span>
 		</div>
@@ -129,31 +130,31 @@
 
 				 <div class="kato" id='pageContainer'>
 		
-				 		<div class="WaterMarkTextContent noselect" style='top:-500px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:-500px; left:-20%;z-index:999;'>
 				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:-250px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:-250px;left:-20%;z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:0px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:0px;left:-20%;z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:250px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:250px;left:-20%;z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap; left:-20%'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:500px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:500px; left:-20%;z-index:999;'>
 				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:750px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:750px; left:-20%;z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1000px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1000px; left:-20%; z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1250px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1250px;left:-20%; z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1500px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1500px;left:-20% ;z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
 				 	
@@ -193,6 +194,30 @@
 
       	var watermark_view = $('#watermark_view').data('value');
       	var watermark_text = $('#watermark_text').data('value');
+      	var text_length = watermark_text.length;
+
+      	if(text_length > 64)
+      	{
+      		$('.WaterMarkTextContent.noselect').css('font-size','20px');
+              
+            if(text_length > 74)
+      	       {
+                     $('.WaterMarkTextContent.noselect').css('font-size','17px');
+
+      	       }
+
+      	}
+
+      	if(text_length < 64)
+      	{
+           $('.WaterMarkTextContent.noselect').css('font-size','30px');
+
+		       if(text_length < 40)
+		      	{
+                   $('.WaterMarkTextContent.noselect').css('font-size','33px');
+		      	}
+      	}
+
       	var watermark_color = $('#watermark_color').data('value');
       	var downloadable = $('#downloadable').data('value');
       	var printable = $('#printable').data('value');
@@ -769,36 +794,25 @@
             e.preventDefault(); return false; 
         });
 
-         // using canvas on canvas div
 
-   //          var container=document.getElementById("pageContainer")
-			// var origCanvas=document.getElementById('myCanvas');
-			// var wmCanvas=document.getElementById('myCanvas');
 
-			// wmCanvas.setAttribute("style","position:absolute;")
+     // rotate functionality
 
-			// if(container.firstChild)
-			//     container.insertBefore(wmCanvas, container.firstChild);
-			// else
-			//     container.appendChild(wmCanvas);
 
-			// var wmContext=wmCanvas.getContext('2d');
-			// wmContext.globalAlpha=0.5;
-			// // setup text for filling
-			// wmContext.font = "30px Comic Sans MS" ;
-			// wmContext.fillStyle = "gray";
-			// // get the metrics with font settings
-			// var metrics = wmContext.measureText("WaterMark Demo fgdfg ggfdg g fgfd gfdg");
-			// var width = metrics.width;
-			// // height is font size
-			// var height = 100;
+     $('#rotate_doc').click(function(){
 
-			// // change the origin coordinate to the middle of the context
-			// //wmContext.translate(origCanvas.width/2, origCanvas.height/2);
-			// // rotate the context (so it's rotated around its center)
-			// //wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
-			// // as the origin is now at the center, just need to center the text
-			// wmContext.fillText("prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....",origCanvas.width,origCanvas.height);
+
+       var current_Deg = $('#current_rotated_deg').val();
+
+       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
+
+       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+
+       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
+
+
+     });
+
 
 	</script>
 

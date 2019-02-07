@@ -84,4 +84,17 @@ class PagesController extends Controller
 
     }
 
+
+    public function Shared_By($project_id){
+
+        $project_id = $project_id;
+
+        $project = Project::where('id', $project_id)->first();
+
+        $project_name = $project->project_name;
+
+        return view('Share.shareByMe',compact('project_name','project_id'));
+
+    }
+
 }

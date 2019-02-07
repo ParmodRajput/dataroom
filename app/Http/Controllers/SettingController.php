@@ -25,6 +25,7 @@ class SettingController extends Controller
 
         $watermark_view = $getSetting['watermark_view']; 
         $watermark_text = $getSetting['watermark_text'];
+
         $watermark_color = $getSetting['watermark_color'];
         $downloadable = $getSetting['downloadable'];
         $printable = $getSetting['printable'];

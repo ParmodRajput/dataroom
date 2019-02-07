@@ -27,8 +27,6 @@ class ShareDocumentcontroller extends Controller
      $userEmails = explode(',',$GetuserEmails);
 
      $durationTime = $request->durationTime;
-
-
      $registerValid = $request->registerValid;
      $printable = $request->printable;
      $downloadable = $request->downloadable;
@@ -342,6 +340,48 @@ class ShareDocumentcontroller extends Controller
          }
 
         //end function
+      
+
+       public function GetSharedDoc(Request $request){
+
+        $project_id = $request->project_id;
+
+        $IndexOfFolder = [];
+        $IndexOfFile = [];
+
+
+        $authEmail = Auth::user()->email;
+
+        $getSharedBy = ShareDocument::where('Shared_by',$authEmail)->where('project_id',$project_id)->get();
+
+         foreach ($getSharedBy as $getSharedBy) {
+            
+            $getDocId = $getSharedBy->document_id;
+
+
+            $getIndexOfFolder = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '1')->get();
+
+            if($getIndexOfFolder !== '')
+            {
+              array_push($IndexOfFolder,$getIndexOfFolder);
+            }
+
+            $getIndexOfFile = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '0')->get();
+
+
+            if($getIndexOfFile !== '')
+            {
+              array_push($IndexOfFile,$getIndexOfFile);
+            }
+            
+
+         }
+            
+
+         $Shared_data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];  
+         return $Shared_data;
+         
+       }
 
 }
 //end class

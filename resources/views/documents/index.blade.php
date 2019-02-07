@@ -249,7 +249,7 @@
                               <div class="document_index index-drop droppable ui-droppable notMoveInDiv" id='upFolerTogo'>
                                 <div class="doc_index_list">
                                   <h4> 
-                                    <div class="upone hidden" onclick="upone_folder();">
+                                    <div class="upone" onclick="upone_folder();">
                                       <i class="fas fa-arrow-up custom upone-folder" ></i>
                                       <div class="back-arrow">{{$project_name}}</div>
                                     </div>
