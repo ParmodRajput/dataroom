@@ -151,6 +151,17 @@
 		.header-set i {
             font-size: 19px;
          }
+
+         .set-center a button {
+			background: none; 
+			border: none;
+			outline:none;
+			}
+		 .set-center a {
+			padding: 5px;
+			display: inline-block;
+		  }
+		  
 	@media only screen and (max-width: 1100px) {
 				.set-center {
 		    text-align: right;
@@ -251,7 +262,7 @@
 						   <button type="submit" name="submit"><i class="fas fa-download"></i></button>
                         </form>
                     </a>
-                    
+
 					<a class='print_document' href=""><i class="fas fa-print"></i></a>
 					<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fas fa-comment"></i></a>
 				</div>

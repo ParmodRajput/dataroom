@@ -12,6 +12,7 @@ use App\Setting;
 use App\Document;
 use App\ShareDocument;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use ZipArchive;
@@ -357,18 +358,25 @@ class ShareDocumentcontroller extends Controller
          foreach ($getSharedBy as $getSharedBy) {
             
             $getDocId = $getSharedBy->document_id;
+            $getAccessToken = $getSharedBy->access_token;
 
 
-            $getIndexOfFolder = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '1')->get();
+            // $getIndexOfFolder = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '1')->get();
 
-            if($getIndexOfFolder !== '')
+            $getIndexOfFolder = DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '1')->where('share_documents.access_token', $getAccessToken)->select('documents.id', 'documents.path', 'documents.document_name', 'share_documents.access_token')->get();
+
+
+            if($getIndexOfFolder !== '') 
             {
               array_push($IndexOfFolder,$getIndexOfFolder);
             }
 
-            $getIndexOfFile = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '0')->get();
+            // $getIndexOfFile = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '0')->get();
 
+              
+            $getIndexOfFile = DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '0')->where('share_documents.access_token', $getAccessToken)->select('documents.id', 'documents.path', 'documents.document_name', 'share_documents.access_token')->get();
 
+ 
             if($getIndexOfFile !== '')
             {
               array_push($IndexOfFile,$getIndexOfFile);
@@ -378,10 +386,43 @@ class ShareDocumentcontroller extends Controller
          }
             
 
-         $Shared_data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile];  
+         $Shared_data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile]; 
+
          return $Shared_data;
          
+       }//function
+
+
+       public function GetSharedDocsUser(Request $request){
+         
+         $project_id = $request->project_id;
+         $dataDoc = $request->dataDoc;
+         $authEmail = Auth::user()->email;
+         $access_token = $request->access_token;
+
+
+         $getSharedUsers = ShareDocument::where('Shared_by',$authEmail)->where('project_id',$project_id)->where('document_id',$dataDoc)->get();
+
+         return $getSharedUsers;
+
+       }//function
+
+       public function GetSharedDocsUserPermission(Request $request){
+
+         $project_id = $request->project_id;
+         $dataUser = $request->dataUser;
+         $authEmail = Auth::user()->email;
+         $access_token = $request->access_token;
+
+
+         $getSharedUsersPermission = ShareDocument::where('Shared_with',$dataUser)->where('project_id',$project_id)->where('access_token',$access_token)->get();
+
+
+         return $getSharedUsersPermission;
+
+
        }
+      
 
 }
 //end class

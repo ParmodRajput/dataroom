@@ -211,10 +211,15 @@ Route::get('/Overview/{access_token}/{project_id}/{email}/{document_id}','ShareD
 
 Route::get('/sharedFile/{project_id}/','ShareDocumentcontroller@ShowDocumentForAuth');
 
-Route::get('/shared/by_Me/{project_id}/','PagesController@Shared_By');
+Route::get('/sharedBy_me/{project_id}/','PagesController@Shared_By');
 
 
 Route::post('/sharedDoc/','ShareDocumentcontroller@GetSharedDoc');
+
+Route::post('/GetSharedUser/','ShareDocumentcontroller@GetSharedDocsUser');
+
+Route::post('/GetSharedUser/Permissions/','ShareDocumentcontroller@GetSharedDocsUserPermission');
+
 
 
 //end

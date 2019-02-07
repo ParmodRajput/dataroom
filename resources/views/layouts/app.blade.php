@@ -1542,7 +1542,6 @@ $(document).ready(function(){
    // right click on document// 
     $(document).on('contextmenu','.documents_index_section .document_index' ,function(e) {
 
-          
           $('.drop_box_document input:checkbox').prop('checked', false);
           e.preventDefault();
 
@@ -1552,7 +1551,7 @@ $(document).ready(function(){
 
           var rightClickPositionTop  = e.pageY-63;
 
-           var menuHeight=$('.right_click.drop-holder').height();
+          var menuHeight=$('.right_click.drop-holder').height();
           //alert(e.pageY);
 
           //var comformHeight = windowHeight-e.pageY;

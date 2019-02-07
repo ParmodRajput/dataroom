@@ -82,7 +82,7 @@
 							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark" ><span><i class="fa fa-cogs"></i></span>General Setting</a></li>
 							<li><a href="{{url('/')}}/project/{{$project_id}}/documents/setting/watermark"><span><i class="fa fa-hashtag"></i></span>Watermark Setting</a></li>
 
-							<li><a href="{{url('/')}}/shared/by_Me/{{$project_id}}/"><i class="fa fa-retweet" aria-hidden="true"></i>Shared by me</a></li>
+							<li><a href="{{url('/')}}/sharedBy_me/{{$project_id}}/"><i class="fa fa-retweet" aria-hidden="true"></i>Shared by me</a></li>
 
 						</ul>    
 					</div>
