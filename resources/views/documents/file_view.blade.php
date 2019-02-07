@@ -244,18 +244,14 @@
 				<div class="set-center">
 				<a href="javascript:;"></a>
 					<a href="javascript:;">
-						<span class="dld">
-							<i class="fas fa-download"></i>
-						</span>
-						<span class="download_file">
-                          <form action="{{ Url('/') }}/project/documents/download" method="post">
+						<form action="{{ Url('/') }}/project/documents/download" method="post">
                           {{ csrf_field() }}
 
                            <input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
-                           <input type="submit" name="submit">
-                          </form>
-                       </span>
+						   <button type="submit" name="submit"><i class="fas fa-download"></i></button>
+                        </form>
                     </a>
+                    
 					<a class='print_document' href=""><i class="fas fa-print"></i></a>
 					<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fas fa-comment"></i></a>
 				</div>
