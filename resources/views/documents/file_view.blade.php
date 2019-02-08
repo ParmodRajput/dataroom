@@ -59,10 +59,10 @@
 
     <style>
 		*{margin:0; padding: 0; box-sizing: border-box; font-family: arial; color: #666;}
-				.header-set {
+		.header-set {
 		    float: left;
 		    width: 100%;
-		    background: white;
+		    background: #F1F1F1;
 		    border-bottom: 1px solid #e2e2e2;
 		    position: relative;
 		    padding: 15px;

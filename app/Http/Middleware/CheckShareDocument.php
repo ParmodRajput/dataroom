@@ -23,8 +23,10 @@ class CheckShareDocument
 
 
         $project_id =  $request->route()->parameter('project_id');
+
         $encryptedUserEmail =  $request->route()->parameter('email');
         $userEmail = Crypt::decryptString($encryptedUserEmail);
+
         $access_token =  $request->route()->parameter('access_token');
         $document_id  = $request->route()->parameter('document_id');
 
@@ -50,7 +52,6 @@ class CheckShareDocument
             
             if (User::where('email', '=', $userEmail)->exists()) {  
 
-
                  if(Auth::user())
                     {
                         $authUserEmail = Auth::user()->email; 
@@ -62,6 +63,10 @@ class CheckShareDocument
                               {
 
                                return $next($request);
+
+                              }else{
+
+                                return redirect(url('/'));
 
                               }
                             
@@ -85,7 +90,7 @@ class CheckShareDocument
             
         }else{
 
-             return $next($request);
+            return $next($request);
          
         }
 

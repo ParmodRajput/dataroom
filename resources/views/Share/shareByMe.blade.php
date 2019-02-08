@@ -46,6 +46,9 @@
 		    background: #E0E0E0;
 		    padding-top: 19px;
         }
+        .shared_Doc_listing{
+        	overflow-y: scroll;
+        }
 
 </style>
 
@@ -96,7 +99,7 @@
 
                   var windowHeight = $(window).height();
 
-                  $('.shared_Doc_listing').css('height',windowHeight);
+                  $('.shared_Doc_listing').css('height',windowHeight-115);
                   
 
                   function getAllSharedDocByAuth(){

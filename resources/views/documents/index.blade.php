@@ -788,6 +788,8 @@
                </select> -->
 
                <input type="text"  name ="user_email" class="form-control shareDocUsers"  data-role="tagsinput" >
+               <div class="error_email hidden" style='color:red'>Please Enter Valid Email</div>
+
             </div></br>
 
             <div class="section_access_permisson">

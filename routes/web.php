@@ -207,12 +207,11 @@ Route::get('/shareFile/{project_id}/{userEmail}/{registerChecker}/{time}','Share
 
 Route::post('/Auth/getShareable/Document','ShareDocumentcontroller@ShowDocumentForAuth');
 
-Route::get('/Overview/{access_token}/{project_id}/{email}/{document_id}','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
+Route::get('/Overview/{access_token}/{project_id}/{email}/{document_id}/{definer}','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
 
 Route::get('/sharedFile/{project_id}/','ShareDocumentcontroller@ShowDocumentForAuth');
 
 Route::get('/sharedBy_me/{project_id}/','PagesController@Shared_By');
-
 
 Route::post('/sharedDoc/','ShareDocumentcontroller@GetSharedDoc');
 
@@ -220,7 +219,7 @@ Route::post('/GetSharedUser/','ShareDocumentcontroller@GetSharedDocsUser');
 
 Route::post('/GetSharedUser/Permissions/','ShareDocumentcontroller@GetSharedDocsUserPermission');
 
-
+Route::post('/GetShared/FoldersDoc/','ShareDocumentcontroller@GetSharedFoldersDoc');
 
 //end
 
@@ -231,7 +230,6 @@ Route::get('project/{project_id}/documents/setting/watermark','SettingController
 Route::post('save_WaterMark/setting','SettingController@SaveWatermarkSetting');
 
 //end
-
 
 
 // export table
@@ -251,7 +249,7 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'' ], function()
 
 });
 
-Route::get('sendemail', function () {
+Route::get('sendemail', function (){
 
     $data = array(
         'name' => "prodataroom",

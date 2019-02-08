@@ -11,7 +11,10 @@
 </head>
 <body>
 	<div class="main-div">
-	<header class="header-top"><a class="logo" href=""><img src="{{url('/')}}/dist/img/Share_module_logo.png" alt="logo"/></a><section><input placeholder="Search Here..." type="text"/><span><a href=""><i class="fas fa-address-book"></i></a><a href=""><i class="fas fa-bell"></i></a></span></section></header>
+		<header class="header-top">
+			<a class="logo" href=""><img src="{{url('/')}}/dist/img/Share_module_logo.png" alt="logo"/></a><section><input placeholder="Search Here..." type="text"/><span><a href=""><i class="fas fa-address-book"></i></a><a href=""><i class="fas fa-bell"></i></a></span></section>
+		</header>
+	<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 		<div class="left-bar">
 			<ul>
 				<li>Menu</li>
@@ -24,12 +27,11 @@
 		<div class="right-bar">
 			<div class="section-box folders">
 				<h6>Folders</h6>
-			  <ul>
+			  <ul class="share_document_folder">
 
 				@foreach($DocumentFolder as $DocumentFolder)
-					<li>
-						<a href=""><span><i class="fas fa-folder"></i><b>{{$DocumentFolder['document_name']}}</b></span>
-
+					<li class='sharedFolder' data-doc_id="{{$DocumentFolder['document_id']}}" data-shared_time ="{{$DocumentFolder['sharedTime']}}" data-projectid = "{{$DocumentFolder['project_id']}}" data-access="{{$DocumentFolder['access_token']}}" data-email="{{$DocumentFolder['Email']}}" data-value ="{{$DocumentFolder['path']}}" id='sharedFolder'>
+						<a href="javascript:;"><span><i class="fas fa-folder"></i><b>{{$DocumentFolder['document_name']}}</b></span>
 						</a>
 					</li>
 				@endforeach
@@ -38,20 +40,17 @@
 			
 			<div class="section-box">
 				<h6>Files</h6>
-				<ul>
-
+				<ul class="share_document_file">
 					@foreach($DocumentFile as $DocumentFile)
 						<li>
-							<a class='overview_shared_document' href="{{url('/')}}/Overview/{{$DocumentFile['access_token']}}/{{$DocumentFile['project_id']}}/{{$DocumentFile['Email']}}/{{$DocumentFile['document_id']}}">
+							<a class='overview_shared_document' href="{{url('/')}}/Overview/{{$DocumentFile['access_token']}}/{{$DocumentFile['project_id']}}/{{$DocumentFile['Email']}}/{{$DocumentFile['document_id']}}/34:34:8844.4" target="_blank">
 								<span>
-									<i class="fas fa-file"></i><b>{{$DocumentFile['document_name']}}
-									</b>
+									<i class="fas fa-file"></i>
+									<b>{{$DocumentFile['document_name']}}</b>
 								</span>
 							</a>
-						</li>
-						
-					@endforeach
-					
+						</li>	
+					@endforeach				
 				</ul>
 			</div>
 		</div><!--right bar close-->
@@ -60,10 +59,84 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-        $(document).on('click','.overview_shared_document',function(){
+        // $(document).on('click','.overview_shared_document',function(){
 
-           var vlaue1 = $(this).data('value');
-           alert(value1);
+        //    var vlaue1 = $(this).data('value');
+        //    alert(value1);
+
+        // });
+
+        $(document).on('click','#sharedFolder',function(){
+            
+           var docId = $(this).data('doc_id'); 
+           var folderValue = $(this).data('value');
+           var project_id   = $(this).data('projectid');
+           var token = $('#csrf-token').val();  
+           var sharedTime = $(this).data('shared_time');
+           var access =  $(this).data('access');
+           var email =  $(this).data('email');
+
+           var html = '';
+           var html1 = '';
+
+        $.ajax({
+
+	              type : "POST",
+	              url : "{{url('/')}}/GetShared/FoldersDoc",
+	              data : {     
+
+	                _token       : token,
+	                project_id   : project_id,
+	                folderValue  : folderValue,
+	                sharedTime   : sharedTime,
+
+	              },
+	              success:function(response){
+
+	                  var getfolders = response.folder_index;
+
+                      var getfiles = response.file_index;
+
+
+			                if(getfolders == '' && getfiles == '')
+			                {
+
+			                  html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Empty</span></div>";
+
+			                 
+			                }else{
+
+			                	 $.each(getfolders,function(key ,value){
+
+			                	 	var doc_name = value.document_name;
+			                	 	var doc_path = value.path;
+			                	 	var project_id = value.project_id;
+
+			                	 	html+='<li class="sharedFolder" data-doc_id='+docId+' data-shared_time ="'+sharedTime+'" data-projectid = '+project_id+'  data-email='+email+' data-access='+access+' data-value ='+doc_path+' id="sharedFolder"><a href="javascript:;"><span><i class="fas fa-folder"></i><b>'+doc_name+'</b></span></a></li>';
+			                	
+			                	 });
+
+			                	$.each(getfiles,function(key ,value){
+
+			                	 	var doc_name = value.document_name;
+			                	 	var doc_path = value.path;
+			                	 	var doc_id   = value.id;
+			                	 	var project_id = value.project_id;
+	
+
+			                	 	html1+='<li><a class="overview_shared_document" href="{{url('/')}}/Overview/'+access+'/'+project_id+'/'+email+'/'+docId+'/'+doc_id+'" target="_blank"><span><i class="fas fa-file"></i><b>'+doc_name+'</b></span></a></li>';
+
+			                	    });
+
+			                }
+
+
+                           $('.share_document_folder').html(html);
+                           $('.share_document_file').html(html1);
+
+	              }
+
+             });
 
         });
 

@@ -111,7 +111,7 @@ class ShareDocumentcontroller extends Controller
 
                         if($decryptedUserEmail == $authUserEmail)
                         {
-                            $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->get();
+                            $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('duration_time', '>=', $current_date)->get();
 
                             $checker = 'true';
                            
@@ -119,6 +119,7 @@ class ShareDocumentcontroller extends Controller
                         }else{
 
                         	 $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
+
                         }
 
                         $GodataRoom = "projects";
@@ -137,8 +138,9 @@ class ShareDocumentcontroller extends Controller
         	$Document = $getShareableDocument->document_id;
         	$GetProjectId = $getShareableDocument->project_id;
         	$access_token = $getShareableDocument->access_token;
+          $sharedTime   = $getShareableDocument->created_at;
 
-               if($checker = 'true')
+              if($checker = 'true')
                {
                   $GetShareWithMeDocumentFolder = Document::where('id',$Document)->where('document_status','1')->first();
 
@@ -148,9 +150,8 @@ class ShareDocumentcontroller extends Controller
 
                   }else{
 
-                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'path'=>$GetShareWithMeDocumentFolder['path'], 'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'Email'=>$userEmail,'sharedTime'=>$sharedTime];	
                   }
-
 
                   $getShareWithMeDocumentFile = Document::where('id',$Document)->where('document_status','0')->first();
 
@@ -162,7 +163,7 @@ class ShareDocumentcontroller extends Controller
                   }else{
 
 
-                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
+                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail,'sharedTime'=>$sharedTime];
                   }
 
 
@@ -178,7 +179,7 @@ class ShareDocumentcontroller extends Controller
 
                   }else{
 
-                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail];	
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail,'sharedTime'=>$sharedTime];	
                   }
 
 
@@ -190,9 +191,8 @@ class ShareDocumentcontroller extends Controller
 
 	                  }else{
 
-
-	                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail];
-	               }
+	                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail,'sharedTime'=>$sharedTime];
+	                  }
 
                }
 
@@ -211,7 +211,6 @@ class ShareDocumentcontroller extends Controller
 
 
     }
-
 
         return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile','GodataRoom'));
 
@@ -239,11 +238,15 @@ class ShareDocumentcontroller extends Controller
 
     public function ViewDocument(Request $request){
 
+
         $project_id =  $request->route()->parameter('project_id');
         $encryptedUserEmail =  $request->route()->parameter('email');
         $userEmail = Crypt::decryptString($encryptedUserEmail);
         $access_token =  $request->route()->parameter('access_token');
         $document_id  = $request->route()->parameter('document_id');
+
+        $definer = $request->route()->parameter('definer');
+
 
         
         $SHRdoc = ShareDocument::where('project_id',$project_id)->where('project_id',$project_id)->where('Shared_with',$userEmail)->where('access_token',$access_token)->where('document_id',$document_id)->first();
@@ -257,8 +260,15 @@ class ShareDocumentcontroller extends Controller
         $watermark_text = $getSetting['watermark_text'];
         $watermark_color = $getSetting['watermark_color']; 
 
+        if($definer == '34:34:8844.4')
+        {
+          $GetdocPath = Document::where('project_id',$project_id)->where('id',$document_id)->first();
 
-        $GetdocPath = Document::where('project_id',$project_id)->where('id',$document_id)->first();
+        }else{
+              
+          $GetdocPath = Document::where('project_id',$project_id)->where('id',$definer)->first(); 
+        }
+
   
         $doc_path = Storage::get($GetdocPath->path);
 
@@ -420,6 +430,25 @@ class ShareDocumentcontroller extends Controller
 
          return $getSharedUsersPermission;
 
+
+       }
+
+       public function GetSharedFoldersDoc(Request $request){
+
+           $project_id = $request->project_id;
+           $folderValue   = $request->folderValue;
+           $sharedTime = $request->sharedTime;
+
+
+           $ShareWithMeDocumentFolder = document::where('directory_url',$folderValue)->where('created_at', "<",$sharedTime)->where('project_id',$project_id )->where('document_status',1 )->get();
+
+
+           $ShareWithMeDocumentFile = document::where('directory_url',$folderValue)->where('created_at', "<",$sharedTime)->where('project_id',$project_id )->where('document_status',0 )->get();
+
+
+           $Under_data = ['folder_index'=>$ShareWithMeDocumentFolder ,'file_index'=>$ShareWithMeDocumentFile ];
+
+           return $Under_data;
 
        }
       

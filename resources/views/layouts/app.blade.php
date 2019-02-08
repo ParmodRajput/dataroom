@@ -3318,6 +3318,17 @@ $(document).on('click','.doc_permission_modal',function(){
 
     var userEmails = $(".shareDocUsers").val();
 
+     if(userEmails== '' || IsEmail(userEmails)==false){
+
+         $('.error_email').removeClass('hidden');
+        
+            
+     }else{
+
+         $('.error_email').addClass('hidden');
+         $('#shareDocForUsers').prop('disabled', false);
+     
+
     var durationTime = $('#duration_time_val').val();
 
     var registerValid = $("input[name='Registration']:checked"). val();
@@ -3362,8 +3373,20 @@ $(document).on('click','.doc_permission_modal',function(){
 
           });
 
-
+       }
   });
+
+
+  //email validation
+
+   function IsEmail(email) {
+             var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+             if(!regex.test(email)) {
+                return false;
+             }else{
+                return true;
+             }
+           }
 
 //date picker
 
