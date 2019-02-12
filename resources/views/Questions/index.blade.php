@@ -219,10 +219,9 @@
             <form action="javascript:void(0)" id="create_question_answer" method="post" >
 
              <input type="hidden" name="doc_path" id="doc_path_directory"/>
-
              <input type='hidden' class='related_to_doc'>
-
              <div class='ques_ans_docs_group' id="user_select">
+
               <span class="to_user">To:</span>       
               <select class="multipleSelectUsers" multiple name="language"><option selected value="{{Auth::user()->email}}">Q&A coordinators</option></select>
              </div>

@@ -1,5 +1,5 @@
 
-body,html{ margin:0px; padding:0px; font-size:13px;overflow-y:hidden; background:#F2F8F9!important;}
+body,html{ margin:0px; padding:0px; font-size:13px; overflow:hidden; background:#F2F8F9!important;}
 
 .table_color{ float:left; width:100%; background:#fff; padding:10px;}
 .table_section { float: left; width: 100%; background: #fff; border:1px solid #dfdfdf;padding: 5px; margin-top:0px;height: auto; position: relative;}
@@ -54,17 +54,46 @@ li.nav-item.dropdown.d-none.d-xl-inline-block { position: relative;}
 .dropdown-menu.list-iteam.show { position: absolute;}
 
 .navbar-nav .dropdown-menu .list-iteam{ position:absolute!important; padding:10px;}
-.dropdown-menu.list-iteam { position: absolute!important; top:39px;}
-
+.dropdown-menu.list-iteam {
+    position: absolute!important;
+    top: 25px;
+    min-width: 160px;
+    right: 0;
+    left: auto;
+}
+ul.navbar-nav.navbar-nav-right.header-menu li{cursor: pointer;}
+.navbar-nav>li>.dropdown-menu:after {
+    position: absolute;
+    content: '';
+    right: 5px;
+    top: -7px;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid white;
+}
 .upone { float: left; width: 200px; padding: 5px 0;}
 .upone i { float:left; width:25px; margin-right:10px; font-size:25px; cursor:pointer;}
 .dropdown-menu.list-iteam ul { list-style: none;  display: inline-block;padding: 0px;}
-.dropdown-menu.list-iteam ul li{ padding:3px 0;}
+.dropdown-menu.list-iteam ul li {
+    padding: 3px 0;
+    float: left;
+    width: 100%;
+}
 
-.dropdown-menu.list-iteam ul li:hover { background: #eaeaea;}
 
-form#logout-form input[type="submit"] { background:transparent; width: 100%; float: left; color: #000;  border:none;
-     border-top: 2px solid #dfdfdf;}
+
+form#logout-form input[type="submit"] {
+    background: transparent;
+    width: 100%;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #18cad7;
+}
+
 form#logout-form input[type="submit"]:hover{/* background:#18cad7;*/}
 .document_index { width: 420px; border: 0.5 px solid gray; border-color: red; border: 0.5px solid gray;
   margin-top: 0px;}
@@ -85,7 +114,11 @@ form#logout-form input[type="submit"]:hover{/* background:#18cad7;*/}
 .document_index:hover h4 a i{ /*background:#18cad7;*/}
 /*.document_index:hover { border:1px solid #2387de; }*/
 .document_index:hover h4 a {/*color:#18cad7;*/}
-.list-iteam  li a{ text-decoration:none; }
+.list-iteam li a {
+    text-decoration: none;
+    color: #4599e3;
+    padding-left: 10px !important;
+}
 .list-iteam ul { float: left; width: 100%;}
 
 .progress { position:relative; width:100%; border: 1px solid #7F98B2; padding: 1px; border-radius: 3px; }
@@ -106,7 +139,7 @@ span.help-block {     float: left!important; padding: 5px; margin-bottom: 15px;
  width: 100%!important;  color: #a94442; background-color: #f2dede; border-color: #ebccd1;
   font-size: 13px; margin-top: 10px;}
 
-.navbar.default-layout .navbar-menu-wrapper .navbar-nav.header-links .nav-item .nav-link { float:left; width:100%; padding:16px 15px!important;}
+.navbar.default-layout .navbar-menu-wrapper .navbar-nav.header-links .nav-item .nav-link { float:left; padding:12px !important;}
 a.nav-link b{/* float:left; width:100%;*/}
 .upload_table { float: left; width: 100%; padding:10px 14px; background: #fff;
  border: 1px solid #dfdfdf;     border-bottom: 0px}
@@ -1506,9 +1539,10 @@ a.btn.btn_export_doc {
     border: 1px solid black;
 }
 
-.btn.delete_items_documents
-{
+.btn.delete_items_documents {
     border: 1px solid black;
+    width: 75px;
+    padding: 9px;
 }
 
 a.btn.btn_dote_doc {
@@ -1816,8 +1850,13 @@ background-size: cover;
     filter:alpha(opacity= 0.9); /* For IE8 and earlier */
 }
 
-.kato { float: left; width: 100%;  overflow: hidden;  position: absolute;  top:50px; left:0px;}
-
+.kato {
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top:56px;
+}
 
 /*end
 */
@@ -1853,8 +1892,8 @@ span.dld {
 }
 .viewer_display {
 
-    padding-left: 25px;
-    padding-bottom: 25px;
+    /*padding-left: 25px;
+    padding-bottom: 25px;*/
 
 }
 
@@ -2039,6 +2078,7 @@ p.reply_content_ques {
 }
 
 .back_arrow_qa.move_last_folder_qa {
+
     font-size: 14px;
     padding: 8px;
 }
@@ -2192,7 +2232,7 @@ p.subject_ques {
 
 .section{ float:left; width: 100%; text-align: center;}
         .section img{ margin: 20px 0; text-align:center;}
-        .section h3{  margin: 20px 0; font-size:18px; color:#d7d7d7;}
+        .section h3{  margin: 20px 0; font-size:18px; color: gray;}
         .section a.invite{ padding:10px 15px; color:#fff; text-decoration: none; font-size:13px; background:#333;
 }
 
@@ -2395,10 +2435,6 @@ button.waiting_reply {
 
 }
 
-.upload_table a.btn.btn_export_doc {
-    margin: 0 5px 0 0;
-}
-
 .create_question .related_question_by {
     width: 100%;
     text-align: center;
@@ -2408,7 +2444,6 @@ button.waiting_reply {
 
 .upload_table .btn-export {
     float: left;
-    margin-left: 15px;
 }
 
 .users__settings-panel {
@@ -2521,4 +2556,119 @@ canvas#myCanvas{
     background: gray;
     width: 131px;
     height: 28px;
+}
+
+a.btn.share_items_documents {
+    border: 1px solid;
+    width: 67px;
+    padding-left: 9px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+a.btn.btn_export_doc {
+    width: 71px;
+    padding-left: 7px;
+}
+
+/*4 feb 2019 Module:- share_document popup design*/
+
+p.label-form {
+   float: left;
+   width: 100%;
+   margin-bottom: 5px;
+   font-size: 15px;
+}
+
+div#ShareDoc span.select2.select2-container.select2-container--default {
+   float: left;
+   width: 100% !important;
+   margin-bottom: 10px;
+}
+
+div#ShareDoc .duration_doc_checkbox label input#duration_time_val {
+   width: 100%;
+   float: left;
+   border: 1px solid silver;
+   border-radius: 4px;
+   padding: 0px 2px;
+}
+
+div#ShareDoc .duration_doc_checkbox label {
+   width: 100%;
+}
+
+div#ShareDoc .registration_doc_checkbox, .print_doc_checkbox, .download_doc_checkbox {
+   background: #e6f3f5;
+   padding: 5px 15px;
+   border-radius: 4px;
+   border: 1px solid #d2e4e6;
+}
+
+div#ShareDoc .registration_doc_checkbox, .print_doc_checkbox, .viewed_doc_checkbox {
+   background: #e6f3f5;
+   padding: 5px 15px;
+   border-radius: 4px;
+   border: 1px solid #d2e4e6;
+}
+
+
+div#ShareDoc .registration_doc_checkbox label {
+   margin-right: 15px;
+}
+
+div#ShareDoc .registration_doc_checkbox label input[type="radio"], div#ShareDoc .print_doc_checkbox input[type="radio"], .download_doc_checkbox label input[type="radio"] {
+   margin-right: 5px;
+}
+
+div#ShareDoc .print_doc_checkbox label, .download_doc_checkbox label {
+   margin-right: 10px;
+}
+
+.print_doc_checkbox {
+   margin: 5px 0;
+}
+
+span.select2.select2-container.select2-container--default {
+    min-height: 45px;
+    height: auto;
+}
+
+#ShareDoc .bootstrap-tagsinput {
+    float: left;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dfdfdf!important;
+}
+
+.WaterMarkTextContent.noselect {
+    font-size: 22px;
+}
+
+#datepicker{width:180px; margin: 0 20px 20px 20px;}
+#datepicker > span:hover{cursor: pointer;}
+
+div#datepicker {
+   width: 100%;
+   height: 43px;
+   margin-left: 0;
+}
+
+div#datepicker input#duration_time_val {
+   background: white;
+   height: 100%;
+   border: 1px solid #e2e2e2;
+}
+
+div#datepicker span.input-group-addon {
+   padding-right: 25px;
+}
+
+div#datepicker span.input-group-addon i.glyphicon.glyphicon-calendar {
+   top: 7px;
+}
+
+.modal-dialog.yet_PermissionFuser, .section img {
+max-width: 1060px;
 }

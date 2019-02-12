@@ -57,11 +57,128 @@
 
     <script src="js/pdf.worker.js"></script>
 
+    <style>
+		*{margin:0; padding: 0; box-sizing: border-box; font-family: arial; color: #666;}
+		.header-set {
+		    float: left;
+		    width: 100%;
+		    background: #F1F1F1;
+		    border-bottom: 1px solid #e2e2e2;
+		    position: relative;
+		    padding: 15px;
+		    border-top: 2px solid #4cfff8;
+		    height: 55px;
+		}
+
+		.header-set section {
+		    float: left;
+		    position: relative;
+		    z-index: 1;
+
+		}
+
+		.image-name p {
+		    float: right;
+		    max-width: 300px;
+		    padding-right: 15px;
+		    overflow: hidden!important;
+		    text-overflow: ellipsis!important;
+		    white-space: nowrap!important;
+		    padding-left: 3px;
+		}
+
+		.image-name {
+		    float: left;
+		    /*max-width: 300px;*/
+		    line-height: 30px;
+		}
+
+		.zoom-set {
+		    float: left;
+		    border-left: 1px solid silver;
+		    border-right: 1px solid silver;
+		    padding: 0 5px;
+		}
+
+		.zoom-set a {
+		    padding: 6px;
+		    float: left;
+		}
+
+		.round {
+		    float: left;
+		    border-right: 1px solid silver;
+		    padding: 0 5px;
+		}
+
+		.round a {
+		    padding: 6px;
+		    float: left;
+		}
+
+		.set-center {
+		    position: absolute;
+		    width: 100%;
+		    text-align: center;
+		    top: 20px;
+		    left: 0;
+		}
+
+		.view {
+		    float: left;
+		}
+
+		.view a {
+		    display: inline-block;
+		    padding: 5px 10px;
+		}
+
+		.set-center  a {
+		    padding: 5px;
+		}
+				.share {
+		    float: right;
+		}
+
+		.share a {
+		    padding: 5px;
+		    display: inline-block;
+		    position: relative;
+		    z-index: 1;
+		    text-decoration: none;
+		}
+
+		.header-set i {
+            font-size: 19px;
+         }
+
+         .set-center a button {
+			background: none; 
+			border: none;
+			outline:none;
+			}
+		 .set-center a {
+			padding: 5px;
+			display: inline-block;
+		  }
+		  
+	@media only screen and (max-width: 1100px) {
+				.set-center {
+		    text-align: right;
+		    padding-right: 85px;
+	 }
+    }
+   @media only screen and (max-width: 600px) {
+					
+   }
+
+	</style>
+
 
 </head>
 
 	<body>
-       <div class="row">
+       <div>
        	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
        	<input type="hidden" id="watermark_color" data-value= '{{$watermark_color}}'>
@@ -71,7 +188,10 @@
 
        	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
        	<input type='hidden' id='currentPdfScale'>
-
+       	<input type="hidden" id='current_rotated_deg' value='0'>
+       	<input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}'/>
+       	<input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
+<!-- 
 		<div class="top_head col-md-12">
 		<div class="left_whole col-md-6">
 			<div class="left_text">
@@ -85,7 +205,7 @@
 
 		<div class="repeat_icons">
 		<i class="fa fa-repeat"></i>
-		<i class="fa fa-repeat"></i>
+		<i class="fa fa-repeat" id='rotate_doc'></i>
 
 		<span class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></span>
 		</div>
@@ -107,15 +227,49 @@
 		   <i class="fa fa-print"></i>
 	     </span>
 		   <a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments discuss_question"></i></a>
-	   
-		<!-- <i class="fa fa-search"></i> -->
+	  
 		</div>
 
 		<div class="arrows_right hidden">
 		<i class="fa fa-angle-left"></i>
 		<i class="fa fa-angle-right"></i>
 		</div>
-		</div>
+		</div> -->
+
+		<div class="header-set">
+			<section><div class="image-name">
+				<i class="fa fa-image"></i>
+				<p>{{$doc_name}}</p>
+				</div>
+		     <div class="zoom-set">
+				<a id="minus" href="javascript:;"><i class="fas fa-search-minus"></i></a>
+			<a id="plus" href="javascript:;"><i class="fas fa-search-plus"></i></a>
+				</div>
+				<div class="round">
+				<a href="javascript:;"><i class="fas fa-redo"></i></a>
+					<a id='rotate_doc' href="javascript:;"><i class="fas fa-undo"></i></a>
+				</div>
+				<div class="view">
+				<a href="javascript:;" class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></a>
+				</div></section>
+				<div class="set-center">
+				<a href="javascript:;"></a>
+					<a href="javascript:;">
+						<form action="{{ Url('/') }}/project/documents/download" method="post">
+                          {{ csrf_field() }}
+
+                           <input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
+						   <button type="submit" name="submit"><i class="fas fa-download"></i></button>
+                        </form>
+                    </a>
+
+					<a class='print_document' href=""><i class="fas fa-print"></i></a>
+					<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fas fa-comment"></i></a>
+				</div>
+				<div class="share">
+				<a href="javascript:;"><i class="fas fa-share-alt"></i> Share</a>
+				</div>
+			</div>
 
         
 		<div class="Doc_viewer">
@@ -129,22 +283,33 @@
 
 				 <div class="kato" id='pageContainer'>
 		
-				 		<div class="WaterMarkTextContent noselect" style='top:100px;'>
-				 			<p class="content_text_wm noselect"</p>
+				 		<div class="WaterMarkTextContent noselect" style='top:-500px; left:-20%;z-index:999;'>
+				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:400px;'>
-				 			<p class="content_text_wm"></p>
+				 		<div class="WaterMarkTextContent noselect" style='top:-250px;left:-20%;z-index:999;'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:700px;'>
-				 			<p class="content_text_wm" ></p>
+				 		<div class="WaterMarkTextContent noselect" style='top:0px;left:-20%;z-index:999;'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1000px;'>
-<<<<<<< HEAD
-				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... </p>
+				 		<div class="WaterMarkTextContent noselect" style='top:250px;left:-20%;z-index:999;'>
+				 			<p class="content_text_wm" style='white-space:nowrap; left:-20%'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:500px; left:-20%;z-index:999;'>
+				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:750px; left:-20%;z-index:999;'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:1000px; left:-20%; z-index:999;'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
+				 		</div>
+				 		<div class="WaterMarkTextContent noselect" style='top:1250px;left:-20%; z-index:999;'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
+				 		</div>
 
-=======
-				 			<p class="content_text_wm"></p>
->>>>>>> 98dc055d58c440fc811cc361de6d905e43b8e8c4
+				 		<div class="WaterMarkTextContent noselect" style='top:1500px;left:-20% ;z-index:999;'>
+				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
@@ -183,6 +348,30 @@
 
       	var watermark_view = $('#watermark_view').data('value');
       	var watermark_text = $('#watermark_text').data('value');
+      	var text_length = watermark_text.length;
+
+      	if(text_length > 64)
+      	{
+      		$('.WaterMarkTextContent.noselect').css('font-size','20px');
+              
+            if(text_length > 74)
+      	       {
+                     $('.WaterMarkTextContent.noselect').css('font-size','17px');
+
+      	       }
+
+      	}
+
+      	if(text_length < 64)
+      	{
+           $('.WaterMarkTextContent.noselect').css('font-size','30px');
+
+		       if(text_length < 40)
+		      	{
+                   $('.WaterMarkTextContent.noselect').css('font-size','33px');
+		      	}
+      	}
+
       	var watermark_color = $('#watermark_color').data('value');
       	var downloadable = $('#downloadable').data('value');
       	var printable = $('#printable').data('value');
@@ -209,19 +398,19 @@
       	}
 
  // discussable exit
-       if(discussable !== 1)
-      	{
-      		$('.discuss_question').addClass('hidden');
+       // if(discussable !== 1)
+      	// {
+      	// 	$('.discuss_question').addClass('hidden');
 
-      	}else{
+      	// }else{
       		
-             $('.discuss_question').removeClass('hidden');
-      	}
+       //       $('.discuss_question').removeClass('hidden');
+      	// }
 
 
       	if(watermark_view == 1)
       	{
-      		$('.content_text_wm').html(watermark_text);
+      		$('.content_text_wm').html(watermark_text+' '+watermark_text+' '+watermark_text);
       		$('.content_text_wm').css('color','#'+watermark_color);
       	}
 
@@ -249,9 +438,9 @@
 		$('#IMGcanvas').css('width',window_width);
         $('#IMGcanvas').css('height',window_height);
         $('#IMGcanvas').css('padding-top','1%');
-        $('#IMGcanvas').css('padding-bottom','3%');
-        $('#IMGcanvas').css('padding-right','5%');
-        $('#IMGcanvas').css('padding-left','3%');
+        $('#IMGcanvas').css('padding-bottom','3.2%');
+        $('#IMGcanvas').css('padding-right','4%');
+        $('#IMGcanvas').css('padding-left','4%');
 
 		var excel_path  = $('#excel_file').val();
 
@@ -745,7 +934,7 @@
 
 		}());
 
-		document.addEventListener('contextmenu', event => event.preventDefault());
+		// document.addEventListener('contextmenu', event => event.preventDefault());
 
 		document.onkeydown = function(e) {
 
@@ -759,36 +948,24 @@
             e.preventDefault(); return false; 
         });
 
-         // using canvas on canvas div
 
-   //          var container=document.getElementById("pageContainer")
-			// var origCanvas=document.getElementById('myCanvas');
-			// var wmCanvas=document.getElementById('myCanvas');
 
-			// wmCanvas.setAttribute("style","position:absolute;")
+     // rotate functionality
 
-			// if(container.firstChild)
-			//     container.insertBefore(wmCanvas, container.firstChild);
-			// else
-			//     container.appendChild(wmCanvas);
 
-			// var wmContext=wmCanvas.getContext('2d');
-			// wmContext.globalAlpha=0.5;
-			// // setup text for filling
-			// wmContext.font = "30px Comic Sans MS" ;
-			// wmContext.fillStyle = "gray";
-			// // get the metrics with font settings
-			// var metrics = wmContext.measureText("WaterMark Demo fgdfg ggfdg g fgfd gfdg");
-			// var width = metrics.width;
-			// // height is font size
-			// var height = 100;
+     $('#rotate_doc').click(function(){
 
-			// // change the origin coordinate to the middle of the context
-			// //wmContext.translate(origCanvas.width/2, origCanvas.height/2);
-			// // rotate the context (so it's rotated around its center)
-			// //wmContext.rotate(-Math.atan(origCanvas.height/origCanvas.width));
-			// // as the origin is now at the center, just need to center the text
-			// wmContext.fillText("prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-21/01/19 .... prodata.com date-01/19 .... prodata.com date-01/19 ....",origCanvas.width,origCanvas.height);
+
+       var current_Deg = $('#current_rotated_deg').val();
+
+       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
+
+       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+
+       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
+
+
+     });
 
 	</script>
 

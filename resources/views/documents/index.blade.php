@@ -7,7 +7,7 @@
             <div class='drop-menu_option'>
               <ul  class='context-menu_list_document'>
                 <li class='ng-scope' >
-                  <a href='{{Url("/")}}/project/{{$project_id}}/documents' target="_blank"> <i>Open in new browser tab</a>
+                  <a href='{{Url("/")}}/project/{{$project_id}}/documents' target="_blank"> <i><i class="fas fa-external-link-alt"></i>Open in new browser tab</a>
                 </li>
                 <input type="hidden"  id="CurrentUrltildf">
                 <li  class='ng-scope copy_url_document'>
@@ -31,7 +31,7 @@
           <input type="hidden" class="checkToActionPopValue">
           <div class='drop-menu'>
             <ul  class='context-menu_list'>
-              <li class='ng-scope new_tab'><a href='{{Url("/")}}/project/{{$project_id}}/documents' target="_blank"> <i>Open in new browser tab</a>
+              <li class='ng-scope new_tab'><a href='{{Url("/")}}/project/{{$project_id}}/documents' target="_blank"> <i><i class="fas fa-external-link-alt"></i> Open in new browser tab</a>
               </li>
 
               <li class='ng-scope view_doc_file'>
@@ -41,7 +41,11 @@
                 <a href='{{ Url("/")}}/project/{{$project_id}}/reports' target="_blank"></i><i class="fas fa-history"></i>History of Action</a>
               </li>
 
-               <li   class='ng-scope ques_ans_docs'>
+               <li   class='ng-scope history_of_action'>
+                <a href='javascript:;' data-toggle="modal" data-target="#ShareDoc"></i><i class="fa fa-share-alt" aria-hidden="true"></i>Share</a>
+              </li>
+
+               <li   class='ng-scope question_create_doc'>
                 <a href='javascript:void(0)'></i><i class="fa fa-comment-o"></i> New Question</a>
               </li>
 
@@ -84,6 +88,7 @@
   <input type="hidden" class="single_select_doc" id="single_select_doc">
   <input type="hidden" id ='CheckUserChangePermission'>
   <input type="hidden" value='{{Auth::user()->email}}' id ='AuthEmailOfProject'>
+  <input type="hidden"  id ='currentUserCount'>
   <div class="document_index_contentable col-md-9">
      <div class="menu_option_block">
    
@@ -130,6 +135,7 @@
                   </div>
                   <div class="btn_upload" permission ='1'>
                     <a  class="btn  folder document-btn1" data-toggle="modal" data-target="#genrate_folder"> <i class="fa fa-plus" aria-hidden="true"></i> Create Folder</a>
+
                   </div>
                   <div class="btn_upload" permission ='2'> 
                       <div class="btn-group">
@@ -157,7 +163,7 @@
                 @if($CurrentGroupUser == 'Administrator')
 
                   <div class="btn_upload">
-                     <a class="btn  document-btn1 doc_permission_modal"  data-toggle="modal" data_user='' data-target="#document_permission_modal"><i class="fas fa-lock"></i> Permissions</a>
+                     <a class="btn  document-btn1 doc_permission_modal"><i class="fas fa-lock"></i> Permissions</a>
                   </div>
 
                 @endif  
@@ -166,10 +172,14 @@
                      <a class="btn delete_items_documents " ><i class='fas fa-trash-alt'></i> Delete</a>           
                   </div>
 
+                  <div class="share_items">
+                     <a class="btn share_items_documents hidden " data-toggle="modal" data-target="#ShareDoc"><i class="fas fa-share-alt"></i> Share</a>           
+                  </div>
+
               </div>
 
                 <div class="btn-export">
-                  <a class="btn btn_export_doc" ><i class="fa fa-table"></i> Export</a>
+                  <a href="{{ url('/') }}/downloadExcel/xlsx" class="btn btn_export_doc"><i class="fa fa-table"></i> Export</a>
                 </div>
 
                  <div class="btn-dote hidden">
@@ -732,13 +742,13 @@
 <!-- End -->
 
 
-<!-- invite Users  -->
+<!-- invite Users open if have no group for invite the user. -->
 
-<div id="users_invite" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
-  <div class="modal-dialog">
+<div id="AddUserToInvite" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+  <div class="modal-dialog yet_PermissionFuser">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
     <!-- Modal content-->
-    <div class="modal-content">
+    <div class="modal-content" >
        <div class="modal-header">
         <h4 class="modal-title">DOCUMENTS' PERMISSIONS</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button> 
@@ -747,7 +757,7 @@
             <div class="section">
               <img src="{{asset('/dist/img/')}}/permission_img.png" alt="img" />
                 <h3>You have no users to assign permissions yet</h3>
-                <a class="invite" href="#">Invite</a>
+                <a class="invite" href="{{url('/')}}/project/{{$project_id}}/users">Invite</a>
             </div>
       </div>
     </div>
@@ -758,6 +768,84 @@
 
 <!-- End -->
 
+
+
+<!-- Share document -->
+
+<div id="ShareDoc" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+  <div class="modal-dialog">
+    <input type='hidden'  name='copy_document' id='copy_document_directory'>
+    <!-- Modal content-->
+    <div class="modal-content">
+       <div class="modal-header">
+        <h4 class="modal-title">Share Documents</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      </div>
+      <div class="modal-body">
+            <div class="section_usersEmail">
+               <p class="label-form">Enter Email Addesses</p>
+               <!-- <select placeholder='Enter email addresses' class="form-control shareDocUsers" multiple="multiple">      
+               </select> -->
+
+               <input type="text"  name ="user_email" class="form-control shareDocUsers"  data-role="tagsinput" >
+               <div class="error_email hidden" style='color:red'>Please Enter Valid Email</div>
+
+            </div></br>
+
+            <div class="section_access_permisson">
+              <div class="setting_permission">
+
+                    <div class="duration_doc_checkbox">
+                      <p class="label-form">View Duration</p>
+                         <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+                                  <input class="form-control" id="duration_time_val" type="text" readonly />
+                                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                          </div>
+                    </div>
+                
+                    <div class="registration_doc_checkbox">
+                      <p class="label-form">Registration Required</p>
+                            <label>
+                              <input type="radio" name="Registration" value='1' id="viewed_doc" checked>Yes</label>
+                              
+                              <label>
+                              <input type="radio" name="Registration" value='0' >No</label>
+                    </div>
+                    <div class="print_doc_checkbox">
+                      <p class="label-form">Printable</p>
+                      <label>
+                              
+                              <input type="radio" name="Printable" value='1' id="viewed_doc" checked>Yes
+                            </label>
+                            <label>
+                              <input type="radio" name="Printable" value='0' >No
+                            </label>
+                     </div>
+                     <div class="download_doc_checkbox">
+                      <p class="label-form">Downloadable</p>
+                      <label>
+                             
+                              <input type="radio" name="Downloadable" value='1' id="viewed_doc" checked>Yes
+                            </label>
+                            <label>
+                               <input type="radio" name="Downloadable" value='0' >No
+                       </label>
+                     </div>
+              
+              </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+            <button type="button" id='shareDocForUsers' class="btn btn-primary">Share</button>
+       </div>
+    </div>
+     </div>
+  </div>    
+</div>
+</div>
+
+
+<!-- end -->
 
 
 

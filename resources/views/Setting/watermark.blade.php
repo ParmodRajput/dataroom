@@ -64,7 +64,9 @@
                             <div class="form-group ng-scope" ng-if="!vm.isCustomWatermarksDisabled"><div class="col-xs-5">
                               <label class="control-label ng-binding">Watermark pattern:</label>
                             </div><div class="col-xs-7">
-                              <textarea rows="1" id='waterMark_text_ch_doc' class="form-control"  style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
+                              <textarea rows="1" maxlength="90" minlength="40" onkeyup="countChar(this)" id='waterMark_text_ch_doc' class="form-control"  style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
+
+                              <div class='error_text hidden' style="color:red; border: 1px solid red;margin-top: 10px;"></div>
                             </div>
                           </div>
                           <div class="form-group ng-scope" ng-if="!vm.isCustomWatermarksDisabled"><div class="col-xs-5"><label class="control-label ng-binding">Watermark color:</label></div><div class="col-xs-7"><div class="form-control-static"><div class='colorWatermark'></div>
@@ -122,6 +124,11 @@ $(document).ready(function(){
         $('#watermark_setting_save').click(function(){
 
          var waterMark_text = $('#waterMark_text_ch_doc').val();
+          if(waterMark_text == '')
+          {
+            var waterMark_text = 'fgh';
+          }
+
          var project_id     = $('.project_id_Wsetting').val();
 
          if($('.viewed_doc_checkbox input[type="checkbox"]'). prop("checked") == true){
@@ -178,6 +185,27 @@ $(document).ready(function(){
         });
     
     });
+
+    function countChar(val){
+
+       var len = val.value.length;
+
+       if (len <= 90 && len >=40 ) {
+
+            $('#watermark_setting_save').prop('disabled', false);
+            $('.error_text').addClass('hidden');
+            $('.error_text').html('');
+
+       }else{
+            
+            $('#watermark_setting_save').prop('disabled', true);
+
+            $('.error_text').removeClass('hidden');
+            $('.error_text').html('Please enter minimum 40 letter.');
+
+       }
+
+    };
 
    </script>
 

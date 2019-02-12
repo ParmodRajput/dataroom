@@ -51,6 +51,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -62,6 +63,7 @@ class Kernel extends HttpKernel
         'CheckUserForPermissionDoc' => \App\Http\Middleware\CheckUserForPermissionDoc::class,
         'checkRegisterUser' => \App\Http\Middleware\checkRegisterUser::class,
         'admin' => \App\Http\Middleware\RedirectifNotAdmin::class,
+        'CheckShareDocument'=> \App\Http\Middleware\CheckShareDocument::class,
 
     ];
 }

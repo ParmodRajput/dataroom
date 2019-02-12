@@ -243,6 +243,7 @@
                                     html +="";
                                   }else{
 
+
                                     html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name ='"+value.sender_name+"' data-status='0'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' name='ques_check' class='question_check' data-ques_id='"+value.question_id+"'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><div class='note_ques_status'><button class='waiting_reply'>Awaiting reply</button></div></div></div>";
 
                                     }
@@ -253,6 +254,7 @@
 
                         
                                    html +="<div class='question_list_qa' data-ques_id='"+value.question_id+"' data-subject='"+value.subject+"' data-content='"+value.content+"' data-sender_name='"+value.sender_name+"' data-status='1'  data-date='"+value.date+"' data-document_name='"+value.document_name+"'><div class='check_input'><input type='checkbox' name='ques_check' class='question_check' data-ques_id='"+value.question_id+"'></div><div class='question_containor'><div class='question_containor_fir'><h5 class='send_by'>"+value.sender_name+"("+value. group_name+")</h5><p class='ques_subject'>"+value.subject+"</p><p class='related_to'><h6>Related to:</h6> "+value.document_name+"</p></div></div><div class='question_containor_sec'><span class='date'>"+value.date+"</span><div class='note_ques_status'><button class='in_progress_ques'>In Progress</button></div></div></div>";
+
 
                                    });
 
@@ -286,6 +288,7 @@
       // //end
 
       $(document).on('click','.question_list_qa',function(){
+
 
          $('.delete_items').removeClass('hidden');
          $('.reply_editor').addClass('hidden'); 
@@ -452,6 +455,7 @@
               if(response == 'reply_sent')
               {
 
+
                  getReplies(project_id,question_id);
 
                  
@@ -559,6 +563,7 @@
 
 
     // });   
+
 
     $(document).ajaxSend(function(event, request, settings) {
       $('.overlay_body').removeClass('hidden');

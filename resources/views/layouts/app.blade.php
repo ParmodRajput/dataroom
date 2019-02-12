@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
   <!-- end -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -61,6 +62,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
+  <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
   <!-- endinject -->
   <!-- Plugin js for this page-->
@@ -232,12 +235,12 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
-
       $('.table.table-hover.table-bordered.table_color').removeClass('hidden');
       $('.table.table-hover.table-bordered.table_color.recycle_bin').addClass('hidden');
       $('.upload_table .document_index_buttons ').removeClass('hidden');
       $('.upload_table .document_index_recycle_bin').addClass('hidden');
-
+     
+      $('.drop_box_document input:checkbox').prop('checked', false);
       $(this).parent().parent().find('input:checkbox').click();
 
         $('.ui-droppable').removeClass('hidden');
@@ -721,7 +724,7 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
-                          var user           = value.CurrentUserCount;
+                          var folder_id        = value.doc_id;
 
                           
                           var index         = value.doc_index;
@@ -748,9 +751,7 @@ $(document).ready(function(){
                           }
                          
 
-                         $('.doc_permission_modal').attr('data-user',user);
-
-                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
+                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-doc_id ='"+folder_id+"' data-type ='1' data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
                               if(fav == '')
                               {
@@ -874,7 +875,7 @@ $(document).ready(function(){
                                       }
 
                                     
-                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"'  value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
+                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"' data-type ='0' value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
 
                                          if(Ext == 'jpg' || Ext == 'png' || Ext =='jpeg')
                                            {
@@ -1037,6 +1038,7 @@ $(document).ready(function(){
   // Delete folder and file 
    $(document).on('click','.delete_item',function(event){
 
+
           var paths = [];
           var token = $('#csrf-token').val();
           var projects_id = $('.directory_location #project_id_doc').val();
@@ -1111,8 +1113,19 @@ $(document).ready(function(){
         var path =  $('.directory_location #current_directory ').val();  
         var root_path =  "<?php echo 'public/documents/'.Auth::user()->id ?>/"+project_name;
         var n = path.lastIndexOf("/");
-        var token =$('#csrf-token').val();
+        var token = $('#csrf-token').val();
         var directory_url = path.substring(0, n);
+
+        var GetDestination = directory_url.split('/');
+        var DestinationName = GetDestination[GetDestination.length-1];
+
+        $('.checked_doc_details').html('<i class="fa fa-folder-o"></i>'+DestinationName);
+        $('.create_notes_get').addClass('hidden');
+        $('.notes_aside_text1').addClass('hidden');
+        $('.submit_note1_doc').addClass('hidden');
+        $('.note1_doc_delete').addClass('hidden');
+        $('.file_view_aside').addClass('hidden'); 
+
         if (path != root_path) {
             data_display(token,directory_url);
             $(' #current_directory ').val(directory_url);  
@@ -1159,6 +1172,7 @@ $(document).ready(function(){
                 var html="";
                 var html2 ="";
                 var html3 ="";
+                var html4 = '';
                 var box = $('.indexing');
                 var user = '';
 
@@ -1168,11 +1182,26 @@ $(document).ready(function(){
 
                 var getfiles = response.file_index;
 
+                var currentUserCount = response.CurrentUserCount;
+
+                var ProjectUsers  = response.ProjectUsers;
+
+
+                $.each(ProjectUsers,function(key,value){
+                  
+
+                  html4+='<option value="'+value.member_email+'">'+value.member_email+'</option>';
+
+                });
+
+                $('#currentUserCount').val(currentUserCount);
+
+                $('.doc_permission_modal').attr('data_user',currentUserCount);
 
                 if(getfolder == '' && getfiles == '')
                 {
 
-                 html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Drag and Drop files here to upload</span></div>";
+                  html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>Drag and Drop files here to upload</span></div>";
 
                  // html3 +='<div class="doc_index_list"><h4> <div class="upone" onclick="upone_folder();"><i class="fas fa-arrow-up custom upone-folder" ></i><div class="back-arrow"></div></div></h4></div>'; 
 
@@ -1182,17 +1211,15 @@ $(document).ready(function(){
                  
                 }else{
 
-                          $.each(getfolder,function(key ,value){
-
-
+                          
+                   $.each(getfolder,function(key ,value){
                           var document_name1 = value.document_name;
                           var path           = value.path;
                           var permission     = value.permission;
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
-                          var user           = value.CurrentUserCount;
-                          
+                          var folder_id        = value.doc_id;
                           
                           var index         = value.doc_index;
                           var element1 = document_name1.substr(0, 45);
@@ -1216,7 +1243,7 @@ $(document).ready(function(){
                             DocumentIndex = document_index+'.'+index;
                           }
                          
-                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
+                              html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-type ='1' data-doc_id ='"+folder_id+"' data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
                               if(fav == '')
                               {
@@ -1310,7 +1337,7 @@ $(document).ready(function(){
                       var note           = value.note;
                       var file_id        = value.doc_id;
                       var ques           = value.ques;
-                      var user =          value.CurrentUserCount;
+                      
 
                         if(document_index == '')
                         {
@@ -1342,7 +1369,7 @@ $(document).ready(function(){
                                       }
 
                                     
-                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"' value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
+                                        html +="<div class='drop_box_document'><div class='document_index  index-drag'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input'name='documents_select' data-doc_id ='"+file_id+"' data-type ='0' value='"+element+"' data-permission='"+permission+"' data-value='"+path+"'></form></div><h4><a href='javascript:void(0)' value='"+path+"' data-permission='"+permission+"' data-doc_id ='"+file_id+"' data-value='"+path+"' data-index='"+DocumentIndex+"' id='"+path+"' class='drap doc_view_file'>";
 
                                          if(Ext == 'jpg' || Ext == 'png' || Ext =='jpeg')
                                            {
@@ -1388,11 +1415,11 @@ $(document).ready(function(){
                                         
                                         if(ques == ''){
 
-                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-user='"+user+"' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans' data-ques='0' data-value='"+path+"' ><span><i class='fa fa-comment-o'></i></span></div>";
 
                                            }else{
 
-                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-ques='1' data-user='"+user+"' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
+                                              html+="<div class='ques_ans_docs hidden_icon black_ques_ans'  data-ques='1' data-value='"+path+"' style='visibility:visible;'><span><i class='fa fa-comment-o'></i></span></div>";
 
                                            }
 
@@ -1435,11 +1462,12 @@ $(document).ready(function(){
 
                                         html+="<div class='view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
                                        }
+                                       
                                        if(permission == '7')
-                                       {
+                                         {
+                                          html+="<div class='view_doc_permis_open' data-value='"+path+"'><span><img src='{{url('/')}}/dist/img/fance.png'></img></span></div>";
 
-                                        html+="<div class='fence_view_doc_permis' data-value='"+path+"'><span><i class='fas fa-eye'></i></span></div>";
-                                       }
+                                         }
                                        
                                         html+="</div></div></div>";
 
@@ -1449,7 +1477,8 @@ $(document).ready(function(){
                        }//blank
 
                           box.html(html);
-                          $('.document_index_buttons .doc_permission_modal').attr('data_user',user);
+                          $('.shareDocUsers').html(html4);
+                       
 
                           $('#folder_create')[0].reset();
                           $('#genrate_folder').modal('hide'); 
@@ -1513,7 +1542,6 @@ $(document).ready(function(){
    // right click on document// 
     $(document).on('contextmenu','.documents_index_section .document_index' ,function(e) {
 
-          
           $('.drop_box_document input:checkbox').prop('checked', false);
           e.preventDefault();
 
@@ -1523,7 +1551,7 @@ $(document).ready(function(){
 
           var rightClickPositionTop  = e.pageY-63;
 
-           var menuHeight=$('.right_click.drop-holder').height();
+          var menuHeight=$('.right_click.drop-holder').height();
           //alert(e.pageY);
 
           //var comformHeight = windowHeight-e.pageY;
@@ -1545,9 +1573,13 @@ $(document).ready(function(){
 
           var value = $(this).find('a').data('value'); 
 
+          $('.checkToActionPopValue').val(value);
+
           var file_id = $(this).find('input:checkbox').data('doc_id');
 
-          if(file_id == undefined)
+          var DocumentType = $(this).find('input:checkbox').data('type');
+
+          if(DocumentType == 1)
           {
             $('.view_doc_file').addClass('hidden');
 
@@ -1947,6 +1979,7 @@ $('#myModal').on('hidden.bs.modal', function () {
           $('.create_note_aside').removeClass('hidden');
           $('#single_select_doc').val(noteDocPath);
           $('.delete_items').removeClass('hideDeleteBtn'); 
+          $('.share_items_documents').removeClass('hidden');
           $('.btn_delete_doc_recycle').removeClass('hideDeleteBtn');  
 
           $.each($("input[name='documents_select']:checked"),function(){
@@ -2012,7 +2045,6 @@ $('#myModal').on('hidden.bs.modal', function () {
       }else if(numberOfChecked == 0)
         {
 
-             $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
              var GetDocumentName = $('#getProject_name').val();
              var showDocWithDoc ="<i class='fa fa-folder-o'></i> " +GetDocumentName+"";
@@ -2023,6 +2055,8 @@ $('#myModal').on('hidden.bs.modal', function () {
              $('.file_view_aside').html('');
              $('.notes_aside_1').html('');
              $('.submit_note1_doc').addClass('hidden');
+             $('.share_items_documents').addClass('hidden');
+             $('.delete_items').addClass('hideDeleteBtn'); 
 
 
         }else
@@ -2033,7 +2067,7 @@ $('#myModal').on('hidden.bs.modal', function () {
               $('.notes_aside_text1').addClass('hidden');
               $('.submit_note1_doc').addClass('hidden');
               $('.note1_doc_delete').addClass('hidden');
-              $('.file_view_aside').addClass('hidden');
+              $('.file_view_aside').addClass('hidden'); 
               
           }
  });
@@ -2043,8 +2077,9 @@ $('#myModal').on('hidden.bs.modal', function () {
 // Select CheckBox Event 
 $(document).on('click','.check-box-input-main',function(){
 
-     $('.document_index_contentable input:checkbox').prop('checked', this.checked); 
+     $('.document_index_contentable input:checkbox').prop('checked', this.checked);
 
+    
 });
 
 //end
@@ -2920,6 +2955,7 @@ $(document).on('click','.note1_doc_delete', function(){
 
    $(document).on('click','.ques_ans_docs',function(){
 
+
        $('input:checkbox').prop('checked', false);
        $(this).parent().prev().find('.check-box-input').trigger( "click" );
        var data_value = $(this).data('value');
@@ -3021,6 +3057,12 @@ $(document).on('click','.note1_doc_delete', function(){
        }); 
 
   });
+
+ $(document).on('click','.ques_ans_docs_left',function(){
+
+  $(this).parent().prev().find('.check-box-input').trigger( "click" );
+
+ });
 
  $(document).ajaxSend(function(event, request, settings) {
       $('.overlay_body').removeClass('hidden');
@@ -3202,23 +3244,26 @@ $(document).on('click','.icon_close_filter',function(){
 });
 
 
-$(document).on('click','.note_create_doc',function(){
-
-
- var getNoteTo =  $('.checkToActionPopValue').val(); 
-
- $('[data-value = "'+getNoteTo+'"]').click();
-
-});
 
 $(document).on('click','.question_create_doc',function(){
 
- var getNoteTo =  $('.checkToActionPopValue').val(); 
 
- $('[data-value = "'+getNoteTo+'"]').click();
+       var data_value = $('.checkToActionPopValue').val(); 
+       var getName  = data_value.split('/');
+       var Name = getName[getName.length-1];
+
+       var project_id  = $('.directory_location #project_id_doc').val();
+
+       $('#genrate_question').modal();
+       $('#genrate_question .related_question').html(Name);
+       $('.question_subject').val('');
+       $('.question_content').val('');
+
+       $('#doc_path_directory').data('value',data_value);
 
 
 });
+
 
 $(document).on('click','.fence_view_doc_permis',function(){
 
@@ -3244,6 +3289,116 @@ alert('Copied to clipboard');
 
 
 });
+
+$(document).on('click','.doc_permission_modal',function(){
+
+  var current_user = $(this).attr('data_user');
+
+  if(current_user == 0)
+  {
+        $('#AddUserToInvite').modal('show');
+  }else{
+       
+        $('#document_permission_modal').modal('show');
+  }
+
+ 
+
+});
+
+// share doc with users
+
+
+  // $(".shareDocUsers").select2({
+  //     tags: true
+  // });
+
+
+  $(document).on('click','#shareDocForUsers',function(){
+
+    var userEmails = $(".shareDocUsers").val();
+
+     if(userEmails== '' || IsEmail(userEmails)==false){
+
+         $('.error_email').removeClass('hidden');
+        
+            
+     }else{
+
+         $('.error_email').addClass('hidden');
+         $('#shareDocForUsers').prop('disabled', false);
+     
+
+    var durationTime = $('#duration_time_val').val();
+
+    var registerValid = $("input[name='Registration']:checked"). val();
+
+    var printable = $("input[name='Printable']:checked"). val();
+ 
+    var downloadable = $("input[name='Downloadable']:checked"). val();
+
+    var DocumentId = [];
+
+    $.each($("input[name='documents_select']:checked"), function(e)
+    {        
+        
+          DocumentId.push($(this).data('doc_id')); 
+
+    });
+   
+   var token = $('#csrf-token').val();  
+   var project_id = $('.projects_id').val();
+
+        $.ajax({
+
+              type : "POST",
+              url : "{{url('/')}}/share/documents",
+              data : {     
+                _token      : token,
+                project_id   : project_id,
+                userEmails   : userEmails,
+                durationTime  : durationTime,
+                registerValid : registerValid,
+                printable   : printable,
+                downloadable   : downloadable,
+                DocumentId   : DocumentId,
+
+              },
+              success:function(response){
+
+                $('#ShareDoc').modal('hide');
+                swal("share successfully", "", "success");
+
+              }
+
+          });
+
+       }
+  });
+
+
+  //email validation
+
+   function IsEmail(email) {
+             var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+             if(!regex.test(email)) {
+                return false;
+             }else{
+                return true;
+             }
+           }
+
+//date picker
+
+$(function () {
+
+  $("#datepicker").datepicker({ 
+        autoclose: true, 
+        todayHighlight: true
+  }).datepicker('update', new Date());
+
+});
+
 
 
 

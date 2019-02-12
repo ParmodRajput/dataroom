@@ -189,6 +189,7 @@ Route::post('/delete_question','QuestionsController@deleteQuestions');
 //reports route.
 
 Route::get('project/{project_id}/reports','ReportsController@getDocsAndGroups')->middleware('auth');
+
 Route::get('project/{project_id}/reports?folder-access','ReportsController@ReportOverview');
 
 Route::post('/get_action','ReportsController@getAction');
@@ -197,12 +198,45 @@ Route::post('/get_group/report','ReportsController@getGroupsReports');
 
 // Reports route end
 
+//share document
+
+Route::post('/share/documents/','ShareDocumentcontroller@shareDocs');
+Route::get('/shareFile/{project_id}/{userEmail}/{registerChecker}/{time}','ShareDocumentcontroller@CheckShareDocs');
+
+// Route::get('/Display/ShareDocument','ShareDocumentcontroller@ShowDocument')->middleware('CheckShareDocument');
+
+Route::post('/Auth/getShareable/Document','ShareDocumentcontroller@ShowDocumentForAuth');
+
+Route::get('/Overview/{access_token}/{project_id}/{email}/{document_id}/{definer}','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
+
+Route::get('/sharedFile/{project_id}/','ShareDocumentcontroller@ShowDocumentForAuth');
+
+Route::get('/sharedBy_me/{project_id}/','PagesController@Shared_By');
+
+Route::post('/sharedDoc/','ShareDocumentcontroller@GetSharedDoc');
+
+Route::post('/GetSharedUser/','ShareDocumentcontroller@GetSharedDocsUser');
+
+Route::post('/GetSharedUser/Permissions/','ShareDocumentcontroller@GetSharedDocsUserPermission');
+
+Route::post('/GetShared/FoldersDoc/','ShareDocumentcontroller@GetSharedFoldersDoc');
+
+//end
+
 // Setting Route
 
 Route::get('project/{project_id}/documents/setting/watermark','SettingController@WatermarkSetting');
 
 Route::post('save_WaterMark/setting','SettingController@SaveWatermarkSetting');
 
+//end
+
+
+// export table
+
+Route::get('downloadExcel/{type}', 'DocumentsController@downloadExcel');
+
+//end
 
 
 //admin dashboard 
@@ -215,7 +249,7 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'' ], function()
 
 });
 
-Route::get('sendemail', function () {
+Route::get('sendemail', function (){
 
     $data = array(
         'name' => "prodataroom",

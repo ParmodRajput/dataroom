@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 
-class Settingcontroller extends Controller
+class SettingController extends Controller
 {
    public function WatermarkSetting($project_id){
 
@@ -25,6 +25,7 @@ class Settingcontroller extends Controller
 
         $watermark_view = $getSetting['watermark_view']; 
         $watermark_text = $getSetting['watermark_text'];
+
         $watermark_color = $getSetting['watermark_color'];
         $downloadable = $getSetting['downloadable'];
         $printable = $getSetting['printable'];
