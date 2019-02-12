@@ -232,7 +232,12 @@ $(document).ready(function(){
    //click open folders
     $(document).on('click','.projects',function(event){
 
-       
+
+      $('.table.table-hover.table-bordered.table_color').removeClass('hidden');
+      $('.table.table-hover.table-bordered.table_color.recycle_bin').addClass('hidden');
+      $('.upload_table .document_index_buttons ').removeClass('hidden');
+      $('.upload_table .document_index_recycle_bin').addClass('hidden');
+
       $(this).parent().parent().find('input:checkbox').click();
 
         $('.ui-droppable').removeClass('hidden');
@@ -498,10 +503,10 @@ $(document).ready(function(){
 
 
                        var document_index = $('.document_indexing_count').val();
-                       var genrate_folder = get_genrate_folder.replace(' ', '_');
+                       var genrate_folder = get_genrate_folder.replace(/[^a-zA-Z0-9]/g, '_');
                        var getPath = path+"/"+genrate_folder; 
                        var box = $('.indexing');
-                       var folder =$('#tree2');
+                       var folder = $('#tree2');
                        
                        var html="";
                        var html1="";
@@ -530,7 +535,7 @@ $(document).ready(function(){
 
                                 html1 +="<li id='projects' data-value='"+getPath+"'class='projects'><span class='doucment_name'>"+response+"</span></li>";
                              
-                                  $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
+                                  // $('[data-value = "'+path+'"]').find('ul').eq(0).append(html1);
                                    $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
                                   var directory_url= path;
 
@@ -716,6 +721,7 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
+                          var user           = value.CurrentUserCount;
 
                           
                           var index         = value.doc_index;
@@ -741,6 +747,8 @@ $(document).ready(function(){
                             DocumentIndex = document_index+'.'+index;
                           }
                          
+
+                         $('.doc_permission_modal').attr('data-user',user);
 
                               html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
@@ -1152,6 +1160,7 @@ $(document).ready(function(){
                 var html2 ="";
                 var html3 ="";
                 var box = $('.indexing');
+                var user = '';
 
                   //first inner array
 
@@ -1182,8 +1191,8 @@ $(document).ready(function(){
                           var fav            = value.fav;
                           var note           = value.note;
                           var ques           = value.ques;
-                          var user =          value.CurrentUserCount;
-
+                          var user           = value.CurrentUserCount;
+                          
                           
                           var index         = value.doc_index;
                           var element1 = document_name1.substr(0, 45);
@@ -1207,7 +1216,6 @@ $(document).ready(function(){
                             DocumentIndex = document_index+'.'+index;
                           }
                          
-
                               html +="<div class='drop_box_document'><div class='document_index index-drop'><div class='doc_index_list'><div class='check-box select_check'><form  action='#' method='post'><input type='checkbox' class='check-box-input' value="+document_name+" data-permission='"+permission+"' data-value="+path+" name='documents_select' ></form></div><h4><a href='javascript:void(0)' data-permission='"+permission+"' data-value='"+path+"' data-index='"+DocumentIndex+"' class='projects'><i class='fa fa-folder-o'></i> "+DocumentIndex+"&nbsp; &nbsp;"+document_name+"</a></h4></div><div class='icons-doc'>";
 
                               if(fav == '')
@@ -1345,8 +1353,15 @@ $(document).ready(function(){
                                                  html+="<i class='far fa-file-archive'></i>";
 
                                            }else{
-                                                
-                                                html+="<i class='far fa-file'></i>";
+
+                                                 if(Ext == 'pdf'){
+
+                                                   html+="<i class='fas fa-file-pdf'></i>";
+                                                 }else{
+
+                                                     html+="<i class='far fa-file'></i>";
+                                                 }
+ 
                                            }
 
 
@@ -1433,8 +1448,8 @@ $(document).ready(function(){
 
                        }//blank
 
-
                           box.html(html);
+                          $('.document_index_buttons .doc_permission_modal').attr('data_user',user);
 
                           $('#folder_create')[0].reset();
                           $('#genrate_folder').modal('hide'); 
@@ -1497,6 +1512,7 @@ $(document).ready(function(){
 
    // right click on document// 
     $(document).on('contextmenu','.documents_index_section .document_index' ,function(e) {
+
           
           $('.drop_box_document input:checkbox').prop('checked', false);
           e.preventDefault();
@@ -1527,11 +1543,18 @@ $(document).ready(function(){
 
           }
 
-
-
           var value = $(this).find('a').data('value'); 
 
           var file_id = $(this).find('input:checkbox').data('doc_id');
+
+          if(file_id == undefined)
+          {
+            $('.view_doc_file').addClass('hidden');
+
+          }else{
+            
+            $('.view_doc_file').removeClass('hidden');
+          }
 
           var project_id  = $('.directory_location #project_id_doc').val();
 
@@ -1587,6 +1610,7 @@ $(document).ready(function(){
        $(document).on('contextmenu','.menu_option_block' ,function(e)
         {
         
+
          hideRightClickPopup();
          var value = $('#current_directory').val();
          
@@ -1913,8 +1937,6 @@ $('#myModal').on('hidden.bs.modal', function () {
 
     var numberOfChecked = $('.document_index_contentable input:checkbox:checked').length;
 
-    alert(numberOfChecked);
-
       if(numberOfChecked == 1)
       {         
           // var ffd  = $('.notes_aside_text1').val();
@@ -1989,7 +2011,6 @@ $('#myModal').on('hidden.bs.modal', function () {
               
       }else if(numberOfChecked == 0)
         {
-             alert('sdsad');
 
              $('.delete_items').addClass('hideDeleteBtn'); 
              $('.btn_delete_doc_recycle').addClass('hideDeleteBtn'); 
@@ -2145,6 +2166,8 @@ $(document).on('mouseleave','.drop_box_document', function(){
 
         
         //filter hide
+        $('.filteredTextContent').addClass('hidden');
+        $('.back-arrow.move_last_folder').removeClass('hidden');
         $('.document_view_block').addClass('hidden');
         $('.fav_filter').addClass('hidden');
         $('.new_filter').addClass('hidden');

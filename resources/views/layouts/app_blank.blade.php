@@ -68,6 +68,7 @@
   <!-- inject:js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
 <script type="text/javascript"> $.noConflict();</script>
 
   <script src="{{ asset('js/off-canvas.js')}}"></script>
@@ -575,6 +576,15 @@ $(document).on('click','#Report6',function(){
           $('.users_list').toggle();
 
         });
+         
+         // Setting save
+
+        // $(document).on('.water_mark_setting_down .watermark_setting_save','click',function(){
+        //       alert('sdfsdfsd');
+        // });
+
+
+
 
 </script>
 

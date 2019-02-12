@@ -1,4 +1,4 @@
-@extends('layouts.app_report')
+@extends('layouts.app_blank')
 @section('content')
 <div class="padding_top_users"></div>
 <div class="content-wrapper">
@@ -256,12 +256,6 @@
 	      </div>
 	<div class="report_display_main col-md-6">
     <div class='report_display row'>
-      <div class='indexingOfReports col-md-12'>
-        <div class='auther_main col-md-4'>Author</div>
-        <div class='action_main col-md-3'>Action</div>
-        <div class='description_main col-md-3'>Description</div>
-        <div class='time_at_main col-md-2'>Date and time</div>
-      </div>
       <div class='container_indexingOfReports row'>
       </div>
     </div>

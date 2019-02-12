@@ -62,6 +62,13 @@
 
 	<body>
        <div class="row">
+       	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
+       	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
+       	<input type="hidden" id="watermark_color" data-value= '{{$watermark_color}}'>
+        <input type="hidden" id="downloadable" data-value= '{{$downloadable}}'>
+       	<input type="hidden" id="printable"  data-value= '{{$printable}}'>
+       	<input type="hidden" id="discussable"  data-value= '{{$discussable}}'>
+
        	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
        	<input type='hidden' id='currentPdfScale'>
 
@@ -99,7 +106,8 @@
          <span class="print_document">
 		   <i class="fa fa-print"></i>
 	     </span>
-		<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments"></i></a>
+		   <a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments discuss_question"></i></a>
+	   
 		<!-- <i class="fa fa-search"></i> -->
 		</div>
 
@@ -122,17 +130,21 @@
 				 <div class="kato" id='pageContainer'>
 		
 				 		<div class="WaterMarkTextContent noselect" style='top:100px;'>
-				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... </p>
+				 			<p class="content_text_wm noselect"</p>
 				 		</div>
 				 		<div class="WaterMarkTextContent noselect" style='top:400px;'>
-				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 ....</p>
+				 			<p class="content_text_wm"></p>
 				 		</div>
 				 		<div class="WaterMarkTextContent noselect" style='top:700px;'>
-				 			<p class="content_text_wm" >prodata.com date-01/19 .... prodata.com date-21/01/19 ....</p>
+				 			<p class="content_text_wm" ></p>
 				 		</div>
 				 		<div class="WaterMarkTextContent noselect" style='top:1000px;'>
+<<<<<<< HEAD
 				 			<p class="content_text_wm">prodata.com date-01/19 .... prodata.com date-21/01/19 .... </p>
 
+=======
+				 			<p class="content_text_wm"></p>
+>>>>>>> 98dc055d58c440fc811cc361de6d905e43b8e8c4
 				 		</div>
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
@@ -154,7 +166,6 @@
   
 	</body>
 	 <div class="overlay_body">
-
           <div class="loader14">
               <div class="loader-inner">
                   <div class="box-1"></div>
@@ -170,6 +181,49 @@
 
       $(document).ready(function(){
 
+      	var watermark_view = $('#watermark_view').data('value');
+      	var watermark_text = $('#watermark_text').data('value');
+      	var watermark_color = $('#watermark_color').data('value');
+      	var downloadable = $('#downloadable').data('value');
+      	var printable = $('#printable').data('value');
+      	var discussable = $('#discussable').data('value');
+
+ // downloadable exit
+      	if(downloadable !== 1)
+      	{
+      		$('.view_download').addClass('hidden');
+
+      	}else{
+
+             $('.view_download').removeClass('hidden');
+      	}
+
+ // printable exit
+      	if(printable !== 1)
+      	{
+      		$('.print_document').addClass('hidden');
+
+      	}else{
+      		
+             $('.print_document').removeClass('hidden');
+      	}
+
+ // discussable exit
+       if(discussable !== 1)
+      	{
+      		$('.discuss_question').addClass('hidden');
+
+      	}else{
+      		
+             $('.discuss_question').removeClass('hidden');
+      	}
+
+
+      	if(watermark_view == 1)
+      	{
+      		$('.content_text_wm').html(watermark_text);
+      		$('.content_text_wm').css('color','#'+watermark_color);
+      	}
 
 		$(window).bind('mousewheel DOMMouseScroll', function(e)
 		{
@@ -691,7 +745,7 @@
 
 		}());
 
-		//document.addEventListener('contextmenu', event => event.preventDefault());
+		document.addEventListener('contextmenu', event => event.preventDefault());
 
 		document.onkeydown = function(e) {
 

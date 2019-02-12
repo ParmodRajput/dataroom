@@ -197,6 +197,7 @@ ul.folders li {
     font-weight: normal;
  }
 
+
 .tree ul li:before {display:block; width:10px; height:0; border-top:1px solid;
     margin-top:-1px; position:absolute; top:1em; left:0;}
 
@@ -2428,7 +2429,7 @@ button.waiting_reply {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     content: "";
-    top: 270px!important;
+    top: 280px!important;
 }
 
 .search_fav_col{
@@ -2503,4 +2504,21 @@ canvas#myCanvas{
     transform: rotate(-45deg);
     font-size: 29px;
     color: gray;
+}
+
+.watermark-settings .watermark-preview {
+    position: relative;
+    width: 145px;
+    height: 180px;
+    margin-right: 27px;
+    overflow: hidden;
+    background: #fff no-repeat;
+    border: 1px solid #ddd;
+    font: 700 18px/22px noto_sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.colorWatermark {
+    background: gray;
+    width: 131px;
+    height: 28px;
 }

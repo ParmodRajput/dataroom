@@ -197,6 +197,14 @@ Route::post('/get_group/report','ReportsController@getGroupsReports');
 
 // Reports route end
 
+// Setting Route
+
+Route::get('project/{project_id}/documents/setting/watermark','SettingController@WatermarkSetting');
+
+Route::post('save_WaterMark/setting','SettingController@SaveWatermarkSetting');
+
+
+
 //admin dashboard 
 
 Route::group(['namespace' => 'Admin', 'prefix' =>'' ], function()
