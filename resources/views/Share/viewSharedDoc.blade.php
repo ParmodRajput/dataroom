@@ -57,20 +57,178 @@
 
     <script src="js/pdf.worker.js"></script>
 
+        <style>
+		*{margin:0; padding: 0; box-sizing: border-box; font-family: arial; color: #666;}
+		.header-set {
+		    float: left;
+		    width: 100%;
+		    background: #F1F1F1;
+		    border-bottom: 1px solid #e2e2e2;
+		    position: relative;
+		    padding: 15px;
+		    border-top: 2px solid #4cfff8;
+		    height: 55px;
+		}
+
+		.header-set section {
+		    float: left;
+		    position: relative;
+		    z-index: 1;
+
+		}
+
+		.image-name p {
+		    float: right;
+		    max-width: 300px;
+		    padding-right: 15px;
+		    overflow: hidden!important;
+		    text-overflow: ellipsis!important;
+		    white-space: nowrap!important;
+		    padding-left: 3px;
+		}
+
+		.image-name {
+		    float: left;
+		    /*max-width: 300px;*/
+		    line-height: 30px;
+		}
+
+		.zoom-set {
+		    float: left;
+		    border-left: 1px solid silver;
+		    border-right: 1px solid silver;
+		    padding: 0 5px;
+		}
+
+		.zoom-set a {
+		    padding: 6px;
+		    float: left;
+		}
+
+		.round {
+		    float: left;
+		    border-right: 1px solid silver;
+		    padding: 0 5px;
+		}
+
+		.round a {
+		    padding: 6px;
+		    float: left;
+		}
+
+		.set-center {
+		    position: absolute;
+		    width: 100%;
+		    text-align: center;
+		    top: 20px;
+		    left: 0;
+		}
+
+		.view {
+		    float: left;
+		}
+
+		.view a {
+		    display: inline-block;
+		    padding: 5px 10px;
+		}
+
+		.set-center  a {
+		    padding: 5px;
+		}
+				.share {
+		    float: right;
+		}
+
+		.share a {
+		    padding: 5px;
+		    display: inline-block;
+		    position: relative;
+		    z-index: 1;
+		    text-decoration: none;
+		}
+
+		.header-set i {
+            font-size: 19px;
+         }
+
+         .set-center a button {
+			background: none; 
+			border: none;
+			outline:none;
+			}
+		 .set-center a {
+			padding: 5px;
+			display: inline-block;
+		  }
+		  
+	@media only screen and (max-width: 1100px) {
+				.set-center {
+		    text-align: right;
+		    padding-right: 85px;
+	 }
+    }
+   @media only screen and (max-width: 600px) {
+					
+   }
+
+	</style>
+
 
 </head>
 
 	<body>
-       <div class="row">
-      
+
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
        	<input type="hidden" id="watermark_color" data-value= '{{$watermark_color}}'>
         <input type="hidden" id="downloadable" data-value= '{{$downloadable}}'>
        	<input type="hidden" id="printable"  data-value= '{{$printable}}'>
+       	<input type="hidden" id='current_rotated_deg' value='0'>
+
      
        	<input type='hidden' id='currentPdfScale'>
 
-		<div class="top_head col-md-12">
+       			<div class="header-set">
+			<section><div class="image-name">
+				<i class="fa fa-image"></i>
+				<p>{{$doc_name}}</p>
+				</div>
+		     <div class="zoom-set">
+				<a id="minus" href="javascript:;"><i class="fas fa-search-minus"></i></a>
+			<a id="plus" href="javascript:;"><i class="fas fa-search-plus"></i></a>
+				</div>
+				<div class="round">
+					<a id='rotate_doc_left' href="javascript:;"><i class="fas fa-redo"></i></a>
+					<a id='rotate_doc_right' href="javascript:;"><i class="fas fa-undo"></i></a>
+				</div>
+				<div class="view">
+				<a href="javascript:;" class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></a>
+				</div></section>
+				<div class="set-center">
+					<a href="javascript:;" class="view_download">
+						<form action="{{ Url('/') }}/project/documents/download" method="post">
+                          {{ csrf_field() }}
+
+                           <input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
+						   <button type="submit" name="submit"><i class="fas fa-download"></i></button>
+                        </form>
+                    </a>
+
+					<a class='print_document' href=""><i class="fas fa-print"></i></a>
+				</div>
+				<div class="share">
+
+				 <a onclick="myFunction();" href="javascript:;">Get shareable link <img src="{{ asset('dist/img/link-button.png ')}}"></a>
+
+
+				</div> 
+
+				
+    
+			</div>
+
+
+<!-- 		<div class="top_head col-md-12">
 		<div class="left_whole col-md-6">
 			<div class="left_text">
 			<i class="fa fa-image"></i> <a href="#">{{$doc_name}}</a>
@@ -104,21 +262,20 @@
          <span class="print_document">
 		   <i class="fa fa-print"></i>
 	     </span>
-
-		<!-- <i class="fa fa-search"></i> -->
 		</div>
 
 		<div class="arrows_right hidden">
 		<i class="fa fa-angle-left"></i>
 		<i class="fa fa-angle-right"></i>
 		</div>
-		</div>
+		</div> -->
 
         
 		<div class="Doc_viewer">
 			<input type="hidden" id='doc_source' value='{{$document_Data}}'>
 			<input type="hidden" id='doc_type' value='{{$Ext}}'>
 			<input type="hidden" id="docx_file_data" value="{{$docx_data}}">
+
 			<div class="viewer_header">
 			</div>
 
@@ -126,31 +283,31 @@
 
 				 <div class="kato" id='pageContainer'>
 		
-				 		<div class="WaterMarkTextContent noselect" style='top:-500px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:-500px; z-index: 999; left:-20%'>
 				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:-250px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:-250px;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:0px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:0px;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:250px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:250px;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap; left:-20%'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:500px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:500px;z-index: 999; left:-20%'>
 				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:750px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:750px; z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1000px; left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1000px; z-index: 999; left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1250px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1250px; z-index: 999;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1500px;left:-20%'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1500px; z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
 				 	
@@ -169,7 +326,6 @@
                  <div id='docx_viewer' class="noselect"></div>
                
 			</div>
-		</div>
   
 	</body>
 	 <div class="overlay_body">
@@ -191,8 +347,10 @@
       	var watermark_text = $('#watermark_text').data('value');
       	var watermark_color = $('#watermark_color').data('value');
       	var downloadable = $('#downloadable').data('value');
-
       	var printable = $('#printable').data('value');
+      	var Url = $(location).attr('href');
+
+      	//$('#myurl').val(Url);
       	
  // downloadable exit
       	if(downloadable !== 1)
@@ -243,9 +401,8 @@
 		$('#IMGcanvas').css('width',window_width);
         $('#IMGcanvas').css('height',window_height);
         $('#IMGcanvas').css('padding-top','1%');
-        $('#IMGcanvas').css('padding-bottom','3%');
-        $('#IMGcanvas').css('padding-right','5%');
-        $('#IMGcanvas').css('padding-left','3%');
+        $('#IMGcanvas').css('padding-bottom','4%');
+        $('#IMGcanvas').css('padding-right','3.2%');
 
 		var excel_path  = $('#excel_file').val();
 
@@ -564,6 +721,55 @@
             e.preventDefault(); return false; 
         });
 
+          
+        // left rotate functionality
+
+
+	     $('#rotate_doc_left').click(function(){
+
+	       var current_Deg = $('#current_rotated_deg').val();
+
+	       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
+
+	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+
+	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
+
+
+	     });  
+
+	      // Right rotate functionality
+
+
+	     $('#rotate_doc_right').click(function(){
+
+	       var current_Deg = $('#current_rotated_deg').val();
+
+	       var Rotated_Deg = parseInt(current_Deg) - parseInt('90');
+
+	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+
+	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
+
+
+	     });  
+
+     
+
+       function myFunction() {
+		  var copyText = document.getElementById("myurl");
+
+		  var e = jQuery.Event("keydown");
+
+
+		  copyText.select();
+
+		  e.which = 67; // 'C' key code value
+	      e.ctrlKey = true; 
+
+		  document.execCommand("copy");
+		  alert("Copied the text: " + copyText.value);
+		}
 
 	</script>
 

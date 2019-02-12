@@ -221,6 +221,9 @@ Route::post('/GetSharedUser/Permissions/','ShareDocumentcontroller@GetSharedDocs
 
 Route::post('/GetShared/FoldersDoc/','ShareDocumentcontroller@GetSharedFoldersDoc');
 
+Route::post('/share/documents/update/','ShareDocumentcontroller@GetSharedDocUpdate');
+
+
 //end
 
 // Setting Route

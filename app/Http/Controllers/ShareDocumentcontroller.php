@@ -26,8 +26,32 @@ class ShareDocumentcontroller extends Controller
      $project_id = $request->project_id;
      $GetuserEmails = $request->userEmails;
      $userEmails = explode(',',$GetuserEmails);
-
      $durationTime = $request->durationTime;
+
+     if($durationTime == 1)
+     {
+       $durationTime = date('Y-m-d', strtotime(' +3 day'));
+
+     }
+
+     if($durationTime == 2)
+     {
+       $durationTime = date('Y-m-d', strtotime(' +7 day'));
+
+     }
+
+     if($durationTime == 3)
+     {
+       $durationTime = date('Y-m-d', strtotime(' +15 day'));
+
+     }
+
+     if($durationTime == 4)
+     {
+       $durationTime = date('Y-m-d', strtotime(' +30 day'));
+
+     }
+
      $registerValid = $request->registerValid;
      $printable = $request->printable;
      $downloadable = $request->downloadable;
@@ -449,6 +473,21 @@ class ShareDocumentcontroller extends Controller
            $Under_data = ['folder_index'=>$ShareWithMeDocumentFolder ,'file_index'=>$ShareWithMeDocumentFile ];
 
            return $Under_data;
+
+       }
+
+       public function GetSharedDocUpdate(Request $request){
+
+
+          $registerValid = $request->registerValid;
+          $printable = $request->printable;
+          $downloadable =$request->downloadable;
+          $SharedId = $request->SharedId;
+
+          ShareDocument::where('id',$SharedId)->update(['register_required' => $registerValid,'printable'=>$printable ,'downloadable'=>$downloadable]);
+
+          return "success";
+
 
        }
       

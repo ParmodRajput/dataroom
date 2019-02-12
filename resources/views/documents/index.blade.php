@@ -768,85 +768,131 @@
 
 <!-- End -->
 
-
-
-<!-- Share document -->
+<!-- Share Document modal -->
 
 <div id="ShareDoc" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog invite_new_user_block">
     <input type='hidden'  name='copy_document' id='copy_document_directory'>
     <!-- Modal content-->
     <div class="modal-content">
-       <div class="modal-header">
-        <h4 class="modal-title">Share Documents</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button> 
-      </div>
-      <div class="modal-body">
-            <div class="section_usersEmail">
-               <p class="label-form">Enter Email Addesses</p>
-               <!-- <select placeholder='Enter email addresses' class="form-control shareDocUsers" multiple="multiple">      
-               </select> -->
+    <div class="modal-header">
+        <h3>Share Document</h3>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body share_modal_sec">
+      <div class="center_section">
+        <div class="center_inner">
+          <h2>Share With Users <i class="fa fa-user-plus"></i></h2>
 
-               <input type="text"  name ="user_email" class="form-control shareDocUsers"  data-role="tagsinput" >
-               <div class="error_email hidden" style='color:red'>Please Enter Valid Email</div>
-
-            </div></br>
-
-            <div class="section_access_permisson">
-              <div class="setting_permission">
-
-                    <div class="duration_doc_checkbox">
-                      <p class="label-form">View Duration</p>
-                         <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
-                                  <input class="form-control" id="duration_time_val" type="text" readonly />
-                                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                          </div>
-                    </div>
-                
-                    <div class="registration_doc_checkbox">
-                      <p class="label-form">Registration Required</p>
-                            <label>
-                              <input type="radio" name="Registration" value='1' id="viewed_doc" checked>Yes</label>
-                              
-                              <label>
-                              <input type="radio" name="Registration" value='0' >No</label>
-                    </div>
-                    <div class="print_doc_checkbox">
-                      <p class="label-form">Printable</p>
-                      <label>
-                              
-                              <input type="radio" name="Printable" value='1' id="viewed_doc" checked>Yes
-                            </label>
-                            <label>
-                              <input type="radio" name="Printable" value='0' >No
-                            </label>
-                     </div>
-                     <div class="download_doc_checkbox">
-                      <p class="label-form">Downloadable</p>
-                      <label>
-                             
-                              <input type="radio" name="Downloadable" value='1' id="viewed_doc" checked>Yes
-                            </label>
-                            <label>
-                               <input type="radio" name="Downloadable" value='0' >No
-                       </label>
-                     </div>
-              
-              </div>
+            <div class="dynamic_input">
+              <input type="text"  name ="user_email" class="form-control shareDocUsers" data-role="tagsinput" placeholder="Enter email,use enter or comma to separate">
+              <div class="error_email hidden" style='color:red'>Please Enter Valid Email</div>
             </div>
+        </div>
+
+        <div class="center_inner view_duration">
+          <h3>View Duration</h3>
+
+          <div class="radio_pannel">
+             <div class="radio_btns" style='width:20%'>
+                 <label>
+                  <input name="view_duration_e" value='1' type="radio" checked /><strong>Next 3 days</strong>
+                </label>
+                <label>
+                  <input type="radio" value='2' name="view_duration_e"/><strong>Next 7 days</strong>
+                </label>
+                <label>
+                  <input type="radio" value='3' name="view_duration_e"/><strong>Next 15 days</strong>
+                </label>
+                <label>
+                  <input type="radio" value='4' name="view_duration_e" /><strong>Next 1 Month</strong>
+                </label>
+                <label>
+                  <input type="radio"  value='5'name="view_duration_e"/><strong>Custom Date</strong>
+                </label>
+             </div>
+             <div class="custom_date hidden">
+                 <div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+                                      <input class="form-control" id="duration_time_val" type="text" readonly />
+                                      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                 </div>
+              </div>
+        </div>
       </div>
-      <div class="modal-footer">
+     <br>
+
+        <div class="center_inner Registration_required ">
+          <h3>Registration Required</h3>
+
+          <div class="radio_pannel">
+             <div class="radio_btns">
+             <label>
+                  <input type="radio" name="Registration" value='1' id="viewed_doc" checked><strong>Yes</strong><br>
+                 <span class="radio_down_content">View document with registration</span>
+             </label>
+                              
+            <label>
+                 <input type="radio" name="Registration" value='0' ><strong>No</strong><br>
+                 <span class="radio_down_content">View document without registration</span>
+             </label>
+
+          </div>
+        </div>
+      </div>
+        <br>
+
+         <div class="center_inner Printable ">
+          <h3>Printable</h3>
+
+          <div class="radio_pannel">
+             <div class="radio_btns">
+             <label>
+                              
+                  <input type="radio" name="Printable" value='1' id="viewed_doc" checked><strong>yes</strong><br><span class="radio_down_content">Document print accessiable</span>
+            </label>
+                              
+            <label>
+                <input type="radio" name="Printable" value='0' ><strong>No</strong><br>
+                 <span class="radio_down_content">Document print not accessiable</span>
+             </label>
+
+          </div>
+        </div>
+
+        </div>
+
+         <div class="center_inner Downloadable ">
+          <h3>Downloadable</h3>
+
+          <div class="radio_pannel">
+             <div class="radio_btns">
+             <label>
+                  <input type="radio" name="Downloadable" value='1' id="viewed_doc" checked><strong>Yes</strong><br>
+                 <span class="radio_down_content">Document download accessiable</span>
+             </label>
+                              
+            <label>
+                <input type="radio" name="Downloadable" value='0' ><strong>No</strong><br>
+                 <span class="radio_down_content">Document not download accessiable</span>
+             </label>
+
+          </div>
+        </div>
+
+        </div><br>
+
+
+    </div>
+  </div>
+  <div class="modal-footer">
             <button type="button" id='shareDocForUsers' class="btn btn-primary">Share</button>
        </div>
-    </div>
-     </div>
-  </div>    
+    </form>
+  </div>
+
+  </div>
 </div>
-</div>
 
-
-<!-- end -->
-
-
+<!-- End -->
 
 @endsection

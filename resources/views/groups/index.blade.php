@@ -1235,8 +1235,8 @@
  $('.scroll_invite_section').css("height",inviteModalheight);
  $('.scroll_group_section').css("height",inviteModalheight);
  $('.scroll_permission_section').css("height",inviteModalheight);
-
-
+ $('.listUsersGroups').css("height",windowHeight-110);
+ 
 
 
  $(document).on('click','.InviteUsersByUp',function(){

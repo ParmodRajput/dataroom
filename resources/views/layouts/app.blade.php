@@ -1881,6 +1881,8 @@ $(document).ready(function(){
  $('.scroll_upload_section').css('height',windowHeight-210);
  $('.scroll_permissionDoc_section').css('height',windowHeight-170);
 
+ $('.share_modal_sec').css('height',windowHeight-150);
+
 
 
 
@@ -3318,7 +3320,7 @@ $(document).on('click','.doc_permission_modal',function(){
 
     var userEmails = $(".shareDocUsers").val();
 
-     if(userEmails== '' || IsEmail(userEmails)==false){
+     if(userEmails == '' ){
 
          $('.error_email').removeClass('hidden');
         
@@ -3328,15 +3330,20 @@ $(document).on('click','.doc_permission_modal',function(){
          $('.error_email').addClass('hidden');
          $('#shareDocForUsers').prop('disabled', false);
      
+    var DurationGet  = $("input[name='view_duration_e']:checked").val();
 
-    var durationTime = $('#duration_time_val').val();
+    if(DurationGet == 5)
+    {
+      var durationTime = $('#duration_time_val').val();
+
+    }else{
+
+       var durationTime = DurationGet;
+    }
 
     var registerValid = $("input[name='Registration']:checked"). val();
-
     var printable = $("input[name='Printable']:checked"). val();
- 
     var downloadable = $("input[name='Downloadable']:checked"). val();
-
     var DocumentId = [];
 
     $.each($("input[name='documents_select']:checked"), function(e)
@@ -3348,6 +3355,7 @@ $(document).on('click','.doc_permission_modal',function(){
    
    var token = $('#csrf-token').val();  
    var project_id = $('.projects_id').val();
+
 
         $.ajax({
 
@@ -3400,7 +3408,18 @@ $(function () {
 });
 
 
+ $(document).on('change','.view_duration input:radio',function(){
 
+    if ($(this).val() == "5") {
+       
+       $('.custom_date').removeClass('hidden');
+
+    }else{
+       
+       $('.custom_date').addClass('hidden');
+    }
+
+ });
 
 </script>
 

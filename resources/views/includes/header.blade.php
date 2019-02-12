@@ -33,7 +33,7 @@
 			<div class="navbar-menu-wrapper d-flex align-items-center">
 				<ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
 					<li class="nav-item">
-						<a href="JavaScript:Void(0);" class="nav-link project_name">
+						<a href="JavaScript:;" class="nav-link project_name">
 							 <B>{{$project_name}}</B> 
 						</a>
 					</li>

@@ -62,7 +62,7 @@ class DocumentsController extends Controller
 }
 
 
- public function get_FoldersAndFiles($project_path)
+public function get_FoldersAndFiles($project_path)
 
              {
              
@@ -824,12 +824,16 @@ public function download (Request $request){
          
 
           // save folder download record 
-
+       if(Auth::user())
+           {
+ 
               $report = new Report();
               $report->action = '26';
               $report->document_path = $DocPath;
               $report->Auth = Auth::user()->id;
               $report->save();
+
+           }
 
 
            return response()->download($path,$file_name,$headers);
@@ -2163,7 +2167,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
       public function downloadExcel($type)
         {
-            $data = User::select('')->get()->toArray();
+            $data = User::select('name','email','phone_no','company')->get()->toArray();
                 
             return Excel::create('allUsers', function($excel) use ($data) {
                 $excel->sheet('mySheet', function($sheet) use ($data)

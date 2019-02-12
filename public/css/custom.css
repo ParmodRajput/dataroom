@@ -2673,3 +2673,20 @@ div#datepicker span.input-group-addon i.glyphicon.glyphicon-calendar {
 .modal-dialog.yet_PermissionFuser, .section img {
 max-width: 1060px;
 }
+
+#ShareDoc .modal-dialog {
+    max-width: 1000px;
+}
+
+.groupListingBlock{
+
+    overflow-y: scroll;
+}
+
+.listUsersGroups{
+    overflow-y: scroll;
+}
+
+#ShareDoc .share_modal_sec{
+    overflow-y: scroll;
+}

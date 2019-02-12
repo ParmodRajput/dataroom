@@ -26,20 +26,20 @@
                 </div>
       @foreach ($projects as $userprojects)
       
-                <div class="content-block">    
-                        <ul id="dashboard-items" class="projects-list">
-                            <li class="dashboard-predefined-item">
-                                <a href="javascript:;" target="_blank" onclick="deleteProject({{$userprojects->id}})">
-                                    <span class="text-box">
-                                     <div class="close">
-                                        <i class="fa fa-window-close" aria-hidden="true"></i>
-                                     </div>
-                                        <strong><a href="{{url('/')}}/project/{{$userprojects->id}}/documents">{{$userprojects->project_name}}</a></strong>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul> 
-                </div>
+                <div class="content-block"> 
+           <a href="javascript:;" target="_blank" onclick="deleteProject({{$userprojects->id}})">
+                       <div class="close">
+                           <i class="fa fa-window-close" aria-hidden="true"></i>
+                       </div>
+                   </a>                                                      
+                   <ul id="dashboard-items" class="projects-list" onclick="location.href='project/{{$userprojects->id}}/documents';">
+                       <li class="dashboard-predefined-item" >
+                           <span class="text-box">                                
+                               <strong><a href="project/{{$userprojects->id}}/documents">{{$userprojects->project_name}}</a></strong>
+                           </span>     
+                       </li>
+                   </ul> 
+               </div>
             @endforeach
         </div>   
       </div>

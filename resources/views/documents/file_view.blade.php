@@ -191,50 +191,6 @@
        	<input type="hidden" id='current_rotated_deg' value='0'>
        	<input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}'/>
        	<input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
-<!-- 
-		<div class="top_head col-md-12">
-		<div class="left_whole col-md-6">
-			<div class="left_text">
-			<i class="fa fa-image"></i> <a href="#">{{$doc_name}}</a>
-			</div>
-		</div>
-		<div class="zoom_icons">
-		<span id="minus"><i class='fas fa-search-minus'></i></span>
-		<span id="plus"><i class='fas fa-search-plus'></i></span>
-		</div>
-
-		<div class="repeat_icons">
-		<i class="fa fa-repeat"></i>
-		<i class="fa fa-repeat" id='rotate_doc'></i>
-
-		<span class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></span>
-		</div>
-
-
-		<div class="icon_center col-md-6 ">
-		<span class="ng-scope view_download">
-                <a href="javascript:void(0)"><span class="dld"><i class="fas fa-download"></i></span><span class="download_file">
-                    <form action="{{ Url('/') }}/project/documents/download" method="post">
-                      {{ csrf_field() }}
-
-                      <input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
-                      <input type="submit" name="submit">
-                  </form>
-                  </span>
-              </a>
-         </span>
-         <span class="print_document">
-		   <i class="fa fa-print"></i>
-	     </span>
-		   <a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fa fa-comments discuss_question"></i></a>
-	  
-		</div>
-
-		<div class="arrows_right hidden">
-		<i class="fa fa-angle-left"></i>
-		<i class="fa fa-angle-right"></i>
-		</div>
-		</div> -->
 
 		<div class="header-set">
 			<section><div class="image-name">
@@ -246,15 +202,16 @@
 			<a id="plus" href="javascript:;"><i class="fas fa-search-plus"></i></a>
 				</div>
 				<div class="round">
-				<a href="javascript:;"><i class="fas fa-redo"></i></a>
-					<a id='rotate_doc' href="javascript:;"><i class="fas fa-undo"></i></a>
+
+				<a id='rotate_doc_left' href="javascript:;"><i class="fas fa-redo"></i></a>
+				<a id='rotate_doc_right' href="javascript:;"><i class="fas fa-undo"></i></a>
+
 				</div>
 				<div class="view">
 				<a href="javascript:;" class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></a>
 				</div></section>
 				<div class="set-center">
-				<a href="javascript:;"></a>
-					<a href="javascript:;">
+					<a href="javascript:;" class="view_download">
 						<form action="{{ Url('/') }}/project/documents/download" method="post">
                           {{ csrf_field() }}
 
@@ -952,7 +909,7 @@
      // rotate functionality
 
 
-     $('#rotate_doc').click(function(){
+     $('#rotate_doc_left').click(function(){
 
 
        var current_Deg = $('#current_rotated_deg').val();
@@ -965,6 +922,22 @@
 
 
      });
+
+         // Right rotate functionality
+
+
+	     $('#rotate_doc_right').click(function(){
+
+	       var current_Deg = $('#current_rotated_deg').val();
+
+	       var Rotated_Deg = parseInt(current_Deg) - parseInt('90');
+
+	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+
+	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
+
+
+	     });  
 
 	</script>
 
