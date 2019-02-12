@@ -264,6 +264,7 @@
 				 		<div class="WaterMarkTextContent noselect" style='top:1250px;left:-20%; z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
+
 				 		<div class="WaterMarkTextContent noselect" style='top:1500px;left:-20% ;z-index:999;'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
