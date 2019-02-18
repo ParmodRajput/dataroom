@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\File;
 use ZipArchive;
 use Mail;
 use Excel;
-
+use Carbon\Carbon;
 class ShareDocumentcontroller extends Controller
 {
     public function shareDocs(Request $request){
@@ -483,8 +483,21 @@ class ShareDocumentcontroller extends Controller
           $printable = $request->printable;
           $downloadable =$request->downloadable;
           $SharedId = $request->SharedId;
-
-          ShareDocument::where('id',$SharedId)->update(['register_required' => $registerValid,'printable'=>$printable ,'downloadable'=>$downloadable]);
+          $duration = $request->durationTime;
+          $current = Carbon::now();
+          if($duration == 1){
+            $durationTime = $current->addDays(3)->format('y-m-d');
+          } else if($duration == 2){
+            $durationTime = $current->addDays(7)->format('y-m-d');
+          }else if($duration == 3){
+            $durationTime = $current->addDays(15)->format('y-m-d');
+          }else if($duration == 4){
+            $durationTime = $current->addDays(30)->format('y-m-d');
+          }else{
+            $durationTime = $duration;
+          }
+          //return $durationTime; die();
+          ShareDocument::where('id',$SharedId)->update(['register_required' => $registerValid,'printable'=>$printable ,'downloadable'=>$downloadable,'duration_time'=>$durationTime]);
 
           return "success";
 

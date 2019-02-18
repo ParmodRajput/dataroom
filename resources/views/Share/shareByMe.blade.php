@@ -272,7 +272,7 @@
                                 html+='/>Next 1 Month</label><label><input type="radio" name="view_duration_edit" value="5"/>Custom Date</label></li>';
 
 
-                                html+='<div class="custom_date hidden"><div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd"><input class="form-control" id="duration_time_val" type="text" readonly  /><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div>';
+                                html+='<div class="custom_date hidden"><div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd"><input class="form-control" id="duration_time_val" type="date"/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div>';
 
                                 if(register_required == 1)
 	                              {
@@ -340,7 +340,7 @@
 
 		$(document).on('click','.permission_shareDoc_update',function(){
 
-                var DurationGet  = $("input[name='view_duration_e']:checked").val();
+                var DurationGet  = $("input[name='view_duration_edit']:checked").val();
 
 			    if(DurationGet == 5)
 			    {
@@ -374,8 +374,11 @@
 
 			              },
 			              success:function(response){
-
-			                // alert(response);
+                                if (response == "success") {
+                                    swal("updated successfully", "", "success");
+                                }else{
+                                	 swal("something wrong", "", "error");
+                                }
 
 			              }
 
