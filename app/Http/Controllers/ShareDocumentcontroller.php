@@ -136,14 +136,14 @@ class ShareDocumentcontroller extends Controller
                         if($decryptedUserEmail == $authUserEmail)
                         {
                             $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('duration_time', '>=', $current_date)->get();
-
+                            $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
                             $checker = 'true';
                            
 
                         }else{
 
                         	 $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
-
+                          $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
                         }
 
                         $GodataRoom = "projects";
@@ -152,7 +152,7 @@ class ShareDocumentcontroller extends Controller
 
 
                     	$getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->get();
-
+                      $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
 
                     	$GodataRoom = "register";
                     }
