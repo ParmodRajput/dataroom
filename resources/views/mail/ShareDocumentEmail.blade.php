@@ -41,7 +41,7 @@
  <div style="float:left; width:100%; border-top:1px solid #dfdfdf;">
  
  <span style="float:left; margin:10px; 0 10px 10px;">
-<img src="{{ url('dist/img/Share_module_logo.png') }}" alt="img" border="0" />
+<img src="{{ url('dist/img/Share_module_logo.png') }}" alt="img" border="0" style="width:216px;"/>
  </span>
 
  </div>

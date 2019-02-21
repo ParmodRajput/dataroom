@@ -278,7 +278,7 @@
 				           		<i class="fas fa-chevron-up"></i>
 				           	</a>
 				           	<input type="text" id="current-number" value="1" />
-				            <input type="text" id="total-number" value="1" />
+				            <input type="text" id="total-number" value="1" readonly />
 	                       <a class="btn btn-default" id="pdf-next">
 	                       		<i class="fas fa-chevron-down"></i>
 	                       </a>
