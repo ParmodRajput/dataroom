@@ -313,6 +313,7 @@
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
 	                <canvas id="canvas"></canvas> 
+	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:-webkit-fill-available;"></div>	                
 	                <div class="button_next_pre hidden">
 				           <button id="pdf-prev">Previous</button>
 	                       <button id="pdf-next">Next</button>
@@ -462,7 +463,6 @@
 		    }
 
 		    function pdfViewer (docPath,__CURRENT_PAGE,scale){
-
 		    	var pdfData = atob(docPath);
 
 					// Loaded via <script> tag, create shortcut to access PDF.js exports.
@@ -481,35 +481,52 @@
 					  var pageNumber = __CURRENT_PAGE;
 					  pdf.getPage(pageNumber).then(function(page) {
 
-					    // var scale = 0.4;
-					    var viewport = page.getViewport(scale);
-
 					    $('.overlay_body').addClass('hidden');
 
 					    // Prepare canvas using PDF page dimensions
-					    var canvas = document.getElementById('canvas');
-					    var context = canvas.getContext('2d');
-					    canvas.height = 700;
-					    canvas.width = 700;
 
-					    $('#canvas').css('text-align','center');
-
+					    //$('#canvas').css('text-align','center');
+					    $('#canvas').css('display','none');
+					    $('#canvas_div').css('display','block');
+					    
 					    // Render PDF page into canvas context
-					    var renderContext = {
-					      canvasContext: context,
-					      viewport: viewport
-					    };
-					    var renderTask = page.render(renderContext);
-					    renderTask.then(function () {
-					      console.log('Page rendered');
-					    });
+							for( let i=1; i<=__TOTAL_PAGES; i+=1){
+								var id ='the-canvas'+i;
+								$('#canvas_div').append("<div style='background-color:gray;text-align: center;padding:20px;' ><canvas calss='the-canvas' id='"+id+"'></canvas></div>");				
+								  var canvas = document.getElementById(id);
+								  //var pageNumber = 1;
+								renderPage(canvas, pdf, pageNumber++, function pageRenderingComplete() {
+									if (pageNumber > pdf.numPages) {
+									  return; 
+									}
+									// Continue rendering of the next page
+									renderPage(canvas, pdf, pageNumber++, pageRenderingComplete);
+								});				
+							}					    
 					  });
 					}, function (reason) {
 					  // PDF loading error
 					  console.error(reason);
-				}); 
+				});
 
 		    }
+
+		function renderPage(canvas, pdf, pageNumber, callback) {
+			pdf.getPage(pageNumber).then(function(page) {
+				var scale = 1.5;
+				var viewport = page.getViewport({scale: scale});
+				var pageDisplayWidth = viewport.width;
+				var pageDisplayHeight = viewport.height;
+				var context = canvas.getContext('2d');
+				canvas.width = pageDisplayWidth;
+				canvas.height = pageDisplayHeight;
+				var renderContext = {
+				  canvasContext: context,
+				  viewport: viewport
+				};
+				page.render(renderContext).promise.then(callback);
+		  });
+		}
 
 
 			// Previous page of the PDF

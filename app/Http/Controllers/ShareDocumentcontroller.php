@@ -94,8 +94,8 @@ class ShareDocumentcontroller extends Controller
 
                 );
 
-                Mail::send('mail.ShareDocumentEmail',$data, function ($message)use ($userEmail) {
-                          $message->from('admin@prodata.com', 'Prodata room');
+                Mail::send('mail.ShareDocumentEmail',$data, function ($message)use ($SenderEmail,$userEmail) {
+                          $message->from($SenderEmail, 'Prodata room');
                           $message->to($userEmail)->subject('Share Document Email')->setBody("url('/')");
 
                 });

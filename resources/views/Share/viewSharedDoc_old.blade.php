@@ -53,11 +53,11 @@
 
     <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
 
-    <script src="{{asset('js/pdf.js')}}"></script>
+    <script src="js/pdf.js"></script>
 
-    <script src="{{asset('js/pdf.worker.js')}}"></script>
+    <script src="js/pdf.worker.js"></script>
 
-    <style>
+        <style>
 		*{margin:0; padding: 0; box-sizing: border-box; font-family: arial; color: #666;}
 		.header-set {
 		    float: left;
@@ -177,22 +177,18 @@
 
 </head>
 
-	<body oncontextmenu="return false;">
-       <div>
-       	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
+	<body>
+
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
        	<input type="hidden" id="watermark_color" data-value= '{{$watermark_color}}'>
         <input type="hidden" id="downloadable" data-value= '{{$downloadable}}'>
        	<input type="hidden" id="printable"  data-value= '{{$printable}}'>
-       	<input type="hidden" id="discussable"  data-value= '{{$discussable}}'>
-
-       	<input type="hidden" id="CurrentDocPermission" data-value= '{{$DocPermission}}'>
-       	<input type='hidden' id='currentPdfScale'>
        	<input type="hidden" id='current_rotated_deg' value='0'>
-       	<input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}'/>
-       	<input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
 
-		<div class="header-set">
+     
+       	<input type='hidden' id='currentPdfScale'>
+
+       			<div class="header-set">
 			<section><div class="image-name">
 				<i class="fa fa-image"></i>
 				<p>{{$doc_name}}</p>
@@ -202,10 +198,8 @@
 			<a id="plus" href="javascript:;"><i class="fas fa-search-plus"></i></a>
 				</div>
 				<div class="round">
-
-				<a id='rotate_doc_left' href="javascript:;"><i class="fas fa-redo"></i></a>
-				<a id='rotate_doc_right' href="javascript:;"><i class="fas fa-undo"></i></a>
-
+					<a id='rotate_doc_left' href="javascript:;"><i class="fas fa-redo"></i></a>
+					<a id='rotate_doc_right' href="javascript:;"><i class="fas fa-undo"></i></a>
 				</div>
 				<div class="view">
 				<a href="javascript:;" class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></a>
@@ -221,18 +215,67 @@
                     </a>
 
 					<a class='print_document' href=""><i class="fas fa-print"></i></a>
-					<a href="{{url('/')}}/project/{{$project_id}}/questions" target="_blank"><i class="fas fa-comment"></i></a>
 				</div>
 				<div class="share">
-				<a href="javascript:;"><i class="fas fa-share-alt"></i> Share</a>
-				</div>
+
+				 <a onclick="myFunction();" href="javascript:;">Get shareable link <img src="{{ asset('dist/img/link-button.png ')}}"></a>
+
+
+				</div> 
+
+				
+    
 			</div>
+
+
+<!-- 		<div class="top_head col-md-12">
+		<div class="left_whole col-md-6">
+			<div class="left_text">
+			<i class="fa fa-image"></i> <a href="#">{{$doc_name}}</a>
+			</div>
+		</div>
+		<div class="zoom_icons">
+		<span id="minus"><i class='fas fa-search-minus'></i></span>
+		<span id="plus"><i class='fas fa-search-plus'></i></span>
+		</div>
+
+		<div class="repeat_icons">
+		<i class="fa fa-repeat"></i>
+		<i class="fa fa-repeat"></i>
+
+		<span class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></span>
+		</div>
+
+
+		<div class="icon_center col-md-6 ">
+		<span class="ng-scope view_download">
+                <a href="javascript:void(0)"><span class="dld"><i class="fas fa-download"></i></span><span class="download_file">
+                    <form action="{{ Url('/') }}/project/documents/download" method="post">
+                      {{ csrf_field() }}
+
+                      <input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
+                      <input type="submit" name="submit">
+                  </form>
+                  </span>
+              </a>
+         </span>
+         <span class="print_document">
+		   <i class="fa fa-print"></i>
+	     </span>
+		</div>
+
+		<div class="arrows_right hidden">
+		<i class="fa fa-angle-left"></i>
+		<i class="fa fa-angle-right"></i>
+		</div>
+		</div> -->
 
         
 		<div class="Doc_viewer">
 			<input type="hidden" id='doc_source' value='{{$document_Data}}'>
 			<input type="hidden" id='doc_type' value='{{$Ext}}'>
 			<input type="hidden" id="docx_file_data" value="{{$docx_data}}">
+
 			<div class="viewer_header">
 			</div>
 
@@ -240,38 +283,36 @@
 
 				 <div class="kato" id='pageContainer'>
 		
-				 		<div class="WaterMarkTextContent noselect" style='top:-500px; left:-20%;z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:-500px; z-index: 999; left:-20%'>
 				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:-250px;left:-20%;z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:-250px;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:0px;left:-20%;z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:0px;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:250px;left:-20%;z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:250px;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap; left:-20%'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:500px; left:-20%;z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:500px;z-index: 999; left:-20%'>
 				 			<p class="content_text_wm noselect" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:750px; left:-20%;z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:750px; z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1000px; left:-20%; z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1000px; z-index: 999; left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-				 		<div class="WaterMarkTextContent noselect" style='top:1250px;left:-20%; z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1250px; z-index: 999;z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
-
-				 		<div class="WaterMarkTextContent noselect" style='top:1500px;left:-20% ;z-index:999;'>
+				 		<div class="WaterMarkTextContent noselect" style='top:1500px; z-index: 999;left:-20%'>
 				 			<p class="content_text_wm" style='white-space:nowrap;'></p>
 				 		</div>
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
-	                <canvas id="canvas"></canvas>
-	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:-webkit-fill-available;"></div> 
+	                <canvas id="canvas"></canvas> 
 	                <div class="button_next_pre hidden">
 				           <button id="pdf-prev">Previous</button>
 	                       <button id="pdf-next">Next</button>
@@ -285,7 +326,6 @@
                  <div id='docx_viewer' class="noselect"></div>
                
 			</div>
-		</div>
   
 	</body>
 	 <div class="overlay_body">
@@ -304,37 +344,14 @@
 
       $(document).ready(function(){
 
-      	var watermark_view = $('#watermark_view').data('value');
       	var watermark_text = $('#watermark_text').data('value');
-      	var text_length = watermark_text.length;
-
-      	if(text_length > 64)
-      	{
-      		$('.WaterMarkTextContent.noselect').css('font-size','20px');
-              
-            if(text_length > 74)
-      	       {
-                     $('.WaterMarkTextContent.noselect').css('font-size','17px');
-
-      	       }
-
-      	}
-
-      	if(text_length < 64)
-      	{
-           $('.WaterMarkTextContent.noselect').css('font-size','30px');
-
-		       if(text_length < 40)
-		      	{
-                   $('.WaterMarkTextContent.noselect').css('font-size','33px');
-		      	}
-      	}
-
       	var watermark_color = $('#watermark_color').data('value');
       	var downloadable = $('#downloadable').data('value');
       	var printable = $('#printable').data('value');
-      	var discussable = $('#discussable').data('value');
+      	var Url = $(location).attr('href');
 
+      	//$('#myurl').val(Url);
+      	
  // downloadable exit
       	if(downloadable !== 1)
       	{
@@ -355,22 +372,10 @@
              $('.print_document').removeClass('hidden');
       	}
 
- // discussable exit
-       // if(discussable !== 1)
-      	// {
-      	// 	$('.discuss_question').addClass('hidden');
 
-      	// }else{
-      		
-       //       $('.discuss_question').removeClass('hidden');
-      	// }
-
-
-      	if(watermark_view == 1)
-      	{
-      		$('.content_text_wm').html(watermark_text+' '+watermark_text+' '+watermark_text);
-      		$('.content_text_wm').css('color','#'+watermark_color);
-      	}
+      	$('.content_text_wm').html(watermark_text+' '+watermark_text+' '+watermark_text);
+      	$('.content_text_wm').css('color','#'+watermark_color);
+  
 
 		$(window).bind('mousewheel DOMMouseScroll', function(e)
 		{
@@ -396,28 +401,12 @@
 		$('#IMGcanvas').css('width',window_width);
         $('#IMGcanvas').css('height',window_height);
         $('#IMGcanvas').css('padding-top','1%');
-        $('#IMGcanvas').css('padding-bottom','3.2%');
-        $('#IMGcanvas').css('padding-right','4%');
-        $('#IMGcanvas').css('padding-left','4%');
+        $('#IMGcanvas').css('padding-bottom','4%');
+        $('#IMGcanvas').css('padding-right','3.2%');
 
 		var excel_path  = $('#excel_file').val();
 
-		var DocPermission = $('#CurrentDocPermission').data('value');
 
-		if(DocPermission == '7')
-		{
-			$('.fence_view').click();
-			var clickEvent = $('.fence_view');
-            setTimeout(function(){ clickEvent.trigger('click') }, 0);
-            
-            $('.fence_view').addClass('hidden');
-
-		}else{
-
-			$('.fence_view').removeClass('hidden');
-
-		}
- 
          $('.viewer_display').css('height',window_height);
 
 		   
@@ -455,153 +444,6 @@
 
 					        img.src ='data:image/jpeg;base64,'+docPath;
 
-
-					        ////////////////////////////////////////////
-
-							// document.addEventListener("DOMContentLoaded", function(e) {
-
-							// 		// Canvas
-							// 		var mouseDown = false;
-							// 		var mousePos = [0, 0];
-							// 		var canvas = document.querySelector("#myCanvas");
-							// 		var context = canvas.getContext("2d");
-							// 		canvas.addEventListener("mousewheel", zoom, false);
-							// 		canvas.addEventListener("mousedown", setMouseDown, false);
-							// 		canvas.addEventListener("mouseup", setMouseUp, false);
-							// 		canvas.addEventListener("mousemove", move, false);
-
-							// 		// Defaults
-							// 		var DEFAULT_ZOOM = .5;
-							// 		var MAX_ZOOM = 3;
-							// 		var MIN_ZOOM = .2;
-							// 		var ZOOM_STEP = .1;
-							// 		// var DRAW_POS = [0, 0];
-							// 		var DRAW_POS = [canvas.width/2, canvas.height/2];
-
-							// 		// Buttons
-							// 		var zoomInBtn = document.querySelector("#plus");
-							// 		zoomInBtn.addEventListener("click", zoomIn, false);
-							// 		var zoomOutBtn = document.querySelector("#minus");
-							// 		zoomOutBtn.addEventListener("click", zoomOut, false);
-							// 		var resetZoomBtn = document.querySelector("#resetZoom");
-							// 		resetZoomBtn.addEventListener("click", resetZoom, false);
-							// 		var resetPosBtn = document.querySelector("#resetPos");
-							// 		resetPosBtn.addEventListener("click", resetPos, false);
-
-							// 		// Image
-							// 		var loaded = false;
-							// 		var drawPos = DRAW_POS;
-							// 		var scale = DEFAULT_ZOOM;
-							// 		var image = new Image();
-							// 		image.src = 'data:image/jpeg;base64,'+docPath;
-							// 		image.addEventListener("load", function(e) {
-							// 			loaded = true;
-							// 			drawCanvas();
-							// 		}, false);
-
-							// 		// Draw the canvas
-							// 		function drawCanvas() {
-							// 			context.fillStyle = "#FFFFFF";
-							// 			context.fillRect(0,0,canvas.width,canvas.height);
-							// 			if (loaded) {
-							// 				drawImage();
-							// 			}
-							// 		}
-
-							// 		// Draw the image
-							// 		function drawImage() {
-							// 			var w = image.width * scale;
-							// 			var h = image.height * scale;
-							// 			// var x = drawPos[0];
-							// 			// var y = drawPos[1]; 
-							// 			var x = drawPos[0] - (w / 2);
-							// 			var y = drawPos[1] - (h / 2);
-							// 			context.drawImage(image, x, y, w, h);
-							// 		}
-									
-							// 		// Set the zoom with the mouse wheel
-							// 		function zoom(e) {
-							// 			if (e.wheelDelta > 0) {
-							// 				zoomIn();
-							// 			}
-							// 			else {
-							// 				zoomOut();
-							// 			}
-							// 		}
-
-							// 		// Zoom in
-							// 		function zoomIn(e) {
-							// 			if (scale < MAX_ZOOM) {
-							// 				scale += ZOOM_STEP;
-							// 				drawCanvas();
-							// 			}
-							// 		}
-
-							// 		// Zoom out
-							// 		function zoomOut(e) {
-							// 			if (scale > MIN_ZOOM) {
-							// 				scale -= ZOOM_STEP;
-							// 				drawCanvas();
-							// 			}
-							// 		}
-
-							// 		// Reset the zoom
-							// 		function resetZoom(e) {
-							// 			scale = DEFAULT_ZOOM;
-							// 			drawCanvas();
-							// 		}
-
-							// 		// Reset the position
-							// 		function resetPos(e) {
-							// 			drawPos = DRAW_POS;
-							// 			drawCanvas();
-							// 		}
-
-							// 		// Toggle mouse status
-							// 		function setMouseDown(e) {
-							// 			mouseDown = true;
-							// 			mousePos = [e.x, e.y];
-							// 		}
-							// 		function setMouseUp(e) {
-							// 			mouseDown = false;
-							// 		}
-
-							// 		// Move
-							// 		function move(e) {
-							// 			if (mouseDown) {
-							// 				var dX = 0, dY = 0;
-							// 				var delta = [e.x - mousePos[0], e.y - mousePos[1]];
-							// 				drawPos = [drawPos[0] + delta[0], drawPos[1] + delta[1]];
-							// 				mousePos = [e.x, e.y];
-							// 				drawCanvas();
-							// 			}
-							// 		}
-
-							// 	}, true);
-
-
-
-
-					        /////////////////////////////////////////////
-
-					    //     function watermarkedDataURL(canvas,text){
-									//   var tempCanvas=document.createElement('canvas');
-									//   var tempCtx=tempCanvas.getContext('2d');
-									//   var cw,ch;
-									//   cw=tempCanvas.width=canvas.width;
-									//   ch=tempCanvas.height=canvas.height;
-									//   tempCtx.drawImage(canvas,0,0);
-									//   tempCtx.font="240px verdana";
-									//   var textWidth=tempCtx.measureText(text).width;
-									//   tempCtx.globalAlpha=.50;
-									//   tempCtx.fillStyle='white'
-									//   tempCtx.fillText(text,cw-textWidth-10,ch-20);
-									//   tempCtx.fillStyle='black'
-									//   tempCtx.fillText(text,cw-textWidth-10+2,ch-20+2);
-									//   // just testing by adding tempCanvas to document
-									//   document.body.appendChild(tempCanvas);
-									//   return(tempCanvas.toDataURL());
-									// }
 		    }
 
              // pdf view
@@ -639,28 +481,28 @@
 					  var pageNumber = __CURRENT_PAGE;
 					  pdf.getPage(pageNumber).then(function(page) {
 
+					    // var scale = 0.4;
+					    var viewport = page.getViewport(scale);
+
 					    $('.overlay_body').addClass('hidden');
 
 					    // Prepare canvas using PDF page dimensions
+					    var canvas = document.getElementById('canvas');
+					    var context = canvas.getContext('2d');
+					    canvas.height = 700;
+					    canvas.width = 700;
 
-					    //$('#canvas').css('text-align','center');
-					    $('#canvas').css('display','none');
-					    $('#canvas_div').css('display','block');
-					    
+					    $('#canvas').css('text-align','center');
+
 					    // Render PDF page into canvas context
-							for( let i=1; i<=__TOTAL_PAGES; i+=1){
-								var id ='the-canvas'+i;
-								$('#canvas_div').append("<div style='background-color:gray;text-align: center;padding:20px;' ><canvas calss='the-canvas' id='"+id+"'></canvas></div>");				
-								  var canvas = document.getElementById(id);
-								  //var pageNumber = 1;
-								renderPage(canvas, pdf, pageNumber++, function pageRenderingComplete() {
-									if (pageNumber > pdf.numPages) {
-									  return; 
-									}
-									// Continue rendering of the next page
-									renderPage(canvas, pdf, pageNumber++, pageRenderingComplete);
-								});				
-							}					    
+					    var renderContext = {
+					      canvasContext: context,
+					      viewport: viewport
+					    };
+					    var renderTask = page.render(renderContext);
+					    renderTask.then(function () {
+					      console.log('Page rendered');
+					    });
 					  });
 					}, function (reason) {
 					  // PDF loading error
@@ -668,22 +510,7 @@
 				}); 
 
 		    }
-		function renderPage(canvas, pdf, pageNumber, callback) {
-			pdf.getPage(pageNumber).then(function(page) {
-				var scale = 1.5;
-				var viewport = page.getViewport({scale: scale});
-				var pageDisplayWidth = viewport.width;
-				var pageDisplayHeight = viewport.height;
-				var context = canvas.getContext('2d');
-				canvas.width = pageDisplayWidth;
-				canvas.height = pageDisplayHeight;
-				var renderContext = {
-				  canvasContext: context,
-				  viewport: viewport
-				};
-				page.render(renderContext).promise.then(callback);
-		  });
-		}
+
 
 			// Previous page of the PDF
 			$("#pdf-prev").on('click', function() {
@@ -744,34 +571,7 @@
 
        })
 
-
-         
-				   //   var excelIO = new GC.Spread.Excel.IO(); 
-
-				   //        function ImportFile() {  
-						 //    var excelUrl = "./test.xlsx";  
-
-						 //    var oReq = new XMLHttpRequest();  
-						 //    oReq.open('get', excelUrl, true);  
-						 //    oReq.responseType = 'blob';  
-						 //    oReq.onload = function () {  
-						 //        var blob = oReq.response;  
-						 //        excelIO.open(blob, LoadSpread, function (message) {  
-						 //            console.log(message);  
-						 //        });  
-						 //    };  
-						 //    oReq.send(null);  
-						 // }  
-
-							// function LoadSpread(json) {  
-							//     jsonData = json;  
-							//     workbook.fromJSON(json);  
-
-							//     workbook.setActiveSheet("Revenues (Sales)");  
-							// }  
-
-
-							 /* set up XMLHttpRequest */
+					/* set up XMLHttpRequest */
 
                     if(docType == 'xlsx' || docType == 'xls' || docType == 'xlsb' ||  docType == 'xltx' || docType == 'xlt'){
 
@@ -921,26 +721,24 @@
             e.preventDefault(); return false; 
         });
 
+          
+        // left rotate functionality
 
 
-     // rotate functionality
+	     $('#rotate_doc_left').click(function(){
+
+	       var current_Deg = $('#current_rotated_deg').val();
+
+	       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
+
+	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+
+	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
 
 
-     $('#rotate_doc_left').click(function(){
+	     });  
 
-
-       var current_Deg = $('#current_rotated_deg').val();
-
-       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
-
-       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
-
-       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
-
-
-     });
-
-         // Right rotate functionality
+	      // Right rotate functionality
 
 
 	     $('#rotate_doc_right').click(function(){
@@ -955,6 +753,23 @@
 
 
 	     });  
+
+     
+
+       function myFunction() {
+		  var copyText = document.getElementById("myurl");
+
+		  var e = jQuery.Event("keydown");
+
+
+		  copyText.select();
+
+		  e.which = 67; // 'C' key code value
+	      e.ctrlKey = true; 
+
+		  document.execCommand("copy");
+		  alert("Copied the text: " + copyText.value);
+		}
 
 	</script>
 

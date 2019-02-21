@@ -1,6 +1,14 @@
 <!doctype html>
 <html>
 <head>
+<style>
+.icon-div{
+    text-align: center;
+    padding: 10px;
+    color: #8080807d;
+    margin-bottom: 10px;	
+}
+</style>
 <meta charset="utf-8">
 <title>Pro Dataroom</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,7 +26,9 @@
 		<div class="left-bar">
 			<ul>
 				<li>Menu</li>
-			<li><a href="{{url('/')}}/{{$GodataRoom}}">Go to Dataroom</a></li>
+				@auth
+				<li><a href="{{url('/')}}/{{$GodataRoom}}">Go to Dataroom</a></li>
+				@endauth
 				<li><a href="">Shared with me</a></li>
 				<li><a href=""><span><i class="far fa-clock"></i></span> Recent</a></li>
 			</ul>
@@ -42,12 +52,28 @@
 				<h6>Files</h6>
 				<ul class="share_document_file">
 					@foreach($DocumentFile as $DocumentFile)
+					 <?php $fileExt = pathinfo($DocumentFile['document_name'], PATHINFO_EXTENSION);?>
 						<li>
 							<a class='overview_shared_document' href="{{url('/')}}/Overview/{{$DocumentFile['access_token']}}/{{$DocumentFile['project_id']}}/{{$DocumentFile['Email']}}/{{$DocumentFile['document_id']}}/34:34:8844.4" target="_blank">
-								<span>
-									<i class="fas fa-file"></i>
-									<b>{{$DocumentFile['document_name']}}</b>
-								</span>
+								@if($fileExt =='pdf')
+								<div class="icon-div">
+									<i class="fas fa-file-pdf fa-7x" aria-hidden="true"></i>
+								</div>
+								@elseif($fileExt == 'jpeg' || $fileExt =='jpg' || $fileExt =='png')
+								<div class="icon-div">
+									<i class="fas fa-file-image fa-7x"></i>
+								</div>
+								@else
+								<div class="icon-div">
+									<i class="fas fa-file fa-7x"></i>
+								</div>												
+								@endif
+								<div>								
+									<span style="word-break: break-word;">
+										<i class="fas fa-file"></i>
+										<b>{{$DocumentFile['document_name']}}</b>
+									</span>
+								</div>
 							</a>
 						</li>	
 					@endforeach				
