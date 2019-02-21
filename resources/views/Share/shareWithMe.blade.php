@@ -20,7 +20,7 @@
 <body>
 	<div class="main-div">
 		<header class="header-top">
-			<a class="logo" href=""><img src="{{url('/')}}/dist/img/Share_module_logo.png" alt="logo"/></a><section><input placeholder="Search Here..." type="text"/><span><a href=""><i class="fas fa-address-book"></i></a><a href=""><i class="fas fa-bell"></i></a></span></section>
+			<a class="logo" href=""><img src="{{url('/')}}/dist/img/Share_module_logo.jpg" alt="logo"/></a><section><input placeholder="Search Here..." type="text"/><span><a href=""><i class="fas fa-address-book"></i></a><a href=""><i class="fas fa-bell"></i></a></span></section>
 		</header>
 	<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 		<div class="left-bar">
