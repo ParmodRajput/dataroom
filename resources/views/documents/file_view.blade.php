@@ -177,7 +177,8 @@
 
 </head>
 
-	<body oncontextmenu="return false;">
+	<!-- <body *oncontextmenu="return false;"> -->
+		<body>
        <div>
        	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
@@ -273,8 +274,14 @@
 	                <canvas id="canvas"></canvas>
 	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:-webkit-fill-available;"></div> 
 	                <div class="button_next_pre hidden">
-				           <button id="pdf-prev">Previous</button>
-	                       <button id="pdf-next">Next</button>
+				           <a class="btn btn-default" id="pdf-prev">
+				           		<i class="fas fa-chevron-up"></i>
+				           	</a>
+				           	<input type="text" id="current-number" value="1" />
+				            <input type="text" id="total-number" value="1" />
+	                       <a class="btn btn-default" id="pdf-next">
+	                       		<i class="fas fa-chevron-down"></i>
+	                       </a>
 	                </div> 
 
 	                <canvas id="IMGcanvas" width="1500" height="700"></canvas> 
@@ -650,7 +657,7 @@
 					    // Render PDF page into canvas context
 							for( let i=1; i<=__TOTAL_PAGES; i+=1){
 								var id ='the-canvas'+i;
-								$('#canvas_div').append("<div style='background-color:gray;text-align: center;padding:20px;' ><canvas calss='the-canvas' id='"+id+"'></canvas></div>");				
+								$('#canvas_div').append("<div style='background-color:gray;text-align: center;padding:20px;' ><canvas calss='the-canvas' id='"+id+"' data-id='"+ i +"'></canvas></div>");				
 								  var canvas = document.getElementById(id);
 								  //var pageNumber = 1;
 								renderPage(canvas, pdf, pageNumber++, function pageRenderingComplete() {
