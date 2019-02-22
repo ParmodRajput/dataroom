@@ -274,14 +274,28 @@
 	                <canvas id="canvas"></canvas>
 	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:-webkit-fill-available;"></div> 
 	                <div class="button_next_pre hidden">
-				           <a class="btn btn-default" id="pdf-prev">
-				           		<i class="fas fa-chevron-up"></i>
-				           	</a>
-				           	<input type="text" id="current-number" value="1" />
-				            <input type="text" id="total-number" value="1" readonly />
-	                       <a class="btn btn-default" id="pdf-next">
-	                       		<i class="fas fa-chevron-down"></i>
-	                       </a>
+	                	<div class="row">
+	                		<div class="col-md-2 col-md-offset-5">
+	                			<div class="row">
+	                				<div class="" style="width:25%; float:left;">
+							           <a class="form-control" id="pdf-prev" style="background-color:#eee;" data-id ="1">
+							           		<i class="fas fa-chevron-up"></i>
+							           	</a>
+	                				</div>
+	                				<div class=""style="width:25%; float:left;">
+									    <div class="input-group" style="width:66px;">
+									      <input name="currentnumber" type="text" id="currentPage" class="form-control" value="1"/>
+									      <span class="input-group-addon" id="total-page">1</span>
+									    </div>	                					
+	                				</div>
+	                				<div class="" style="width:25%; float:left;">
+				                       <a class="form-control" id="pdf-next" style="background-color:#eee;">
+				                       		<i class="fas fa-chevron-down"></i>
+				                       </a>	                					
+	                				</div>	                					                				
+	                			</div>				           	
+	                		</div>
+	                	</div>
 	                </div> 
 
 	                <canvas id="IMGcanvas" width="1500" height="700"></canvas> 
@@ -653,7 +667,7 @@
 					    //$('#canvas').css('text-align','center');
 					    $('#canvas').css('display','none');
 					    $('#canvas_div').css('display','block');
-					    
+					    $('#total-page').text(__TOTAL_PAGES);
 					    // Render PDF page into canvas context
 							for( let i=1; i<=__TOTAL_PAGES; i+=1){
 								var id ='the-canvas'+i;
@@ -694,9 +708,13 @@
 
 			// Previous page of the PDF
 			$("#pdf-prev").on('click', function() {
-			    if(__CURRENT_PAGE != 1)
-
-			        pdfViewer(docPath,--__CURRENT_PAGE,scale);
+			    	var page_id = $('#currentPage').val();
+				    	var prev_page_id = page_id;
+			    	if(prev_page_id > 0 ){
+			    		var position =  $('#the-canvas'+prev_page_id).offset().top;
+			    		alert(position);
+						$('#canvas_div').scrollTop(position);			    		
+			    	}
 			});
 
 			// Next page of the PDF

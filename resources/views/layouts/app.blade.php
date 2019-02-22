@@ -3319,7 +3319,7 @@ $(document).on('click','.doc_permission_modal',function(){
   $(document).on('click','#shareDocForUsers',function(){
 
     var userEmails = $(".shareDocUsers").val();
-
+    var EmailsTitle = $(".shareDocEmailTitle").val();                           
      if(userEmails == '' ){
 
          $('.error_email').removeClass('hidden');
@@ -3370,6 +3370,7 @@ $(document).on('click','.doc_permission_modal',function(){
                 printable   : printable,
                 downloadable   : downloadable,
                 DocumentId   : DocumentId,
+                EmailsTitle :EmailsTitle,
 
               },
               success:function(response){

@@ -25,6 +25,7 @@ class ShareDocumentcontroller extends Controller
 
      $project_id = $request->project_id;
      $GetuserEmails = $request->userEmails;
+     $emailtitle = $request->EmailsTitle;
      $userEmails = explode(',',$GetuserEmails);
      $durationTime = $request->durationTime;
 
@@ -74,6 +75,7 @@ class ShareDocumentcontroller extends Controller
          $SrDocument->register_required = $registerValid;
          $SrDocument->printable = $printable;
          $SrDocument->downloadable = $downloadable;
+         $SrDocument->email_title = $emailtitle;
          $SrDocument->access_token = $time;
          $SrDocument->save();
 
@@ -91,7 +93,7 @@ class ShareDocumentcontroller extends Controller
                           'SenderEmail'=> $SenderEmail,
                           'SenderName' =>  $SenderName,
                           'verifyUrl'  => $verifyUrl,
-
+                          'emailtitle'      =>$emailtitle,
                 );
 
                 Mail::send('mail.ShareDocumentEmail',$data, function ($message)use ($SenderEmail,$userEmail) {

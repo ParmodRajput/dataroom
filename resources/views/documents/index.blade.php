@@ -789,7 +789,14 @@
               <div class="error_email hidden" style='color:red'>Please Enter Valid Email</div>
             </div>
         </div>
+        <div class="center_inner">
+          <h2>Title</h2>
 
+            <div class="dynamic_title">
+              <input type="text"  name ="email_title" class="form-control shareDocEmailTitle" data-role="emailtitle" placeholder="Enter  Title">
+              <div class="error_email hidden" style='color:red'>Please Enter Title</div>
+            </div>
+        </div>
         <div class="center_inner view_duration">
           <h3>View Duration</h3>
 
