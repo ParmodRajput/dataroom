@@ -47,8 +47,13 @@ class SettingController extends Controller
       
 
       $getDocInFolder = Setting::where('project_id',$project_id)->update(['watermark_view' => $watermark_view,'watermark_text'=>$waterMark_text ,'downloadable'=>$downloadable,'printable'=>$printable]);
-
-      return "sucess";
+	if($getDocInFolder){
+		 return "sucess";
+	}else{
+		return "errore";
+	}
+	
+     
 
 
    }
