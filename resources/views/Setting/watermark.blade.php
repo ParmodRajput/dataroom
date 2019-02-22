@@ -126,7 +126,7 @@ $(document).ready(function(){
          var waterMark_text = $('#waterMark_text_ch_doc').val();
           if(waterMark_text == '')
           {
-            var waterMark_text = 'fgh';
+            var waterMark_text = 'WaterMark';
           }
 
          var project_id     = $('.project_id_Wsetting').val();

@@ -46,14 +46,17 @@ class SettingController extends Controller
       $printable   = $request->get2;
       
 
-      $getDocInFolder = Setting::where('project_id',$project_id)->update(['watermark_view' => $watermark_view,'watermark_text'=>$waterMark_text ,'downloadable'=>$downloadable,'printable'=>$printable]);
-	if($getDocInFolder){
-		 return "sucess";
-	}else{
-		return "errore";
-	}
-	
-     
+      //$getDocInFolder = Setting::where('project_id',$project_id)->update(['watermark_view' => $watermark_view,'watermark_text'=>$waterMark_text ,'downloadable'=>$downloadable,'printable'=>$printable]);
+		$getDocInFolder = Setting::updateOrCreate([
+							'project_id'   =>$project_id,
+						  ],
+						  [	
+							'watermark_view' => $watermark_view,
+							'watermark_text'=>$waterMark_text ,
+							'downloadable'=>$downloadable,
+							'printable'=>$printable
+						 ]);
+		return "sucess";
 
 
    }
