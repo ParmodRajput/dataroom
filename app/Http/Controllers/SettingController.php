@@ -54,7 +54,9 @@ class SettingController extends Controller
 							'watermark_view' => $watermark_view,
 							'watermark_text'=>$waterMark_text ,
 							'downloadable'=>$downloadable,
-							'printable'=>$printable
+							'printable'=>$printable,
+							'discussable'=>'1',
+							'watermark_color'=>'1'
 						 ]);
 		return "sucess";
 
