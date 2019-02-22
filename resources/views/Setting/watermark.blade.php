@@ -176,9 +176,11 @@ $(document).ready(function(){
 
                         },
                         success:function(response){
+                            if(response =='sucess'){
 
-                           
-                        }
+                              swal("successfull", "", "success"); 
+                            }
+                          }
 
                     });
 

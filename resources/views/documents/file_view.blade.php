@@ -234,6 +234,9 @@
 			<input type="hidden" id='doc_source' value='{{$document_Data}}'>
 			<input type="hidden" id='doc_type' value='{{$Ext}}'>
 			<input type="hidden" id="docx_file_data" value="{{$docx_data}}">
+			<input type="hidden" id="zoooom" value="100">
+			<input type="hidden" id="zoooom1" value="10">
+			
 			<div class="viewer_header">
 			</div>
 
@@ -708,13 +711,16 @@
 
 			// Previous page of the PDF
 			$("#pdf-prev").on('click', function() {
-			    	var page_id = $('#currentPage').val();
-				    	var prev_page_id = page_id;
-			    	if(prev_page_id > 0 ){
-			    		var position =  $('#the-canvas'+prev_page_id).offset().top;
-			    		alert(position);
-						$('#canvas_div').scrollTop(position);			    		
-			    	}
+				//alert('sdghfg');
+			   //  	var page_id = $('#currentPage').val();
+				  //   	var prev_page_id = page_id;
+			   //  	if(prev_page_id > 0 ){
+			   //  		var position =  $('#the-canvas'+prev_page_id).offset().top;
+			   //  		alert(position);
+						// $('#canvas_div').scrollTop(position);			    		
+			   //  	}
+
+
 			});
 
 			// Next page of the PDF
@@ -880,8 +886,19 @@
 		 
 		    // add button event listeners
 		    document.getElementById("plus").addEventListener("click", function(){
+		    	if(docType == 'jpg' || docType == 'png' || docType == 'jpeg' ){		    	
 		        scale /= scaleMultiplier;
 		        draw(scale, translatePos);
+				}
+				if(docType == 'pdf'){
+		    		var counter ='';
+		    		counter++;
+		    		var zom = counter *10;
+		    		var final =$('#zoooom').val()+zom;
+		    		$('#zoooom').val(final);
+                  $('#canvas_div').css('zoom',final+'%');
+				}	
+
 		    }, false);
 		 
 		    document.getElementById("minus").addEventListener("click", function(){
@@ -894,8 +911,13 @@
 		    	}
 
 		    	if(docType == 'pdf')
-		    	{
-                  
+		    	{  
+		    		var counter ='';
+		    		counter++;
+		    		var zom = counter *10;
+		    		var final =$('#zoooom').val()-zom;
+		    		$('#zoooom').val(final);
+                  $('#canvas_div').css('zoom',final+'%');
 		    	}
 
 		    }, false);
