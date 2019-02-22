@@ -177,8 +177,8 @@
 
 </head>
 
-	<!-- <body *oncontextmenu="return false;"> -->
-		<body>
+	<body *oncontextmenu="return false;">
+		<!-- <body> -->
        <div>
        	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
