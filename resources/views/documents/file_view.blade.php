@@ -292,7 +292,7 @@
 									    </div>	                					
 	                				</div>
 	                				<div class="" style="width:25%; float:left;">
-				                       <a class="form-control" id="pdf-next" style="background-color:#eee;" href="">
+				                       <a class="form-control" id="pdf-next" style="background-color:#eee;" href="#the-canvas1">
 				                       		<i class="fas fa-chevron-down"></i>
 				                       </a>	                					
 	                				</div>	                					                				
@@ -726,7 +726,7 @@
 		               	var prev_page =parseInt(canvas_data_id)-1;
 		               	var next_page =parseInt(canvas_data_id)+1;
 
-		               if(prev_page >= 1 || next_page<=4){
+		               if(prev_page >= 1 || next_page <= 4){
 		      			var prev_page_href ="#the-canvas"+prev_page;
 		      			var next_page_href ="#the-canvas"+next_page;		               	
 		                $("#pdf-prev").attr("href",'#the-canvas'+canvas_data_id); 
@@ -756,15 +756,18 @@
 			        window.location.hash = hash;
 			      });
 				      var currentPage =  $('#currentPage').val();
+
 				      var prev_page =parseInt(currentPage) -1;
+				      //alert(prev_page);
 				      var next_page =parseInt(currentPage)+1;
-				      alert(next_page);
+				      //alert(next_page);
 		      		if(prev_page >= 1){
 		      			var prev_page_href ="#the-canvas"+prev_page;
 		      			var next_page_href ="#the-canvas"+next_page;
 		      			//alert(canvas_href);
 		    			$("#pdf-prev").attr("href",prev_page_href); 
 		    			$('#pdf-next').attr("href",next_page_href);
+		    			$('#currentPage').val(prev_page);
 		      		}  
 			    } // End if
  
@@ -791,13 +794,14 @@
 				      var currentPage =  $('#currentPage').val();
 				      var prev_page =parseInt(currentPage) -1;
 				      var next_page =parseInt(currentPage)+1;
-				      alert(next_page);
+				    // alert(currentPage);
 		      		if(next_page <= 4){
 		      			var prev_page_href ="#the-canvas"+prev_page;
 		      			var next_page_href ="#the-canvas"+next_page;
 		      			//alert(canvas_href);
 		    			$("#pdf-prev").attr("href",prev_page_href); 
 		    			$('#pdf-next').attr("href",next_page_href);
+		    			$('#currentPage').val(next_page);
 		      		}  
 			    } // End if
 			});
