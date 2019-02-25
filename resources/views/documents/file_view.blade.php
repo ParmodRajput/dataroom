@@ -891,12 +891,17 @@
 		        draw(scale, translatePos);
 				}
 				if(docType == 'pdf'){
+
 		    		var counter ='';
 		    		counter++;
-		    		var zom = counter *10;
-		    		var final =$('#zoooom').val()+zom;
+		    		var zom = parseInt(counter * 10);
+		    		var plus_zoom =$('#zoooom').val();
+		    		alert(zom);
+		    		var final =(plus_zoom + zom);
+		    		console.log(final);
 		    		$('#zoooom').val(final);
-                  $('#canvas_div').css('zoom',final+'%');
+                    $('#canvas_div').css('zoom',final +'%');
+
 				}	
 
 		    }, false);
@@ -914,10 +919,14 @@
 		    	{  
 		    		var counter ='';
 		    		counter++;
-		    		var zom = counter *10;
-		    		var final =$('#zoooom').val()-zom;
-		    		$('#zoooom').val(final);
-                  $('#canvas_div').css('zoom',final+'%');
+		    		var zom = counter * 20;
+		    		var minus_zoom = $('#zoooom').val();
+		    		if(minus_zoom > 20){
+		    			var final =minus_zoom-zom;
+		    			console.log(zom);
+		    			$('#zoooom').val(final);
+                 	 	$('#canvas_div').css('zoom',final+'%');
+		    		}
 		    	}
 
 		    }, false);
