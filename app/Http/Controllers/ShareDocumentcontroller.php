@@ -62,10 +62,10 @@ class ShareDocumentcontroller extends Controller
      $SenderEmail = Auth::user()->email;
      $SenderName = Auth::user()->name;
 
-    foreach ($DocumentId as $document) {
+    
 
      foreach ($userEmails as $userEmail) {
-
+        foreach ($DocumentId as $document) {
          $SrDocument = new ShareDocument();
          $SrDocument->duration_time = $durationTime;
          $SrDocument->project_id = $project_id;
@@ -96,13 +96,14 @@ class ShareDocumentcontroller extends Controller
                           'emailtitle'      =>$emailtitle,
                 );
 
-                Mail::send('mail.ShareDocumentEmail',$data, function ($message)use ($SenderEmail,$userEmail) {
+               
+
+     }
+      Mail::send('mail.ShareDocumentEmail',$data, function ($message)use ($SenderEmail,$userEmail) {
                           $message->from($SenderEmail, 'Prodata room');
                           $message->to($userEmail)->subject('Share Document Email')->setBody("url('/')");
 
                 });
-
-     }
 
  }
 
