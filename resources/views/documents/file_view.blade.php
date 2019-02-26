@@ -707,9 +707,11 @@
 				};
 				page.render(renderContext).promise.then(callback);
 		  });
-		}
+		}	 
+			
 		    $('#canvas_div').on('scroll',function(){
-		    	//alert('sfgsdf');
+		    	var tatal_canvas = parseInt($('#total-page').text());
+		    	//alert(tatal_canvas);
 		        var Wscroll = $(this).scrollTop();
 		        $('canvas[id^="the-canvas"]').each(function(){
 		            var ThisOffset = $(this).closest('canvas').offset();
@@ -726,7 +728,7 @@
 		               	var prev_page =parseInt(canvas_data_id)-1;
 		               	var next_page =parseInt(canvas_data_id)+1;
 
-		               if(prev_page >= 1 || next_page <= 4){
+		               if(prev_page >= 1 || next_page <= tatal_canvas){
 		      			var prev_page_href ="#the-canvas"+prev_page;
 		      			var next_page_href ="#the-canvas"+next_page;		               	
 		                $("#pdf-prev").attr("href",'#the-canvas'+canvas_data_id); 
@@ -775,6 +777,8 @@
 
 			// Next page of the PDF
 			$("#pdf-next").on('click', function() {
+				var tatal_canvas = parseInt($('#total-page').text());
+				//alert(tatal_canvas);
 			    // Add smooth scrolling to all links
 			    // Make sure this.hash has a value before overriding default behavior
 			    if (this.hash !== "") {
@@ -795,7 +799,7 @@
 				      var prev_page =parseInt(currentPage) -1;
 				      var next_page =parseInt(currentPage)+1;
 				    // alert(currentPage);
-		      		if(next_page <= 4){
+		      		if(next_page <= tatal_canvas){
 		      			var prev_page_href ="#the-canvas"+prev_page;
 		      			var next_page_href ="#the-canvas"+next_page;
 		      			//alert(canvas_href);

@@ -275,7 +275,8 @@
 			<input type="hidden" id='doc_source' value='{{$document_Data}}'>
 			<input type="hidden" id='doc_type' value='{{$Ext}}'>
 			<input type="hidden" id="docx_file_data" value="{{$docx_data}}">
-
+			<input type="hidden" id="zoooom" value="100">
+			<input type="hidden" id="zoooom1" value="10">
 			<div class="viewer_header">
 			</div>
 
@@ -315,8 +316,28 @@
 	                <canvas id="canvas"></canvas> 
 	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:-webkit-fill-available;"></div>	                
 	                <div class="button_next_pre hidden">
-				           <button id="pdf-prev">Previous</button>
-	                       <button id="pdf-next">Next</button>
+	                	<div class="row">
+	                		<div class="col-md-2 col-md-offset-5">
+	                			<div class="row">
+	                				<div class="" style="width:25%; float:left;">
+							           <a class="form-control" id="pdf-prev" style="background-color:#eee;"  href="#the-canvas1">
+							           		<i class="fas fa-chevron-up"></i>
+							           	</a>
+	                				</div>
+	                				<div class=""style="width:25%; float:left;">
+									    <div class="input-group" style="width:66px;">
+									      <input name="currentnumber" type="text" id="currentPage" class="form-control" value="1"/>
+									      <span class="input-group-addon" id="total-page">1</span>
+									    </div>	                					
+	                				</div>
+	                				<div class="" style="width:25%; float:left;">
+				                       <a class="form-control" id="pdf-next" style="background-color:#eee;" href="#the-canvas1">
+				                       		<i class="fas fa-chevron-down"></i>
+				                       </a>	                					
+	                				</div>	                					                				
+	                			</div>				           	
+	                		</div>
+	                	</div>
 	                </div> 
 
 	                <canvas id="IMGcanvas" width="1500" height="700"></canvas> 
@@ -488,11 +509,11 @@
 					    //$('#canvas').css('text-align','center');
 					    $('#canvas').css('display','none');
 					    $('#canvas_div').css('display','block');
-					    
+					    $('#total-page').text(__TOTAL_PAGES);
 					    // Render PDF page into canvas context
 							for( let i=1; i<=__TOTAL_PAGES; i+=1){
 								var id ='the-canvas'+i;
-								$('#canvas_div').append("<div style='background-color:gray;text-align: center;padding:20px;' ><canvas calss='the-canvas' id='"+id+"'></canvas></div>");				
+								$('#canvas_div').append("<div style='background-color:gray;text-align:center;padding:20px;' ><canvas calss='the-canvas' id='"+id+"' data-id='"+ i +"' ></canvas></div>");				
 								  var canvas = document.getElementById(id);
 								  //var pageNumber = 1;
 								renderPage(canvas, pdf, pageNumber++, function pageRenderingComplete() {
@@ -511,6 +532,7 @@
 
 		    }
 
+
 		function renderPage(canvas, pdf, pageNumber, callback) {
 			pdf.getPage(pageNumber).then(function(page) {
 				var scale = 1.5;
@@ -527,20 +549,105 @@
 				page.render(renderContext).promise.then(callback);
 		  });
 		}
+		    $('#canvas_div').on('scroll',function(){
+		    	var tatal_canvas = parseInt($('#total-page').text());
+				//alert(tatal_canvas);
+		        var Wscroll = $(this).scrollTop();
+		        $('canvas[id^="the-canvas"]').each(function(){
+		            var ThisOffset = $(this).closest('canvas').offset();
+		            //console.log(ThisOffset);
+		            if(Wscroll > ThisOffset.top &&  Wscroll < ThisOffset.top  + $(this).closest('canvas').outerHeight(true)){
+		                var tres = $(this).closest('canvas').attr('id');
+		                //alert(tres);
+		                console.log($(this).attr('id')); // will return undefined if this anchor not has an Id
+		                // to get parent <p> id
+		                console.log($(this).closest('canvas').attr('id')); // will return the parent <p> id
+		                var parent_page = $(this).closest('canvas').attr('id');
+		               // alert(parent_page);
+		               	var canvas_data_id = $(this).closest('canvas').attr('data-id');
+		               	var prev_page =parseInt(canvas_data_id)-1;
+		               	var next_page =parseInt(canvas_data_id)+1;
 
+		               if(prev_page >= 1 || next_page <= tatal_canvas){
+		      			var prev_page_href ="#the-canvas"+prev_page;
+		      			var next_page_href ="#the-canvas"+next_page;		               	
+		                $("#pdf-prev").attr("href",'#the-canvas'+canvas_data_id); 
+		                 $("#pdf-next").attr("href",'#'+parent_page);
+		                $('#currentPage').val($(this).closest('canvas').attr('data-id'));
+		               }
+		            }
+		        });
+		    });
 
 			// Previous page of the PDF
 			$("#pdf-prev").on('click', function() {
-			    if(__CURRENT_PAGE != 1)
 
-			        pdfViewer(docPath,--__CURRENT_PAGE,scale);
+			    // Add smooth scrolling to all links
+			    // Make sure this.hash has a value before overriding default behavior
+			    if (this.hash !== "") {
+			      // Prevent default anchor click behavior
+			      event.preventDefault();
+
+			      // Store hash
+			      var hash = this.hash;
+			      // Using jQuery's animate() method to add smooth page scroll
+			      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+			      $('html, body').animate({
+			        scrollTop: $(hash).offset().top
+			      }, 100, function(){			   
+			        // Add hash (#) to URL when done scrolling (default click behavior)
+			        window.location.hash = hash;
+			      });
+				      var currentPage =  $('#currentPage').val();
+
+				      var prev_page =parseInt(currentPage) -1;
+				      //alert(prev_page);
+				      var next_page =parseInt(currentPage)+1;
+				      //alert(next_page);
+		      		if(prev_page >= 1){
+		      			var prev_page_href ="#the-canvas"+prev_page;
+		      			var next_page_href ="#the-canvas"+next_page;
+		      			//alert(canvas_href);
+		    			$("#pdf-prev").attr("href",prev_page_href); 
+		    			$('#pdf-next').attr("href",next_page_href);
+		    			$('#currentPage').val(prev_page);
+		      		}  
+			    } // End if
 			});
 
 			// Next page of the PDF
 			$("#pdf-next").on('click', function() {
-			    if(__CURRENT_PAGE != __TOTAL_PAGES)
+				var tatal_canvas = parseInt($('#total-page').text());
+				//alert(tatal_canvas);				
+			    // Add smooth scrolling to all links
+			    // Make sure this.hash has a value before overriding default behavior
+			    if (this.hash !== "") {
+			      // Prevent default anchor click behavior
+			      event.preventDefault();
 
-			        pdfViewer(docPath,++__CURRENT_PAGE,scale);
+			      // Store hash
+			      var hash = this.hash;
+			      // Using jQuery's animate() method to add smooth page scroll
+			      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+			      $('html, body').animate({
+			        scrollTop: $(hash).offset().top
+			      }, 100, function(){			   
+			        // Add hash (#) to URL when done scrolling (default click behavior)
+			        window.location.hash = hash;
+			      });
+				      var currentPage =  $('#currentPage').val();
+				      var prev_page =parseInt(currentPage) -1;
+				      var next_page =parseInt(currentPage)+1;
+				    // alert(currentPage);
+		      		if(next_page <= tatal_canvas){
+		      			var prev_page_href ="#the-canvas"+prev_page;
+		      			var next_page_href ="#the-canvas"+next_page;
+		      			//alert(canvas_href);
+		    			$("#pdf-prev").attr("href",prev_page_href); 
+		    			$('#pdf-next').attr("href",next_page_href);
+		    			$('#currentPage').val(next_page);
+		      		}  
+			    } // End if
 			});
 
 
@@ -672,12 +779,26 @@
 		 
 		    // add button event listeners
 		    document.getElementById("plus").addEventListener("click", function(){
+		    	if(docType == 'jpg' || docType == 'png' || docType == 'jpeg' ){		    	
 		        scale /= scaleMultiplier;
 		        draw(scale, translatePos);
+				}
+				if(docType == 'pdf'){
+
+		    		var counter ='';
+		    		counter++;
+		    		var zom = parseInt(counter * 25);
+		    		var plus_zoom =$('#zoooom').val();
+		    		if(plus_zoom < 300){
+			    		var final =(parseInt(plus_zoom) + zom);
+			    		console.log(final);
+			    		$('#zoooom').val(final);
+	                    $('#canvas_div').css('zoom',final +'%');
+		    		}
+				}
 		    }, false);
 		 
 		    document.getElementById("minus").addEventListener("click", function(){
-
 		    	if(docType == 'jpg' || docType == 'png' || docType == 'jpeg' )
 		    	{
                    
@@ -686,8 +807,17 @@
 		    	}
 
 		    	if(docType == 'pdf')
-		    	{
-                  
+		    	{  
+		    		var counter ='';
+		    		counter++;
+		    		var zom = counter * 20;
+		    		var minus_zoom = $('#zoooom').val();
+		    		if(minus_zoom > 20){
+		    			var final =minus_zoom-zom;
+		    			console.log(zom);
+		    			$('#zoooom').val(final);
+                 	 	$('#canvas_div').css('zoom',final+'%');
+		    		}
 		    	}
 
 		    }, false);
