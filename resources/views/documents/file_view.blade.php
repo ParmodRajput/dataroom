@@ -1064,13 +1064,30 @@
 
      // $('#rotate_doc_left').click(function(){
      	function rotate_doc_left(){
-	       var current_Deg = $('#current_rotated_deg').val();
+			var docType2 = $('#doc_type').val();
+			if(docType2 == 'jpg' || docType2 == 'png' || docType2 == 'jpeg' ){
+			   var current_Deg = $('#current_rotated_deg').val();
 
-	       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
+			   var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
 
-	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+			   $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
 
-	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
+			   var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);				
+			}
+			if(docType2 == 'pdf'){
+				var Wscroll = $(this).scrollTop();
+		        $('canvas[id^="the-canvas"]').each(function(){
+		            var ThisOffset = $(this).closest('canvas').offset();
+		            if(Wscroll > ThisOffset.top &&  Wscroll < ThisOffset.top  + $(this).closest('canvas').outerHeight(true)){ 
+		                console.log($(this).closest('canvas').attr('id')); // will return the parent <p> id
+		                var parent_page = $(this).closest('canvas').attr('id');
+						var current_Deg = $('#current_rotated_deg').val();
+						var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
+						$('#'+parent_page).css('transform','rotate('+Rotated_Deg+'deg)');
+						var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);					   
+		            }
+		        });
+			}			
      	}
      // });
 
@@ -1079,13 +1096,32 @@
 
 	     // $('#rotate_doc_right').click(function(){
 	    function rotate_doc_right(){
-	       var current_Deg = $('#current_rotated_deg').val();
+			var docType2 = $('#doc_type').val();
+			//alert(docType2);
+			if(docType2 == 'jpg' || docType2 == 'png' || docType2 == 'jpeg' ){
+			   var current_Deg = $('#current_rotated_deg').val();
 
-	       var Rotated_Deg = parseInt(current_Deg) - parseInt('90');
+			   var Rotated_Deg = parseInt(current_Deg) - parseInt('90');
 
-	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
+			   $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
 
-	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);	    	
+			   var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);				
+			}	
+			if(docType2 == 'pdf'){
+				var Wscroll = $(this).scrollTop();
+		        $('canvas[id^="the-canvas"]').each(function(){
+		            var ThisOffset = $(this).closest('canvas').offset();
+		            if(Wscroll > ThisOffset.top &&  Wscroll < ThisOffset.top  + $(this).closest('canvas').outerHeight(true)){ 
+		                console.log($(this).closest('canvas').attr('id')); // will return the parent <p> id
+		                var parent_page = $(this).closest('canvas').attr('id');
+		               // alert(parent_page);
+					   var current_Deg = $('#current_rotated_deg').val();
+					   var Rotated_Deg = parseInt(current_Deg) - parseInt('90');
+					   $('#'+parent_page).css('transform','rotate('+Rotated_Deg+'deg)');
+					   var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);					   
+		            }
+		        });
+			}		
 	    }
 	     // });  
 
