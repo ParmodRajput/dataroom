@@ -198,8 +198,8 @@
 			<a id="plus" href="javascript:;"><i class="fas fa-search-plus"></i></a>
 				</div>
 				<div class="round">
-					<a id='rotate_doc_left' href="javascript:;"><i class="fas fa-redo"></i></a>
-					<a id='rotate_doc_right' href="javascript:;"><i class="fas fa-undo"></i></a>
+					<a id='rotate_doc_left' href="javascript:;" onclick="rotate_doc_left();"><i class="fas fa-redo"></i></a>
+					<a id='rotate_doc_right' href="javascript:;" onclick="rotate_doc_right();"><i class="fas fa-undo"></i></a>
 				</div>
 				<div class="view">
 				<a href="javascript:;" class="fence_view"><img src="{{url('/')}}/dist/img/fance.png"></img></a>
