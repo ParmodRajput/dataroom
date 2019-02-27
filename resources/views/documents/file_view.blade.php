@@ -204,8 +204,8 @@
 				</div>
 				<div class="round">
 
-				<a id='rotate_doc_left' href="javascript:;"><i class="fas fa-redo"></i></a>
-				<a id='rotate_doc_right' href="javascript:;"><i class="fas fa-undo"></i></a>
+				<a id='rotate_doc_left' href="javascript:;" onclick="rotate_doc_left();"><i class="fas fa-redo"></i></a>
+				<a id='rotate_doc_right' href="javascript:;" onclick="rotate_doc_right();"><i class="fas fa-undo"></i></a>
 
 				</div>
 				<div class="view">
@@ -1062,35 +1062,32 @@
      // rotate functionality
 
 
-     $('#rotate_doc_left').click(function(){
+     // $('#rotate_doc_left').click(function(){
+     	function rotate_doc_left(){
+	       var current_Deg = $('#current_rotated_deg').val();
 
+	       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
 
-       var current_Deg = $('#current_rotated_deg').val();
+	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
 
-       var Rotated_Deg = parseInt(current_Deg) + parseInt('90');
-
-       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
-
-       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
-
-
-     });
+	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
+     	}
+     // });
 
          // Right rotate functionality
 
 
-	     $('#rotate_doc_right').click(function(){
-
+	     // $('#rotate_doc_right').click(function(){
+	    function rotate_doc_right(){
 	       var current_Deg = $('#current_rotated_deg').val();
 
 	       var Rotated_Deg = parseInt(current_Deg) - parseInt('90');
 
 	       $('#IMGcanvas').css('transform','rotate('+Rotated_Deg+'deg)');
 
-	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);
-
-
-	     });  
+	       var current_Deg = $('#current_rotated_deg').val(Rotated_Deg);	    	
+	    }
+	     // });  
 
 	</script>
 
