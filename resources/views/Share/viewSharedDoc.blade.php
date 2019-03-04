@@ -177,8 +177,7 @@
 
 </head>
 
-	<body>
-
+	<body oncontextmenu="return false;">
        	<input type="hidden" id="watermark_text" data-value= '{{$watermark_text}}'>
        	<input type="hidden" id="watermark_color" data-value= '{{$watermark_color}}'>
         <input type="hidden" id="downloadable" data-value= '{{$downloadable}}'>
