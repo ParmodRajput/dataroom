@@ -984,6 +984,19 @@
 		    		}
 				}	
 
+				if(docType == 'xlsx' || docType == 'xls' || docType == 'xlsb' ||  docType == 'xltx' || docType == 'xlt'){
+					var counter ='';
+		    		counter++;
+		    		var zom = parseInt(counter * 25);
+		    		var plus_zoom =$('#zoooom').val();
+		    		if(plus_zoom < 300){
+			    		var final =(parseInt(plus_zoom) + zom);
+			    		console.log(final);
+			    		$('#zoooom').val(final);
+	                    $('#excel_viewer').css('zoom',final +'%');
+		    		}
+				}
+
 		    }, false);
 		 
 		    document.getElementById("minus").addEventListener("click", function(){
@@ -1006,6 +1019,18 @@
 		    			console.log(zom);
 		    			$('#zoooom').val(final);
                  	 	$('#canvas_div').css('zoom',final+'%');
+		    		}
+		    	}
+		    	if(docType == 'xlsx' || docType == 'xls' || docType == 'xlsb' ||  docType == 'xltx' || docType == 'xlt'){
+		    		var counter ='';
+		    		counter++;
+		    		var zom = counter * 20;
+		    		var minus_zoom = $('#zoooom').val();
+		    		if(minus_zoom > 20){
+		    			var final =minus_zoom-zom;
+		    			console.log(zom);
+		    			$('#zoooom').val(final);
+                 	 	$('#excel_viewer').css('zoom',final+'%');
 		    		}
 		    	}
 
