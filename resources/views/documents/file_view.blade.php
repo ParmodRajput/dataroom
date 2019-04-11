@@ -890,7 +890,6 @@
                     	 var pdfData = atob(docPath);             
 
 		                        var data = pdfData;
-		                        console.log(XLSX.read(data));
 		                        var wb = XLSX.read(data,{type:'binary'});
                                 
 		                        var htmlstr = XLSX.write(wb,{type:'binary',bookType:'html'});
