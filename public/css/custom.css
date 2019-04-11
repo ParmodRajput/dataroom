@@ -1534,9 +1534,16 @@ button#pdf-next {
     background: rgba(206,126,78);
     color: white;
 }
-
+#excel_viewer table{
+  border-collapse: collapse;
+  width: 100%;	
+}
 #excel_viewer tbody td{
     border:1px solid green;
+	/* height: 50px; */
+	/* width: 100%; */
+	/* text-align: left; */
+	/* padding:5px; */
 }
 
 #excel_viewer tbody tr{
@@ -1544,10 +1551,9 @@ button#pdf-next {
 }
 
 #excel_viewer{
-    float: left;
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    float: center;
+    width: 100%;    
+    overflow: scroll;
     z-index: 9999;
     position: relative;
 }
