@@ -885,7 +885,7 @@
 							 /* set up XMLHttpRequest */
 
                     if(docType == 'xlsx' || docType == 'xls' || docType == 'xlsb' ||  docType == 'xltx' || docType == 'xlt'){
-
+                    	 $('.round').hide();
                     	 $('#excel_viewer').css('height',window_height-50);
                     	 var pdfData = atob(docPath);             
 
