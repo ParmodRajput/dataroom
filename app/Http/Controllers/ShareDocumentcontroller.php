@@ -11,6 +11,7 @@ use App\User;
 use App\Setting;
 use App\Document;
 use App\ShareDocument;
+use App\DeviceDetect;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
@@ -118,8 +119,12 @@ class ShareDocumentcontroller extends Controller
       $ip  =$request->getClientIp(); //$this->get_client_ip();
       $geo = Location::get($ip);//geoip();
       $device = $this->deviceDetect();
-      $device['ip address'] =$ip;
-      $device['location'] ='country:'.$geo->countryName.' region:'.$geo->regionName.' city:'$geo->cityName.' latitude:'$geo->latitude.' longitude:'$geo->longitude;
+      $device['ip_address'] =$ip;
+      $device['location'] ='country:'.$geo->countryName.' region:'.$geo->regionName.' city:'.$geo->cityName;
+      $device['latitude'] = $geo->latitude;
+      $device['longitude'] =$geo->longitude;
+      $device['time'] = \Carbon\Carbon::now();
+      //DeviceDetect::insert($device);
     	$authUserEmail ='';
         $checker = '';
 
@@ -172,7 +177,8 @@ class ShareDocumentcontroller extends Controller
         	$GetProjectId = $getShareableDocument->project_id;
         	$access_token = $getShareableDocument->access_token;
           $sharedTime   = $getShareableDocument->created_at;
-
+              $device['document_id'] =$Document;
+              DeviceDetect::insert($device);
               if($checker = 'true')
                {
                   $GetShareWithMeDocumentFolder = Document::where('id',$Document)->where('document_status','1')->first();
