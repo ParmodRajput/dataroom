@@ -521,7 +521,8 @@ class ShareDocumentcontroller extends Controller
         }else{
            $device ='unknown';
         }
-        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'q'=>$device.Browser::deviceFamily().Browser::deviceModel());
+        $ip  = $request->getClientIp();
+        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'q'=>$device.' '.Browser::deviceFamily().'model'.Browser::deviceModel(), 'ip address'=>$ip );
        return $device_detail;
 
        }
