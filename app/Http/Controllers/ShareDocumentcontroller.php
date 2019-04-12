@@ -20,6 +20,7 @@ use Mail;
 use Excel;
 use Browser;
 use Carbon\Carbon;
+use Location;
 class ShareDocumentcontroller extends Controller
 {
     public function shareDocs(Request $request){
@@ -508,24 +509,24 @@ class ShareDocumentcontroller extends Controller
 
        }
        // Function to get the client IP address
-        function get_client_ip() {
-            $ipaddress = '';
-            if (isset($_SERVER['HTTP_CLIENT_IP']))
-                $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-            else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-                $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            else if(isset($_SERVER['HTTP_X_FORWARDED']))
-                $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-            else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
-                $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-            else if(isset($_SERVER['HTTP_FORWARDED']))
-                $ipaddress = $_SERVER['HTTP_FORWARDED'];
-            else if(isset($_SERVER['REMOTE_ADDR']))
-                $ipaddress = $_SERVER['REMOTE_ADDR'];
-            else
-                $ipaddress = 'UNKNOWN';
-            return $ipaddress;
-        }
+        // function get_client_ip() {
+        //     $ipaddress = '';
+        //     if (isset($_SERVER['HTTP_CLIENT_IP']))
+        //         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        //     else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        //         $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        //     else if(isset($_SERVER['HTTP_X_FORWARDED']))
+        //         $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        //     else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+        //         $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        //     else if(isset($_SERVER['HTTP_FORWARDED']))
+        //         $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        //     else if(isset($_SERVER['REMOTE_ADDR']))
+        //         $ipaddress = $_SERVER['REMOTE_ADDR'];
+        //     else
+        //         $ipaddress = 'UNKNOWN';
+        //     return $ipaddress;
+        // }
        public function deviceDetect(Request $request){
         $device ='';
         if(Browser::isMobile()){
@@ -539,8 +540,10 @@ class ShareDocumentcontroller extends Controller
         }else{
            $device ='unknown';
         }
-        $ip  = $this->get_client_ip();
-        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'device'=>$device.' '.Browser::deviceFamily().' model:'.Browser::deviceModel(), 'ip address:'=>$ip );
+
+        $ip  =$request->getClientIp(); //$this->get_client_ip();
+        $geo = Location::get($ip);
+        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'device'=>$device.' '.Browser::deviceFamily().' model:'.Browser::deviceModel(), 'ip address:'=>$ip ,'location: '=>$geo );
        return $device_detail;
 
        }
