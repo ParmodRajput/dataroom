@@ -202,7 +202,6 @@ Route::post('/get_group/report','ReportsController@getGroupsReports');
 
 Route::post('/share/documents/','ShareDocumentcontroller@shareDocs');
 Route::get('/shareFile/{project_id}/{userEmail}/{registerChecker}/{time}','ShareDocumentcontroller@CheckShareDocs');
-Route::get('/device_detect','ShareDocumentcontroller@deviceDetect');
 
 // Route::get('/Display/ShareDocument','ShareDocumentcontroller@ShowDocument')->middleware('CheckShareDocument');
 
