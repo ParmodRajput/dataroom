@@ -115,7 +115,11 @@ class ShareDocumentcontroller extends Controller
     }
 
     public function CheckShareDocs(Request $request){
-
+      $ip  =$request->getClientIp(); //$this->get_client_ip();
+      $geo = Location::get($ip);//geoip();
+      $device = $this->deviceDetect();
+      $device['ip address'] =$ip;
+      $device['location'] ='country:'.$geo->countryName.' region:'.$geo->regionName.' city:'$geo->cityName.' latitude:'$geo->latitude.' longitude:'$geo->longitude;
     	$authUserEmail ='';
         $checker = '';
 
@@ -527,7 +531,7 @@ class ShareDocumentcontroller extends Controller
         //         $ipaddress = 'UNKNOWN';
         //     return $ipaddress;
         // }
-       public function deviceDetect(Request $request){
+       function deviceDetect(){
         $device ='';
         if(Browser::isMobile()){
             $device ="mobile";
@@ -541,9 +545,8 @@ class ShareDocumentcontroller extends Controller
            $device ='unknown';
         }
 
-        $ip  =$request->getClientIp(); //$this->get_client_ip();
-        $geo = Location::get($ip);
-        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'device'=>$device.' '.Browser::deviceFamily().' model:'.Browser::deviceModel(), 'ip address:'=>$ip ,'location: '=>$geo );
+        
+        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'device'=>$device.' '.Browser::deviceFamily().' model:'.Browser::deviceModel());
        return $device_detail;
 
        }
