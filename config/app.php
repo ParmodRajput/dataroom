@@ -162,6 +162,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 		\hisorange\BrowserDetect\ServiceProvider::class,
+		Stevebauman\Location\LocationServiceProvider::class,
 
     ],
 
@@ -214,6 +215,7 @@ return [
         'Zipper' => Chumper\Zipper\Zipper::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 		'Browser' => \hisorange\BrowserDetect\Facade::class,
+		'Location' => Stevebauman\Location\Facades\Location::class,
 
 
     ],
