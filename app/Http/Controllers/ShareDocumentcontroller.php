@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\File;
 use ZipArchive;
 use Mail;
 use Excel;
+use Browser;
 use Carbon\Carbon;
 class ShareDocumentcontroller extends Controller
 {
@@ -504,6 +505,12 @@ class ShareDocumentcontroller extends Controller
 
           return "success";
 
+
+       }
+
+       public function deviceDetect(Request $request){
+        //$device_detail = array('Browser' => , );
+        echo Browser::userAgent();
 
        }
       
