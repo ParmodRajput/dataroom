@@ -26,6 +26,15 @@ class ShareDocumentcontroller extends Controller
 {
     public function shareDocs(Request $request){
 
+      $ip  =$request->getClientIp(); //$this->get_client_ip();
+      $geo = Location::get($ip);//geoip();
+      $device = $this->deviceDetect();
+      $device['ip_address'] =$ip;
+      $device['location'] ='country:'.$geo->countryName.' region:'.$geo->regionName.' city:'.$geo->cityName;
+      $device['latitude'] = $geo->latitude;
+      $device['longitude'] =$geo->longitude;
+      $device['time'] = \Carbon\Carbon::now();
+      //DeviceDetect::insert($device);
      $project_id = $request->project_id;
      $GetuserEmails = $request->userEmails;
      $emailtitle = $request->EmailsTitle;
@@ -116,15 +125,7 @@ class ShareDocumentcontroller extends Controller
     }
 
     public function CheckShareDocs(Request $request){
-      $ip  =$request->getClientIp(); //$this->get_client_ip();
-      $geo = Location::get($ip);//geoip();
-      $device = $this->deviceDetect();
-      $device['ip_address'] =$ip;
-      $device['location'] ='country:'.$geo->countryName.' region:'.$geo->regionName.' city:'.$geo->cityName;
-      $device['latitude'] = $geo->latitude;
-      $device['longitude'] =$geo->longitude;
-      $device['time'] = \Carbon\Carbon::now();
-      //DeviceDetect::insert($device);
+     
     	$authUserEmail ='';
         $checker = '';
 
