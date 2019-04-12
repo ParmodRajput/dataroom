@@ -509,7 +509,19 @@ class ShareDocumentcontroller extends Controller
        }
 
        public function deviceDetect(Request $request){
-        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName());
+        $device ='';
+        if(Browser::isMobile()){
+            $device ="mobile device";
+        }elseif(Browser::isTablet()){
+            $device ="tablet device";
+        }elseif(Browser::isDesktop()){
+            $device ="desktop computer";
+        }elseif(Browser::isBot()){
+            $device ="crawler/bot";
+        }else{
+           $device ='unknown';
+        }
+        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'q'=>$device.Browser::deviceFamily());
        return $device_detail;
 
        }
