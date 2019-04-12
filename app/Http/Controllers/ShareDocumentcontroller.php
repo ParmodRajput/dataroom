@@ -521,7 +521,7 @@ class ShareDocumentcontroller extends Controller
         }else{
            $device ='unknown';
         }
-        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'q'=>$device.Browser::deviceFamily());
+        $device_detail = array('user_agent' =>Browser::userAgent(),'browser'=>Browser::browserName(),"operator"=>Browser::platformName() ,'q'=>$device.Browser::deviceFamily().Browser::deviceModel());
        return $device_detail;
 
        }
