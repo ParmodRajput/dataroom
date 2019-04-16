@@ -10,5 +10,5 @@ class ShareDocument extends Model
     
     public $timestamps = true;
 
-    protected $fillable = ['duration_time', 'project_id','document_id', 'email','register_required','printable','downloadable','acess_token'];
+    protected $fillable = ['duration_time', 'project_id','share_documents_id', 'email','register_required','printable','downloadable','acess_token'];
 }
