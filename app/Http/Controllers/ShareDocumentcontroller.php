@@ -262,6 +262,7 @@ class ShareDocumentcontroller extends Controller
       return Redirect(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
       
     }
+    
 
 
     public function ViewDocument(Request $request){
