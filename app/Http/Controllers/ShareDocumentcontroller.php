@@ -116,18 +116,6 @@ class ShareDocumentcontroller extends Controller
 
     public function CheckShareDocs(Request $request){
 
-      $ip  =$request->getClientIp(); //$this->get_client_ip();
-      $geo = Location::get($ip);//geoip();
-      $device = $this->deviceDetect();
-      $device['ip_address'] =$ip;
-      $device['location'] ='country:'.$geo->countryName.' region:'.$geo->regionName.' city:'.$geo->cityName;
-      $device['latitude'] = $geo->latitude;
-      $device['longitude'] =$geo->longitude;
-      $device['time'] = \Carbon\Carbon::now();
-      //DeviceDetect::insert($device);
-
-     
-
     	$authUserEmail ='';
         $checker = '';
 
@@ -180,9 +168,6 @@ class ShareDocumentcontroller extends Controller
         	$GetProjectId = $getShareableDocument->project_id;
         	$access_token = $getShareableDocument->access_token;
           $sharedTime   = $getShareableDocument->created_at;
-
-              $device['document_id'] =$Document;
-              DeviceDetect::insert($device);
 
               if($checker = 'true')
                {
@@ -278,6 +263,7 @@ class ShareDocumentcontroller extends Controller
       return Redirect(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
       
     }
+    
 
 
     public function ViewDocument(Request $request){
