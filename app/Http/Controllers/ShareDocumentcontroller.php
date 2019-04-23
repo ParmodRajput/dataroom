@@ -337,10 +337,17 @@ class ShareDocumentcontroller extends Controller
           $device['location'] ='country:'.$geo->countryName.' region:'.$geo->regionName.' city:'.$geo->cityName;
           $device['latitude'] = $geo->latitude;
           $device['longitude'] =$geo->longitude;
+          $device['project_id']= $project_id;
+          $device['document_id']= $document_id;
           $device['time'] = \Carbon\Carbon::now();
           $device['share_documents_id'] =$SHRdoc['id'];
-          DeviceDetect::insert($device);
-
+          $checkvalue = DeviceDetect::where('share_documents_id', '=',$SHRdoc['id'])->first();
+          //Check the Share ID Exits or Not
+         if($checkvalue){
+            $checkvalue->update($device);
+          }else{
+             DeviceDetect::insert($device);
+          }
         return view('Share.viewSharedDoc',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id','watermark_text','watermark_color','downloadable','printable'));
 
     }
@@ -556,7 +563,7 @@ class ShareDocumentcontroller extends Controller
        return $device_detail;
 
        }
-      
+     
 
 }
 //end class

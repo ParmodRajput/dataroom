@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShareDocument extends Model
 {
+// 	protected $casts = [
+//     'view_share' => 'json'
+// ];
+
     protected $table = 'share_documents';
     
     public $timestamps = true;

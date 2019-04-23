@@ -6,6 +6,7 @@ use App\Project;
 use App\User;
 use App\Document;
 use App\Note;
+use App\DeviceDetect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
@@ -17,7 +18,6 @@ class NotesController extends Controller
 {
 	public function createNotes (Request $request){
        
-
          $projects_id = $request->projects_id;
         
          $documentPath = $request->documentPath;
@@ -47,27 +47,26 @@ class NotesController extends Controller
 	}
 
 	public function GetDocumentNotes (Request $request){
-
-		 $projects_id  = $request->projects_id;
+         $return_value =array();
+         $note = '';
+		   $projects_id  = $request->projects_id;
          $documentPath = $request->documentPath;
          $user_id = Auth::user()->id;
-
          $getDocumentID = Document::where('path',$documentPath)->where('project_id',$projects_id)->first();
          $DocumentID =  $getDocumentID->id;
         
          $getNoteContent = Note::where('document_id',$DocumentID)->where('project_id',$projects_id)->where('user_id',$user_id)->first();
-
+         $share_view = DeviceDetect::where('document_id','=',$DocumentID)->where('project_id','=',$projects_id)->first()->orderBy('time', 'DESC')->get();
+         //print_r($share_view); die('here');
          if(!empty($getNoteContent))
          {
          	$noteContent = $getNoteContent->content;
          	$noteCreateAt = $getNoteContent->time;
-         	$return_value = [$noteContent ,$noteCreateAt];
-
-            return $return_value;
-
+         	$note = [$noteContent ,$noteCreateAt];
 
          }
-
+         $return_value = array('note'=>$note,'share_view'=> $share_view);
+       return $return_value;
          //$return_value = ['content'=> $noteContent , 'time' => $noteCreateAt];
 
 	}
