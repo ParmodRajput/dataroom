@@ -2723,9 +2723,9 @@ $(document).on('click','.note1_doc_delete', function(){
                            $.each(response.share_view, function(key, value) {
                             //console.log(value);
 
-                           html2+='<div class="readall read-more'+key+'" style= display:none><div>IP Address:'+value.ip_address+'</div>'+'<div>Browser Details:'+value.browser+'</div>'+'<div>device:'+value.device+ '</div>'+'</div>';
+                           html2+='<div class="readall read-more'+key+'" style= display:none><div><b>IP Address</b>:'+value.ip_address+'</div>'+'<div><b>Browser Details</b>:'+value.browser+'</div>'+'<div><b>device</b>:'+value.device+ '</div>'+'</div>';
                          });
-                          html2+='<button onclick="myFunction()" id="myBtn">Read more</button>';
+                          html2+='<button onclick="myFunction()" id="myBtn" class="btn  document-btn">Read more</button>';
 
                            var html = "<textarea class='notes_aside_text1' data-value='0' placeholder='Enter text here...' rows='6' cols='28'></textarea><button class='submit_note1_doc'>Add</button><button value='"+documentPath+"' data-value='"+timestamp+"' class='note1_doc_delete hidden'><i class='fa fa-trash-o'></i></button>";
 
