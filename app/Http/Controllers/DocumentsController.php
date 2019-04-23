@@ -1769,8 +1769,6 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
          $getDocPermission = Permission::where('project_id',$project_id)->where('group_id',$userInGroup)->orWhere('document_id',$file_id)->first();
  
          $DocPermission = $getDocPermission->permission_id;
-
-
        }
 
        $getSetting = Setting::where('project_id',$project_id)->first();
@@ -1864,6 +1862,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
                 $kv_texts = str_replace('</w:r></w:p>', "\r\n", $kv_texts);
                 $kv_strip_texts = nl2br(strip_tags($kv_texts,''));
+                //print_r($kv_strip_texts); die('here');
 
                 return $kv_strip_texts;
               }

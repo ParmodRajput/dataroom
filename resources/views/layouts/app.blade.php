@@ -25,7 +25,10 @@
   <link rel="stylesheet" href="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
   <!-- end -->
-
+<style type="text/css">button#myBtn {
+    background-color: #18cad7!important;
+    color: #fff;
+}</style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -2712,11 +2715,18 @@ $(document).on('click','.note1_doc_delete', function(){
                        if(response !== ''){
 
                            $('.notes_aside_1').html(''); 
-                           
-                           var content = response[0];
-                           var timestamp = response[1];
-
+                      
+                           var content = response.note[0];
+                           var timestamp = response.note[1];
+                           var html2 = '';
     
+                           $.each(response.share_view, function(key, value) {
+                            //console.log(value);
+
+                           html2+='<div class="readall read-more'+key+'" style= display:none><div>IP Address:'+value.ip_address+'</div>'+'<div>Browser Details:'+value.browser+'</div>'+'<div>device:'+value.device+ '</div>'+'</div>';
+                         });
+                          html2+='<button onclick="myFunction()" id="myBtn">Read more</button>';
+
                            var html = "<textarea class='notes_aside_text1' data-value='0' placeholder='Enter text here...' rows='6' cols='28'></textarea><button class='submit_note1_doc'>Add</button><button value='"+documentPath+"' data-value='"+timestamp+"' class='note1_doc_delete hidden'><i class='fa fa-trash-o'></i></button>";
 
                             $('.notes_aside_1').html(html);     
@@ -2726,11 +2736,20 @@ $(document).on('click','.note1_doc_delete', function(){
                             $('.notes_aside_1').removeClass('hidden');     
                             $('.note1_doc_delete').removeClass('hidden');    
                             $('.submit_note1_doc').addClass('hidden');
-                            $('.close_note_aside').addClass('hidden');   
-                              response_status = 1;
+                            $('.close_note_aside').addClass('hidden'); 
+                            $('.shareview').html(html2);
+                            $('.note1_doc_delete').removeClass('hidden');    
+                            $('.submit_note1_doc').addClass('hidden');
+                            $('.read-more0').css("display", "block");
+                            $("#myBtn").click(function(){
+                            $(".readall").show();
                               
-                           
+                            });
 
+                            $(".check-box-input").click(function(){
+                            $(".shareview").toggle();
+                          });
+                              response_status = 1;                          
                           }else{
                               
 
