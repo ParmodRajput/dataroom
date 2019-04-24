@@ -56,7 +56,7 @@ class NotesController extends Controller
          $DocumentID =  $getDocumentID->id;
         
          $getNoteContent = Note::where('document_id',$DocumentID)->where('project_id',$projects_id)->where('user_id',$user_id)->first();
-         $share_view = DeviceDetect::where('document_id','=',$DocumentID)->where('project_id','=',$projects_id)->first()->orderBy('time', 'DESC')->get();
+         $share_view = DeviceDetect::where('document_id','=',$DocumentID)->where('project_id','=',$projects_id)->first()->orderBy('time', 'DESC')->take(5)->get();
          //print_r($share_view); die('here');
          if(!empty($getNoteContent))
          {
