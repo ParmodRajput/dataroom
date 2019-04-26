@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2019 at 07:55 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Apr 26, 2019 at 11:00 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `prodata_room`
+-- Database: `prodata_room2`
 --
 
 -- --------------------------------------------------------
@@ -170,7 +170,9 @@ INSERT INTO `delete_documents` (`id`, `deleted_file`, `deleted_folder`, `project
 (42, '', '1548653234.jikjkj', '19', 'public/documents/7/uiuiui/jikjkj', '1', '7', '0', '28 January 2019 05:27:14', '0', '2019-01-27 23:57:15', '2019-01-27 23:57:15'),
 (43, '1548670199.Jellyfish (1).jpg', '', '22', 'public/documents/7/test1/Jellyfish (1).jpg', '0', '7', '0', '1548670199', '0', '2019-01-28 04:39:59', '2019-01-28 04:39:59'),
 (44, '', '1548671031.8uy7u87', '22', 'public/documents/7/test1/8uy7u87', '1', '7', '0', '28 January 2019 10:23:51', '0', '2019-01-28 04:53:51', '2019-01-28 04:53:51'),
-(45, '', '1548671058.hey_check in folder', '22', 'public/documents/7/test1/hey_check in folder', '1', '7', '0', '28 January 2019 10:24:18', '0', '2019-01-28 04:54:18', '2019-01-28 04:54:18');
+(45, '', '1548671058.hey_check in folder', '22', 'public/documents/7/test1/hey_check in folder', '1', '7', '0', '28 January 2019 10:24:18', '0', '2019-01-28 04:54:18', '2019-01-28 04:54:18'),
+(46, '1555401084.Koala.jpg', '', '38', 'public/documents/1/re/Koala.jpg', '0', '1', '0', '1555401084', '0', '2019-04-16 02:21:24', '2019-04-16 02:21:24'),
+(47, '1556268670.(3).jpg', '', '40', 'public/documents/13/dataroom/(3).jpg', '0', '13', '0', '1556268670', '0', '2019-04-26 03:21:10', '2019-04-26 03:21:10');
 
 -- --------------------------------------------------------
 
@@ -189,8 +191,27 @@ CREATE TABLE `device_detect` (
   `ip_address` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `latitude` varchar(255) NOT NULL,
-  `longitude` varchar(255) NOT NULL
+  `longitude` varchar(255) NOT NULL,
+  `project_id` int(255) NOT NULL,
+  `document_id` int(255) NOT NULL,
+  `created_at` timestamp(6) NULL DEFAULT NULL,
+  `updated_at` timestamp(6) NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `device_detect`
+--
+
+INSERT INTO `device_detect` (`id`, `share_documents_id`, `user_agent`, `browser`, `operator`, `device`, `time`, `ip_address`, `location`, `latitude`, `longitude`, `project_id`, `document_id`, `created_at`, `updated_at`) VALUES
+(30, 161, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', 'Chrome 73.0.3683', 'Windows 7', 'desktop computer Unknown model:', '2019-04-17 07:45:32', '::1', 'country: region: city:', '', '', 39, 847, NULL, '2019-04-17 07:45:32.000000'),
+(31, 164, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', 'Chrome 73.0.3683', 'Windows 7', 'desktop computer Unknown model:', '2019-04-17 07:45:48', '::1', 'country: region: city:', '', '', 40, 849, NULL, '2019-04-17 07:45:48.000000'),
+(32, 162, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', 'Chrome 73.0.3683', 'Windows 7', 'desktop computer Unknown model:', '2019-04-18 03:39:13', '::1', 'country: region: city:', '', '', 39, 847, NULL, NULL),
+(33, 163, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36', 'Chrome 73.0.3683', 'Windows 7', 'desktop computer Unknown model:', '2019-04-18 23:24:37', '::1', 'country: region: city:', '', '', 39, 847, NULL, NULL),
+(34, 165, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', 'Chrome 74.0.3729', 'Windows 7', 'desktop computer Unknown model:', '2019-04-26 03:29:15', '::1', 'country: region: city:', '', '', 39, 846, NULL, '2019-04-26 03:29:15.000000'),
+(35, 168, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', 'Chrome 74.0.3729', 'Windows 7', 'desktop computer Unknown model:', '2019-04-26 03:29:13', '::1', 'country: region: city:', '', '', 39, 852, NULL, '2019-04-26 03:29:13.000000'),
+(36, 167, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', 'Chrome 74.0.3729', 'Windows 7', 'desktop computer Unknown model:', '2019-04-26 03:29:09', '::1', 'country: region: city:', '', '', 39, 851, NULL, '2019-04-26 03:29:09.000000'),
+(37, 169, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', 'Chrome 74.0.3729', 'Windows 7', 'desktop computer Unknown model:', '2019-04-26 03:22:36', '::1', 'country: region: city:', '', '', 39, 853, NULL, '2019-04-26 03:22:36.000000'),
+(38, 166, 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.108 Safari/537.36', 'Chrome 74.0.3729', 'Windows 7', 'desktop computer Unknown model:', '2019-04-26 03:22:25', '::1', 'country: region: city:', '', '', 39, 850, NULL, '2019-04-26 03:22:25.000000');
 
 -- --------------------------------------------------------
 
@@ -906,7 +927,20 @@ INSERT INTO `documents` (`id`, `doc_index`, `project_id`, `document_name`, `path
 (836, 27, '6', 'download (1).xls', 'public/documents/1/erwer/download (1).xls', 'public/documents/1/erwer', '0', 'xls', '0', '0', '1', '1', '0', '0', '2019-04-10 07:38:50', '2019-04-10 07:38:50'),
 (837, 28, '6', 'qqq.xls', 'public/documents/1/erwer/qqq.xls', 'public/documents/1/erwer', '0', 'xls', '0', '0', '1', '1', '0', '0', '2019-04-10 07:39:51', '2019-04-10 07:39:51'),
 (838, 29, '6', 'rrrrr.xls', 'public/documents/1/erwer/rrrrr.xls', 'public/documents/1/erwer', '0', 'xls', '0', '0', '1', '1', '0', '0', '2019-04-11 04:59:45', '2019-04-11 04:59:45'),
-(839, 30, '6', 'swsw.xls', 'public/documents/1/erwer/swsw.xls', 'public/documents/1/erwer', '0', 'xls', '0', '0', '1', '1', '0', '0', '2019-04-11 05:09:39', '2019-04-11 05:09:39');
+(839, 30, '6', 'swsw.xls', 'public/documents/1/erwer/swsw.xls', 'public/documents/1/erwer', '0', 'xls', '0', '0', '1', '1', '0', '0', '2019-04-11 05:09:39', '2019-04-11 05:09:39'),
+(840, 0, '38', 're', 'public/documents/1/re', '', '', '', '', '', '1', '1', '', '', '2019-04-16 00:46:34', '2019-04-16 00:46:34'),
+(841, 1, '38', '25367832364_Index (1).xlsx', 'public/documents/1/re/25367832364_Index (1).xlsx', 'public/documents/1/re', '0', 'xlsx', '0', '0', '1', '1', '0', '0', '2019-04-16 00:47:08', '2019-04-16 00:47:08'),
+(842, 2, '38', 'gre_research_validity_data.pdf', 'public/documents/1/re/gre_research_validity_data.pdf', 'public/documents/1/re', '0', 'pdf', '0', '0', '1', '1', '0', '0', '2019-04-16 00:47:08', '2019-04-16 00:47:08'),
+(844, 3, '38', '(3).jpg', 'public/documents/1/re/(3).jpg', 'public/documents/1/re', '0', 'jpg', '0', '0', '1', '1', '0', '0', '2019-04-16 04:12:43', '2019-04-16 04:12:43'),
+(845, 0, '39', 'test', 'public/documents/1/test', '', '', '', '', '', '1', '1', '', '', '2019-04-16 06:45:01', '2019-04-16 06:45:01'),
+(846, 1, '39', '5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1).jpeg', 'public/documents/1/test/5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1).jpeg', 'public/documents/1/test', '0', 'jpeg', '0', '0', '1', '1', '0', '0', '2019-04-16 06:45:16', '2019-04-16 06:45:16'),
+(847, 2, '39', '(3).jpg', 'public/documents/1/test/(3).jpg', 'public/documents/1/test', '0', 'jpg', '0', '0', '1', '1', '0', '0', '2019-04-16 08:07:55', '2019-04-16 08:07:55'),
+(848, 0, '40', 'dataroom', 'public/documents/13/dataroom', '', '', '', '', '', '13', '13', '', '', '2019-04-17 00:50:46', '2019-04-17 00:50:46'),
+(850, 3, '39', 'test.txt', 'public/documents/1/test/test.txt', 'public/documents/1/test', '0', 'txt', '0', '0', '1', '1', '0', '0', '2019-04-18 06:31:43', '2019-04-18 06:31:43'),
+(851, 4, '39', 'file-sample_500kB.docx', 'public/documents/1/test/file-sample_500kB.docx', 'public/documents/1/test', '0', 'docx', '0', '0', '1', '1', '0', '0', '2019-04-19 04:21:05', '2019-04-19 04:21:05'),
+(852, 5, '39', 'SamplePPTFile_500kb.ppt', 'public/documents/1/test/SamplePPTFile_500kb.ppt', 'public/documents/1/test', '0', 'ppt', '0', '0', '1', '1', '0', '0', '2019-04-19 04:33:31', '2019-04-19 04:33:31'),
+(853, 6, '39', '5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1) (1).jpeg', 'public/documents/1/test/5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1) (1).jpeg', 'public/documents/1/test', '0', 'jpeg', '0', '0', '1', '1', '0', '0', '2019-04-23 03:39:15', '2019-04-23 03:39:15'),
+(854, 1, '40', '2 Chrysanthemum (1) - Copy - Copy - Copy (1).pdf', 'public/documents/13/dataroom/2 Chrysanthemum (1) - Copy - Copy - Copy (1).pdf', 'public/documents/13/dataroom', '0', 'pdf', '0', '0', '13', '13', '0', '0', '2019-04-26 03:22:13', '2019-04-26 03:22:13');
 
 -- --------------------------------------------------------
 
@@ -1786,7 +1820,8 @@ INSERT INTO `fav_documents` (`id`, `document_id`, `document_path`, `user_id`, `p
 (50, '109', 'public/documents/1/erwer/rerdfgsfg', '1', '6', 'public/documents/1/erwer', '1549445234', '2019-02-06 03:57:14', '2019-02-06 03:57:14'),
 (51, '563', 'public/documents/1/erwer/terter', '1', '6', 'public/documents/1/erwer', '1549445268', '2019-02-06 03:57:48', '2019-02-06 03:57:48'),
 (52, '612', 'public/documents/1/erwer/fdfsf-copy', '1', '6', 'public/documents/1/erwer', '1549445269', '2019-02-06 03:57:49', '2019-02-06 03:57:49'),
-(53, '401', 'public/documents/1/erwer/rer-copy-copy', '1', '6', 'public/documents/1/erwer', '1549445269', '2019-02-06 03:57:49', '2019-02-06 03:57:49');
+(53, '401', 'public/documents/1/erwer/rer-copy-copy', '1', '6', 'public/documents/1/erwer', '1549445269', '2019-02-06 03:57:49', '2019-02-06 03:57:49'),
+(54, '841', 'public/documents/1/re/25367832364_Index (1).xlsx', '1', '38', 'public/documents/1/re', '1555400286', '2019-04-16 02:08:06', '2019-04-16 02:08:06');
 
 -- --------------------------------------------------------
 
@@ -1866,7 +1901,10 @@ INSERT INTO `groups` (`id`, `group_name`, `project_id`, `group_status`, `group_f
 (59, 'Administrator', '34', 1, 'Administrator', 'Administrator', 'all_groups', '1', NULL, '0', '11', '11', '2019-02-21 08:24:50', '2019-02-21 08:24:50'),
 (60, 'Administrator', '35', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-02-22 05:42:31', '2019-02-22 05:42:31'),
 (61, 'Administrator', '36', 1, 'Administrator', 'Administrator', 'all_groups', '1', NULL, '0', '12', '12', '2019-02-25 07:19:14', '2019-02-25 07:19:14'),
-(62, 'Administrator', '37', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-02-27 05:59:52', '2019-02-27 05:59:52');
+(62, 'Administrator', '37', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-02-27 05:59:52', '2019-02-27 05:59:52'),
+(63, 'Administrator', '38', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-04-16 00:46:34', '2019-04-16 00:46:34'),
+(64, 'Administrator', '39', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-04-16 06:45:01', '2019-04-16 06:45:01'),
+(65, 'Administrator', '40', 1, 'Administrator', 'Administrator', 'all_groups', '1', NULL, '0', '13', '13', '2019-04-17 00:50:46', '2019-04-17 00:50:46');
 
 -- --------------------------------------------------------
 
@@ -1955,7 +1993,10 @@ INSERT INTO `group_members` (`id`, `group_id`, `project_id`, `member_email`, `me
 (49, '59', '34', 'alberto.cerri@collinsdale.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '11', '11', '2019-02-21 08:24:50', '2019-02-21 08:24:50'),
 (50, '60', '35', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-02-22 05:42:31', '2019-02-22 05:42:31'),
 (51, '61', '36', 'vellabnda420@gmail.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '12', '12', '2019-02-25 07:19:15', '2019-02-25 07:19:15'),
-(52, '62', '37', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-02-27 05:59:52', '2019-02-27 05:59:52');
+(52, '62', '37', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-02-27 05:59:52', '2019-02-27 05:59:52'),
+(53, '63', '38', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-04-16 00:46:34', '2019-04-16 00:46:34'),
+(54, '64', '39', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-04-16 06:45:01', '2019-04-16 06:45:01'),
+(55, '65', '40', 'rahul.mamotra@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '13', '13', '2019-04-17 00:50:46', '2019-04-17 00:50:46');
 
 -- --------------------------------------------------------
 
@@ -2023,7 +2064,7 @@ CREATE TABLE `notes` (
 --
 
 INSERT INTO `notes` (`id`, `document_id`, `content`, `user_id`, `project_id`, `priority`, `time`, `updated_time`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '2', 'ewre', '1', '1', '1', '1545920044', '', '1', '1', '2018-12-27 08:44:04', '2018-12-27 08:44:04'),
+(1, '842', 'ewre', '1', '38', '1', '1545920044', '', '1', '1', '2018-12-27 08:44:04', '2018-12-27 08:44:04'),
 (2, '6', 'retre', '1', '1', '1', '1545994934', '', '1', '1', '2018-12-28 05:32:14', '2018-12-28 05:32:14'),
 (3, '15', '67', '1', '1', '1', '1545995287', '', '1', '1', '2018-12-28 05:38:07', '2018-12-28 05:38:07'),
 (4, '19', 'uiuiu', '1', '1', '1', '1546083980', '', '1', '1', '2018-12-29 06:16:20', '2018-12-29 06:16:20'),
@@ -2046,7 +2087,8 @@ INSERT INTO `notes` (`id`, `document_id`, `content`, `user_id`, `project_id`, `p
 (24, '611', '\"?\'/', '7', '22', '1', '1548670117', '', '7', '7', '2019-01-28 04:38:37', '2019-01-28 04:38:37'),
 (25, '786', 'kjkjk', '7', '25', '1', '1548843831', '', '7', '7', '2019-01-30 04:53:51', '2019-01-30 04:53:51'),
 (26, '787', 'nkjkmjk', '7', '25', '1', '1548843849', '', '7', '7', '2019-01-30 04:54:09', '2019-01-30 04:54:09'),
-(27, '570', 'Bdbsnnsnsnsnnsns', '1', '6', '1', '1549428749', '1549428756', '1', '1', '2019-02-05 23:22:29', '2019-02-05 23:22:36');
+(27, '570', 'Bdbsnnsnsnsnnsns', '1', '6', '1', '1549428749', '1549428756', '1', '1', '2019-02-05 23:22:29', '2019-02-05 23:22:36'),
+(28, '844', 'etets', '1', '38', '1', '1555409139', '', '1', '1', '2019-04-16 04:35:39', '2019-04-16 04:35:39');
 
 -- --------------------------------------------------------
 
@@ -2096,22 +2138,20 @@ CREATE TABLE `projects` (
 INSERT INTO `projects` (`id`, `user_id`, `project_name`, `company_name`, `created_by`, `updated_by`, `project_slug`, `created_at`, `updated_at`, `industry`, `server_location`) VALUES
 (3, '3', '34234234', 'Contriverz', '3', '3', '34234234', '2018-12-29 08:20:37', '2018-12-29 08:20:37', 'empty', 'empty'),
 (4, '4', 'TAKEOFF', 'Collins Dale Capital Partners Ltd', '4', '4', 'takeoff', '2018-12-29 09:13:53', '2018-12-29 09:13:53', 'empty', 'empty'),
-(6, '1', 'erwer', 'erwer', '1', '1', 'erwer', '2019-01-17 01:21:07', '2019-01-17 01:21:07', 'empty', 'Canada'),
 (7, '2', '4597474', 'sfad15da5s', '2', '2', '4597474', '2019-01-18 05:29:11', '2019-01-18 05:29:11', 'empty', 'London'),
 (15, '8', 'testing', 'contriverz', '8', '8', 'testing', '2019-01-23 23:27:08', '2019-01-23 23:27:08', 'empty', 'empty'),
 (25, '7', 'test1', 'cz', '7', '7', 'test1', '2019-01-30 04:07:31', '2019-01-30 04:07:31', 'empty', 'London'),
 (26, '7', 'test2', 'cz', '7', '7', 'test2', '2019-01-30 04:11:00', '2019-01-30 04:11:00', 'empty', 'London'),
 (27, '7', 'ty87', 'u9iouu9o', '7', '7', 'ty87', '2019-01-30 04:12:41', '2019-01-30 04:12:41', 'empty', 'Usa'),
 (28, '7', 'test12345', 'test123', '7', '7', 'test12345', '2019-01-30 05:04:14', '2019-01-30 05:04:14', 'empty', 'NewYork'),
-(29, '1', 'ioiijoio', 'jojio', '1', '1', 'ioiijoio', '2019-02-04 07:25:17', '2019-02-04 07:25:17', 'empty', 'London'),
 (30, '4', 'Marketing_Material', 'Collins Dale Capital Partners Ltd', '4', '4', 'marketing_material', '2019-02-05 07:10:46', '2019-02-05 07:10:46', 'empty', 'London'),
-(31, '1', 'jkkjkjkjk', 'lk;kl', '1', '1', 'jkkjkjkjk', '2019-02-07 01:07:10', '2019-02-07 01:07:10', 'empty', 'NewYork'),
 (32, '9', 'oop', 'mjk', '9', '9', 'oop', '2019-02-08 09:19:22', '2019-02-08 09:19:22', 'empty', 'London'),
 (33, '10', 'DreamWorker', 'dream_worker', '10', '10', 'dreamworker', '2019-02-18 21:50:52', '2019-02-18 21:50:52', 'empty', 'empty'),
 (34, '11', 'CDCP', 'Collins Dale Capital Partners Ltd', '11', '11', 'cdcp', '2019-02-21 08:24:50', '2019-02-21 08:24:50', 'empty', 'empty'),
-(35, '1', 'tdg', 'tfryrt', '1', '1', 'tdg', '2019-02-22 05:42:31', '2019-02-22 05:42:31', 'empty', 'London'),
 (36, '12', 'testapp', 'new', '12', '12', 'testapp', '2019-02-25 07:19:14', '2019-02-25 07:19:14', 'empty', 'empty'),
-(37, '1', 'fh', 'fgfh', '1', '1', 'fh', '2019-02-27 05:59:51', '2019-02-27 05:59:51', 'empty', 'NewYork');
+(38, '1', 're', 'ref', '1', '1', 're', '2019-04-16 00:46:34', '2019-04-16 00:46:34', 'empty', 'India'),
+(39, '1', 'Test', 'Test', '1', '1', 'test', '2019-04-16 06:45:01', '2019-04-16 06:45:01', 'empty', 'India'),
+(40, '13', 'Dataroom', 'cz', '13', '13', 'dataroom', '2019-04-17 00:50:46', '2019-04-17 00:50:46', 'empty', 'empty');
 
 -- --------------------------------------------------------
 
@@ -3019,7 +3059,84 @@ INSERT INTO `reports` (`id`, `action`, `document_path`, `Auth`, `created_at`, `u
 (781, '7', 'public/documents/1/erwer/swsw.xls', '1', '2019-04-12 00:26:54', '2019-04-12 00:26:54'),
 (782, '7', 'public/documents/1/erwer/rrrrr.xls', '1', '2019-04-12 04:10:48', '2019-04-12 04:10:48'),
 (783, '7', 'public/documents/1/erwer/swsw.xls', '1', '2019-04-12 05:29:42', '2019-04-12 05:29:42'),
-(784, '7', 'public/documents/1/erwer/swsw.xls', '1', '2019-04-16 00:22:27', '2019-04-16 00:22:27');
+(784, '7', 'public/documents/1/erwer/swsw.xls', '1', '2019-04-16 00:22:27', '2019-04-16 00:22:27'),
+(785, '29', 'public/documents/1/jkkjkjkjk', '1', '2019-04-16 00:29:51', '2019-04-16 00:29:51'),
+(786, '29', 'public/documents/1/tdg', '1', '2019-04-16 00:46:14', '2019-04-16 00:46:14'),
+(787, '29', 'public/documents/1/fh', '1', '2019-04-16 00:46:18', '2019-04-16 00:46:18'),
+(788, '29', 'public/documents/1/erwer', '1', '2019-04-16 00:46:20', '2019-04-16 00:46:20'),
+(789, '29', 'public/documents/1/ioiijoio', '1', '2019-04-16 00:46:23', '2019-04-16 00:46:23'),
+(790, '14', 'public/documents/1/re', '1', '2019-04-16 00:46:34', '2019-04-16 00:46:34'),
+(791, '28', '63', '1', '2019-04-16 00:46:34', '2019-04-16 00:46:34'),
+(792, '2', 'public/documents/1/re/25367832364_Index (1).xlsx', '1', '2019-04-16 00:47:08', '2019-04-16 00:47:08'),
+(793, '2', 'public/documents/1/re/gre_research_validity_data.pdf', '1', '2019-04-16 00:47:08', '2019-04-16 00:47:08'),
+(794, '2', 'public/documents/1/re/Koala.jpg', '1', '2019-04-16 00:47:08', '2019-04-16 00:47:08'),
+(795, '7', 'public/documents/1/re/gre_research_validity_data.pdf', '1', '2019-04-16 00:47:12', '2019-04-16 00:47:12'),
+(796, '7', 'public/documents/1/re/gre_research_validity_data.pdf', '1', '2019-04-16 00:58:04', '2019-04-16 00:58:04'),
+(797, '7', 'public/documents/1/re/Koala.jpg', '1', '2019-04-16 01:45:37', '2019-04-16 01:45:37'),
+(798, '6', 'public/documents/1/re/Koala.jpg', '1', '2019-04-16 02:21:24', '2019-04-16 02:21:24'),
+(799, '2', 'public/documents/1/re/(3).jpg', '1', '2019-04-16 04:12:43', '2019-04-16 04:12:43'),
+(800, '14', 'public/documents/1/test', '1', '2019-04-16 06:45:01', '2019-04-16 06:45:01'),
+(801, '28', '64', '1', '2019-04-16 06:45:01', '2019-04-16 06:45:01'),
+(802, '2', 'public/documents/1/test/5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1).jpeg', '1', '2019-04-16 06:45:16', '2019-04-16 06:45:16'),
+(803, '7', 'public/documents/1/test/5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1).jpeg', '1', '2019-04-16 06:49:44', '2019-04-16 06:49:44'),
+(804, '7', 'public/documents/1/test/5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1).jpeg', '1', '2019-04-16 07:01:24', '2019-04-16 07:01:24'),
+(805, '2', 'public/documents/1/test/(3).jpg', '1', '2019-04-16 08:07:55', '2019-04-16 08:07:55'),
+(806, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-16 08:07:59', '2019-04-16 08:07:59'),
+(807, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-16 08:29:48', '2019-04-16 08:29:48'),
+(808, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-16 23:06:03', '2019-04-16 23:06:03'),
+(809, '2', 'public/documents/13/dataroom/(3).jpg', '13', '2019-04-17 00:54:06', '2019-04-17 00:54:06'),
+(810, '7', 'public/documents/13/dataroom/(3).jpg', '13', '2019-04-17 03:05:38', '2019-04-17 03:05:38'),
+(811, '25', 'public/documents/1/test', '1', '2019-04-17 23:36:23', '2019-04-17 23:36:23'),
+(812, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-17 23:37:30', '2019-04-17 23:37:30'),
+(813, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-18 01:55:23', '2019-04-18 01:55:23'),
+(814, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-18 05:13:15', '2019-04-18 05:13:15'),
+(815, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-18 06:30:29', '2019-04-18 06:30:29'),
+(816, '2', 'public/documents/1/test/test.txt', '1', '2019-04-18 06:31:43', '2019-04-18 06:31:43'),
+(817, '7', 'public/documents/1/test/test.txt', '1', '2019-04-18 06:31:46', '2019-04-18 06:31:46'),
+(818, '30', '39', '1', '2019-04-18 23:17:01', '2019-04-18 23:17:01'),
+(819, '30', '39', '1', '2019-04-18 23:17:02', '2019-04-18 23:17:02'),
+(820, '7', 'public/documents/1/test/test.txt', '1', '2019-04-19 04:19:48', '2019-04-19 04:19:48'),
+(821, '2', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-19 04:21:05', '2019-04-19 04:21:05'),
+(822, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-19 04:21:20', '2019-04-19 04:21:20'),
+(823, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-19 04:21:35', '2019-04-19 04:21:35'),
+(824, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-19 04:28:58', '2019-04-19 04:28:58'),
+(825, '2', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:33:31', '2019-04-19 04:33:31'),
+(826, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:33:35', '2019-04-19 04:33:35'),
+(827, '7', 'public/documents/1/test/(3).jpg', '1', '2019-04-19 04:45:07', '2019-04-19 04:45:07'),
+(828, '7', 'public/documents/1/test/5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1).jpeg', '1', '2019-04-19 04:45:27', '2019-04-19 04:45:27'),
+(829, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:46:13', '2019-04-19 04:46:13'),
+(830, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:48:19', '2019-04-19 04:48:19'),
+(831, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:48:44', '2019-04-19 04:48:44'),
+(832, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:49:17', '2019-04-19 04:49:17'),
+(833, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:49:38', '2019-04-19 04:49:38'),
+(834, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:50:04', '2019-04-19 04:50:04'),
+(835, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:50:06', '2019-04-19 04:50:06'),
+(836, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:50:07', '2019-04-19 04:50:07'),
+(837, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:50:31', '2019-04-19 04:50:31'),
+(838, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:51:00', '2019-04-19 04:51:00'),
+(839, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:51:29', '2019-04-19 04:51:29'),
+(840, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-19 04:51:42', '2019-04-19 04:51:42'),
+(841, '7', 'public/documents/1/test/test.txt', '1', '2019-04-19 04:52:43', '2019-04-19 04:52:43'),
+(842, '7', 'public/documents/1/test/test.txt', '1', '2019-04-19 04:58:25', '2019-04-19 04:58:25'),
+(843, '7', 'public/documents/1/test/test.txt', '1', '2019-04-19 04:58:40', '2019-04-19 04:58:40'),
+(844, '7', 'public/documents/1/test/test.txt', '1', '2019-04-19 04:59:07', '2019-04-19 04:59:07'),
+(845, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-19 05:24:30', '2019-04-19 05:24:30'),
+(846, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-19 05:35:59', '2019-04-19 05:35:59'),
+(847, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-21 22:48:39', '2019-04-21 22:48:39'),
+(848, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-21 23:28:57', '2019-04-21 23:28:57'),
+(849, '7', 'public/documents/1/test/file-sample_500kB.docx', '1', '2019-04-22 00:22:54', '2019-04-22 00:22:54'),
+(850, '30', '39', '1', '2019-04-22 04:33:00', '2019-04-22 04:33:00'),
+(851, '30', '39', '1', '2019-04-22 04:33:01', '2019-04-22 04:33:01'),
+(852, '30', '39', '1', '2019-04-22 04:33:02', '2019-04-22 04:33:02'),
+(853, '30', '39', '1', '2019-04-22 04:33:04', '2019-04-22 04:33:04'),
+(854, '15', '39', '1', '2019-04-22 04:33:09', '2019-04-22 04:33:09'),
+(855, '30', '39', '1', '2019-04-22 04:33:17', '2019-04-22 04:33:17'),
+(856, '15', '39', '1', '2019-04-22 04:33:29', '2019-04-22 04:33:29'),
+(857, '2', 'public/documents/1/test/5 27B0CE0F-007D-4D13-817F-ED2A8E1323DF (1) (1).jpeg', '1', '2019-04-23 03:39:15', '2019-04-23 03:39:15'),
+(858, '7', 'public/documents/1/test/SamplePPTFile_500kb.ppt', '1', '2019-04-23 05:45:11', '2019-04-23 05:45:11'),
+(859, '6', 'public/documents/13/dataroom/(3).jpg', '13', '2019-04-26 03:21:10', '2019-04-26 03:21:10'),
+(860, '2', 'public/documents/13/dataroom/2 Chrysanthemum (1) - Copy - Copy - Copy (1).pdf', '13', '2019-04-26 03:22:13', '2019-04-26 03:22:13'),
+(861, '7', 'public/documents/13/dataroom/2 Chrysanthemum (1) - Copy - Copy - Copy (1).pdf', '13', '2019-04-26 03:22:15', '2019-04-26 03:22:15');
 
 -- --------------------------------------------------------
 
@@ -3051,7 +3168,9 @@ INSERT INTO `settings` (`id`, `watermark_view`, `watermark_text`, `watermark_col
 (4, '1', 'Prodata 2019-02-08 14:49:22...oop Prodata 2019-02-08 14:49:22...oop', '1', '1', '1', '1', '32', '2019-02-08 09:19:22', '2019-02-08 09:19:22'),
 (5, '1', 'sfsdfdgfd cdfgfdgfd fhfhdfhdfh gdfgdfgfd dfgd', '1', '1', '1', '1', '35', '2019-02-22 05:42:31', '2019-02-22 05:55:21'),
 (6, '1', 'fgfhfghfgfg vhfghfthr fyhrthfgn fhfn hjjghj', '1', '1', '1', '1', '6', '2019-02-22 06:30:37', '2019-02-22 06:30:37'),
-(7, '1', 'Prodata 2019-02-27 11:29:51...fh Prodata 2019-02-27 11:29:51...fh', '1', '1', '1', '1', '37', '2019-02-27 05:59:52', '2019-02-27 05:59:52');
+(7, '1', 'Prodata 2019-02-27 11:29:51...fh Prodata 2019-02-27 11:29:51...fh', '1', '1', '1', '1', '37', '2019-02-27 05:59:52', '2019-02-27 05:59:52'),
+(8, '1', 'Prodata 2019-04-16 06:16:34...re Prodata 2019-04-16 06:16:34...re', '1', '1', '1', '1', '38', '2019-04-16 00:46:34', '2019-04-16 00:46:34'),
+(9, '1', 'Prodata 2019-04-16 12:15:01...Test Prodata 2019-04-16 12:15:01...Test', '1', '1', '1', '1', '39', '2019-04-16 06:45:01', '2019-04-16 06:45:01');
 
 -- --------------------------------------------------------
 
@@ -3083,7 +3202,26 @@ INSERT INTO `share_documents` (`id`, `duration_time`, `project_id`, `document_id
 (147, '2019-04-15', '6', '572', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dfg', '1', '1', '1', '1555065698', '2019-04-12 05:11:38', '2019-04-12 05:11:38'),
 (148, '2019-04-15', '6', '839', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'sf', '1', '1', '1', '1555066820', '2019-04-12 05:30:20', '2019-04-12 05:30:20'),
 (149, '2019-04-19', '6', '564', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dfgdf', '1', '1', '1', '1555393872', '2019-04-16 00:21:13', '2019-04-16 00:21:13'),
-(150, '2019-04-19', '6', '839', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dsf', '1', '1', '1', '1555393996', '2019-04-16 00:23:16', '2019-04-16 00:23:16');
+(150, '2019-04-19', '6', '839', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dsf', '1', '1', '1', '1555393996', '2019-04-16 00:23:16', '2019-04-16 00:23:16'),
+(151, '2019-04-19', '6', '838', 'rahul.mamotra@contriver.com', 'priyanshu.chauhan@contriverz.com', 'TEST', '1', '1', '1', '1555394439', '2019-04-16 00:30:39', '2019-04-16 00:30:39'),
+(152, '2019-04-19', '29', '812', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'test2', '1', '1', '1', '1555394885', '2019-04-16 00:38:05', '2019-04-16 00:38:05'),
+(153, '2019-04-19', '6', '564', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dfdfdff', '1', '1', '1', '1555395008', '2019-04-16 00:40:08', '2019-04-16 00:40:08'),
+(154, '2019-04-19', '38', '842', 'rahun.mahotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dd', '1', '1', '1', '1555395537', '2019-04-16 00:48:57', '2019-04-16 00:48:57'),
+(155, '2019-04-19', '38', '842', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dddd', '1', '1', '1', '1555395625', '2019-04-16 00:50:25', '2019-04-16 00:50:25'),
+(156, '2019-04-19', '38', '842', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dfg', '1', '1', '1', '1555396194', '2019-04-16 00:59:54', '2019-04-16 01:40:20'),
+(157, '2019-04-19', '39', '846', 'cxcxc', 'priyanshu.chauhan@contriverz.com', 'cxcxcx', '1', '1', '1', '1555416950', '2019-04-16 06:45:50', '2019-04-16 06:45:50'),
+(158, '2019-04-19', '39', '846', 'cxcxc', 'priyanshu.chauhan@contriverz.com', 'cxcxcx', '1', '1', '1', '1555417114', '2019-04-16 06:48:34', '2019-04-16 06:48:34'),
+(159, '2019-04-19', '39', '846', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'cxcxcxcxcx', '1', '1', '1', '1555417137', '2019-04-16 06:48:57', '2019-04-16 06:48:57'),
+(160, '2019-04-19', '39', '846', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'sdsdsd', '1', '1', '1', '1555417384', '2019-04-16 06:53:04', '2019-04-16 06:53:04'),
+(161, '2019-04-19', '39', '847', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'asasas', '1', '1', '1', '1555421903', '2019-04-16 08:08:23', '2019-04-16 08:08:23'),
+(162, '2019-04-20', '39', '847', 'pramod.kumar@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dsdsdsd', '1', '1', '1', '1555481890', '2019-04-17 00:48:10', '2019-04-17 00:48:10'),
+(163, '2019-04-20', '39', '847', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'dsdsdsd', '1', '1', '1', '1555481890', '2019-04-17 00:48:13', '2019-04-17 00:48:13'),
+(164, '2019-04-20', '40', '849', 'rahul.mamotra@contriverz.com', 'rahul.mamotra@contriverz.com', 'dsd', '1', '1', '1', '1555482354', '2019-04-17 00:55:54', '2019-04-17 00:55:54'),
+(165, '2019-04-26', '39', '846', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'ddsdsd', '1', '1', '1', '1555994195', '2019-04-22 23:06:35', '2019-04-22 23:06:35'),
+(166, '2019-04-26', '39', '850', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'ddsdsd', '1', '1', '1', '1555994195', '2019-04-22 23:06:35', '2019-04-22 23:06:35'),
+(167, '2019-04-26', '39', '851', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'ddsdsd', '1', '1', '1', '1555994195', '2019-04-22 23:06:35', '2019-04-22 23:06:35'),
+(168, '2019-04-26', '39', '852', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'ddsdsd', '1', '1', '1', '1555994195', '2019-04-22 23:06:35', '2019-04-22 23:06:35'),
+(169, '2019-04-26', '39', '853', 'rahul.mamotra@contriverz.com', 'priyanshu.chauhan@contriverz.com', 'xccxc', '1', '1', '1', '1556010591', '2019-04-23 03:39:51', '2019-04-23 03:39:51');
 
 -- --------------------------------------------------------
 
@@ -3108,7 +3246,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone_no`, `remember_token`, `created_at`, `updated_at`, `company`) VALUES
-(1, 'priyanshu45', 'priyanshu.chauhan@contriverz.com', '$2y$10$4wdR7nyN3KivA3kJLPuwCeTYPKMSMUhZpBbskSLkHI3AZ2DuI9BTK', '7409610653', 'mtbZ4PhwSYHx3g7nBjoHyyrF7UnAY2SfxWRd6DJJuSYUSJZHFGVws7wfwOUY', '2018-12-27 08:42:08', '2019-01-23 09:38:04', 'Contriverz'),
+(1, 'priyanshu45', 'priyanshu.chauhan@contriverz.com', '$2y$10$4wdR7nyN3KivA3kJLPuwCeTYPKMSMUhZpBbskSLkHI3AZ2DuI9BTK', '7409610653', 'sFq5l0sljovUXSv7K2Ju8fLMQeZxRSlUSi44SLk6paeslCzyovi2mKxsmwzT', '2018-12-27 08:42:08', '2019-01-23 09:38:04', 'Contriverz'),
 (2, 'Gagandeep', 'gdeep@contriverz.com', '$2y$10$n3ueaSw4UkN4i7eUkGr7uubhHIjoJCbDN5UIBCYpDQEJEvzloB0j2', '9988429146', NULL, '2018-12-28 23:30:20', '2018-12-28 23:30:20', 'Contriverz'),
 (3, 'Ankit', 'ankit.chauhan@contriverz.com', '$2y$10$sFD.LyPsF30sVfnEs1IcM.ur2v.6bnDJMJpw.wq5KsLmlMnsSyg7.', '62789453467', NULL, '2018-12-29 08:20:37', '2018-12-29 08:20:37', 'Contriverz'),
 (4, 'Danilo Campestrin', 'dc@collinsdale.com', '$2y$10$RiTRblliyTeCyxoqvX16VeEVNgddn8ILphxBF8cqF2qp/S6JlUNfm', '+447946628918', 'c9R79TzFgFloi7MM35GWbux4u6I7FfEgPRiAKM9NfBUorTWxnnTlOYB4IPlE', '2018-12-29 09:13:53', '2018-12-29 09:13:53', 'Collins Dale Capital Partners Ltd'),
@@ -3119,7 +3257,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone_no`, `remember_to
 (9, 'dedar', 'dchoudhary@contriverz.com', '$2y$10$z1EE1nD4KtuqmRij0C0J6.ZaMy7CZ1r1rljcm3jjPVXYjKuX7PT9i', '9090909090', NULL, '2019-02-08 09:19:10', '2019-02-08 09:19:10', 'contriverz'),
 (10, 'priyanshu chauhan', 'priyanshu7111997@gmail.com', '$2y$10$54H2fUM3zwh2oFPtp6Jtn.aN.n.MIEHUPc3DutuAKbMnCgcH1x4wu', '740961653', NULL, '2019-02-18 21:50:52', '2019-02-18 21:50:52', 'dream_worker'),
 (11, 'Alberto Cerri', 'alberto.cerri@collinsdale.com', '$2y$10$wdxsTH42.ZAXx4WfQLz97uehnncocI.gk/hiIgngbzJ2RoamwBiPK', '+393478189463', 'BkbIx7UiMUNfHT3zcJkmUXG46k8rfcUNC9bNXa6dEACOVYiauIL52Ks4d58J', '2019-02-21 08:24:50', '2019-02-21 08:24:50', 'Collins Dale Capital Partners Ltd'),
-(12, 'ashish sharma', 'vellabnda420@gmail.com', '$2y$10$d5XNrR0O1atm8x6g1TiBKeyeuAQR5uVRCe.EVNx/A35ijTuKnWvAi', '7404678848', NULL, '2019-02-25 07:19:14', '2019-02-25 07:19:14', 'new');
+(12, 'ashish sharma', 'vellabnda420@gmail.com', '$2y$10$d5XNrR0O1atm8x6g1TiBKeyeuAQR5uVRCe.EVNx/A35ijTuKnWvAi', '7404678848', NULL, '2019-02-25 07:19:14', '2019-02-25 07:19:14', 'new'),
+(13, 'Rahul Malhotra', 'rahul.mamotra@contriverz.com', '$2y$10$kxr5AWf8aj7N5Fuv7OH1JOVSXv5AMR7LiOArksifebiqGBAj.OroS', '898998998', 'MQetkEMKu078LzverSmJXdYhvhBnULt0GOl9zzttnwVprMDNmkWpw8m2kQpz', '2019-04-17 00:50:46', '2019-04-17 00:50:46', 'cz');
 
 --
 -- Indexes for dumped tables
@@ -3288,19 +3427,19 @@ ALTER TABLE `collaboration_with_group`
 -- AUTO_INCREMENT for table `delete_documents`
 --
 ALTER TABLE `delete_documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `device_detect`
 --
 ALTER TABLE `device_detect`
-  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(225) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=840;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=855;
 
 --
 -- AUTO_INCREMENT for table `document_permission`
@@ -3312,13 +3451,13 @@ ALTER TABLE `document_permission`
 -- AUTO_INCREMENT for table `fav_documents`
 --
 ALTER TABLE `fav_documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `groups_reports`
@@ -3330,7 +3469,7 @@ ALTER TABLE `groups_reports`
 -- AUTO_INCREMENT for table `group_members`
 --
 ALTER TABLE `group_members`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -3342,13 +3481,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `questions`
@@ -3372,25 +3511,25 @@ ALTER TABLE `question_reply`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=785;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=862;
 
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `share_documents`
 --
 ALTER TABLE `share_documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
