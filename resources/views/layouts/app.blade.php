@@ -2723,7 +2723,7 @@ $(document).on('click','.note1_doc_delete', function(){
                            $.each(response.share_view, function(key, value) {
                             console.log(value);
 
-                           html2+='<div class="readall read-more'+key+'" style= display:none><div><b>IP Address</b>:'+value.ip_address+'</div>'+'<div><b>Browser Details</b>:'+value.browser+'</div>'+'<div><b>device</b>:'+value.device+ '</div>'+'</div>';
+                           html2+='<div class="readall read-more'+key+'" style= display:none><div><b>Date & Time</b>:'+value.time+'</div>'+'<div><b>IP Address</b>:'+value.ip_address+'</div>'+'<div><b>Browser Details</b>:'+value.browser+'</div>'+'<div><b>device</b>:'+value.device+ '</div>'+'</div>';
                          });
                           html2+='<button onclick="myFunction()" id="myBtn" class="btn  document-btn">Read more</button>';
 
