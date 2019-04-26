@@ -30,6 +30,7 @@
 				<li><a href="{{url('/')}}/{{$GodataRoom}}">Go to Dataroom</a></li>
 				@endauth
 				<li><a href="">Shared with me</a></li>
+				<li><a href="{{url('/')}}/sharedBy_me/{{$project_id_share}}/">Shared By me</a></li>
 				<li><a href=""><span><i class="far fa-clock"></i></span> Recent</a></li>
 			</ul>
 		</div><!--left bar close-->
