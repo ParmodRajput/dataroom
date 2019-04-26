@@ -2731,7 +2731,7 @@ $(document).on('click','.note1_doc_delete', function(){
                           html2+='<button onclick="myFunction()" id="myBtn" class="btn  document-btn">Read more</button>';
 
                            var html = "<textarea class='notes_aside_text1' data-value='0' placeholder='Enter text here...' rows='6' cols='28'></textarea><button class='submit_note1_doc'>Add</button><button value='"+documentPath+"' data-value='"+timestamp+"' class='note1_doc_delete hidden'><i class='fa fa-trash-o'></i></button>";
-
+     
                             $('.notes_aside_1').html(html);     
                             $('.notes_aside_text1').val(content);   
                             $('.close_note_aside').removeClass('hidden');
