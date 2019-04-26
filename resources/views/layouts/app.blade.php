@@ -2721,7 +2721,7 @@ $(document).on('click','.note1_doc_delete', function(){
                            var html2 = '';
     
                            $.each(response.share_view, function(key, value) {
-                            //console.log(value);
+                            console.log(value);
 
                            html2+='<div class="readall read-more'+key+'" style= display:none><div><b>IP Address</b>:'+value.ip_address+'</div>'+'<div><b>Browser Details</b>:'+value.browser+'</div>'+'<div><b>device</b>:'+value.device+ '</div>'+'</div>';
                          });
