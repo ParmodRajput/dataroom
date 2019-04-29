@@ -122,6 +122,8 @@ class ShareDocumentcontroller extends Controller
         $project_id =  $request->route()->parameter('project_id');
         $decryptedProjectId = Crypt::decryptString($project_id);
 
+        $project_id_share = $decryptedProjectId;
+
         $userEmail =  $request->route()->parameter('userEmail');
         $decryptedUserEmail = Crypt::decryptString($userEmail);
 
@@ -241,7 +243,7 @@ class ShareDocumentcontroller extends Controller
 
     }
 
-        return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile','GodataRoom'));
+        return view('Share.shareWithMe',compact('DocumentFolder','DocumentFile','GodataRoom','project_id_share'));
 
     }
 
