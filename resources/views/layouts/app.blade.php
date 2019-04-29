@@ -2726,7 +2726,7 @@ $(document).on('click','.note1_doc_delete', function(){
                             var datetime = datetime.split(" ");
                             console.log(datetime[0],datetime[1]);
 
-                           html2+='<div class="readall read-more'+key+'" style= display:none><div><b>Date</b>:'+datetime[0]+'</div>'+'<div><b>Time</b>:'+datetime[1]+'</div>'+'<div><b>IP Address</b>:'+value.ip_address+'</div>'+'<div><b>Browser Details</b>:'+value.browser+'</div>'+'<div><b>device</b>:'+value.device+ '</div>'+'</div>';
+                           html2+='<div class="readall read-more'+key+'" style= display:none><div><b>Date</b>:'+datetime[0]+'</div>'+'<div><b>Time</b>:'+datetime[1]+'</div>'+'<div><b>IP Address</b>:'+value.ip_address+'</div>'+'<div><b>Browser Details</b>:'+value.browser+'</div>'+'<div><b>Device</b>:'+value.device+ '</div> </div> <br>';
                          });
                           html2+='<button onclick="myFunction()" id="myBtn" class="btn  document-btn">Read more</button>';
 

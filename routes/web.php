@@ -198,6 +198,9 @@ Route::post('/get_group/report','ReportsController@getGroupsReports');
 
 // Reports route end
 
+//Recents Share File
+ //Route::post('/share/documents/','ShareDocumentcontroller@shareDocsRecents');
+Route::get('/shareFileRecents/{project_id}/{userEmail}/{registerChecker}/{time}','ShareDocumentcontroller@CheckShareDocsRecents');
 //share document
 
 Route::post('/share/documents/','ShareDocumentcontroller@shareDocs');
@@ -210,6 +213,8 @@ Route::post('/Auth/getShareable/Document','ShareDocumentcontroller@ShowDocumentF
 Route::get('/Overview/{access_token}/{project_id}/{email}/{document_id}/{definer}','ShareDocumentcontroller@ViewDocument')->middleware('CheckShareDocument');
 
 Route::get('/sharedFile/{project_id}/','ShareDocumentcontroller@ShowDocumentForAuth');
+//ShareFileRecents
+Route::get('/shareRecents/{project_id}/','ShareDocumentcontroller@ShowDocumentForRecentAuth');
 
 Route::get('/sharedBy_me/{project_id}/','PagesController@Shared_By');
 
