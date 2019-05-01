@@ -27,7 +27,7 @@ class ProjectsController extends Controller
 
       $validator = Validator::make($request->all(), [
         'company_name' => 'required',
-        'project_name' => 'required|unique:projects|alpha_dash|max:255',
+        'project_name' => 'required|unique:projects|alpha_dash|max:255|regex:/^[A-Za-z0-9_.]+$/',
         'server_location' => 'required',
 
 
