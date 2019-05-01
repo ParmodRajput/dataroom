@@ -25,7 +25,6 @@
                         </ul> 
                 </div>
       @foreach ($projects as $userprojects)
-      
                 <div class="content-block"> 
            <a href="javascript:;" target="_blank" onclick="deleteProject({{$userprojects->id}})">
                        <div class="close">

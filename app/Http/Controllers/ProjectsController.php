@@ -27,7 +27,7 @@ class ProjectsController extends Controller
 
       $validator = Validator::make($request->all(), [
         'company_name' => 'required',
-        'project_name' => 'required|unique:projects|alpha_dash|max:255',
+        'project_name' => 'required|unique:projects|alpha_dash|max:255|regex:/^[A-Za-z0-9_.]+$/',
         'server_location' => 'required',
 
 
@@ -37,7 +37,6 @@ class ProjectsController extends Controller
             $errors = $validator->getMessageBag()->toArray();
             return response()->json(['validation_failed'=>true,'errors'=>$errors]);   
         } else{ 
-
        $project_slug = str_slug($request->project_name, '_');
        
        $post = new project();

@@ -42,6 +42,7 @@ class DocumentsController extends Controller
   $return = array();
 
   $project_folders = DB::table('documents')->select('path')->where('directory_url', '=', $project_path)->where('document_status','1')->get()->toArray();
+ 
 
       if ($project_folders) {
         foreach ($project_folders as $folder) {
@@ -93,6 +94,7 @@ public function getDocument($project_id)
 
 {
 
+
   $project_id = $project_id;
   $project = Project::where('id', $project_id)->first();
   $folder_tree = array();
@@ -102,7 +104,7 @@ public function getDocument($project_id)
   // get groups of the project
 
   $groups = $this-> getAllGroups($project_id);
-
+  
   // Auth checked
   $authEmail = Auth::user()->email;
   $authId    = Auth::user()->id;
@@ -111,7 +113,6 @@ public function getDocument($project_id)
   $group = Group_Member::where('member_email',$authEmail)->pluck('group_id');
   $groupProject = Group::find($group);
   $groupProjectId=array();
-
 
           $CurrentGroupId = getAuthgroupId($project_id); 
 
@@ -166,6 +167,7 @@ public function getDocument($project_id)
               $invitedUserId = $invitedUser['id'];
 
             }
+
  
 }
 
