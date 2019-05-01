@@ -115,7 +115,7 @@ class ShareDocumentcontroller extends Controller
     }
 
     public function CheckShareDocs(Request $request){
-  
+
     	$authUserEmail ='';
         $checker = '';
 
@@ -170,6 +170,7 @@ class ShareDocumentcontroller extends Controller
         	$GetProjectId = $getShareableDocument->project_id;
         	$access_token = $getShareableDocument->access_token;
           $sharedTime   = $getShareableDocument->created_at;
+
               if($checker = 'true')
                {
                   $GetShareWithMeDocumentFolder = Document::where('id',$Document)->where('document_status','1')->first();

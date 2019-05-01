@@ -14244,7 +14244,7 @@ html {
   flex-grow: 1; }
 
 .container-scroller {
-      overflow-x: hidden;
+    overflow-x: hidden;
     height: 100vh;
     overflow-y: auto; }
 
