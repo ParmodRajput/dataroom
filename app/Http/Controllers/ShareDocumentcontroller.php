@@ -265,7 +265,19 @@ class ShareDocumentcontroller extends Controller
       return Redirect(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
       
     }
-    
+    //Recents Share File
+     public function ShowDocumentForRecentAuth($project_id){
+     
+      $AuthEmail = Auth::user()->email;
+      $encryptedUserEmail = Crypt::encryptString($AuthEmail);
+      $encryptedProjectId  = Crypt::encryptString($project_id);
+      $registerValid = '0';
+      $registerRequired      = Crypt::encryptString($registerValid);
+      $time ='0';
+
+      return Redirect(url('/').'/shareFileRecents/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
+      
+    }
 
 
     public function ViewDocument(Request $request){
@@ -567,6 +579,137 @@ class ShareDocumentcontroller extends Controller
        return $device_detail;
 
        }
+    //Recents Share File
+  public function CheckShareDocsRecents(Request $request){
+  
+      $authUserEmail ='';
+        $checker = '';
+
+        $project_id =  $request->route()->parameter('project_id');
+        $decryptedProjectId = Crypt::decryptString($project_id);
+
+        $project_id_share = $decryptedProjectId;
+
+        $userEmail =  $request->route()->parameter('userEmail');
+        $decryptedUserEmail = Crypt::decryptString($userEmail);
+
+        $registerChecker =  $request->route()->parameter('registerChecker');
+        $decryptedRegisterChecker = Crypt::decryptString($registerChecker); 
+
+        $time =  $request->route()->parameter('time');
+        $current_date = date('Y-m-d');
+
+        $DocumentFolder = [];
+        $DocumentFile = [];
+
+        if(Auth::user())
+                    {
+                        $authUserEmail = Auth::user()->email; 
+
+                        if($decryptedUserEmail == $authUserEmail)
+                        {
+                            $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('duration_time', '>=', $current_date)->where('created_at', '>=', Carbon::now()->subDays(14)->toDateTimeString())->get();
+                            $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
+                            $checker = 'true';
+                           
+
+                        }else{
+
+                           $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->where('created_at', '>=', Carbon::now()->subDays(14)->toDateTimeString())->get();
+                          $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
+                        }
+
+                        $GodataRoom = "projects";
+
+                    }else{
+
+
+                      $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '>=', $current_date)->where('created_at', '>=', Carbon::now()->subDays(14)->toDateTimeString())->get();
+                      $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
+
+                      $GodataRoom = "register";
+                    }
+
+        foreach ($getShareableDocument as $getShareableDocument) {
+        
+          $Document = $getShareableDocument->document_id;
+          $GetProjectId = $getShareableDocument->project_id;
+          $access_token = $getShareableDocument->access_token;
+          $sharedTime   = $getShareableDocument->created_at;
+              if($checker = 'true')
+               {
+                  $GetShareWithMeDocumentFolder = Document::where('id',$Document)->where('document_status','1')->first();
+
+                  if($GetShareWithMeDocumentFolder == null)
+                  {
+                      $ShareWithMeDocumentFolder = [];
+
+                  }else{
+
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'path'=>$GetShareWithMeDocumentFolder['path'], 'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'Email'=>$userEmail,'sharedTime'=>$sharedTime]; 
+                  }
+
+                  $getShareWithMeDocumentFile = Document::where('id',$Document)->where('document_status','0')->first();
+
+                  if($getShareWithMeDocumentFile == null)
+                  {
+
+                      $ShareWithMeDocumentFile = [];
+
+                  }else{
+
+
+                     $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail,'sharedTime'=>$sharedTime];
+                  }
+
+
+               }else{
+
+
+                 $GetShareWithMeDocumentFolder = Document::where('project_id',$decryptedProjectId)->where('document_status','1')->where('id',$Document)->get();
+
+
+                  if($GetShareWithMeDocumentFolder == null)
+                  {
+                      $ShareWithMeDocumentFolder = [];
+
+                  }else{
+
+                      $ShareWithMeDocumentFolder = ['document_name'=>$GetShareWithMeDocumentFolder['document_name'],'document_id'=>$GetShareWithMeDocumentFolder['id'],'project_id'=>$GetShareWithMeDocumentFolder['project_id'],'access_token'=>$access_token,'document_id'=>$GetShareWithMeDocumentFolder['id'],'Email'=>$userEmail,'sharedTime'=>$sharedTime]; 
+                  }
+
+
+                 $getShareWithMeDocumentFile = Document::where('project_id',$decryptedProjectId)->where('document_status','0')->where('id',$Document)->get();
+
+               if($getShareWithMeDocumentFile == null)
+                    {
+                        $ShareWithMeDocumentFile = [];
+
+                    }else{
+
+                       $ShareWithMeDocumentFile = ['document_name'=>$getShareWithMeDocumentFile['document_name'],'document_id'=>$getShareWithMeDocumentFile['id'],'project_id'=>$getShareWithMeDocumentFile['project_id'],'access_token'=>$access_token,'document_id'=>$getShareWithMeDocumentFile['id'],'Email'=>$userEmail,'sharedTime'=>$sharedTime];
+                    }
+
+               }
+
+            if($GetShareWithMeDocumentFolder !== null)
+                  {
+                      array_push($DocumentFolder,$ShareWithMeDocumentFolder);
+                  }
+
+
+               if($getShareWithMeDocumentFile !== null)
+                  {
+
+                     array_push($DocumentFile,$ShareWithMeDocumentFile);
+
+                  }
+
+
+    }
+
+        return view('Share.shareFileRecents',compact('DocumentFolder','DocumentFile','GodataRoom','project_id_share'));
+  }
      
 
 }
