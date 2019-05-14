@@ -254,7 +254,7 @@ class ShareDocumentcontroller extends Controller
 
    
     public function ShowDocumentForAuth($project_id){
-     
+      if (Auth::user()){
       $AuthEmail = Auth::user()->email;
       $encryptedUserEmail = Crypt::encryptString($AuthEmail);
       $encryptedProjectId  = Crypt::encryptString($project_id);
@@ -263,11 +263,16 @@ class ShareDocumentcontroller extends Controller
       $time ='0';
 
       return Redirect(url('/').'/shareFile/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
+    }
+    else
+    {
+     return redirect('/login');
+    }
       
     }
     //Recents Share File
      public function ShowDocumentForRecentAuth($project_id){
-     
+     if (Auth::user()){
       $AuthEmail = Auth::user()->email;
       $encryptedUserEmail = Crypt::encryptString($AuthEmail);
       $encryptedProjectId  = Crypt::encryptString($project_id);
@@ -276,7 +281,11 @@ class ShareDocumentcontroller extends Controller
       $time ='0';
 
       return Redirect(url('/').'/shareFileRecents/'.$encryptedProjectId.'/'.$encryptedUserEmail.'/'.$registerRequired.'/'.$time);
-      
+      }
+      else
+      {
+       return redirect('/login'); 
+      }
     }
 
 

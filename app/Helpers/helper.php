@@ -163,10 +163,10 @@ if (!function_exists('folder_tree')) {
 
 
     function checkUserType($project_name){
-
+      if (Auth::user()){
         $authEmail = Auth::user()->email;
 
-        $project_id = Project::where('project_name',$project_name)->pluck('id');
+        $project_id = Project::where('project_slug',$project_name)->pluck('id');
 
         $getCurrentGroupId = Group_Member::where('project_id',$project_id)->where('member_email',$authEmail)->first();
 
@@ -177,6 +177,10 @@ if (!function_exists('folder_tree')) {
         $CurrentGroupUser = $getCurrentGroupUser->group_user_type;
 
         return  $CurrentGroupUser;
+      }
+      else{
+        return redirect('/login');
+      }
 
     }
 

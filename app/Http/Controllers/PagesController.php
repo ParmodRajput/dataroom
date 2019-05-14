@@ -87,13 +87,19 @@ class PagesController extends Controller
 
     public function Shared_By($project_id){
 
-        $project_id = $project_id;
+        if (Auth::user()){
 
-        $project = Project::where('id', $project_id)->first();
+            $project_id = $project_id;
 
-        $project_name = $project->project_name;
+            $project = Project::where('id', $project_id)->first();
 
-        return view('Share.shareByMe',compact('project_name','project_id'));
+            $project_name = $project->project_slug;
+
+            return view('Share.shareByMe',compact('project_name','project_id'));
+        }
+        else{
+            return redirect('/login');
+        }
 
     }
 
