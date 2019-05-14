@@ -166,7 +166,7 @@ if (!function_exists('folder_tree')) {
 
         $authEmail = Auth::user()->email;
 
-        $project_id = Project::where('project_name',$project_name)->pluck('id');
+        $project_id = Project::where('project_slug',$project_name)->pluck('id');
 
         $getCurrentGroupId = Group_Member::where('project_id',$project_id)->where('member_email',$authEmail)->first();
 

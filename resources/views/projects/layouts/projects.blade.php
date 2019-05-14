@@ -265,7 +265,8 @@
                                 $("#"+index).click(function(){
                                   $("#alert_"+index).hide();
                                 });
-                              }                        
+                              }  
+                                             
                           });
                       }
                       if(response.message == 'notmatchpassword'){

@@ -1757,8 +1757,8 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
 
     public function documentView($project_id,$file_id){
 
-       $getPath = Document::where('project_id',$project_id)->where('id',$file_id)->first();
 
+       $getPath = Document::where('project_id',$project_id)->where('id',$file_id)->first();
        $userInGroup = getAuthgroupId($project_id); 
        $userRole = checkCurrentGroupUser($project_id);
 
@@ -1798,10 +1798,9 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
   
        $getExtension = explode('.', $getdocumementExtension);
        
-       $Ext      = end($getExtension);
+       $Ext = end($getExtension);
 
        // docx file
-
        $kv_texts = $this->kv_read_word($fullPath);
 
        if($kv_texts !== false) {   
@@ -1850,6 +1849,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
                   if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
                     
                   if (zip_entry_name($zip_entry) != "word/document.xml") continue;
+
 
                   $kv_texts .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
                     

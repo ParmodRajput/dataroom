@@ -6,7 +6,8 @@
     text-align: center;
     padding: 10px;
     color: #8080807d;
-    margin-bottom: 10px;	
+    margin-bottom: 10px;
+    display: none;	
 }
 </style>
 <meta charset="utf-8">
