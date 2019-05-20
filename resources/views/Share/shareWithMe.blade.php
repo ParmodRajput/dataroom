@@ -7,7 +7,7 @@
     padding: 10px;
     color: #8080807d;
     margin-bottom: 10px;
-    display: none;	
+    display: none;
 }
 </style>
 <meta charset="utf-8">
@@ -17,6 +17,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
 	<link href="{{ asset('css/share_module/style.css') }}" rel="stylesheet" media="screen"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!--sweetalrt js csss link-->
+	 <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 	<div class="main-div">
@@ -30,11 +33,47 @@
 				@auth
 				<li><a href="{{url('/')}}/{{$GodataRoom}}">Go to Dataroom</a></li>
 				@endauth
-				<li><a href="{{url('/')}}/sharedFile/{{$project_id_share}}/">Shared with me</a></li>
-				<li><a href="{{url('/')}}/sharedBy_me/{{$project_id_share}}/">Shared By me</a></li>
-				<li><a href="{{url('/')}}/shareRecents/{{$project_id_share}}/"><span><i class="far fa-clock"></i></span> Recent</a></li>
+				<li>  <form id="from1"> <button style="background: none; border:none;">Shared with me</button>  </form></li>	
+				<!-- <li><a href="{{url('/')}}/sharedFile/{{$project_id_share}}/" >Shared with me</a></li> -->
+				<!-- <li><a href="{{url('/')}}/sharedBy_me/{{$project_id_share}}/">Shared By me</a></li>
+				<li><a href="{{url('/')}}/shareRecents/{{$project_id_share}}/"><span><i class="far fa-clock"></i></span> Recent</a></li> -->
 			</ul>
 		</div><!--left bar close-->
+
+  <script>
+    document.querySelector('#from1').addEventListener('submit', function(e) {
+      var form = this;
+      
+      e.preventDefault();
+      
+      swal({
+          title: "You are leaving the DataRoom, are you sure to continue?",
+          //text: "You will not be able to recover this imaginary file!",
+          icon: "warning",
+          buttons: [
+            'No',
+            'Yes'
+          ],
+          dangerMode: true,
+        }).then(function(isConfirm) {
+          if (isConfirm) {
+            swal({
+              title: "Success!",
+			  //text: "Redirecting in 2 seconds.",
+			  type: "success",
+			  timer: 2,
+            }).then(function() {
+              form.submit();
+              window.location.href = "{{url('/')}}/sharedFile/{{$project_id_share}}/";
+            });
+          } else {
+            //swal("Cancelled", "error");
+          }
+        });
+    });
+  </script>
+
+
 		
 		<div class="right-bar">
 			<div class="section-box folders">

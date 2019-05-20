@@ -91,7 +91,7 @@
 					<li class="nav-item dropdown d-none d-xl-inline-block" >
                      <div data-toggle="dropdown" aria-hidden="true">
 					 <i class="fas fa-user"></i>
-					 <span class="profile-text">{{ Auth::user()->name }}</span>
+					 <span class="profile-text">@if(Auth::user()){{ Auth::user()->name }}@endif</span>
 					 <i class="fa fa-caret-down down-arrow"></i>
 					</div>
 
@@ -213,7 +213,7 @@ No
 <h3>Data room administrators</h3>
 
 <div class="personal_detail_pannel">
-<input type="text" value="" placeholder="{{ Auth::user()->email}}">
+<input type="text" value="" placeholder="@if (Auth::user()){{ Auth::user()->email}}@endif">
 <p>Enter Personal Details</p>
 </div>
 

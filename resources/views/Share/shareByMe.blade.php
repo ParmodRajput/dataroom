@@ -101,7 +101,7 @@
 
                          },
                          success: function (response) { 
-                     
+                       	  console.log(response);
                           var getfolders = response.folder_index;
 
                           var getfiles = response.file_index;
