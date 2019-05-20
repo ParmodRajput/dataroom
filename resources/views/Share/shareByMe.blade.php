@@ -104,7 +104,7 @@
                        	  console.log(response);
                           var getfolders = response.folder_index;
 
-                          var getfiles = response.file_index;
+                          var getfiles = response['file_index'];
 
 			                if(getfolders == '' && getfiles == '')
 			                {
@@ -116,7 +116,8 @@
 			                	 $.each(getfolders,function(key ,value){
 
 			                	 	$.each(value,function(key ,value){
-
+			                	 		
+			                	 	var Shared_time = value.Shared_time;
 			                	 	var doc_name = value.document_name;
 			                	 	var doc_path = value.path;
 			                	 	var doc_id   = value.id;
@@ -131,7 +132,7 @@
 			                	$.each(getfiles,function(key ,value){
 
                                   $.each(value,function(key ,value){
-
+                                  	 var Shared_time = value.Shared_time;
 			                	 	var doc_name = value.document_name;
 			                	 	var doc_path = value.path;
 			                	 	var doc_id   = value.id;
@@ -185,7 +186,7 @@
                               	var userEmail = value.Shared_with;
                               	var access_token = value.access_token;
 
-                              	html+='<ul><li class="selectSharedUser" data-value='+userEmail+' data-access='+access_token+'><label><input type="checkbox"/>'+userEmail+'</label></li>';
+                              	html+='<ul><li class="selectSharedUser" data-value='+userEmail+' data-access='+access_token+'><label><input type="checkbox"/>'+userEmail+'</label></li></ul>';
 
                               });
 

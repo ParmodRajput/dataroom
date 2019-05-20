@@ -11,4 +11,8 @@ class Document extends Model
     public $timestamps = true;
 
     protected $fillable = ['project_id', 'document_name','path', 'type'];
+
+    // public function share_documents(){
+    //     return $this->hasMany(ShareDocument::class, 'document_id','id');
+    // }
 }
