@@ -507,13 +507,25 @@ class ShareDocumentcontroller extends Controller
           $document_id = $request->document_id;
           $access_token =$request->access_token;
           $shared_id = $request->shared_id;
-
-          $file_detail= DB::table('share_documents')
-          ->join('device_detect', 'share_documents.id', '=', 'device_detect.share_documents_id')
-          ->where('share_documents.id','=',$shared_id)
-          ->select('device_detect.ip_address as IP','device_detect.location','device_detect.latitude','device_detect.longitude','device_detect.time','device_detect.user_agent','share_documents.duration_time','share_documents.register_required','share_documents.printable',
-        'share_documents.downloadable')
-          ->first();
+          $file_detail='';
+          $sharedata = ShareDocument::where('id', '=', $shared_id)->first();
+          $device = DeviceDetect::where('share_documents_id', '=', $shared_id)->first();
+          $file_detail['IP']= $device->ip_address;
+          $file_detail['location']= $device->location;
+          $file_detail['latitude']= $device->latitude;
+          $file_detail['longitude']= $device->longitude;
+          $file_detail['user_agent']= $device->user_agent;
+          
+          $file_detail['duration_time']= $sharedata->duration_time;
+          $file_detail['register_required']= $sharedata->register_required;
+          $file_detail['printable']= $sharedata->printable;
+          $file_detail['downloadable']= $sharedata->downloadable;
+        //   $file_detail= DB::table('share_documents')
+        //   ->join('device_detect', 'share_documents.id', '=', 'device_detect.share_documents_id')
+        //   ->where('share_documents.id','=',$shared_id)
+        //   ->select('device_detect.ip_address as IP','device_detect.location','device_detect.latitude','device_detect.longitude','device_detect.time','device_detect.user_agent','share_documents.duration_time','share_documents.register_required','share_documents.printable',
+        // 'share_documents.downloadable')
+        //   ->first();
           if($file_detail->register_required == '1'){
             $file_detail->register_required ='Yes';
           }else{
