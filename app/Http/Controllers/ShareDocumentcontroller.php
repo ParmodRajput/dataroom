@@ -510,12 +510,21 @@ class ShareDocumentcontroller extends Controller
           $file_detail='';
           $sharedata = ShareDocument::where('id', '=', $shared_id)->first();
           $device = DeviceDetect::where('share_documents_id', '=', $shared_id)->first();
-          $file_detail['IP']= $device->ip_address;
-          $file_detail['location']= $device->location;
-          $file_detail['latitude']= $device->latitude;
-          $file_detail['longitude']= $device->longitude;
-          $file_detail['user_agent']= $device->user_agent;
+          if($device){
+            $file_detail['IP']= $device->ip_address;
+            $file_detail['location']= $device->location;
+            $file_detail['latitude']= $device->latitude;
+            $file_detail['longitude']= $device->longitude;
+            $file_detail['user_agent']= $device->user_agent;
+          }else{
+            $file_detail['IP']= '';
+            $file_detail['location']= '';
+            $file_detail['latitude']= '';
+            $file_detail['longitude']='';
+            $file_detail['user_agent']='';
+          }
           
+
           $file_detail['duration_time']= $sharedata->duration_time;
           $file_detail['register_required']= $sharedata->register_required;
           $file_detail['printable']= $sharedata->printable;
