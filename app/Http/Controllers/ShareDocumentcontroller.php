@@ -507,53 +507,53 @@ class ShareDocumentcontroller extends Controller
           $document_id = $request->document_id;
           $access_token =$request->access_token;
           $shared_id = $request->shared_id;
-          $file_detail='';
+          $file_detail= new \stdClass();
           $sharedata = ShareDocument::where('id', '=', $shared_id)->first();
           $device = DeviceDetect::where('share_documents_id', '=', $shared_id)->first();
-          if($device){
-            $file_detail['IP']= $device->ip_address;
-            $file_detail['location']= $device->location;
-            $file_detail['latitude']= $device->latitude;
-            $file_detail['longitude']= $device->longitude;
-            $file_detail['user_agent']= $device->user_agent;
-          }else{
-            $file_detail['IP']= '';
-            $file_detail['location']= '';
-            $file_detail['latitude']= '';
-            $file_detail['longitude']='';
-            $file_detail['user_agent']='';
-          }
-          
 
-          $file_detail['duration_time']= $sharedata->duration_time;
-          $file_detail['register_required']= $sharedata->register_required;
-          $file_detail['printable']= $sharedata->printable;
-          $file_detail['downloadable']= $sharedata->downloadable;
+            $file_detail->IP= '';
+            $file_detail->location= '';
+            $file_detail->latitude= '';
+            $file_detail->longitude= '';
+            $file_detail->user_agent= '';
+            $file_detail->time_= '';
+            $file_detail->date_ = '';
+
+          if($device){
+            $file_detail->IP=$device->ip_address;
+            $file_detail->location= $device->location;
+            $file_detail->latitude= $device->latitude;
+            $file_detail->longitude= $device->longitude;
+            $file_detail->user_agent= $device->user_agent;
+            if($device->time !==''){
+              $time =explode(' ',$device->time);
+              $file_detail->time_ = $time[1];
+              $file_detail->date_ = $time[0];
+          }
+          }
+
+          $file_detail->duration_time= $sharedata->duration_time;
+
         //   $file_detail= DB::table('share_documents')
         //   ->join('device_detect', 'share_documents.id', '=', 'device_detect.share_documents_id')
         //   ->where('share_documents.id','=',$shared_id)
         //   ->select('device_detect.ip_address as IP','device_detect.location','device_detect.latitude','device_detect.longitude','device_detect.time','device_detect.user_agent','share_documents.duration_time','share_documents.register_required','share_documents.printable',
         // 'share_documents.downloadable')
         //   ->first();
-          if($file_detail->register_required == '1'){
+          if($sharedata->register_required == '1'){
             $file_detail->register_required ='Yes';
           }else{
             $file_detail->register_required ='No';
           }
-          if($file_detail->printable == '1'){
+          if($sharedata->printable == '1'){
             $file_detail->printable ='Yes';
           }else{
             $file_detail->printable ='No';
           }
-          if($file_detail->downloadable == '1'){
+          if($sharedata->downloadable == '1'){
             $file_detail->downloadable ='Yes';
           }else{
             $file_detail->downloadable ='No';
-          }
-          if($file_detail->time !==''){
-                $time =explode(' ',$file_detail->time);
-                $file_detail->time_ = $time[1];
-                $file_detail->date_ = $time[0];
           }
 
           return json_encode($file_detail);
