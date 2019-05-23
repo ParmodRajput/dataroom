@@ -210,12 +210,12 @@
 
 		                                html+='<ul><li class="select_shared_file" data-access="'+data_access+'" data-value="'+document_id+'"><label><input type="checkbox" data-value="'+share_id+'"/><i class="fa fa-folder-o"></i> '+doc_name+'</label></li></ul>';
                               		});
-
+				                	
                               		$.each(getfiles,function(key ,value){
 		                              	var Shared_time = value.Shared_time;
 				                	 	var doc_name = value.document_name;
-				                	 	var document_id = value.id;
-				                	 	var share_id   = value.id;
+				                	 	var document_id = value.document_id;
+				                	 	var share_id   = value.shared_id;
 				                	 	var data_access = value.access_token;
 
 		                                html+='<ul><li class="select_shared_file" data-access="'+data_access+'" data-value="'+document_id+'"><label><input type="checkbox" data-value="'+share_id+'"/><i class="fa fa-file-o"></i> '+doc_name+'</label></li></ul>';
