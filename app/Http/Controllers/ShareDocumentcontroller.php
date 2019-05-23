@@ -436,39 +436,9 @@ class ShareDocumentcontroller extends Controller
         $authEmail = Auth::user()->email;
 
         $getSharedBy = ShareDocument::where('Shared_by',$authEmail)
-        ->where('project_id',$project_id)->groupBy('access_token')->get();
-
-         foreach ($getSharedBy as $getSharedBy) {
-            
-            $getDocId = $getSharedBy->document_id;
-            $getAccessToken = $getSharedBy->access_token;
-
-
-            // $getIndexOfFolder = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '1')->get();
-
-          $getFolder= DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '1')->where('share_documents.access_token', $getAccessToken)->select('documents.id', 'documents.path', 'documents.document_name', 'share_documents.access_token','share_documents.Shared_time')->first();
- 
-            // $getIndexOfFile = Document::where('project_id', $project_id)->where('id', $getDocId)->where('deleted_by', '0')->where('document_status', '0')->get();
-            if(!empty($getFolder)) {
-                array_push($getIndexOfFolder, $getFolder);
-            }
-              
-          $getFile = DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '0')->where('share_documents.access_token', $getAccessToken)->select('documents.id', 'documents.path', 'documents.document_name', 'share_documents.access_token','share_documents.Shared_time')->first();
-            if(!empty($getFile)) {
-              array_push($getIndexOfFile, $getFile);
-            }
-         }
-         
-          if($getIndexOfFolder !== '') {
-                array_push($IndexOfFolder,$getIndexOfFolder);
-          }
-
-          if($getIndexOfFile !== ''){
-                array_push($IndexOfFile,$getIndexOfFile);
-          } 
-       
-         $Shared_data = ['folder_index' => $IndexOfFolder , 'file_index' => $IndexOfFile]; 
-         return $Shared_data;
+        ->where('project_id',$project_id)->groupBy('access_token')->get()->toArray();
+        //echo"<pre>";print_r($getSharedBy);die;
+        return $getSharedBy;
         
       }//function
 
@@ -488,17 +458,26 @@ class ShareDocumentcontroller extends Controller
        }//function
 
        public function GetSharedDocsUserPermission(Request $request){
-
+           // echo"<pre>";print_r($request->all()); die;
          $project_id = $request->project_id;
          $dataUser = $request->dataUser;
          $authEmail = Auth::user()->email;
          $access_token = $request->access_token;
 
 
-         $getSharedUsersPermission = ShareDocument::where('Shared_with',$dataUser)->where('project_id',$project_id)->where('access_token',$access_token)->get();
+        // $getSharedUsersPermission = ShareDocument::where('Shared_with',$dataUser)
+        //                             ->where('project_id',$project_id)
+        //                             ->where('access_token',$access_token)->get();
 
+        $getFolder= DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '1')->where('share_documents.access_token', $access_token)->where('Shared_with',$dataUser)
+          ->select('documents.id as document_id','share_documents.id as shared_id','documents.path', 'documents.document_name', 'share_documents.access_token','share_documents.Shared_time')
+        ->get()->toArray(); 
 
-         return $getSharedUsersPermission;
+        $getFile = DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '0')->where('share_documents.access_token', $access_token)->where('Shared_with',$dataUser)->select('documents.id as document_id','share_documents.id as shared_id', 'documents.path', 'documents.document_name', 'share_documents.access_token','share_documents.Shared_time')->get()->toArray(); 
+
+        $Shared_data = ['folder_index' => $getFolder , 'file_index' => $getFile];   
+        //echo"<pre>";print_r($Shared_data); die;                       
+         return $Shared_data;
 
 
        }
@@ -524,31 +503,43 @@ class ShareDocumentcontroller extends Controller
 
        public function GetSharedDocUpdate(Request $request){
 
+          $project_id = $request->project_id;
+          $document_id = $request->document_id;
+          $access_token =$request->access_token;
+          $shared_id = $request->shared_id;
 
-          $registerValid = $request->registerValid;
-          $printable = $request->printable;
-          $downloadable =$request->downloadable;
-          $SharedId = $request->SharedId;
-          $duration = $request->durationTime;
-          $current = Carbon::now();
-          if($duration == 1){
-            $durationTime = $current->addDays(3)->format('y-m-d');
-          } else if($duration == 2){
-            $durationTime = $current->addDays(7)->format('y-m-d');
-          }else if($duration == 3){
-            $durationTime = $current->addDays(15)->format('y-m-d');
-          }else if($duration == 4){
-            $durationTime = $current->addDays(30)->format('y-m-d');
+          $file_detail= DB::table('share_documents')
+          ->join('device_detect', 'share_documents.id', '=', 'device_detect.share_documents_id')
+          ->where('share_documents.id','=',$shared_id)
+          ->select('device_detect.ip_address as IP','device_detect.location','device_detect.latitude','device_detect.longitude','device_detect.time','device_detect.user_agent','share_documents.duration_time','share_documents.register_required','share_documents.printable',
+        'share_documents.downloadable')
+          ->first();
+          if($file_detail->register_required == '1'){
+            $file_detail->register_required ='Yes';
           }else{
-            $durationTime = $duration;
+            $file_detail->register_required ='No';
           }
-          //return $durationTime; die();
-          ShareDocument::where('id',$SharedId)->update(['register_required' => $registerValid,'printable'=>$printable ,'downloadable'=>$downloadable,'duration_time'=>$durationTime]);
+          if($file_detail->printable == '1'){
+            $file_detail->printable ='Yes';
+          }else{
+            $file_detail->printable ='No';
+          }
+          if($file_detail->downloadable == '1'){
+            $file_detail->downloadable ='Yes';
+          }else{
+            $file_detail->downloadable ='No';
+          }
+          if($file_detail->time !==''){
+                $time =explode(' ',$file_detail->time);
+                $file_detail->time_ = $time[1];
+                $file_detail->date_ = $time[0];
+          }
 
-          return "success";
-
-
+          return json_encode($file_detail);
+         // echo"<pre>";print_r($file_detail);die;
        }
+
+
        // Function to get the client IP address
         // function get_client_ip() {
         //     $ipaddress = '';

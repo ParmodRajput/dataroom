@@ -54,6 +54,9 @@
 
         	overflow-y: scroll;
         }
+        .shared_User_permission li {
+		    font-weight: bold;
+		}
 
 </style>
 
@@ -65,7 +68,9 @@
 		 	<div class="col-md-12">
 				<div class="left-one col-md-4 shared_Doc_listing"></div><!--left one close-->
 					
-				<div class="left-one col-md-4 shared_User_listing"></div><!--left one close-->
+				<div class="left-one col-md-4 shared_User_listing">
+
+				</div><!--left one close-->
 					
 				<div class="left-one set-value col-md-4 shared_User_permission hidden">	</div><!--left one close-->
 				
@@ -100,58 +105,21 @@
                          	_token     :token,
 
                          },
-                         success: function (response) { 
-                       	  console.log(response);
-                          var getfolders = response.folder_index;
+                         success: function (response) {
+                         	$.each(response,function(key ,value){
+                              	var Shared_time = value.Shared_time;
+		                	 	var doc_name = value.document_name;
+		                	 	var document_id = value.document_id;
+		                	 	var share_id   = value.id;
+		                	 	var data_access = value.access_token;
 
-                          var getfiles = response['file_index'];
-
-			                if(getfolders == '' && getfiles == '')
-			                {
-
-			                  html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>You have no any shared document.</span></div>";
-
-			                }else{
-
-			                	 $.each(getfolders,function(key ,value){
-
-			                	 	$.each(value,function(key ,value){
-			                	 		
-			                	 	var Shared_time = value.Shared_time;
-			                	 	var doc_name = value.document_name;
-			                	 	var doc_path = value.path;
-			                	 	var doc_id   = value.id;
-			                	 	var data_access = value.access_token;
-
-			                	 	html+='<ul><li class="select_shared" data-access='+data_access+' data-value='+doc_id+'><label><input type="checkbox" data-value='+doc_path+'/><i class="fa fa-folder-o"></i> '+doc_name+'</label></li></ul>';
-
-			                	 	});
-
-			                	 });
-
-			                	$.each(getfiles,function(key ,value){
-
-                                  $.each(value,function(key ,value){
-                                  	 var Shared_time = value.Shared_time;
-			                	 	var doc_name = value.document_name;
-			                	 	var doc_path = value.path;
-			                	 	var doc_id   = value.id;
-			                	 	var data_access = value.access_token;
-
-			                	 	html+='<ul><li class="select_shared" data-access='+data_access+' data-value='+doc_id+'><label><input type="checkbox" data-value='+doc_path+'/><i class="fa fa-file-o"></i>  '+doc_name+'</label></li></ul>';
-
-			                	    });
-
-                                  });
-			                }
-
-
-                           $('.shared_Doc_listing').html(html);
-
+		                	 	html+='<ul><li class="select_shared" data-access="'+data_access+'" data-value="'+document_id+'"><label><input type="checkbox" data-value='+share_id+'"/>'+Shared_time+'</label></li></ul>';
+                              });
+                        	$('.shared_Doc_listing').html(html);
 			             }//success
 
 
-			            });//ajax
+			       	});//ajax
 
                   }//function
 
@@ -166,7 +134,6 @@
 		              var access_token = $(this).data('access');
                       var token =$('#csrf-token').val();
                       var html = '';
-
                       $.ajax({
                          
                          type:"POST",
@@ -180,16 +147,16 @@
 
                          },
                          success: function (response) { 
-                              
+                         		var html ='<div><h5>Shared with</h5></div><div>';
                               $.each(response,function(key ,value){
 
                               	var userEmail = value.Shared_with;
                               	var access_token = value.access_token;
 
-                              	html+='<ul><li class="selectSharedUser" data-value='+userEmail+' data-access='+access_token+'><label><input type="checkbox"/>'+userEmail+'</label></li></ul>';
+                              	html+='<ul><li class="selectSharedUser" data-value="'+userEmail+'"data-access="'+access_token+'"><label><input type="checkbox"/>'+userEmail+'</label></li></ul>';
 
                               });
-
+                              	html+='</div><div class="shared_User_file_listing"></div>';
                              $('.shared_User_listing').html(html);
 
                          }
@@ -204,7 +171,7 @@
 
 		              $('.shared_User_listing input:checkbox').prop('checked', false);
 		              $(this).find('input:checkbox').prop('checked', true);
-		              $('.shared_User_permission').removeClass('hidden');
+		              $('.shared_User_permission').addClass('hidden');
 
 		              var dataUser= $(this).data('value');
 		              var project_id = $('#project_id').val();
@@ -228,85 +195,35 @@
 
                          },
                          success: function (response) { 
+                         	var getfolders = response.folder_index;
+                          	var getfiles = response.file_index;
+                          	var html ='<div><h5>Shared file</h5></div><div>';
+	                          	if(getfolders == '' && getfiles == ''){
+				                	html +="<div class='emplty_box_drag_drop'><span class='drag_document_img'><img src='{{asset("dist/img/icon-blue.png")}}'></span><span class='drag_document_texts'>You have no any shared document.</span></div>";
+				                }else{
+				                	$.each(getfolders,function(key ,value){
+		                              	var Shared_time = value.Shared_time;
+				                	 	var doc_name = value.document_name;
+				                	 	var document_id = value.document_id;
+				                	 	var share_id   = value.shared_id;
+				                	 	var data_access = value.access_token;
 
-                              $.each(response,function(key ,value){
+		                                html+='<ul><li class="select_shared_file" data-access="'+data_access+'" data-value="'+document_id+'"><label><input type="checkbox" data-value="'+share_id+'"/><i class="fa fa-folder-o"></i> '+doc_name+'</label></li></ul>';
+                              		});
 
-                              	var register_required = value.register_required;
-                              	var printable = value.printable;
-                              	var downloadable = value.downloadable;
-                                var duration_time = value.duration_time;
+                              		$.each(getfiles,function(key ,value){
+		                              	var Shared_time = value.Shared_time;
+				                	 	var doc_name = value.document_name;
+				                	 	var document_id = value.id;
+				                	 	var share_id   = value.id;
+				                	 	var data_access = value.access_token;
 
-
-                                const endDate = value.created_at;
-								const startDate   = duration_time;
-								const timeDiff  = (new Date(startDate)) - (new Date(endDate));
-								const days      = timeDiff / (1000 * 60 * 60 * 24);
-
-                                html+='<ul><li class="view_duration_e"><span>View Duration</span><label><input name="view_duration_edit" type="radio"/ value="1"';
-                               
-                                if(days >= 2.0 && days <= 3)
-                                {
-                                  html+='checked';
-                                }
-
-                                html+='>Next 3 days</label><label><input type="radio" name="view_duration_edit" value="2"/';
-
-                                if(days >= 6.0 && days <= 7)
-                                {
-                                  html+='checked';
-                                }
-
-                                html+='>Next 7 days</label><label><input type="radio" name="view_duration_edit" value="3"/';
-
-                                if(days >= 14.0 && days <= 15)
-                                {
-                                  html+='checked';
-                                }
-
-                                html+='>Next 15 days</label><label><input type="radio" name="view_duration_edit" value="4"';
-
-                                if(days >= 29.0 && days <= 30)
-                                {
-                                  html+='checked';
-                                }
-
-                                html+='/>Next 1 Month</label><label><input type="radio" name="view_duration_edit" value="5"/>Custom Date</label></li>';
-
-
-                                html+='<div class="custom_date hidden"><div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd"><input class="form-control" id="duration_time_val" type="date"/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div>';
-
-                                if(register_required == 1)
-	                              {
-	                                   html+='<li class="register_required_edit"><span>Registeration Required</span><label><input name="register_required_edit" value="1" type="radio" checked/> Yes</label><label><input name="register_required_edit" value="0" type="radio"/> No</label></li>';
-	                              }else{
-
-	                              	html+='<li  class="register_required_edit"><span>Registeration Required</span><label><input name="register_required_edit" value="1" type="radio" /> Yes</label><label><input value="0" type="radio" name="register_required_edit"checked /> No</label></li>';
-
-	                              }
-
-	                              if(printable == 1)
-	                              {
-	                                   html+='<li  class="print_edit"><span>Printable</span><label><input name="print_edit"  value="1" type="radio" checked/> Yes</label><label><input value="0" name="print_edit"  type="radio"/> No</label></li>';
-	                              }else{
-
-	                              	html+='<li  class="print_edit"><span>Printable</span><label><input value="1" name="print_edit" type="radio"/> Yes</label><label><input value="0" name="print_edit" type="radio" checked/> No</label></li>';
-
-	                              }
-	                              if(downloadable == 1)
-	                              {
-	                                   html+='<li class="download_edit"><span>Downloadable</span><label><input name="download_edit"  value="1"  type="radio" checked/> Yes</label><label><input name="download_edit"  value="0" type="radio"/> No</label></li></ul>';
-	                              }else{
-
-	                              	html+='<li  class="download_edit"><span>Downloadable</span><label><input name="download_edit" value="0"  type="radio" /> Yes</label><label><input value="0" name="download_edit" type="radio" checked/> No</label></li></ul>';
-
-	                              }
-
-	                              html+='<button data-value="'+value.id+'"class="permission_shareDoc_update btn btn-primary">Update</button>';
-
-
-                              });
-
-                              $('.shared_User_permission').html(html);
+		                                html+='<ul><li class="select_shared_file" data-access="'+data_access+'" data-value="'+document_id+'"><label><input type="checkbox" data-value="'+share_id+'"/><i class="fa fa-file-o"></i> '+doc_name+'</label></li></ul>';
+                              		});
+				                }
+				                html+='</div>';
+				                //console.log(html);
+                              $('.shared_User_file_listing').html(html);
 
 
                          }
@@ -316,49 +233,18 @@
                         
 		          });//ajax
 
+			$(document).on('click','.select_shared_file',function(){
+				//alert('dhjs');
+				$('.shared_User_file_listing input:checkbox').prop('checked', false);
+		   		$(this).find('input:checkbox').prop('checked', true);
+		        $('.shared_User_permission').removeClass('hidden');
 
-                $("#datepicker").datepicker({ 
-
-						        autoclose: true, 
-						        todayHighlight: true
-
-						  }).datepicker('update', new Date());
-
-
-                 $(document).on('change','.view_duration_e input:radio',function(){
-
-				    if ($(this).val() == "5") {
-				       
-				       $('.custom_date').removeClass('hidden');
-
-				    }else{
-				       
-				       $('.custom_date').addClass('hidden');
-				    }
-
-				 });
-	 
-
-		$(document).on('click','.permission_shareDoc_update',function(){
-
-                var DurationGet  = $("input[name='view_duration_edit']:checked").val();
-
-			    if(DurationGet == 5)
-			    {
-			       var durationTime = $('#duration_time_val').val();
-
-			    }else{
-
-			       var durationTime = DurationGet;
-			    }
-
-			    var registerValid = $("input[name='register_required_edit']:checked"). val();
-			    var printable = $("input[name='print_edit']:checked"). val();
-			    var downloadable = $("input[name='download_edit']:checked"). val();
-			    var token = $('#csrf-token').val();  
-			    var project_id = $('.project_id').val();
-			    var SharedId = $(this).data('value');
-
+		              var document_id= $(this).data('value');
+		              var project_id = $('#project_id').val();
+		              var access_token = $(this).data('access');
+                      var token =$('#csrf-token').val();
+                      var shared_id = $(this).find('input:checkbox').data('value');
+                      var html='';
 			        $.ajax({
 
 			              type : "POST",
@@ -367,20 +253,16 @@
 
 			                _token        : token,
 			                project_id    : project_id,
-			                durationTime  : durationTime,
-			                registerValid : registerValid,
-			                printable     : printable,
-			                downloadable  : downloadable,
-			                SharedId      : SharedId,
+			                document_id  : document_id,
+			                access_token : access_token,
+			                shared_id      : shared_id,
 
 			              },
 			              success:function(response){
-                                if (response == "success") {
-                                    swal("updated successfully", "", "success");
-                                }else{
-                                	 swal("something wrong", "", "error");
-                                }
+			              	var obj = jQuery.parseJSON(response);
+			              	html = '<ul><li>Date : '+obj.date_+'</li><li>Time : '+obj.time_+'</li><li>View Duration : '+obj.duration_time+'</li><li>Date : '+obj.date_+'</li><li>Registeration Required : '+obj.register_required+'</li><li>Printable : '+obj.printable+'</li><li>Downloadable : '+obj.downloadable+'</li><li>IP : '+obj.IP+'</li><li>Location : '+obj.location+'</li><li>Latitude : '+obj.latitude+'</li><li>Longitude : '+obj.longitude+'</li><li>Device Detail : '+obj.user_agent+'</li></ul>';
 
+			              	$('.shared_User_permission').html(html);
 			              }
 
 			         });
