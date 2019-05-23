@@ -260,7 +260,7 @@
 			              },
 			              success:function(response){
 			              	var obj = jQuery.parseJSON(response);
-			              	html = '<ul><li>Date : '+obj.date_+'</li><li>Time : '+obj.time_+'</li><li>View Duration : '+obj.duration_time+'</li><li>Date : '+obj.date_+'</li><li>Registeration Required : '+obj.register_required+'</li><li>Printable : '+obj.printable+'</li><li>Downloadable : '+obj.downloadable+'</li><li>IP : '+obj.IP+'</li><li>Location : '+obj.location+'</li><li>Latitude : '+obj.latitude+'</li><li>Longitude : '+obj.longitude+'</li><li>Device Detail : '+obj.user_agent+'</li></ul>';
+			              	html = '<div> Permissions</div> <ul><li>View Duration : '+obj.duration_time+'</li><li>Registeration Required : '+obj.register_required+'</li><li>Printable : '+obj.printable+'</li><li>Downloadable : '+obj.downloadable+'</li></ul> <div> View Detail</div><ul><li>Date : '+obj.date_+'</li><li>Time : '+obj.time_+'</li<li>IP : '+obj.IP+'</li><li>Location : '+obj.location+'</li><li>Latitude : '+obj.latitude+'</li><li>Longitude : '+obj.longitude+'</li><li>Device Detail : '+obj.user_agent+'</li></ul>';
 
 			              	$('.shared_User_permission').html(html);
 			              }
