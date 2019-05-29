@@ -1033,6 +1033,10 @@ $(document).ready(function(){
               }); 
                       
             }
+          },
+          error: function (error) {
+            swal("Something Wrong", "error");
+            location.reload();
           }
 
         });
@@ -1161,12 +1165,9 @@ $(document).ready(function(){
               },  
               // multiple data sent using ajax//
               success: function (response) { 
-     
-                   GetDocumentInfoByResponse(response,document_index,directory_url);
-                   $('.notMoveInDiv').droppable("disable");
-       
-
-                 }//success
+                GetDocumentInfoByResponse(response,document_index,directory_url);
+                $('.notMoveInDiv').droppable("disable");       
+              }
         });//ajax
    }
 

@@ -132,6 +132,7 @@ class ShareDocumentcontroller extends Controller
         $decryptedRegisterChecker = Crypt::decryptString($registerChecker); 
 
         $time =  $request->route()->parameter('time');
+
         $current_date = date('Y-m-d');
 
         $DocumentFolder = [];
@@ -141,11 +142,14 @@ class ShareDocumentcontroller extends Controller
                     {
                         $authUserEmail = Auth::user()->email; 
 
-                        if($decryptedUserEmail == $authUserEmail)
-                        {
+                        if($decryptedUserEmail == $authUserEmail){
+                          if($time > '0'){
+                            $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('duration_time', '>=', $current_date)->where('access_token',$time)->get();
+                          }else{
                             $getShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('duration_time', '>=', $current_date)->get();
-                            $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
-                            $checker = 'true';
+                          }
+                          $deleteShareableDocument = ShareDocument::where('Shared_with',$decryptedUserEmail)->where('access_token',$time)->where('duration_time', '<', $current_date)->delete();
+                          $checker = 'true';
                            
 
                         }else{
