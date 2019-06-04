@@ -469,17 +469,18 @@ class ShareDocumentcontroller extends Controller
          $access_token = $request->access_token;
 
 
-        // $getSharedUsersPermission = ShareDocument::where('Shared_with',$dataUser)
-        //                             ->where('project_id',$project_id)
-        //                             ->where('access_token',$access_token)->get();
-
+        $getSharedUsersPermission = ShareDocument::where('Shared_with',$dataUser)
+                                    ->where('project_id',$project_id)
+                                    ->where('access_token',$access_token)->first();
+         // $Permission = json_encode($getSharedUsersPermission);
+         //echo"<pre>";print_r($getSharedUsersPermission);die;                           
         $getFolder= DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '1')->where('share_documents.access_token', $access_token)->where('Shared_with',$dataUser)
           ->select('documents.id as document_id','share_documents.id as shared_id','documents.path', 'documents.document_name', 'share_documents.access_token','share_documents.Shared_time')
         ->get()->toArray(); 
 
         $getFile = DB::table('documents')->join('share_documents', 'documents.id', '=', 'share_documents.document_id')->where('documents.project_id', $project_id)->where('documents.deleted_by', '0')->where('documents.document_status', '0')->where('share_documents.access_token', $access_token)->where('Shared_with',$dataUser)->select('documents.id as document_id','share_documents.id as shared_id', 'documents.path', 'documents.document_name', 'share_documents.access_token','share_documents.Shared_time')->get()->toArray(); 
 
-        $Shared_data = ['folder_index' => $getFolder , 'file_index' => $getFile];   
+        $Shared_data = ['folder_index' => $getFolder , 'file_index' => $getFile,'Permission'=>$getSharedUsersPermission];   
         //echo"<pre>";print_r($Shared_data); die;                       
          return $Shared_data;
 
@@ -505,7 +506,36 @@ class ShareDocumentcontroller extends Controller
 
        }
 
-       public function GetSharedDocUpdate(Request $request){
+       //update permission
+      public function GetSharedDocUpdate(Request $request){
+          $shared_with = $request->useremail;
+          $access_token = $request->accesstoken;
+          $project_id = $request->project_id;
+          $registerValid = $request->registerValid;
+          $printable = $request->printable;
+          $downloadable =$request->downloadable;
+          $SharedId = $request->SharedId;
+          $duration = $request->durationTime;
+          $current = Carbon::now();
+          if($duration == 1){
+            $durationTime = $current->addDays(3)->format('y-m-d');
+          } else if($duration == 2){
+            $durationTime = $current->addDays(7)->format('y-m-d');
+          }else if($duration == 3){
+            $durationTime = $current->addDays(15)->format('y-m-d');
+          }else if($duration == 4){
+            $durationTime = $current->addDays(30)->format('y-m-d');
+          }else{
+            $durationTime = $duration;
+          }
+          ShareDocument::where('Shared_with',$shared_with)
+              ->where('access_token',$access_token)
+              ->where('project_id',$project_id)
+              ->update(['register_required' => $registerValid,'printable'=>$printable ,'downloadable'=>$downloadable,'duration_time'=>$durationTime]);
+          return "success";
+      }
+
+       public function GetSharedDocLogAccess(Request $request){
 
           $project_id = $request->project_id;
           $document_id = $request->document_id;

@@ -195,6 +195,17 @@
 
                          },
                          success: function (response) { 
+                         	var permission_ = response.Permission;
+
+                         	var duration_time = permission_.duration_time;
+                         	var register_required = permission_.register_required;
+                          	var printable = permission_.printable;
+                          	var downloadable = permission_.downloadable;
+                         	const endDate = permission_.created_at;
+							const startDate   = duration_time;
+							const timeDiff  = (new Date(startDate)) - (new Date(endDate));
+							const days      = timeDiff / (1000 * 60 * 60 * 24);
+
                          	var getfolders = response.folder_index;
                           	var getfiles = response.file_index;
                           	var html ='<div><h5>Shared file</h5></div><div>';
@@ -221,6 +232,62 @@
 		                                html+='<ul><li class="select_shared_file" data-access="'+data_access+'" data-value="'+document_id+'"><label><input type="checkbox" data-value="'+share_id+'"/><i class="fa fa-file-o"></i> '+doc_name+'</label></li></ul>';
                               		});
 				                }
+
+                                html+='<div><h5>Permissions</h5></div><ul><li class="view_duration_e"><span>View Duration</span><label><input name="view_duration_edit" type="radio"/ value="1"';
+                                var Customduration = true;
+                                if(days >= 2.0 && days <= 3){
+                                  html+='checked';
+                                  Customduration =false;
+                                }
+                                html+='>Next 3 days</label><label><input type="radio" name="view_duration_edit" value="2"/';
+                                if(days >= 6.0 && days <= 7){
+                                  html+='checked';
+                                  Customduration =false;
+                                }
+                                html+='>Next 7 days</label><label><input type="radio" name="view_duration_edit" value="3"/';
+                                if(days >= 14.0 && days <= 15){
+                                  html+='checked';
+                                  Customduration =false;
+                                }
+                                html+='>Next 15 days</label><label><input type="radio" name="view_duration_edit" value="4"';
+                                if(days >= 29.0 && days <= 30){
+                                  html+='checked';
+                                  Customduration =false;
+                                }
+                                html+='/>Next 1 Month</label><label><input type="radio" name="view_duration_edit" value="5"';
+                                if(Customduration ==true){
+                                	html+='checked />Custom Date</label></li><div class="custom_date"><div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd"><input value="'+duration_time+'" class="form-control" id="duration_time_val" type="date"/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div>';
+                                }else{
+                                	html+='/>Custom Date</label></li><div class="custom_date hidden"><div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd"><input class="form-control" id="duration_time_val" type="date"/><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div></div>';
+                                }
+                                if(register_required == 1)
+	                              {
+	                                   html+='<li class="register_required_edit"><span>Registeration Required</span><label><input name="register_required_edit" value="1" type="radio" checked/> Yes</label><label><input name="register_required_edit" value="0" type="radio"/> No</label></li>';
+	                              }else{
+
+	                              	html+='<li  class="register_required_edit"><span>Registeration Required</span><label><input name="register_required_edit" value="1" type="radio" /> Yes</label><label><input value="0" type="radio" name="register_required_edit"checked /> No</label></li>';
+
+	                              }
+
+	                              if(printable == 1)
+	                              {
+	                                   html+='<li  class="print_edit"><span>Printable</span><label><input name="print_edit"  value="1" type="radio" checked/> Yes</label><label><input value="0" name="print_edit"  type="radio"/> No</label></li>';
+	                              }else{
+
+	                              	html+='<li  class="print_edit"><span>Printable</span><label><input value="1" name="print_edit" type="radio"/> Yes</label><label><input value="0" name="print_edit" type="radio" checked/> No</label></li>';
+
+	                              }
+	                              if(downloadable == 1)
+	                              {
+	                                   html+='<li class="download_edit"><span>Downloadable</span><label><input name="download_edit"  value="1"  type="radio" checked/> Yes</label><label><input name="download_edit"  value="0" type="radio"/> No</label></li></ul>';
+	                              }else{
+
+	                              	html+='<li  class="download_edit"><span>Downloadable</span><label><input name="download_edit" value="0"  type="radio" /> Yes</label><label><input value="0" name="download_edit" type="radio" checked/> No</label></li></ul>';
+
+	                              }
+
+	                              html+='<button class="permission_shareDoc_update btn btn-primary">Update</button>';
+
 				                html+='</div>';
 				                //console.log(html);
                               $('.shared_User_file_listing').html(html);
@@ -248,7 +315,7 @@
 			        $.ajax({
 
 			              type : "POST",
-			              url : "{{url('/')}}/share/documents/update",
+			              url : "{{url('/')}}/share/documents/logaccess",
 			              data : {  
 
 			                _token        : token,
@@ -260,7 +327,7 @@
 			              },
 			              success:function(response){
 			              	var obj = jQuery.parseJSON(response);
-			              	html = '<div> Permissions</div> <ul><li>View Duration : '+obj.duration_time+'</li><li>Registeration Required : '+obj.register_required+'</li><li>Printable : '+obj.printable+'</li><li>Downloadable : '+obj.downloadable+'</li></ul> <div> View Detail</div><ul><li>Date : '+obj.date_+'</li><li>Time : '+obj.time_+'</li<li>IP : '+obj.IP+'</li><li>Location : '+obj.location+'</li><li>Latitude : '+obj.latitude+'</li><li>Longitude : '+obj.longitude+'</li><li>Device Detail : '+obj.user_agent+'</li></ul>';
+			              	html = '<div> View Detail</div><ul><li>Date : '+obj.date_+'</li><li>Time : '+obj.time_+'</li<li>IP : '+obj.IP+'</li><li>Location : '+obj.location+'</li><li>Latitude : '+obj.latitude+'</li><li>Longitude : '+obj.longitude+'</li><li>Device Detail : '+obj.user_agent+'</li></ul>';
 
 			              	$('.shared_User_permission').html(html);
 			              }
@@ -269,6 +336,59 @@
                
             });
 
+            //update permission
+            $(document).on('click','.permission_shareDoc_update',function(){
+            	var userdetail = $('.selectSharedUser').find('input[type="checkbox"]:checked');
+            	var useremail = $(userdetail).closest('.selectSharedUser').data('value');
+            	var accesstoken = $(userdetail).closest('.selectSharedUser').data('access');
+
+            	var DurationGet  = $("input[name='view_duration_edit']:checked").val();
+
+			    if(DurationGet == 5)
+			    {
+			       var durationTime = $('#duration_time_val').val();
+
+			    }else{
+
+			       var durationTime = DurationGet;
+			    }
+
+            	var project_id = $('#project_id').val();
+            	var token =$('#csrf-token').val();
+            	var registerValid = $("input[name='register_required_edit']:checked"). val();
+			    var printable = $("input[name='print_edit']:checked"). val();
+			    var downloadable = $("input[name='download_edit']:checked"). val();
+			        $.ajax({
+			              type : "POST",
+			              url : "{{url('/')}}/share/documents/update",
+			              data : {
+			              	useremail     :  useremail,
+			              	accesstoken   :  accesstoken,
+			                _token        : token,
+			                project_id    : project_id,
+			                durationTime  : durationTime,
+			                registerValid : registerValid,
+			                printable     : printable,
+			                downloadable  : downloadable,
+			              },
+			              success:function(response){
+			              	if (response == "success") {
+                                swal("updated successfully", "", "success");
+                            }else{
+                            	 swal("something wrong", "", "error");
+                            }
+		              }
+			         });               
+            });
+
+			$(document).on('click','input[name="view_duration_edit"]',function(){
+				if($(this).is(':checked') && $(this).val() == '5'){
+					$('.custom_date').removeClass('hidden');
+				}else{
+					$('.custom_date').addClass('hidden');
+				}
+
+			});
 
         });//document
 
