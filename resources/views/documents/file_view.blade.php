@@ -51,7 +51,8 @@
 
     <script lang="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.10.8/xlsx.full.min.js"></script>
 
-    <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
+   <!--  <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script> -->
+   <script src="{{ asset('public/js/FileSaver.min.js')}}"></script>
 
     <script src="{{asset('js/pdf.js')}}"></script>
 
@@ -172,6 +173,12 @@
 					
    }
 
+   #canvas_div{
+   	display:none;
+   	overflow-y:scroll;
+   	height:95vh
+   }
+
 	</style>
 
 
@@ -275,7 +282,7 @@
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
 	                <canvas id="canvas"></canvas>
-	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:-webkit-fill-available;"></div> 
+	                <div id="canvas_div"></div> 
 	                <div class="button_next_pre hidden">
 	                	<div class="row">
 	                		<div class="col-md-2 col-md-offset-5">
@@ -933,7 +940,7 @@
 			context.save();
 			context.translate(translatePos.x, translatePos.y);
 			context.scale(scale, scale);
-			
+			img = new Image();
 			context.drawImage(img, 0, 0, img.width, img.height,     // source rectangle
 		                   0, 0, canvas.width, canvas.height); // destination rectangle;
 		  
