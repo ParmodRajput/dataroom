@@ -294,7 +294,8 @@
 	                				</div>
 	                				<div class=""style="width:25%; float:left;">
 									    <div class="input-group" style="width:66px;">
-									      <input name="currentnumber" type="text" id="currentPage" class="form-control" value="1"/>
+									      <input name="currentnumber" type="hidden" id="currentPage" class="form-control" value="1"/>
+									      <span class="input-group-addon" id="current-page">1</span>
 									      <span class="input-group-addon" id="total-page">1</span>
 									    </div>	                					
 	                				</div>
@@ -744,6 +745,7 @@
 		               }
 		            }
 		        });
+		        $('#current-page').text($('#currentPage').val());
 		    });
 			// Previous page of the PDF
 			$("#pdf-prev").on('click', function(event) {

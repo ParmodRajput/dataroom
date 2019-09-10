@@ -51,11 +51,12 @@
 
     <script lang="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.10.8/xlsx.full.min.js"></script>
 
-    <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
-
-    <script src="js/pdf.js"></script>
-
-    <script src="js/pdf.worker.js"></script>
+  <!--   <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script> -->
+	<script src="{{ asset('public/js/FileSaver.min.js')}}"></script>
+	<script src="{{ asset('public/js/pdf.js')}}"></script>
+	<script src="{{ asset('public/js/pdf.worker.js')}}"></script>
+    <!-- <script src="js/pdf.js"></script> -->
+    <!-- <script src="js/pdf.worker.js"></script> -->
 
         <style>
 		*{margin:0; padding: 0; box-sizing: border-box; font-family: arial; color: #666;}
@@ -172,6 +173,11 @@
 					
    }
 
+	#canvas_div{
+	   	display:none;
+	   	overflow-y:scroll;
+	   	height:95vh
+	   }
 	</style>
 
 
@@ -217,7 +223,7 @@
 				</div>
 				<div class="share">
 
-				 <a onclick="myFunction();" href="javascript:;">Get shareable link <img src="{{ asset('dist/img/link-button.png ')}}"></a>
+				 <a onclick="myFunction();" href="javascript:void(0);">Get shareable link <img src="{{ asset('dist/img/link-button.png ')}}"></a>
 
 
 				</div> 
@@ -313,7 +319,7 @@
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
 	                <canvas id="canvas"></canvas> 
-	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:-webkit-fill-available;"></div>	                
+	                <div id="canvas_div"></div>	                
 	                <div class="button_next_pre hidden">
 	                	<div class="row">
 	                		<div class="col-md-2 col-md-offset-5">
@@ -325,7 +331,8 @@
 	                				</div>
 	                				<div class=""style="width:25%; float:left;">
 									    <div class="input-group" style="width:66px;">
-									      <input name="currentnumber" type="text" id="currentPage" class="form-control" value="1"/>
+									      <input name="currentnumber" type="hidden" id="currentPage" class="form-control" value="1"/>
+									      <span class="input-group-addon" id="current-page">1</span>
 									      <span class="input-group-addon" id="total-page">1</span>
 									    </div>	                					
 	                				</div>
@@ -576,6 +583,7 @@
 		               }
 		            }
 		        });
+		        $('#current-page').text($('#currentPage').val());
 		    });
 
 			// Previous page of the PDF
@@ -745,7 +753,7 @@
 			context.save();
 			context.translate(translatePos.x, translatePos.y);
 			context.scale(scale, scale);
-			
+			var img = new Image();
 			context.drawImage(img, 0, 0, img.width, img.height,     // source rectangle
 		                   0, 0, canvas.width, canvas.height); // destination rectangle;
 		  
