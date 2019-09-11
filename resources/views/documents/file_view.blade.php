@@ -179,6 +179,20 @@
    	height:95vh
    }
 
+   .pageing a{
+   		background-color: #eee;
+    	width: 36px;
+    	display: inline;
+    	float: left;
+   }
+
+   .pageing span{
+   		background-color: #eee;
+    	width: 36px;
+    	display: inline;
+    	float: left;
+   }
+
 	</style>
 
 
@@ -287,23 +301,17 @@
 	                	<div class="row">
 	                		<div class="col-md-2 col-md-offset-5">
 	                			<div class="row">
-	                				<div class="" style="width:25%; float:left;">
-							           <a class="form-control" id="pdf-prev" style="background-color:#eee;"  href="#the-canvas1">
+	                				<div class="pageing">
+							           <a class="input-group-addon" id="pdf-prev" href="#the-canvas1">
 							           		<i class="fas fa-chevron-up"></i>
 							           	</a>
-	                				</div>
-	                				<div class=""style="width:25%; float:left;">
-									    <div class="input-group" style="width:66px;">
-									      <input name="currentnumber" type="hidden" id="currentPage" class="form-control" value="1"/>
-									      <span class="input-group-addon" id="current-page">1</span>
-									      <span class="input-group-addon" id="total-page">1</span>
-									    </div>	                					
-	                				</div>
-	                				<div class="" style="width:25%; float:left;">
-				                       <a class="form-control" id="pdf-next" style="background-color:#eee;" href="#the-canvas1">
-				                       		<i class="fas fa-chevron-down"></i>
-				                       </a>	                					
-	                				</div>	                					                				
+								        <input name="currentnumber" type="hidden" id="currentPage" class="" value="1"/>
+										<span class="input-group-addon" id="current-page">1</span>
+										<span class="input-group-addon" id="total-page">1</span>
+					                    <a class="input-group-addon" id="pdf-next" href="#the-canvas1">
+					                    	<i class="fas fa-chevron-down"></i>
+					                    </a>
+	                				</div>		                				
 	                			</div>				           	
 	                		</div>
 	                	</div>
