@@ -728,11 +728,12 @@
 		    $('#canvas_div').on('scroll',function(){
 		    	var tatal_canvas = parseInt($('#total-page').text());
 		    	//alert(tatal_canvas);
-		        var Wscroll = $(this).scrollTop();
+		        //var Wscroll = $(this).scrollTop();
+		        var windowHeight = $(window).height();
 		        $('canvas[id^="the-canvas"]').each(function(){
 		            var ThisOffset = $(this).closest('canvas').offset();
 		            //console.log(ThisOffset);
-		            if(Wscroll > ThisOffset.top &&  Wscroll < ThisOffset.top  + $(this).closest('canvas').outerHeight(true)){
+		            if(windowHeight > ThisOffset.top &&  windowHeight < ThisOffset.top  + $(this).closest('canvas').outerHeight(true)){
 		                var tres = $(this).closest('canvas').attr('id');
 		                //alert(tres);
 		                console.log($(this).attr('id')); // will return undefined if this anchor not has an Id
