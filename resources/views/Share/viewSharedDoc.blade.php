@@ -205,7 +205,8 @@
         <input type="hidden" id="downloadable" data-value= '{{$downloadable}}'>
        	<input type="hidden" id="printable"  data-value= '{{$printable}}'>
        	<input type="hidden" id='current_rotated_deg' value='0'>
-
+       	<input type="hidden" name="scrolled" id="scrolled" value="0">
+       	<input type="hidden" name="canvasheight" id="canvasheight" value="">
      
        	<input type='hidden' id='currentPdfScale'>
 
@@ -555,6 +556,7 @@
 				var viewport = page.getViewport({scale: scale});
 				var pageDisplayWidth = viewport.width;
 				var pageDisplayHeight = viewport.height;
+				$('#canvasheight').val(pageDisplayHeight);
 				var context = canvas.getContext('2d');
 				canvas.width = pageDisplayWidth;
 				canvas.height = pageDisplayHeight;
@@ -564,6 +566,19 @@
 				};
 				page.render(renderContext).promise.then(callback);
 		  });
+		}
+
+		function scrolled(a){
+			var scrolled = parseInt($('#scrolled').val());
+			var pagehyt  = parseInt($('#canvasheight').val());
+			if(a =='up'){
+				scrolled=scrolled-pagehyt;
+			}
+			if(a =='down'){
+				scrolled=scrolled+pagehyt;
+			}
+			
+			return scrolled;
 		}
 		    $('#canvas_div').on('scroll',function(){
 		    	var tatal_canvas = parseInt($('#total-page').text());
@@ -586,86 +601,108 @@
 		               	var next_page =parseInt(canvas_data_id)+1;
 
 		               if(prev_page >= 1 || next_page <= tatal_canvas){
-		      			var prev_page_href ="#the-canvas"+prev_page;
-		      			var next_page_href ="#the-canvas"+next_page;		               	
-		                $("#pdf-prev").attr("href",'#the-canvas'+canvas_data_id); 
-		                 $("#pdf-next").attr("href",'#'+parent_page);
-		                $('#currentPage').val($(this).closest('canvas').attr('data-id'));
+			      			// var prev_page_href ="#the-canvas"+prev_page;
+			      			// var next_page_href ="#the-canvas"+next_page;		               	
+			                // $("#pdf-prev").attr("href",'#the-canvas'+canvas_data_id); 
+			                // $("#pdf-next").attr("href",'#'+parent_page);
+			                $('#currentPage').val($(this).closest('canvas').attr('data-id'));
+			                $('#current-page').text($('#currentPage').val());
+			                $('#scrolled').val($('#canvas_div').scrollTop());
 		               }
 		            }
 		        });
-		        $('#current-page').text($('#currentPage').val());
 		    });
 
 			// Previous page of the PDF
 			$("#pdf-prev").on('click', function() {
+				var currentPage =  $('#currentPage').val();
+				var prev_page =parseInt(currentPage) -1;
+				if(prev_page >= 1){
+					var scroll=scrolled('up');		
+					$("#canvas_div").animate({
+					    scrollTop:  scroll
+					});
+					$('#scrolled').val(scroll);		
+				}
 
 			    // Add smooth scrolling to all links
 			    // Make sure this.hash has a value before overriding default behavior
-			    if (this.hash !== "") {
-			      // Prevent default anchor click behavior
-			      event.preventDefault();
+			    // if (this.hash !== "") {
+			    //   // Prevent default anchor click behavior
+			    //   event.preventDefault();
 
-			      // Store hash
-			      var hash = this.hash;
-			      // Using jQuery's animate() method to add smooth page scroll
-			      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-			      $('html, body').animate({
-			        scrollTop: $(hash).offset().top
-			      }, 100, function(){			   
-			        // Add hash (#) to URL when done scrolling (default click behavior)
-			        window.location.hash = hash;
-			      });
-				      var currentPage =  $('#currentPage').val();
+			    //   // Store hash
+			    //   var hash = this.hash;
+			    //   // Using jQuery's animate() method to add smooth page scroll
+			    //   // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+			    //   $('html, body').animate({
+			    //     scrollTop: $(hash).offset().top
+			    //   }, 100, function(){			   
+			    //     // Add hash (#) to URL when done scrolling (default click behavior)
+			    //     window.location.hash = hash;
+			    //   });
+				   //    var currentPage =  $('#currentPage').val();
 
-				      var prev_page =parseInt(currentPage) -1;
-				      //alert(prev_page);
-				      var next_page =parseInt(currentPage)+1;
-				      //alert(next_page);
-		      		if(prev_page >= 1){
-		      			var prev_page_href ="#the-canvas"+prev_page;
-		      			var next_page_href ="#the-canvas"+next_page;
-		      			//alert(canvas_href);
-		    			$("#pdf-prev").attr("href",prev_page_href); 
-		    			$('#pdf-next').attr("href",next_page_href);
-		    			$('#currentPage').val(prev_page);
-		      		}  
-			    } // End if
+				   //    var prev_page =parseInt(currentPage) -1;
+				   //    //alert(prev_page);
+				   //    var next_page =parseInt(currentPage)+1;
+				   //    //alert(next_page);
+		     //  		if(prev_page >= 1){
+		     //  			var prev_page_href ="#the-canvas"+prev_page;
+		     //  			var next_page_href ="#the-canvas"+next_page;
+		     //  			//alert(canvas_href);
+		    	// 		$("#pdf-prev").attr("href",prev_page_href); 
+		    	// 		$('#pdf-next').attr("href",next_page_href);
+		    	// 		$('#currentPage').val(prev_page);
+		     //  		}  
+			    // } // End if
 			});
 
 			// Next page of the PDF
 			$("#pdf-next").on('click', function() {
+				
 				var tatal_canvas = parseInt($('#total-page').text());
-				//alert(tatal_canvas);				
-			    // Add smooth scrolling to all links
-			    // Make sure this.hash has a value before overriding default behavior
-			    if (this.hash !== "") {
-			      // Prevent default anchor click behavior
-			      event.preventDefault();
+				var currentPage =  $('#currentPage').val();
+				var next_page =parseInt(currentPage)+1;
+				if(next_page <= tatal_canvas){
+					var scroll=scrolled('down');		
+					$("#canvas_div").animate({
+					    scrollTop:  scroll
+					});
+					$('#scrolled').val(scroll);
+				}
 
-			      // Store hash
-			      var hash = this.hash;
-			      // Using jQuery's animate() method to add smooth page scroll
-			      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-			      $('html, body').animate({
-			        scrollTop: $(hash).offset().top
-			      }, 100, function(){			   
-			        // Add hash (#) to URL when done scrolling (default click behavior)
-			        window.location.hash = hash;
-			      });
-				      var currentPage =  $('#currentPage').val();
-				      var prev_page =parseInt(currentPage) -1;
-				      var next_page =parseInt(currentPage)+1;
-				    // alert(currentPage);
-		      		if(next_page <= tatal_canvas){
-		      			var prev_page_href ="#the-canvas"+prev_page;
-		      			var next_page_href ="#the-canvas"+next_page;
-		      			//alert(canvas_href);
-		    			$("#pdf-prev").attr("href",prev_page_href); 
-		    			$('#pdf-next').attr("href",next_page_href);
-		    			$('#currentPage').val(next_page);
-		      		}  
-			    } // End if
+				// var tatal_canvas = parseInt($('#total-page').text());
+				// //alert(tatal_canvas);				
+				//    // Add smooth scrolling to all links
+				//    // Make sure this.hash has a value before overriding default behavior
+				//    if (this.hash !== "") {
+				//      // Prevent default anchor click behavior
+				//      event.preventDefault();
+
+				//      // Store hash
+				//      var hash = this.hash;
+				//      // Using jQuery's animate() method to add smooth page scroll
+				//      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+				//      $('html, body').animate({
+				//        scrollTop: $(hash).offset().top
+				//      }, 100, function(){			   
+				//        // Add hash (#) to URL when done scrolling (default click behavior)
+				//        window.location.hash = hash;
+				//      });
+				//       var currentPage =  $('#currentPage').val();
+				//       var prev_page =parseInt(currentPage) -1;
+				//       var next_page =parseInt(currentPage)+1;
+				//     // alert(currentPage);
+				//     		if(next_page <= tatal_canvas){
+				//     			var prev_page_href ="#the-canvas"+prev_page;
+				//     			var next_page_href ="#the-canvas"+next_page;
+				//     			//alert(canvas_href);
+				//   			$("#pdf-prev").attr("href",prev_page_href); 
+				//   			$('#pdf-next').attr("href",next_page_href);
+				//   			$('#currentPage').val(next_page);
+				//     		}  
+				//    } // End if
 			});
 
 

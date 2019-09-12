@@ -214,6 +214,7 @@
        	<input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}'/>
        	<input type="hidden" name="download" id="document-download-viewer" value="{{$filePath}}">
        	<input type="hidden" name="scrolled" id="scrolled" value="0">
+       	<input type="hidden" name="canvasheight" id="canvasheight" value="">
 
 		<div class="header-set">
 			<section><div class="image-name">
@@ -714,6 +715,7 @@
 				var viewport = page.getViewport({scale: scale});
 				var pageDisplayWidth = viewport.width;
 				var pageDisplayHeight = viewport.height;
+				$('#canvasheight').val(pageDisplayHeight);
 				var context = canvas.getContext('2d');
 				canvas.width = pageDisplayWidth;
 				canvas.height = pageDisplayHeight;
@@ -727,11 +729,12 @@
 
 		function scrolled(a){
 			var scrolled = parseInt($('#scrolled').val());
+			var pagehyt  = parseInt($('#canvasheight').val());
 			if(a =='up'){
-				scrolled=scrolled-300;
+				scrolled=scrolled-pagehyt;
 			}
 			if(a =='down'){
-				scrolled=scrolled+300;
+				scrolled=scrolled+pagehyt;
 			}
 			
 			return scrolled;
@@ -762,8 +765,9 @@
 		      			// var next_page_href ="#the-canvas"+next_page;		               	
 		         //        $("#pdf-prev").attr("href",'#the-canvas'+canvas_data_id); 
 		         //         $("#pdf-next").attr("href",'#'+parent_page);
-		                $('#currentPage').val($(this).closest('canvas').attr('data-id'));
-		                 $('#current-page').text($('#currentPage').val());
+			                $('#currentPage').val($(this).closest('canvas').attr('data-id'));
+			                $('#current-page').text($('#currentPage').val());
+			                $('#scrolled').val($('#canvas_div').scrollTop());
 		               }
 		            }
 		        });
