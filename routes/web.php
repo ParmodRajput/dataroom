@@ -250,12 +250,27 @@ Route::get('downloadExcel/{type}', 'DocumentsController@downloadExcel');
 
 //admin dashboard 
 
-Route::group(['namespace' => 'Admin', 'prefix' =>'' ], function()
+Route::group(['namespace' => 'Admin', 'prefix' =>'admin' ], function()
 {
-   Route::get('/admin','AdminController@admin')->name('login_Page');
-   Route::post('/admin/login','AdminController@adminLogin')->name('adminLogin');
-   Route::get('/admin/dashboard','AdminController@dashboard')->name('dashboard');
-
+	Route::get('/login','AdminController@getAdminLogin');
+	
+	Route::post('/login','AdminController@adminLogin')->name('adminLogin');
+	Route::get('/','AdminController@dashboard')->name('dashboard')->middleware('admin');
+	Route::get('/users','AdminController@usersList')->name('usersList')->middleware('admin');
+	Route::get('/usersEnable','AdminController@usersEnable')->name('usersEnable')->middleware('admin');
+	Route::get('/usersDisable','AdminController@usersDisable')->name('usersDisable')->middleware('admin');
+	Route::get('/projectList/{id}', 'AdminController@projectList')->name('projectList')->middleware('admin');
+	Route::get('/detail/{id}', 'AdminController@detail')->name('detail')->middleware('admin');
+	Route::get('/changeProjectStatus/{id}', 'AdminController@changeProjectStatus')->name('changeProjectStatus')->middleware('admin');
+	Route::get('/changeStatus/{id}', 'AdminController@changeStatus')->name('changeStatus')->middleware('admin');
+	
+	Route::get('/changeStatusAjax', 'AdminController@changeStatusAjax')->name('changeStatusAjax')->middleware('admin');
+	
+	Route::get('/allProjects', 'AdminController@allProjects')->name('allProjects')->middleware('admin');
+		
+	Route::get('/logout', 'AdminController@logout')->name('adminLogout');
+	
+	
 });
 
 Route::get('sendemail', function (){
@@ -276,16 +291,7 @@ Route::get('sendemail', function (){
 
 });
 
-// Route::get('storage/{filename}', function ($filename)
-//     {
-//         $path = storage_path('app/videos/' . $filename);
 
-//         return \Response::make(file_get_contents($path), 200, [
-//             'Content-Type' => 'video/webm',
-//             'Content-Disposition' => 'inline; filename="'.$filename.'"'
-//         ]);
-
-// })->name('get-video');
 
 
 

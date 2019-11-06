@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
-    <link rel="stylesheet" type="text/css" href="css/admin/main.css">
+    <!--link rel="stylesheet" type="text/css" href="css/admin/main.css"-->
+	<link href="{!! asset('css/admin/main.css') !!}" media="all" rel="stylesheet" type="text/css" />
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Login - prodata Admin</title>
@@ -30,11 +31,11 @@
             <label class="control-label">PASSWORD</label>
             <input class="form-control admin_password" name='password' type="password" placeholder="Password">
           </div>
-          <div class="form-group">
+          <!--div class="form-group">
             <div class="utility">
               <p class="semibold-text mb-2"><a href="#" data-toggle="flip">Forgot Password ?</a></p>
             </div>
-          </div>
+          </div-->
           <div class="form-group btn-container"> 
             <button type="submit" class="btn btn-primary btn-block login_administrator"><i class="fa fa-sign-in fa-lg fa-fw "></i>SIGN IN</button>
           </div>
@@ -55,18 +56,19 @@
       </div>
     </section>
     <!-- Essential javascripts for application to work-->
-    <script src="js/admin/jquery-3.2.1.min.js"></script>
-    <script src="js/admin/popper.min.js"></script>
-    <script src="js/admin/bootstrap.min.js"></script>
-    <script src="js/admin/main.js"></script>
+	
+    <script  src="{!! asset('js/admin/jquery-3.2.1.min.js') !!}" ></script>
+    <script src="{!! asset('js/admin/popper.min.js') !!}"></script>
+    <script src="{!! asset('js/admin/bootstrap.min.js') !!}"></script>
+    <script src="{!! asset('js/admin/main.js') !!}"></script>
     <!-- The javascript plugin to display page loading on top-->
-    <script src="js/admin/plugins/pace.min.js"></script>
+    <script src="{!! asset('js/admin/plugins/pace.min.js') !!}"></script>
     <script type="text/javascript">
       // Login Page Flipbox control
-      $('.login-content [data-toggle="flip"]').click(function() {
+      /* $('.login-content [data-toggle="flip"]').click(function() {
       	$('.login-box').toggleClass('flipped');
       	return false;
-      });
+      }); */
 
       // $(document).on('click','.login_administrator',function(){
 

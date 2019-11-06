@@ -1820,7 +1820,7 @@ public  function folderToZip($folder, &$zipFile, $exclusiveLength) {
           $report->save();
 
 
-       return view('documents.file_view',compact('document_Data','doc_name','Ext','filePath','docx_data','project_id','DocPermission','watermark_view','watermark_text','watermark_color','downloadable','printable','discussable'));
+       return view('documents.file_view',compact('document_Data','fullPath','doc_name','Ext','filePath','docx_data','project_id','DocPermission','watermark_view','watermark_text','watermark_color','downloadable','printable','discussable'));
 
     }
 

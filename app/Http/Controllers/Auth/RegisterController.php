@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+
 session_start();
 
 class RegisterController extends Controller
@@ -73,7 +74,7 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {
+    { 
             $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -158,7 +159,8 @@ class RegisterController extends Controller
                   //end  
 
                 }
-
+				/* Auth::logout();
+				return redirect('/login'); */
                 unset($_SESSION['register_user_info']);
            
            return $user;

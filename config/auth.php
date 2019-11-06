@@ -107,7 +107,13 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
-        ],
+        ], 
+	'admins' => [
+        'provider' => 'admin',
+        'email' => 'auth.emails.password',
+        'table' => 'password_resets',
+        'expire' => 60,
+    ],
 
     ],
 

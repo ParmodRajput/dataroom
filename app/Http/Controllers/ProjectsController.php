@@ -155,9 +155,14 @@ class ProjectsController extends Controller
     }
 
     public function getUserProjects(Request $request){
-		//$projects = DB::table('projects')->select('projects.id','projects.company','projects.project_name');
 		  $user_id = Auth::user()->id;
-      $authEmail = Auth::user()->email;
+          $authEmail = Auth::user()->email;
+		  
+		    if(Auth::check() && Auth::user()->is_active == '0'){
+				Auth::logout();
+				\Session::flash('message', 'This account is not activated. Wait for administrator to activate your account!');
+				return redirect("login");
+			}
 
         $group = Group_Member::where('member_email',$authEmail)->pluck('group_id');
         $groupProject = Group::find($group);
@@ -171,15 +176,14 @@ class ProjectsController extends Controller
 
       }
 
-      //  $projects1 = DB::table('projects')->get()->whereIn('id', $groupProjectId);
-      //  print_r($projects1);
-      //  die();
-
-	    // $projects = DB::table('projects')->get()->where('user_id', $user_id);
-
-      $projects = DB::table('projects')->whereIn('id', $groupProjectId)->orWhere('user_id', $user_id)->get();
-
-      return view('projects.all', ['projects' => $projects]);
+		//  $projects = DB::table('projects')->whereIn('id', $groupProjectId)->orWhere('user_id', $user_id)->get();  //Old query 09-10-19
+	
+		$projects = DB::table('projects')->where('is_active',  '1')->where(function ($query) use ($groupProjectId,$user_id) {
+					$query->whereIn('id', $groupProjectId)
+					->orwhere('user_id', $user_id);
+					})->get();	
+			
+		return view('projects.all', ['projects' => $projects]);
 	}
 
 

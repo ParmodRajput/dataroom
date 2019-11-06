@@ -42,6 +42,9 @@
                           <strong>{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
+				@if(Session::has('message'))
+				<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+				@endif	
                 <div class="form-group  {{ $errors->has('project_name') ? ' has-error' : '' }}" >
                   <label class="label">Email </label>
                   <div class="input-group">
