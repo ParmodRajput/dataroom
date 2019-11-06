@@ -162,13 +162,6 @@
 			padding: 5px;
 			display: inline-block;
 		  }
-		  #pageContainer {
-		  	position: relative;
-		  }
-		  .button_next_pre {
-    position: fixed;
-    bottom: 30px;
-}
 		  
 	@media only screen and (max-width: 1100px) {
 				.set-center {
@@ -205,7 +198,7 @@
 
 </head>
 
-	<body *oncontextmenu="return false;" style="overflow: inherit !important;">
+	<body *oncontextmenu="return false;">
 		<!-- <body> -->
        <div>
        	<input type="hidden" id="watermark_view" data-value= '{{$watermark_view}}'>
@@ -305,30 +298,12 @@
 				 	
 				 <!-- 	<div class="overlay_new"></div> -->
 	                <canvas id="canvas"></canvas>
-	                <div id="canvas_div" style="display:none;overflow-y:scroll;height:1188px;max-width: auto; margin: 0 auto;"></div> 
+	                <div id="canvas_div"></div> 
 	                <div class="button_next_pre hidden">
 	                	<div class="row">
-	                		<div class="col-md-4 col-md-offset-4">
+	                		<div class="col-md-2 col-md-offset-5">
 	                			<div class="row">
-<!-- change -->
-	                				<div class="col-md-4" >
-							           <a class="form-control" id="pdf-prev" style="background-color:#eee;"  href="#the-canvas1">
-							           		<i class="fas fa-chevron-up"></i>
-							           	</a>
-	                				</div>
-	                				<div class="col-md-4">
-									    <div class="input-group" >
-									      <input name="currentnumber" type="text" id="currentPage" class="form-control" value="1"/>
-									      <span class="input-group-addon" id="total-page">1</span>
-									    </div>	                					
-	                				</div>
-	                				<div class="col-md-4" >
-				                       <a class="form-control" id="pdf-next" style="background-color:#eee;" href="#the-canvas1">
-				                       		<i class="fas fa-chevron-down"></i>
-				                       </a>	                					
-	                				</div>	                					                				
-<!-- old -->
-	                				<!-- <div class="pageing">
+	                				<div class="pageing">
 							           <a class="input-group-addon" id="pdf-prev" href="javascript:void(0);">
 							           		<i class="fas fa-chevron-up"></i>
 							           	</a>
@@ -338,8 +313,7 @@
 					                    <a class="input-group-addon" id="pdf-next" href="javascript:void(0);">
 					                    	<i class="fas fa-chevron-down"></i>
 					                    </a>
-	                				</div>	 -->	                				
-<!--old -->
+	                				</div>		                				
 	                			</div>				           	
 	                		</div>
 	                	</div>
