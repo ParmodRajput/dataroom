@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', 'PagesController@home');
 Route::get('/home', 'PagesController@home');
 Route::get('/contact','PagesController@contact');
@@ -257,20 +258,35 @@ Route::group(['namespace' => 'Admin', 'prefix' =>'admin' ], function()
 	Route::post('/login','AdminController@adminLogin')->name('adminLogin');
 	Route::get('/','AdminController@dashboard')->name('dashboard')->middleware('admin');
 	Route::get('/users','AdminController@usersList')->name('usersList')->middleware('admin');
+	Route::post('users','AdminController@usersList')->name('ajaxusersList')->middleware('admin');
 	Route::get('/usersEnable','AdminController@usersEnable')->name('usersEnable')->middleware('admin');
 	Route::get('/usersDisable','AdminController@usersDisable')->name('usersDisable')->middleware('admin');
 	Route::get('/projectList/{id}', 'AdminController@projectList')->name('projectList')->middleware('admin');
-	Route::get('/detail/{id}', 'AdminController@detail')->name('detail')->middleware('admin');
+	Route::get('/user/detail/{id}', 'AdminController@userDetail')->name('userdetail')->middleware('admin');
+	Route::post('/user/detail/{id}', 'AdminController@userDetail')->name('userdetailpost')->middleware('admin');
 	Route::get('/changeProjectStatus/{id}', 'AdminController@changeProjectStatus')->name('changeProjectStatus')->middleware('admin');
 	Route::get('/changeStatus/{id}', 'AdminController@changeStatus')->name('changeStatus')->middleware('admin');
-	
 	Route::get('/changeStatusAjax', 'AdminController@changeStatusAjax')->name('changeStatusAjax')->middleware('admin');
-	
-	Route::get('/allProjects', 'AdminController@allProjects')->name('allProjects')->middleware('admin');
-		
+	Route::get('/allProjects', 'AdminController@allProjects')->name('allProjects')->middleware('admin');	
 	Route::get('/logout', 'AdminController@logout')->name('adminLogout');
-	
-	
+	// pages controller
+	// pages list
+	Route::get('/pages', 'PagesController@Pages')->name('Pages')->middleware('admin');
+	// add pages
+	Route::get('/addpage', 'PagesController@addPages')->name('addPage')->middleware('admin');
+	Route::post('/addpage', 'PagesController@addPages')->name('postaddPage')->middleware('admin');
+	//add home
+	Route::get('/homepage', 'PagesController@homePage')->name('homepage')->middleware('admin');
+	Route::post('/homepage', 'PagesController@homePage')->name('posthomepage')->middleware('admin');
+	//edit home
+	Route::get('/edithomepage', 'PagesController@editHomePage')->name('edithomepage')->middleware('admin');
+	Route::post('/edithomepage', 'PagesController@editHomePage')->name('postedithomepage')->middleware('admin');
+	//add home
+	Route::get('/contactpage', 'PagesController@contactPage')->name('contactpage')->middleware('admin');
+	Route::post('/contactpage', 'PagesController@contactPage')->name('postcontactpage')->middleware('admin');
+	//edit Contact
+	Route::get('/editcontactpage', 'PagesController@editContactPage')->name('editcontactpage')->middleware('admin');
+	Route::post('/editcontactpage', 'PagesController@editContactPage')->name('posteditcontactpage')->middleware('admin');
 });
 
 Route::get('sendemail', function (){

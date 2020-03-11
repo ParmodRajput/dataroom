@@ -14,7 +14,7 @@
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-body">
-              <table class="table table-hover table-bordered" id="sampleTable">
+              <table class="table table-hover table-bordered" id="userDetailTable">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -22,23 +22,10 @@
                     <th>Phone</th>
                     <th>Company</th>
                     <th>Projects</th>
-                    <th>Current Status</th>
-                    <th>Detail</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-				@foreach($users_list as $data)
-                  <tr>
-                    <td>{{ $data -> name}}</th></td>
-                    <td>{{ $data -> email}}</th></td>
-                    <td>{{ $data -> phone_no}}</th></td>
-                    <td>{{ $data -> company}}</th></td>
-                    <td><a href="{{ route('projectList',$data->id) }}">Projects</a></th></td>
-                    <td>{{ ($data->is_active == 1) ? 'Enabled' : 'Disabled'}}</td>
-                    <td><a href="{{ route('detail',$data->id) }}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-                  </tr>
-				@endforeach
-                
                 </tbody>
               </table>
             </div>
@@ -48,12 +35,33 @@
 		
 	<script src="{!! asset('js/admin/plugins/jquery.dataTables.min.js') !!}"></script>
 	<script src="{!! asset('js/admin/plugins/dataTables.bootstrap.min.js') !!}"></script>
-	
-	
-	
 	<script type="text/javascript">
 		$(document).ready( function () {
-			$('#sampleTable').DataTable();
-		} );
+			$('#userDetailTable').DataTable({
+            "aaSorting": [],
+            "processing": true,
+            "serverSide": true,
+            "stateSave" : true,
+            "ajax": {
+                "url": APP_URL+"/admin/users",
+                "type": "POST",
+                "data":{
+                  "_token": "{{ csrf_token() }}",
+                  "type":"{{ $type }}"
+                }
+            },
+            "columns": [
+                { "name": "name" },
+                { "name": "email" },
+                { "name": "phone_no" },
+                { "name": "company" },
+                { "name": "projects",orderable: false,searchable:false },
+                { className: "action_btns", "name": "actions",orderable: false,searchable:false }
+            ],
+            "columnDefs": [
+                { orderable: false, targets: -1 }
+            ]
+        });
+		});
 	</script>
 @endsection

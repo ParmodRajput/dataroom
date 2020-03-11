@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Project;
+use App\Page;
+use App\Content;
 use Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,16 +18,24 @@ class PagesController extends Controller
 {
     public function home()
     {
-    	//$page = Page::where('page_name', 'about_us')->first();
-        //$page_name = 'Home';
-        return view('frontend.home');
+    	$page = Content::where('name', 'home')->get();
+        $sections = array();
+        foreach ($page as $value) {
+            $section = $value['section'];
+            $sections[$section] = $value['content'];
+        }
+        return view('frontend.home')->with('sections',$sections);
     }
     
     public function contact()
     {
-    	//$page = Page::where('page_name', 'about_us')->first();
-        //$page_name = 'Home';
-        return view('frontend.contact');
+    	$page = Content::where('name', 'contact')->get();
+        $sections = array();
+        foreach ($page as $value) {
+            $section = $value['section'];
+            $sections[$section] = $value['content'];
+        }
+        return view('frontend.contact')->with('sections',$sections);
     }
     public function platform()
     {

@@ -14,7 +14,7 @@ use App\Project;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Redirect;
 class AdminController extends Controller
 {
 	/**
@@ -66,21 +66,114 @@ class AdminController extends Controller
     }
 	
 	/* List Of all  Users */
-	public function usersList(){
-		 $select = DB::select('select * from users');
-		 return view ('Admin.all_users')->with('users_list',$select);
+	public function usersListOrder($length,$draw,$start,$order,$search,$columns,$search_value,$search_regex,$filter_users,$dir,$type){
+		$all_users  =User::select('*');
+		if($type =='Disable'){
+			$all_users->where('is_active','=','0');
+		}if($type =='Enable'){
+			$all_users->where('is_active','=','1');
+		}
+		$count_users = $all_users->count();
+		if(!empty($search_value)){
+			$all_users =$all_users->where(function($q) use ($search_value){
+						$q->orWhere('name' ,'like', '%'.$search_value.'%')
+						->orWhere('email' ,'like', '%'.$search_value.'%')
+						->orWhere('phone_no' ,'like', '%'.$search_value.'%')
+						->orWhere('company' ,'like', '%'.$search_value.'%');
+						});
+		}
+		if($order){
+            $all_users = $all_users->orderBy($order, $dir);
+        }else{
+            $all_users = $all_users->orderBy('id', 'desc');
+        }	
+		$all_users = $all_users->offset($start)->limit($length)->get();
+		$filter_users = $all_users->count();
+		$pageLength = $count_users/$filter_users;
+		$page = intval($pageLength);
+		$pageLength =($pageLength > $page) ? intval($pageLength+1) : intval($pageLength);
+		$data = array();
+		$i = 0;
+		foreach($all_users as $user){
+	        $data[$i][]  = $user->name;
+	        $data[$i][]  = $user->email;
+	        $data[$i][]  = $user->phone_no;
+	        $data[$i][]  = $user->company;
+	        $data[$i][]  = '<a href="'.route('projectList',$user->id).'">click</a>';
+	        $data[$i][]  = '<a href="'.route('userdetail',$user->id).'"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+	        $i++;
+        } 
+
+        return array(
+                    'draw' => $draw,
+                    'recordsTotal' => $count_users,
+                    'recordsFiltered' => $filter_users,
+                    "pageLength" => $pageLength,
+                    'data' => $data
+                );
+	}
+	/* List Of all  Users */
+	public function usersList(Request $request){
+		$length=10;
+		$draw=1;
+		$start=0;
+		$order='';
+		$search='';
+		$columns='';
+		$search_value='';
+		$search_regex='';
+		$filter_users=10;
+		if ($request->isMethod('post')) {
+			if($request->has('type')){
+	            $type  = $request->input('type');
+	        }if($request->has('start')){
+	            $start  = $request->input('start');
+	        }if($request->has('length')){
+	            $length  = $request->input('length');
+	        }if($request->has('draw')){
+	            $draw  = $request->input('draw');
+	        }if($request->has('order')){
+	            $order  = $request->input('order');
+	        }if($request->has('search')){
+	            $search_arr  = $request->input('search');
+	        }if($request->has('columns')){
+	            $columns  = $request->post("columns");
+	        }
+	        if(!empty($search_arr)){
+	            $search_value = $search_arr['value'];
+		        $search_regex = $search_arr['regex'];
+	        }
+	        $col = 0;
+	        $dir = "";
+	        if(!empty($order)) {
+	            foreach($order as $o) {
+	                $col   = $o['column'];
+	                $dir   = $o['dir'];
+	                $order = $columns[$col]['name'];
+	            }
+	        }
+	        if($dir != "asc" && $dir != "desc") {
+	            $dir = "asc";
+	        }
+			$output = $this->usersListOrder($length,$draw,$start,$order,$search,$columns,$search_value,$search_regex,$filter_users,$dir,$type);
+	        echo json_encode($output);
+	        exit();
+		}else{
+			$type ="All";
+		 	return view ('Admin.all_users')->with('type',$type);
+		}
     }
 	
 	/* List Of all Enable Users */
 	public function usersEnable(){
-		 $select = DB::select('select * from users where is_active = 1');
-		 return view ('Admin.all_users')->with('users_list',$select);
+		 $type = "Enable";
+		 return view ('Admin.all_users')->with('type',$type);
     }
 	
 	/* List Of all Disable Users */
 	public function usersDisable(){
-		 $select = DB::select('select * from users where is_active = 0');
-		 return view ('Admin.all_users')->with('users_list',$select);
+		 $type = "Disable";
+		 return view ('Admin.all_users')->with('type',$type);
     }
 	
 	
@@ -140,11 +233,20 @@ class AdminController extends Controller
         return back();
     }
 	
-	/* Get User Details*/
-	public function detail($user_id)
-    {	
-		$user = User::find($user_id);
-		return view('Admin.user_details', ['user' => $user]);
+	/* Get User Detail*/
+	public function userDetail(Request $request,$user_id)
+    {
+    	$user = User::find($user_id);
+    	if ($request->isMethod('post')) {
+			$user->update($request->all());
+			if($user){
+				return Redirect::back()->with('success','User account has been updated!');
+			}else{
+				return Redirect::back()->with('error','Something Wrong!');
+			}
+		}else{
+			return view('Admin.user_details', ['user' => $user]);
+		}
     }
 	
 	

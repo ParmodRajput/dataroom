@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 01, 2019 at 06:29 PM
--- Server version: 5.7.22-0ubuntu0.17.10.1
--- PHP Version: 7.1.17-0ubuntu0.17.10.1
+-- Generation Time: Mar 11, 2020 at 10:41 AM
+-- Server version: 5.7.29-0ubuntu0.18.04.1
+-- PHP Version: 7.2.28-3+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `prodata_room`
+-- Database: `dataroom`
 --
 
 -- --------------------------------------------------------
@@ -87,7 +87,7 @@ CREATE TABLE `admin_users` (
 --
 
 INSERT INTO `admin_users` (`id`, `name`, `email`, `password`, `phone_no`, `created_at`, `updated_at`) VALUES
-(1, 'priyanshu', 'priyanshu.chauhan@contriverz.com', '$2y$10$96ipKa09.WAEFZzJf4tNVuz/1IR9v1gKGWND490a33lVmmYGOVTJG', '7409610653', '2019-01-22 18:30:00', '2019-01-22 18:30:00');
+(1, 'priyanshu', 'pramod.kumar@contriverz.com', '$2y$10$yvhOngi9IzzZmPxXq7WPeeyvB.L7D4csY5oEklh.5dOF0fwQjHoD.', '7409610653', '2019-01-22 18:30:00', '2019-01-22 18:30:00');
 
 -- --------------------------------------------------------
 
@@ -126,6 +126,37 @@ INSERT INTO `collaboration_with_group` (`id`, `group_id`, `project_id`, `collabo
 (16, '32', '31', '57', '2019-02-11 01:49:35', '2019-02-11 01:49:35'),
 (17, '40', '31', '57', '2019-02-11 01:49:35', '2019-02-11 01:49:35'),
 (18, '57', '31', '57', '2019-02-11 01:49:35', '2019-02-11 01:49:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contents`
+--
+
+CREATE TABLE `contents` (
+  `id` int(200) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `section` varchar(200) NOT NULL,
+  `content` longtext,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `contents`
+--
+
+INSERT INTO `contents` (`id`, `name`, `section`, `content`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(25, 'home', 'bannercontent', '<p><img alt=\"banner\" src=\"http://192.168.0.131/dataroom/images/frontend/banner.jpg\" /></p>\r\n\r\n<div class=\"banner_content\">\r\n<h1>PRODATA Virtual<br />\r\nData Rooms</h1>\r\n\r\n<p>Share and collaborate on business-critical documents in a secure way.</p>\r\n</div>', NULL, '2020-03-09 05:54:05', NULL),
+(26, 'home', 'trustedby', '<div class=\"trusted_by_left\">\r\n<h2>TRUSTED BY</h2>\r\n\r\n<p>When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>\r\n</div>\r\n\r\n<div class=\"trusted_by_right\"><img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon1.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon2.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon3.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon4.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon5.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon6.jpg\" /></div>', NULL, '2020-03-09 05:54:05', NULL),
+(27, 'home', 'focus', '<div class=\"focus_pannel_left\">\r\n<h2>Focus on Your Business, Not the<br />\r\nSoftware</h2>\r\n\r\n<p>We keep things simple. Our data rooms are so easy to use that new users don&#39;t require training.</p>\r\n\r\n<ul>\r\n	<li><a href=\"#\">It only takes 15 minutes to deploy your data room</a></li>\r\n	<li><a href=\"#\">Use any computer, browser or mobile device - no plug-ins required</a></li>\r\n	<li><a href=\"#\">Easy uploads via Drag &amp; Drop - import your entire index structure to the data room in two clicks</a></li>\r\n	<li><a href=\"#\">No document preparation is necessary &ndash; we support 25+ file formats for secure viewing, printing and downloading</a></li>\r\n	<li><a href=\"#\">Copy and paste email addresses to invite hundreds of users to the data room in a minute</a></li>\r\n	<li><a href=\"#\">Intuitive document rights management to configure which files can be viewed, printed or downloaded for each user</a></li>\r\n</ul>\r\n</div>\r\n\r\n<div class=\"focus_pannel_right\"><img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/focus_img1.jpg\" /></div>', NULL, '2020-03-09 05:54:05', NULL),
+(28, 'home', 'SandR', '<div class=\"focus_pannel_n_left\"><img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/focus_img2.jpg\" /></div>\r\n\r\n<div class=\"focus_pannel_n_right\">\r\n<h2>Industry-Leading Security and<br />\r\nReliability</h2>\r\n\r\n<p>We keep things simple. Our data rooms are so easy to use that new users don&#39;t require training.</p>\r\n\r\n<ul>\r\n	<li><a href=\"#\">Data center operations are ISO 27001 certified and audited by EY</a></li>\r\n	<li><a href=\"#\">All data centers infrastructure is SOC2 compliant and has been fully audited</a></li>\r\n	<li><a href=\"#\">Development practices at iDeals are compliant with the Open Web Application Security Project</a></li>\r\n	<li><a href=\"#\">Multiple data centers continuously mirror each other to handle even the most extreme scenarios</a></li>\r\n	<li><a href=\"#\">Industry-leading 99.95% data room uptime is guaranteed</a></li>\r\n	<li><a href=\"#\">Data is protected by 256-bit encryption and 2048-bit keys when transferred and at rest</a></li>\r\n</ul>\r\n</div>', NULL, '2020-03-09 05:54:05', NULL),
+(29, 'home', 'idealplatform', '<h3>Over $100 bln in Capital Sold Using<br />\r\nthe iDeals Platform</h3>\r\n\r\n<p>100% of the top 25 investment banks and thousands of enterprises, legal firms and<br />\r\nlife science companies have used iDeals Virtual Data Rooms.</p>\r\n\r\n<div class=\"clear\">&nbsp;</div>\r\n\r\n<div class=\"trusted_ideal_pannel_icons\"><img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon1.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon1.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon1.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon1.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon1.jpg\" /> <img alt=\"img\" src=\"http://192.168.0.131/dataroom/images/frontend/trusted_icon1.jpg\" /></div>', NULL, '2020-03-09 05:54:05', NULL),
+(30, 'home', 'customerreviews', '<h3>Customer Reviews</h3>\r\n\r\n<p>See why thousands of companies of all sizes choose iDeals as their virtual data room provider.</p>', NULL, '2020-03-09 05:54:05', NULL),
+(31, 'contact', 'bannercontent', '<h3>Get in Touch with Prodataroom</h3>\r\n<p>Want to learn more about our products or have a sales, support or billing request?</p>', NULL, NULL, NULL),
+(32, 'contact', 'contactus', '<h2>Contact Us</h2>\r\n            <p>Please select one of the following departments at Prodataroom:</p>\r\n            <div class=\"contact_left_form\">\r\n               <div class=\"form-section\">\r\n                  <h4></h4>\r\n                  <div>\r\n                     <form>\r\n                        <input class=\"form-control\" type=\"text\" name=\"name\" placeholder=\"Full Name\">\r\n                        <input class=\"form-control\" type=\"text\" name=\"company\" placeholder=\"Company\">\r\n                        <input class=\"form-control\" type=\"text\" name=\"email\" placeholder=\"Email\">\r\n                        <input  class=\"form-control\" type=\"text\" name=\"phone\" placeholder=\"phone no\">\r\n                        <select name=\"selectbasic\" placeholder=\"\" class=\"form-control\" title=\"How did you hear about iDeals?\">\r\n                           <option style=\"display:none;\" value=\"-1\" disabled=\"\" selected=\"\">How did you hear about iDeals?</option>\r\n                           <option value=\"Web search\">Web search</option>\r\n                           <option value=\"Recommendation\">Recommendation</option>\r\n                           <option value=\"Used iDeals before\">Used iDeals before</option>\r\n                           <option value=\"Conference\">Conference</option>\r\n                           <option value=\"Advertisement\">Advertisement</option>\r\n                           <option value=\"Other\">Other</option>\r\n                        </select>\r\n                        <textarea class=\"form-control\" name=\"message\" placeholder=\"Enter text here...\"></textarea>\r\n                        <input type=\"submit\" value=\"Send\" name=\"submit\">\r\n                     </form>\r\n                  </div>\r\n               </div>\r\n            </div>', NULL, NULL, NULL),
+(33, 'contact', 'contactaddress', '<div class=\"contact_address\">\r\n               <h2>Europe</h2>\r\n               <span class=\"addreses\">\r\n                  <h4>UK</h4>\r\n                  <p>+44 (0) 203 514 2571</p>\r\n                  <p>800 048 8172 (toll free)</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Germany</h4>\r\n                  <p>+44 (0) 203 514 2571</p>\r\n                  <p>800 048 8172 (toll free)</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>France</h4>\r\n                  <p>+44 (0) 203 514 2571</p>\r\n                  <p>800 048 8172 (toll free)</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Russia</h4>\r\n                  <p>+44 (0) 203 514 2571</p>\r\n                  <p>800 048 8172 (toll free)</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Ukraine</h4>\r\n                  <p>+44 (0) 203 514 2571</p>\r\n                  <p>800 048 8172 (toll free)</p>\r\n               </span>\r\n               <h2>Middle East & Africa</h2>\r\n               <span class=\"addreses\">\r\n                  <h4>Turkey</h4>\r\n                  <p>(0) 203 514 2571</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>UAE</h4>\r\n                  <p>8000 3570 3989 (toll free)</p>\r\n                  <p>+97142743089</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Israel</h4>\r\n                  <p>972 372 192 72</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Kazakhstan</h4>\r\n                  <p>+7 727 346 9815</p>\r\n               </span>\r\n            </div>\r\n            <div class=\"contact_address\">\r\n               <h2>Americas</h2>\r\n               <span class=\"addreses\">\r\n                  <h4>US</h4>\r\n                  <p>+1 646 843 6060</p>\r\n                  <p>888 822 5141 (toll free)</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Canada</h4>\r\n                  <p>1 888 225 2821 (toll free)</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Brazil</h4>\r\n                  <p>55 11 3197 4871</p>\r\n                  <p>800 878 4065 (toll free)</p>\r\n               </span>\r\n               <h2>Asia Pacific</h2>\r\n               <span class=\"addreses\">\r\n                  <h4>Hong Kong</h4>\r\n                  <p>852 5808 2376</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Japan</h4>\r\n                  <p>81 345 801 680</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>India</h4>\r\n                  <p>91 226 101 45450</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>China</h4>\r\n                  <p>400 120 3034 (toll free)</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Singapore</h4>\r\n                  <p>65 315 828 68</p>\r\n               </span>\r\n               <span class=\"addreses\">\r\n                  <h4>Australia</h4>\r\n                  <p>+61 283 109 326</p>\r\n               </span>\r\n            </div>', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -266,7 +297,9 @@ INSERT INTO `documents` (`id`, `doc_index`, `project_id`, `document_name`, `path
 (38, 0, '93', 'divesh_divesh_f', 'public/documents/1/divesh_divesh_f', '', '', '', '', '', '1', '1', '', '', '2019-05-01 05:05:54', '2019-05-01 05:05:54'),
 (39, 0, '94', 'sdsdsdd_dssdsd', 'public/documents/1/sdsdsdd_dssdsd', '', '', '', '', '', '1', '1', '', '', '2019-05-01 07:21:35', '2019-05-01 07:21:35'),
 (40, 0, '95', 'sdsd_dsds_dsd', 'public/documents/1/sdsd_dsds_dsd', '', '', '', '', '', '1', '1', '', '', '2019-05-01 07:21:51', '2019-05-01 07:21:51'),
-(41, 0, '96', 'dsds_sdsd_dsds', 'public/documents/1/dsds_sdsd_dsds', '', '', '', '', '', '1', '1', '', '', '2019-05-01 07:24:27', '2019-05-01 07:24:27');
+(41, 0, '96', 'dsds_sdsd_dsds', 'public/documents/1/dsds_sdsd_dsds', '', '', '', '', '', '1', '1', '', '', '2019-05-01 07:24:27', '2019-05-01 07:24:27'),
+(42, 0, '92', 'xvxc', 'public/documents/6/xvxc', '', '', '', '', '', '6', '6', '', '', '2020-03-05 06:33:29', '2020-03-05 06:33:29'),
+(43, 1, '92', '1568264632733Chrysanthemum.jpg', 'public/documents/6/xvxc/1568264632733Chrysanthemum.jpg', 'public/documents/6/xvxc', '0', 'jpg', '0', '0', '6', '6', '0', '0', '2020-03-05 06:33:45', '2020-03-05 06:33:45');
 
 -- --------------------------------------------------------
 
@@ -1266,7 +1299,8 @@ INSERT INTO `groups` (`id`, `group_name`, `project_id`, `group_status`, `group_f
 (98, 'Administrator', '93', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-05-01 05:05:54', '2019-05-01 05:05:54'),
 (99, 'Administrator', '94', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-05-01 07:21:35', '2019-05-01 07:21:35'),
 (100, 'Administrator', '95', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-05-01 07:21:51', '2019-05-01 07:21:51'),
-(101, 'Administrator', '96', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-05-01 07:24:27', '2019-05-01 07:24:27');
+(101, 'Administrator', '96', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '1', '1', '2019-05-01 07:24:27', '2019-05-01 07:24:27'),
+(102, 'Administrator', '92', 1, 'Administrator', 'Administrator', 'all_group', '1', NULL, '0', '6', '6', '2020-03-05 06:33:29', '2020-03-05 06:33:29');
 
 -- --------------------------------------------------------
 
@@ -1394,7 +1428,8 @@ INSERT INTO `group_members` (`id`, `group_id`, `project_id`, `member_email`, `me
 (88, '98', '93', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-05-01 05:05:54', '2019-05-01 05:05:54'),
 (89, '99', '94', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-05-01 07:21:35', '2019-05-01 07:21:35'),
 (90, '100', '95', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-05-01 07:21:51', '2019-05-01 07:21:51'),
-(91, '101', '96', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-05-01 07:24:27', '2019-05-01 07:24:27');
+(91, '101', '96', 'priyanshu.chauhan@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '1', '1', '2019-05-01 07:24:27', '2019-05-01 07:24:27'),
+(92, '102', '92', 'pramod.kumar@contriverz.com', '1', 'Administrator', 'Administrator', '1', NULL, '00', '6', '6', '2020-03-05 06:33:29', '2020-03-05 06:33:29');
 
 -- --------------------------------------------------------
 
@@ -1491,6 +1526,33 @@ INSERT INTO `notes` (`id`, `document_id`, `content`, `user_id`, `project_id`, `p
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pages`
+--
+
+CREATE TABLE `pages` (
+  `id` int(200) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pages`
+--
+
+INSERT INTO `pages` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(32, 'home', NULL, NULL, NULL),
+(33, 'platform', NULL, NULL, NULL),
+(34, 'solutions', NULL, NULL, NULL),
+(35, 'support', NULL, NULL, NULL),
+(36, 'clients', NULL, NULL, NULL),
+(37, 'pricing', NULL, NULL, NULL),
+(38, 'contact', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
@@ -1505,9 +1567,8 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
-('priyanshu.chauhan@contriverz.com', '$2y$10$XpZbUf7W8waJ07kuB9mOluU051UFWgAMZ4N3YYbBZeqVMTGJRqDXW', '2019-01-30 03:55:45'),
-('pramod.kumar@contriverz.com', '$2y$10$XqJO7f87loJFuFyAInqBcu8ih8RpwrQ1FpeeCfH.Apz/sy/4r7y1K', '2019-03-05 04:54:19'),
-('dchoudhary@contriverz.com', '$2y$10$19ch4aM/MFl231Vi14dZ0.qHM3N1eJ5dirA66B8/dsRyQ6tiDIICq', '2019-03-05 05:05:27');
+('dchoudhary@contriverz.com', '$2y$10$19ch4aM/MFl231Vi14dZ0.qHM3N1eJ5dirA66B8/dsRyQ6tiDIICq', '2019-03-05 05:05:27'),
+('priyanshu.chauhan@contriverz.com', '$2y$10$6E0hZ3emZ6ovb9B0LgxQ3.tNDFU5mlc/gKkvz6ogEGN5gQ5j.6wky', '2020-03-02 06:44:56');
 
 -- --------------------------------------------------------
 
@@ -1520,6 +1581,7 @@ CREATE TABLE `projects` (
   `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `project_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `company_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_active` int(11) NOT NULL DEFAULT '0',
   `created_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `updated_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `project_slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1533,26 +1595,27 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `user_id`, `project_name`, `company_name`, `created_by`, `updated_by`, `project_slug`, `created_at`, `updated_at`, `industry`, `server_location`) VALUES
-(3, '3', '34234234', 'Contriverz', '3', '3', '34234234', '2018-12-29 08:20:37', '2018-12-29 08:20:37', 'empty', 'empty'),
-(4, '4', 'TAKEOFF', 'Collins Dale Capital Partners Ltd', '4', '4', 'takeoff', '2018-12-29 09:13:53', '2018-12-29 09:13:53', 'empty', 'empty'),
-(7, '2', '4597474', 'sfad15da5s', '2', '2', '4597474', '2019-01-18 05:29:11', '2019-01-18 05:29:11', 'empty', 'London'),
-(15, '8', 'testing', 'contriverz', '8', '8', 'testing', '2019-01-23 23:27:08', '2019-01-23 23:27:08', 'empty', 'empty'),
-(25, '7', 'test1', 'cz', '7', '7', 'test1', '2019-01-30 04:07:31', '2019-01-30 04:07:31', 'empty', 'London'),
-(26, '7', 'test2', 'cz', '7', '7', 'test2', '2019-01-30 04:11:00', '2019-01-30 04:11:00', 'empty', 'London'),
-(27, '7', 'ty87', 'u9iouu9o', '7', '7', 'ty87', '2019-01-30 04:12:41', '2019-01-30 04:12:41', 'empty', 'Usa'),
-(28, '7', 'test12345', 'test123', '7', '7', 'test12345', '2019-01-30 05:04:14', '2019-01-30 05:04:14', 'empty', 'NewYork'),
-(30, '4', 'Marketing_Material', 'Collins Dale Capital Partners Ltd', '4', '4', 'marketing_material', '2019-02-05 07:10:46', '2019-02-05 07:10:46', 'empty', 'London'),
-(32, '9', 'oop', 'mjk', '9', '9', 'oop', '2019-02-08 09:19:22', '2019-02-08 09:19:22', 'empty', 'London'),
-(33, '10', 'DreamWorker', 'dream_worker', '10', '10', 'dreamworker', '2019-02-18 21:50:52', '2019-02-18 21:50:52', 'empty', 'empty'),
-(34, '11', 'CDCP', 'Collins Dale Capital Partners Ltd', '11', '11', 'cdcp', '2019-02-21 08:24:50', '2019-02-21 08:24:50', 'empty', 'empty'),
-(36, '12', 'testapp', 'new', '12', '12', 'testapp', '2019-02-25 07:19:14', '2019-02-25 07:19:14', 'empty', 'empty'),
-(46, '1', 'test', 'test', '1', '1', 'test', '2019-04-28 23:58:47', '2019-04-28 23:58:47', 'empty', 'India'),
-(49, '14', 'Shared_Material', 'Collins Dale Capital Partners', '14', '14', 'shared_material', '2019-04-30 04:02:34', '2019-04-30 04:02:34', 'empty', 'London'),
-(52, '14', 'Danilo', 'Danilo', '14', '14', 'danilo', '2019-04-30 04:50:23', '2019-04-30 04:50:23', 'empty', 'Usa'),
-(55, '14', 'cdcp-shared-material', 'cdcp-shared-material', '14', '14', 'cdcp_shared_material', '2019-04-30 05:40:22', '2019-04-30 05:40:22', 'empty', 'Usa'),
-(89, '13', 'rahu_lrahul', 'rahul_rahul', '13', '13', 'rahu_lrahul', '2019-05-01 00:19:29', '2019-05-01 00:19:29', 'empty', 'India'),
-(91, '13', 'dsddssds-sds', 'wdwd-sdsd', '13', '13', 'dsddssds_sds', '2019-05-01 00:42:56', '2019-05-01 00:42:56', 'empty', 'India');
+INSERT INTO `projects` (`id`, `user_id`, `project_name`, `company_name`, `is_active`, `created_by`, `updated_by`, `project_slug`, `created_at`, `updated_at`, `industry`, `server_location`) VALUES
+(3, '3', '34234234', 'Contriverz', 0, '3', '3', '34234234', '2018-12-29 08:20:37', '2018-12-29 08:20:37', 'empty', 'empty'),
+(4, '4', 'TAKEOFF', 'Collins Dale Capital Partners Ltd', 0, '4', '4', 'takeoff', '2018-12-29 09:13:53', '2018-12-29 09:13:53', 'empty', 'empty'),
+(7, '2', '4597474', 'sfad15da5s', 0, '2', '2', '4597474', '2019-01-18 05:29:11', '2019-01-18 05:29:11', 'empty', 'London'),
+(15, '8', 'testing', 'contriverz', 0, '8', '8', 'testing', '2019-01-23 23:27:08', '2019-01-23 23:27:08', 'empty', 'empty'),
+(25, '7', 'test1', 'cz', 0, '7', '7', 'test1', '2019-01-30 04:07:31', '2019-01-30 04:07:31', 'empty', 'London'),
+(26, '7', 'test2', 'cz', 0, '7', '7', 'test2', '2019-01-30 04:11:00', '2019-01-30 04:11:00', 'empty', 'London'),
+(27, '7', 'ty87', 'u9iouu9o', 0, '7', '7', 'ty87', '2019-01-30 04:12:41', '2019-01-30 04:12:41', 'empty', 'Usa'),
+(28, '7', 'test12345', 'test123', 0, '7', '7', 'test12345', '2019-01-30 05:04:14', '2019-01-30 05:04:14', 'empty', 'NewYork'),
+(30, '4', 'Marketing_Material', 'Collins Dale Capital Partners Ltd', 0, '4', '4', 'marketing_material', '2019-02-05 07:10:46', '2019-02-05 07:10:46', 'empty', 'London'),
+(32, '9', 'oop', 'mjk', 0, '9', '9', 'oop', '2019-02-08 09:19:22', '2019-02-08 09:19:22', 'empty', 'London'),
+(33, '10', 'DreamWorker', 'dream_worker', 0, '10', '10', 'dreamworker', '2019-02-18 21:50:52', '2019-02-18 21:50:52', 'empty', 'empty'),
+(34, '11', 'CDCP', 'Collins Dale Capital Partners Ltd', 0, '11', '11', 'cdcp', '2019-02-21 08:24:50', '2019-02-21 08:24:50', 'empty', 'empty'),
+(36, '12', 'testapp', 'new', 0, '12', '12', 'testapp', '2019-02-25 07:19:14', '2019-02-25 07:19:14', 'empty', 'empty'),
+(46, '1', 'test', 'test', 0, '1', '1', 'test', '2019-04-28 23:58:47', '2019-04-28 23:58:47', 'empty', 'India'),
+(49, '14', 'Shared_Material', 'Collins Dale Capital Partners', 0, '14', '14', 'shared_material', '2019-04-30 04:02:34', '2019-04-30 04:02:34', 'empty', 'London'),
+(52, '14', 'Danilo', 'Danilo', 0, '14', '14', 'danilo', '2019-04-30 04:50:23', '2019-04-30 04:50:23', 'empty', 'Usa'),
+(55, '14', 'cdcp-shared-material', 'cdcp-shared-material', 0, '14', '14', 'cdcp_shared_material', '2019-04-30 05:40:22', '2019-04-30 05:40:22', 'empty', 'Usa'),
+(89, '13', 'rahu_lrahul', 'rahul_rahul', 0, '13', '13', 'rahu_lrahul', '2019-05-01 00:19:29', '2019-05-01 00:19:29', 'empty', 'India'),
+(91, '13', 'dsddssds-sds', 'wdwd-sdsd', 0, '13', '13', 'dsddssds_sds', '2019-05-01 00:42:56', '2019-05-01 00:42:56', 'empty', 'India'),
+(92, '6', 'xvxc', 'sg', 0, '6', '6', 'xvxc', '2020-03-05 06:33:29', '2020-03-05 06:33:29', 'empty', 'Usa');
 
 -- --------------------------------------------------------
 
@@ -2644,7 +2707,10 @@ INSERT INTO `reports` (`id`, `action`, `document_path`, `Auth`, `created_at`, `u
 (979, '29', 'public/documents/1/sdsd_dsds_dsd', '1', '2019-05-01 07:21:56', '2019-05-01 07:21:56'),
 (980, '14', 'public/documents/1/dsds_sdsd_dsds', '1', '2019-05-01 07:24:27', '2019-05-01 07:24:27'),
 (981, '28', '101', '1', '2019-05-01 07:24:27', '2019-05-01 07:24:27'),
-(982, '29', 'public/documents/1/dsds_sdsd_dsds', '1', '2019-05-01 07:24:34', '2019-05-01 07:24:34');
+(982, '29', 'public/documents/1/dsds_sdsd_dsds', '1', '2019-05-01 07:24:34', '2019-05-01 07:24:34'),
+(983, '14', 'public/documents/6/xvxc', '6', '2020-03-05 06:33:29', '2020-03-05 06:33:29'),
+(984, '28', '102', '6', '2020-03-05 06:33:29', '2020-03-05 06:33:29'),
+(985, '2', 'public/documents/6/xvxc/1568264632733Chrysanthemum.jpg', '6', '2020-03-05 06:33:45', '2020-03-05 06:33:45');
 
 -- --------------------------------------------------------
 
@@ -2713,7 +2779,8 @@ INSERT INTO `settings` (`id`, `watermark_view`, `watermark_text`, `watermark_col
 (41, '1', 'Prodata 2019-05-01 10:35:54...divesh-divesh-f Prodata 2019-05-01 10:35:54...divesh-divesh-f', '1', '1', '1', '1', '93', '2019-05-01 05:05:54', '2019-05-01 05:05:54'),
 (42, '1', 'Prodata 2019-05-01 12:51:35...sdsdsdd-dssdsd Prodata 2019-05-01 12:51:35...sdsdsdd-dssdsd', '1', '1', '1', '1', '94', '2019-05-01 07:21:35', '2019-05-01 07:21:35'),
 (43, '1', 'Prodata 2019-05-01 12:51:51...sdsd_dsds_dsd Prodata 2019-05-01 12:51:51...sdsd_dsds_dsd', '1', '1', '1', '1', '95', '2019-05-01 07:21:51', '2019-05-01 07:21:51'),
-(44, '1', 'Prodata 2019-05-01 12:54:27...dsds_sdsd_dsds Prodata 2019-05-01 12:54:27...dsds_sdsd_dsds', '1', '1', '1', '1', '96', '2019-05-01 07:24:27', '2019-05-01 07:24:27');
+(44, '1', 'Prodata 2019-05-01 12:54:27...dsds_sdsd_dsds Prodata 2019-05-01 12:54:27...dsds_sdsd_dsds', '1', '1', '1', '1', '96', '2019-05-01 07:24:27', '2019-05-01 07:24:27'),
+(45, '1', 'Prodata 2020-03-05 12:03:29...xvxc Prodata 2020-03-05 12:03:29...xvxc', '1', '1', '1', '1', '92', '2020-03-05 06:33:29', '2020-03-05 06:33:29');
 
 -- --------------------------------------------------------
 
@@ -2782,6 +2849,7 @@ CREATE TABLE `users` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_active` int(11) NOT NULL DEFAULT '0',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -2792,21 +2860,21 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone_no`, `remember_token`, `created_at`, `updated_at`, `company`) VALUES
-(1, 'priyanshu45', 'priyanshu.chauhan@contriverz.com', '$2y$10$4wdR7nyN3KivA3kJLPuwCeTYPKMSMUhZpBbskSLkHI3AZ2DuI9BTK', '7409610653', 'atyrvRuXmz6NLSyAK88et1khWfkeFCa1l2JMqBOCg41IXsqhMALh6HV7BTgX', '2018-12-27 08:42:08', '2019-01-23 09:38:04', 'Contriverz'),
-(2, 'Gagandeep', 'gdeep@contriverz.com', '$2y$10$n3ueaSw4UkN4i7eUkGr7uubhHIjoJCbDN5UIBCYpDQEJEvzloB0j2', '9988429146', NULL, '2018-12-28 23:30:20', '2018-12-28 23:30:20', 'Contriverz'),
-(3, 'Ankit', 'ankit.chauhan@contriverz.com', '$2y$10$sFD.LyPsF30sVfnEs1IcM.ur2v.6bnDJMJpw.wq5KsLmlMnsSyg7.', '62789453467', NULL, '2018-12-29 08:20:37', '2018-12-29 08:20:37', 'Contriverz'),
-(4, 'Danilo Campestrin', 'dc@collinsdale.com', '$2y$10$RiTRblliyTeCyxoqvX16VeEVNgddn8ILphxBF8cqF2qp/S6JlUNfm', '+447946628918', 'c9R79TzFgFloi7MM35GWbux4u6I7FfEgPRiAKM9NfBUorTWxnnTlOYB4IPlE', '2018-12-29 09:13:53', '2018-12-29 09:13:53', 'Collins Dale Capital Partners Ltd'),
-(5, 'DC CAMBO', 'danilo@cambo.it', '$2y$10$Wme0GDe9tE.yHsd7nM5UZelJQ5GFNXljeOP8irqS0PjZfyxi2CwC6', '+393475401412', NULL, '2018-12-29 09:20:53', '2018-12-29 09:20:53', 'CAMBO s.a.s.'),
-(6, 'parmod', 'pramod.kumar@contriverz.com', '$2y$10$cbYt7MEdQzO45N6Y6yaeluFw/B6/okrE9A3Ay.daVj7yav5z.Am4.', '7695220', NULL, '2019-01-18 04:31:33', '2019-01-18 04:31:33', 'fgf'),
-(7, 'kavita', 'kavita.sharma@contriverz.com', '$2y$10$gZTO7PqZgfZcta74rco.quRaqJ8P5tvIGMbAMTGJsdI3ZjMLLiAi2', '09288623746', '2yMqAIlnrZxhppDXHvumXc8oeujrKaz6hz5VeTy3h5oi3yePoWG3P3IsOkJG', '2019-01-23 05:31:12', '2019-01-30 04:05:20', 'in'),
-(8, 'seema arora', 'seema.arora@contriverz.com', '$2y$10$r9OD3HfAhWdREDirX7OTZ.puzFeDslq6.I4nbKGk9K9KtUMygY.JC', '9784161012', NULL, '2019-01-23 23:27:07', '2019-01-23 23:27:07', 'contriverz'),
-(9, 'dedar', 'dchoudhary@contriverz.com', '$2y$10$z1EE1nD4KtuqmRij0C0J6.ZaMy7CZ1r1rljcm3jjPVXYjKuX7PT9i', '9090909090', NULL, '2019-02-08 09:19:10', '2019-02-08 09:19:10', 'contriverz'),
-(10, 'priyanshu chauhan', 'priyanshu7111997@gmail.com', '$2y$10$54H2fUM3zwh2oFPtp6Jtn.aN.n.MIEHUPc3DutuAKbMnCgcH1x4wu', '740961653', NULL, '2019-02-18 21:50:52', '2019-02-18 21:50:52', 'dream_worker'),
-(11, 'Alberto Cerri', 'alberto.cerri@collinsdale.com', '$2y$10$wdxsTH42.ZAXx4WfQLz97uehnncocI.gk/hiIgngbzJ2RoamwBiPK', '+393478189463', 'BkbIx7UiMUNfHT3zcJkmUXG46k8rfcUNC9bNXa6dEACOVYiauIL52Ks4d58J', '2019-02-21 08:24:50', '2019-02-21 08:24:50', 'Collins Dale Capital Partners Ltd'),
-(12, 'ashish sharma', 'vellabnda420@gmail.com', '$2y$10$d5XNrR0O1atm8x6g1TiBKeyeuAQR5uVRCe.EVNx/A35ijTuKnWvAi', '7404678848', NULL, '2019-02-25 07:19:14', '2019-02-25 07:19:14', 'new'),
-(13, 'Rahul Malhotra', 'rahul.mamotra@contriverz.com', '$2y$10$kxr5AWf8aj7N5Fuv7OH1JOVSXv5AMR7LiOArksifebiqGBAj.OroS', '898998998', '21AZtHVhORfpQVgkUKlOQR2AjbvMrfLL40H30Gg1gFEv2m7QSAMHpVXlxXtD', '2019-04-17 00:50:46', '2019-04-17 00:50:46', 'cz'),
-(14, 'Danilo Carolini', 'd.carolini@collinsdale.com', '$2y$10$pdFByNQa.nhjJKDZ4mRUmu8lF8jlTEoKKA9LDkNEe2rImToyG1zL2', '004407526733364', 'xZHvLACnvQXB14TYOLhfICAdxTvQocvbCF4GjZVPevOMsOGmuzaM2GUaY8BQ', '2019-04-30 04:01:21', '2019-04-30 04:01:21', 'Collins Dale Capital Partners');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone_no`, `is_active`, `remember_token`, `created_at`, `updated_at`, `company`) VALUES
+(1, 'priyanshu45', 'priyanshu.chauhan@contriverz.com', '$2y$10$4wdR7nyN3KivA3kJLPuwCeTYPKMSMUhZpBbskSLkHI3AZ2DuI9BTK', '7409610653', 1, 'atyrvRuXmz6NLSyAK88et1khWfkeFCa1l2JMqBOCg41IXsqhMALh6HV7BTgX', '2018-12-27 08:42:08', '2019-01-23 09:38:04', 'Contriverz'),
+(2, 'Gagandeep', 'gdeep@contriverz.com', '$2y$10$n3ueaSw4UkN4i7eUkGr7uubhHIjoJCbDN5UIBCYpDQEJEvzloB0j2', '9988429146', 1, NULL, '2018-12-28 23:30:20', '2018-12-28 23:30:20', 'Contriverz'),
+(3, 'Ankit', 'ankit.chauhan@contriverz.com', '', '62789453467', 1, NULL, '2018-12-29 08:20:37', '2020-03-05 05:19:37', 'Contriverz'),
+(4, 'Danilo Campestrin', 'dc@collinsdale.com', '$2y$10$RiTRblliyTeCyxoqvX16VeEVNgddn8ILphxBF8cqF2qp/S6JlUNfm', '+447946628918', 1, 'c9R79TzFgFloi7MM35GWbux4u6I7FfEgPRiAKM9NfBUorTWxnnTlOYB4IPlE', '2018-12-29 09:13:53', '2018-12-29 09:13:53', 'Collins Dale Capital Partners Ltd'),
+(5, 'DC CAMBO', 'danilo@cambo.it', '$2y$10$Wme0GDe9tE.yHsd7nM5UZelJQ5GFNXljeOP8irqS0PjZfyxi2CwC6', '+393475401412', 1, NULL, '2018-12-29 09:20:53', '2018-12-29 09:20:53', 'CAMBO s.a.s.'),
+(6, 'parmod', 'pramod.kumar@contriverz.com', '$2y$10$yvhOngi9IzzZmPxXq7WPeeyvB.L7D4csY5oEklh.5dOF0fwQjHoD.', '7695220', 1, 'ePnGin9YcWRS5gL6BAyGnhnb5sBfT61PVumuDru2jgrvJS72dAaXYmocxYtN', '2019-01-18 04:31:33', '2020-03-02 06:47:07', 'fgf'),
+(7, 'kavita', 'kavita.sharma@contriverz.com', '$2y$10$gZTO7PqZgfZcta74rco.quRaqJ8P5tvIGMbAMTGJsdI3ZjMLLiAi2', '09288623746', 1, '2yMqAIlnrZxhppDXHvumXc8oeujrKaz6hz5VeTy3h5oi3yePoWG3P3IsOkJG', '2019-01-23 05:31:12', '2019-01-30 04:05:20', 'in'),
+(8, 'seema arora', 'seema.arora@contriverz.com', '$2y$10$r9OD3HfAhWdREDirX7OTZ.puzFeDslq6.I4nbKGk9K9KtUMygY.JC', '9784161012', 1, NULL, '2019-01-23 23:27:07', '2019-01-23 23:27:07', 'contriverz'),
+(9, 'dedar', 'dchoudhary@contriverz.com', '$2y$10$z1EE1nD4KtuqmRij0C0J6.ZaMy7CZ1r1rljcm3jjPVXYjKuX7PT9i', '9090909090', 1, NULL, '2019-02-08 09:19:10', '2019-02-08 09:19:10', 'contriverz'),
+(10, 'priyanshu chauhan', 'priyanshu7111997@gmail.com', '$2y$10$54H2fUM3zwh2oFPtp6Jtn.aN.n.MIEHUPc3DutuAKbMnCgcH1x4wu', '740961653', 1, NULL, '2019-02-18 21:50:52', '2019-02-18 21:50:52', 'dream_worker'),
+(11, 'Alberto Cerri', 'alberto.cerri@collinsdale.com', '$2y$10$wdxsTH42.ZAXx4WfQLz97uehnncocI.gk/hiIgngbzJ2RoamwBiPK', '+393478189463', 0, 'BkbIx7UiMUNfHT3zcJkmUXG46k8rfcUNC9bNXa6dEACOVYiauIL52Ks4d58J', '2019-02-21 08:24:50', '2020-03-05 04:04:45', 'Collins Dale Capital Partners Ltd'),
+(12, 'ashish sharma', 'vellabnda420@gmail.com', '$2y$10$d5XNrR0O1atm8x6g1TiBKeyeuAQR5uVRCe.EVNx/A35ijTuKnWvAi', '7404678848', 1, NULL, '2019-02-25 07:19:14', '2019-02-25 07:19:14', 'new'),
+(13, 'Rahul Malhotra', 'rahul.mamotra@contriverz.com', '$2y$10$kxr5AWf8aj7N5Fuv7OH1JOVSXv5AMR7LiOArksifebiqGBAj.OroS', '898998998', 1, '21AZtHVhORfpQVgkUKlOQR2AjbvMrfLL40H30Gg1gFEv2m7QSAMHpVXlxXtD', '2019-04-17 00:50:46', '2019-04-17 00:50:46', 'cz'),
+(14, 'Danilo Carolini', 'd.carolini@collinsdale.com', '$2y$10$pdFByNQa.nhjJKDZ4mRUmu8lF8jlTEoKKA9LDkNEe2rImToyG1zL2', '004407526733364', 1, 'xZHvLACnvQXB14TYOLhfICAdxTvQocvbCF4GjZVPevOMsOGmuzaM2GUaY8BQ', '2019-04-30 04:01:21', '2019-04-30 04:01:21', 'Collins Dale Capital Partners');
 
 --
 -- Indexes for dumped tables
@@ -2830,6 +2898,12 @@ ALTER TABLE `admin_users`
 -- Indexes for table `collaboration_with_group`
 --
 ALTER TABLE `collaboration_with_group`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contents`
+--
+ALTER TABLE `contents`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2890,6 +2964,12 @@ ALTER TABLE `migrations`
 -- Indexes for table `notes`
 --
 ALTER TABLE `notes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pages`
+--
+ALTER TABLE `pages`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2969,6 +3049,11 @@ ALTER TABLE `admin_users`
 ALTER TABLE `collaboration_with_group`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
+-- AUTO_INCREMENT for table `contents`
+--
+ALTER TABLE `contents`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+--
 -- AUTO_INCREMENT for table `delete_documents`
 --
 ALTER TABLE `delete_documents`
@@ -2982,7 +3067,7 @@ ALTER TABLE `device_detect`
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `document_permission`
 --
@@ -2997,7 +3082,7 @@ ALTER TABLE `fav_documents`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 --
 -- AUTO_INCREMENT for table `groups_reports`
 --
@@ -3007,7 +3092,7 @@ ALTER TABLE `groups_reports`
 -- AUTO_INCREMENT for table `group_members`
 --
 ALTER TABLE `group_members`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
@@ -3019,10 +3104,15 @@ ALTER TABLE `migrations`
 ALTER TABLE `notes`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
+-- AUTO_INCREMENT for table `pages`
+--
+ALTER TABLE `pages`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+--
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 --
 -- AUTO_INCREMENT for table `questions`
 --
@@ -3042,12 +3132,12 @@ ALTER TABLE `question_reply`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=983;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=986;
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT for table `share_documents`
 --
